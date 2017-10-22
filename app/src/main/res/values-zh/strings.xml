@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DoMoment</string>
+    <string name="title_moment">时刻</string>
+    <string name="title_todo">任务</string>
+    <string name="title_focus">关注</string>
+    <string name="timeline_today_title">今日事 • 今日毕</string>
+    <string name="timeline_tomorrow_title">明日复明日，明日何其多</string>
+    <string name="timeline_nextweek_title">转眼即到是下周</string>
+    <string name="timeline_aftertomorrow_title">明日至后日，后日尝未晓</string>
+    <string name="hello_blank_fragment">你好空的碎片</string>
+    <string name="timeline_thisweek_title">这周事，早绸缪</string>
+    <string name="timeline_thismonth_title">本月</string>
+    <string name="timeline_nextmonth_title">下个月</string>
+    <string name="timeline_30daysoverdue_title">逾期30天</string>
+    <string name="timeline_forward_title">远期</string>
+    <string name="timeline_withinthreemonths_title">三个月以内</string>
+    <string name="timeline_withinsixmonths_title">六个月以内</string>
+    <string name="category_alltask_title">所有任务</string>
+    <string name="overdue_yesterday_title">昨天</string>
+    <string name="overdue_beforeyesterday_title">前天</string>
+    <string name="overdue_thisweek_title">这周</string>
+    <string name="overdue_lastweek_title">上周</string>
+    <string name="overdue_thismonth_title">这月</string>
+    <string name="overdue_lastmonth_title">上个月内</string>
+    <string name="overdue_withinthreemonths_title">三个月以内</string>
+    <string name="overdue_withinsixmonths_title">六个月以内</string>
+    <string name="overdue_longtimeage_title">六个月以上</string>
+    <string name="create_yesterday_title">昨天创建</string>
+    <string name="create_beforeyesterday_title">前天创建</string>
+    <string name="create_thisweek_title">这周创建</string>
+    <string name="create_lastweek_title">上周创建</string>
+    <string name="create_thismonth_title">这个月创建</string>
+    <string name="create_lastmonth_title">上个月创建</string>
+    <string name="create_withinthreemonths_title">三个月以内创建</string>
+    <string name="create_withinsixmonths_title">六个月内创建</string>
+    <string name="create_longtimeage_title">六个月以前创建</string>
+    <string name="viewgroup_timeline_title">待办</string>
+    <string name="viewgroup_overdue_title">逾期</string>
+    <string name="viewgroup_completed_title">完成</string>
+    <string name="create_today_title">今天创建</string>
+    <string name="viewgroup_nodate_title">待定</string>
+    <string name="category_nocategory_title">没有分类</string>
+    <string name="title_activity_task_edit">编辑任务活动</string>
+</resources>

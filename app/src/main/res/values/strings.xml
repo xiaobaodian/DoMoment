@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">DoMoment</string>
+    <string name="title_todo">todo</string>
+    <string name="title_moment">Momemt</string>
+    <string name="title_focus">Focus</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="timeline_today_title">Today</string>
+    <string name="timeline_tomorrow_title">Tomorrow</string>
+    <string name="timeline_nextweek_title">Next Week</string>
+    <string name="timeline_aftertomorrow_title">After Tomorrow</string>
+    <string name="timeline_thisweek_title">This Week</string>
+    <string name="timeline_thismonth_title">This Month</string>
+    <string name="timeline_nextmonth_title">Next Month</string>
+    <string name="timeline_30daysoverdue_title">30Days Overdue</string>
+    <string name="timeline_forward_title">Forward Tasks</string>
+    <string name="timeline_withinthreemonths_title">Within Three Months</string>
+    <string name="timeline_withinsixmonths_title">Within Six Months</string>
+    <string name="category_alltask_title">All Tasks</string>
+    <string name="overdue_yesterday_title">Yesterday</string>
+    <string name="overdue_beforeyesterday_title">Before Yesterday</string>
+    <string name="overdue_thisweek_title">This Week</string>
+    <string name="overdue_lastweek_title">Last week</string>
+    <string name="overdue_thismonth_title">This Month</string>
+    <string name="overdue_lastmonth_title">Last Month</string>
+    <string name="overdue_withinthreemonths_title">Within Three Months</string>
+    <string name="overdue_withinsixmonths_title">Within Six Months</string>
+    <string name="overdue_longtimeage_title">Long Time Ago</string>
+    <string name="create_yesterday_title">Created Yesterday</string>
+    <string name="create_beforeyesterday_title">Created BeforeYesterday</string>
+    <string name="create_thisweek_title">Created ThisWeek</string>
+    <string name="create_lastweek_title">Created LastWeek</string>
+    <string name="create_thismonth_title">Created ThisMonth</string>
+    <string name="create_lastmonth_title">Created LastMonth</string>
+    <string name="create_withinthreemonths_title">Created Within Three Months</string>
+    <string name="create_withinsixmonths_title">Created Within Six Months</string>
+    <string name="create_longtimeage_title">Created Long Time Ago</string>
+    <string name="viewgroup_timeline_title">Todo</string>
+    <string name="viewgroup_overdue_title">Overdue</string>
+    <string name="viewgroup_completed_title">Completed</string>
+    <string name="create_today_title">Created Today</string>
+    <string name="viewgroup_nodate_title">No Date</string>
+    <string name="category_nocategory_title">No Category</string>
+    <string name="title_activity_task_edit">TaskEditActivity</string>
+</resources>

@@ -1,0 +1,38 @@
+package DataStructures;
+
+import android.content.Context;
+
+import ENUM.CategoryType;
+import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.R;
+
+/**
+ * Created by zhang on 2017/8/21.
+ */
+
+public class NoCategory extends CategoryBase {
+    private Context context = DoMoment.getContext();
+
+    public NoCategory() {
+        super();
+        setID(1);
+        setTitle(context.getString(R.string.category_nocategory_title));
+        categoryType = CategoryType.System;
+        themeBackground = R.drawable.todo_themebackground_work1;
+        BuildViewGroups();
+    }
+
+    @Override
+    public boolean InCategory(Task task) {
+        return task.getCategoryID() == getID();
+    }
+
+    @Override
+    protected void BuildViewGroups() {
+
+        AddGroupList(new TimeLineGroupList(this));
+        AddGroupList(new OverdueGroupList(this));
+        AddGroupList(new NoDateGroupList(this));
+    }
+
+}

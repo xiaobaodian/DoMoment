@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/todo_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:fitsSystemWindows="true"
+            app:elevation="1dp">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/todo_collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/touch_bg"
+                android:fitsSystemWindows="true"
+                android:pointerIcon="arrow"
+                android:saveEnabled="false"
+                android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginBottom="50dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:toolbarId="@+id/todo_toolbar">
+
+                <ImageView
+                    android:id="@+id/todo_appbar_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/todo_themebackground_work1"
+                    app:layout_collapseMode="parallax" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/todo_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginBottom="35dp"
+                    android:minHeight="185dp"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="?attr/homeAsUpIndicator"
+                    app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/ViewTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_gravity="top"
+            app:layout_anchor="@id/todo_appbar"
+            app:layout_anchorGravity="bottom"
+            app:layout_collapseMode="none"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/white">
+
+        </android.support.design.widget.TabLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/AddActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:fabSize="mini"
+            app:layout_anchor="@id/todo_appbar"
+            app:layout_anchorGravity="bottom|right|end" />
+
+        <ProgressBar
+            android:id="@+id/LoadDatasprogressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:translationY="60dp"
+            android:visibility="gone"
+            app:layout_anchor="@id/todo_appbar"
+            app:layout_anchorGravity="bottom|center_horizontal" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/todo_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@+id/todo_tabLayout"
+            app:layout_constraintRight_toRightOf="@+id/todo_tabLayout"
+            app:layout_constraintTop_toBottomOf="@+id/todo_tabLayout"
+            app:layout_constraintVertical_bias="0.0">
+
+        </android.support.v4.view.ViewPager>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/background_light">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/CategoryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.v4.widget.DrawerLayout>
+
