@@ -15,14 +15,14 @@ import adapter.OverdueAdapter;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
-public class TodoOverDueFragment extends Fragment {
+public class TodoOverDueFragment extends ViewFragment {
 
     private View overdueFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setTitle(R.string.viewgroup_overdue_title);
     }
 
     @Override

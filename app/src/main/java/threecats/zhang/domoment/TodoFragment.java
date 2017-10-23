@@ -38,6 +38,7 @@ import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
 import layout.TodoOverDueFragment;
 import layout.TodoTimeLineFragment;
+import layout.ViewFragment;
 
 /**
  * Created by zhang on 2017/7/25.
@@ -61,7 +62,7 @@ public class TodoFragment extends Fragment {
     private TodoOverDueFragment overDueFragment;
     private TodoNoDateFragment noDateFragment;
     private TodoMakeOutFragment makeOutFragment;
-    private List<Fragment> viewFragmentList;
+    private List<ViewFragment> viewFragmentList;
     private List<String> viewFragmentTitle;
     private ProgressBar progressBar;
     private View thisView;
@@ -85,6 +86,11 @@ public class TodoFragment extends Fragment {
         viewFragmentList.add(overDueFragment);
         viewFragmentList.add(noDateFragment);
         viewFragmentList.add(makeOutFragment);
+
+        String a = viewFragmentList.get(0).getTitle();
+        String b = viewFragmentList.get(1).getTitle();
+        String c = viewFragmentList.get(2).getTitle();
+        String d = viewFragmentList.get(3).getTitle();
 
         viewFragmentTitle.add(DoMoment.getContext().getString(R.string.viewgroup_timeline_title));
         viewFragmentTitle.add(DoMoment.getContext().getString(R.string.viewgroup_overdue_title));

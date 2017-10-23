@@ -44,4 +44,7 @@ public class DoMoment extends Application {
     public static MainActivity getMainActivity(){
         return mainActivity;
     }
+    public static String getRString(int StringID){
+        return DoMoment.getContext().getString(StringID);
+    }
 }

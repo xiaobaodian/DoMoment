@@ -1,6 +1,7 @@
 package layout;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,9 +18,16 @@ import threecats.zhang.domoment.R;
 /**
 
  */
-public class TodoNoDateFragment extends Fragment {
+public class TodoNoDateFragment extends ViewFragment {
 
     private View nodateFragment;
+    private String title = DoMoment.getRString(R.string.viewgroup_nodate_title);
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(R.string.viewgroup_nodate_title);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
