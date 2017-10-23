@@ -24,8 +24,8 @@ public class NoDateAdapter extends RecyclerViewAdapterBase {
     protected void OnBindTask(ItemViewHolder holder, Task task, GroupType groupType) {
         holder
                 .setText(R.id.taskTitle, task.getTitle())
-                .setText(R.id.taskPlace, task.getPlace()+"-"+groupType.toString())
-                .setText(R.id.taskDateTime, task.getBeginDateString(DATEFORMAT.China));
+                .setText(R.id.taskPlace, " "+groupType.toString())
+                .setText(R.id.taskDateTime, "创建于：" + task.getCreatedDateTimeStr());
 
     }
 

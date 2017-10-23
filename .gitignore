@@ -1,3 +1,4 @@
+*.iml
 .gradle
 /local.properties
 /.idea/workspace.xml
@@ -7,5 +8,3 @@
 /captures
 .externalNativeBuild
 libs/
-DoMoment.iml
-app/app.iml

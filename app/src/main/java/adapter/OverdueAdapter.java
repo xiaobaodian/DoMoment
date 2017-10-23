@@ -25,7 +25,7 @@ public class OverdueAdapter extends RecyclerViewAdapterBase {
         holder
                 .setText(R.id.taskTitle, task.getTitle())
                 .setText(R.id.taskPlace, task.getPlace()+"-"+groupType.toString())
-                .setText(R.id.taskDateTime, task.getBeginDateString(DATEFORMAT.China));
+                .setText(R.id.taskDateTime, task.getBeginDateString());
 
     }
 

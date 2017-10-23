@@ -211,48 +211,21 @@ public class TaskBase extends ListItemBase implements Comparable{
 
     public String getCreatedDateTimeStr(){
         String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
-        SimpleDateFormat createDateTimeFS = new SimpleDateFormat(year + "MMMd  H:m");
-        return createDateTimeFS.format(createDateTime.getTime());
+        SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m");
+        return createDateTimeFStr.format(createDateTime.getTime());
     }
 
-    public String getBeginDateString(DATEFORMAT dateformat){
-        String dateMD;
-        String dateYMD;
-        if (dateformat == DATEFORMAT.China) {
-            dateYMD = "yyyy年-M月-d日";
-            dateMD = "M月 d日";
-        } else {
-            dateYMD = "yyyy-M-d";
-            dateMD = "M d";
-        }
-        String dateFormatString = DateTime.IsCurrentYear(startDateTime) ? dateMD : dateYMD;
-        return (String) DateFormat.format(dateFormatString, startDateTime);
+    public String getBeginDateString(){
+        String year = DateTime.IsCurrentYear(startDateTime) ? "" : "yyyy ";
+        SimpleDateFormat beginDateTimeFStr = new SimpleDateFormat(year + "MMM  dd");
+        return beginDateTimeFStr.format(startDateTime.getTime());
     }
-    public String getEndDateString(DATEFORMAT dateformat){
+    public String getEndDateString(){
         if (IsOneDay()) return "";
-        String dateFormatString;
-        String dateMD;
-        String dateYMD;
-        String dateD;
-        if (dateformat == DATEFORMAT.China) {
-            dateYMD = "yyyy年-M月-d日";
-            dateMD = "M月 d日";
-            dateD = "d日";
-        } else {
-            dateYMD = "yyyy-M-d";
-            dateMD = "M d";
-            dateD = "d";
-        }
-        if (DateTime.IsCurrentYear(dueDateTime)) {
-            if (DateTime.SameYearMonth(startDateTime, dueDateTime)) {
-                dateFormatString = dateD;
-            } else{
-                dateFormatString = dateMD;
-            }
-        } else{
-            dateFormatString = dateYMD;
-        }
-        return (String) DateFormat.format(dateFormatString, dueDateTime);
+        String year = DateTime.IsCurrentYear(dueDateTime) ? "" : "yyyy ";
+        String month = DateTime.SameYearMonth(startDateTime, dueDateTime) ? "" : "MMM  ";
+        SimpleDateFormat dueDateTimeFStr = new SimpleDateFormat(year + month + "dd");
+        return dueDateTimeFStr.format(dueDateTime.getTime());
     }
     public String getDateRange(){
         if (IsNoDate()) return "DoDate";

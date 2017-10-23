@@ -116,7 +116,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.taskeditor, menu);
         return true;  //super.onCreateOptionsMenu(menu)
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -129,7 +128,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         noteBox.setText(task.getNote());
         placeBox.setText(task.getPlace());
     }
-
     private void DisplayDateTimeFields(){
         if (task.IsNoDate()) {
             startDateBox.setText("");
@@ -137,13 +135,13 @@ public class TaskDetailsActivity extends AppCompatActivity {
             addDateButton.setVisibility(View.GONE);
             HideTimeRecylerItems();
         } else if (task.IsOneDay()){
-            startDateBox.setText(task.getBeginDateString(DATEFORMAT.China));
+            startDateBox.setText(task.getBeginDateString());
             dueDateBox.setVisibility(View.GONE);
             addDateButton.setVisibility(View.VISIBLE);
             DisplayTimeRecyclerItems();
         } else {
-            startDateBox.setText(task.getBeginDateString(DATEFORMAT.China));
-            dueDateBox.setText(task.getEndDateString(DATEFORMAT.China));
+            startDateBox.setText(task.getBeginDateString());
+            dueDateBox.setText(task.getEndDateString());
             dueDateBox.setVisibility(View.VISIBLE);
             addDateButton.setVisibility(View.GONE);
         }
@@ -163,7 +161,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
             addTimeButton.setVisibility(View.GONE);
         }
     }
-
     private void HideTimeRecylerItems(){
         timeLinearLayout.setVisibility(View.GONE);
         recyclerDateBox.setVisibility(View.GONE);

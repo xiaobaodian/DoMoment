@@ -73,7 +73,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         etTaskTitle.setText(task.getTitle());
-        tvCreatedDateTime.setText("创建于：>" + task.getCreatedDateTimeStr());
+        tvCreatedDateTime.setText("创建于：" + task.getCreatedDateTimeStr());
 
     }
 

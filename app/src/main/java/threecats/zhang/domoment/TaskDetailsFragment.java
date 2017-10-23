@@ -132,13 +132,13 @@ public class TaskDetailsFragment extends Fragment {
             addDateButton.setVisibility(View.GONE);
             HideTimeRecylerItems();
         } else if (task.IsOneDay()){
-            startDateBox.setText(task.getBeginDateString(DATEFORMAT.China));
+            startDateBox.setText(task.getBeginDateString() + "日");
             dueDateBox.setVisibility(View.GONE);
             addDateButton.setVisibility(View.VISIBLE);
             DisplayTimeRecyclerItems();
         } else {
-            startDateBox.setText(task.getBeginDateString(DATEFORMAT.China));
-            dueDateBox.setText(task.getEndDateString(DATEFORMAT.China));
+            startDateBox.setText(task.getBeginDateString() + "日");
+            dueDateBox.setText(" -   " + task.getEndDateString() + "日");
             dueDateBox.setVisibility(View.VISIBLE);
             addDateButton.setVisibility(View.GONE);
         }
@@ -153,7 +153,7 @@ public class TaskDetailsFragment extends Fragment {
             //dueTimeBox.setText(task.getDueTime());
         } else {
             startTimeBox.setText(task.getStartTime());
-            dueTimeBox.setText(task.getDueTime());
+            dueTimeBox.setText(" -   " + task.getDueTime());
             dueTimeBox.setVisibility(View.VISIBLE);
             addTimeButton.setVisibility(View.GONE);
         }
