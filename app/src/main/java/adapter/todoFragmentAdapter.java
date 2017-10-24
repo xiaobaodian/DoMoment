@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+import layout.TitleFragment;
 import layout.ViewFragment;
 
 /**
@@ -15,16 +16,14 @@ import layout.ViewFragment;
 
 public class todoFragmentAdapter extends FragmentPagerAdapter {
 
-    List<ViewFragment> fragmentList;
-    List<String> titleList;
+    List<TitleFragment> fragmentList;
 
     public todoFragmentAdapter(FragmentManager fm, Context context){
         super(fm);
     }
-    public todoFragmentAdapter(FragmentManager fm, List<ViewFragment> fragmentList, List<String> titleList){
+    public todoFragmentAdapter(FragmentManager fm, List<TitleFragment> fragmentList){
         super(fm);
         this.fragmentList = fragmentList;
-        this.titleList = titleList;
     }
 
     @Override
@@ -39,10 +38,7 @@ public class todoFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        ViewFragment item = fragmentList.get(position);
-        String t = item.getTitle();
-        //return titleList.get(position);
-        //return fragmentList.get(position).getTitle();
-        return "aaa";
+        TitleFragment fragment = fragmentList.get(position);
+        return fragment.getTitle();
     }
 }

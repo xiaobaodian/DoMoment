@@ -7,22 +7,23 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+import layout.TitleFragment;
+import layout.ViewFragment;
+
 /**
  * Created by zhang on 2017/7/31.
  */
 
 public class TaskFragmentAdapter extends FragmentPagerAdapter {
 
-    List<Fragment> fragmentList;
-    List<String> titleList;
+    List<TitleFragment> fragmentList;
 
-    public TaskFragmentAdapter(FragmentManager fm, Context context){
-        super(fm);
+    public TaskFragmentAdapter(FragmentManager fragmentManager, Context context){
+        super(fragmentManager);
     }
-    public TaskFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList){
-        super(fm);
+    public TaskFragmentAdapter(FragmentManager fragmentManager, List<TitleFragment> fragmentList){
+        super(fragmentManager);
         this.fragmentList = fragmentList;
-        this.titleList = titleList;
     }
 
     @Override
@@ -33,11 +34,10 @@ public class TaskFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return fragmentList.size();
-        //return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titleList.get(position);
+        return fragmentList.get(position).getTitle();
     }
 }

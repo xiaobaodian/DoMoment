@@ -2,8 +2,6 @@ package layout;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +14,20 @@ import adapter.TimeLineAdapter;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
-public class TodoTimeLineFragment extends ViewFragment {
+public class TodoTimeLineFragment extends TitleFragment {
 
     private View timelineFragment;
-    private TimeLineGroupList timeLineViewGroup;
+    private TimeLineGroupList timeLineGroupList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.viewgroup_timeline_title);
-        String t = getTitle();
+        //Log.d("DoMoment","set Title");
+    }
+
+    @Override
+    public String getTitle(){
+        return DoMoment.getRString(R.string.viewgroup_timeline_title);
     }
 
     @Override
@@ -37,11 +39,11 @@ public class TodoTimeLineFragment extends ViewFragment {
 
     public void BindDatas(){
         if (timelineFragment == null) return;
-        timeLineViewGroup = (TimeLineGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.TimeLine);
+        timeLineGroupList = (TimeLineGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.TimeLine);
         try {
             RecyclerView recyclerView = (RecyclerView) timelineFragment.findViewById(R.id.TimeLineRecyclerView);
-            TimeLineAdapter viewGroupAdapter = new TimeLineAdapter(timeLineViewGroup.getRecyclerViewItems());
-            timeLineViewGroup.BindRecyclerView(recyclerView, viewGroupAdapter, timelineFragment);
+            TimeLineAdapter viewGroupAdapter = new TimeLineAdapter(timeLineGroupList.getRecyclerViewItems());
+            timeLineGroupList.BindRecyclerView(recyclerView, viewGroupAdapter, timelineFragment);
             //TouchMode下默认没有Focus，只有设置如下才能获取OnFocusChange事件
             recyclerView.setFocusableInTouchMode(true);
             recyclerView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -59,6 +61,9 @@ public class TodoTimeLineFragment extends ViewFragment {
         }
     }
 
-
+    public int getTaskCount(){
+        if (timeLineGroupList == null) return 0;
+        return timeLineGroupList.getTaskCount();
+    }
 
 }

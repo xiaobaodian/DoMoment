@@ -95,6 +95,13 @@ public abstract class GroupListBase {
     public int getGroupCount(){
         return groups.size();
     }
+    public int getTaskCount(){
+        int count = 0;
+        for (GroupBase group : groups) {
+            count += group.getTaskCount();
+        }
+        return count;
+    }
     public void SortGroup(GroupBase group){
         group.Sort();
         int I = group.SiteID +1;
@@ -171,7 +178,6 @@ public abstract class GroupListBase {
         }
         return isOK;
     }
-
     public boolean InsertTask(Task task){
         boolean isOK = false;
         for(GroupBase group : groups){
@@ -187,7 +193,6 @@ public abstract class GroupListBase {
         }
         return isOK;
     }
-
     public void RemoveTask(Task task){
         for (GroupBase group : groups) {
             if (group.InGroup(task)) {
@@ -199,7 +204,6 @@ public abstract class GroupListBase {
     public void RemoveTask(GroupBase group, Task task){
         RemoveTaskFromGroup(group, task);
     }
-
     private void RemoveTaskFromGroup(GroupBase group, Task task){
         //task.getParentGroups().remove(group);  这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
         int site = group.RemoveTask(task);
@@ -212,7 +216,6 @@ public abstract class GroupListBase {
     public List<ListItemBase> getRecyclerViewItems(){
         return recyclerViewItems;
     }
-
     private void AddGroupInListItems(GroupBase group){
 
         if (group.State == DisplayState.Hide) return;
@@ -239,7 +242,7 @@ public abstract class GroupListBase {
         //测试用，更新显示组头的位置序号
         UpdateTitleMessage();
     }
-    private  void RemoveTaskFromListItems(GroupBase group, int position, Task task){
+    private void RemoveTaskFromListItems(GroupBase group, int position, Task task){
         int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
         recyclerViewItems.remove(site);
         if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);

@@ -27,8 +27,10 @@ import DataStructures.GroupListBase;
 import DataStructures.Task;
 import ENUM.DATEFORMAT;
 import ENUM.OneDayBase;
+import layout.TitleFragment;
+import layout.ViewFragment;
 
-public class TaskDetailsFragment extends Fragment {
+public class TaskDetailsFragment extends TitleFragment {
 
     private final Task task = DoMoment.getDataManger().getCurrentTask();;
     private final DateTimeHelper DateTime = DoMoment.getDateTime();
@@ -53,6 +55,11 @@ public class TaskDetailsFragment extends Fragment {
     private ImageButton addTimeButton;
     private View aLine;
     private View bLine;
+
+    @Override
+    public String getTitle(){
+        return "任务详情";
+    }
 
     @Override
     public void onAttach(Context context) {

@@ -13,14 +13,18 @@ import threecats.zhang.domoment.R;
 /**
 
  */
-public class TodoMakeOutFragment extends ViewFragment {
+public class TodoMakeOutFragment extends TitleFragment {
 
     private String title = DoMoment.getRString(R.string.viewgroup_completed_title);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.viewgroup_completed_title);
+    }
+
+    @Override
+    public String getTitle(){
+        return DoMoment.getRString(R.string.viewgroup_completed_title);
     }
 
     @Override
@@ -28,6 +32,10 @@ public class TodoMakeOutFragment extends ViewFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_todo_makeout, container, false);
+    }
+
+    public int getTaskCount(){
+        return 11;
     }
 
 }

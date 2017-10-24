@@ -8,7 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TaskCheckListFragment extends Fragment {
+import layout.TitleFragment;
+import layout.ViewFragment;
+
+public class TaskCheckListFragment extends TitleFragment {
+
+    @Override
+    public String getTitle(){
+        return "检查表";
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -2,7 +2,6 @@ package layout;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +14,19 @@ import adapter.OverdueAdapter;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
-public class TodoOverDueFragment extends ViewFragment {
+public class TodoOverDueFragment extends TitleFragment {
 
     private View overdueFragment;
+    private OverdueGroupList overdueGroupList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.viewgroup_overdue_title);
+    }
+
+    @Override
+    public String getTitle(){
+        return DoMoment.getRString(R.string.viewgroup_overdue_title);
     }
 
     @Override
@@ -35,14 +39,19 @@ public class TodoOverDueFragment extends ViewFragment {
 
     public void BindDatas(){
         if (overdueFragment == null) return;
-        OverdueGroupList OverdueGroups = (OverdueGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
+        overdueGroupList = (OverdueGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
         try {
             RecyclerView recyclerView = (RecyclerView) overdueFragment.findViewById(R.id.OverdueRecyclerView);
-            OverdueAdapter viewGroupAdapter = new OverdueAdapter(OverdueGroups.getRecyclerViewItems());
-            OverdueGroups.BindRecyclerView(recyclerView, viewGroupAdapter, overdueFragment);
+            OverdueAdapter viewGroupAdapter = new OverdueAdapter(overdueGroupList.getRecyclerViewItems());
+            overdueGroupList.BindRecyclerView(recyclerView, viewGroupAdapter, overdueFragment);
         } catch (Exception e){
             Toast.makeText(overdueFragment.getContext(),"Overdue Groups is Null",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public int getTaskCount(){
+        if (overdueGroupList == null) return 0;
+        return overdueGroupList.getTaskCount();
     }
 
 }

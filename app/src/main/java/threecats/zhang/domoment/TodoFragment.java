@@ -34,6 +34,7 @@ import DataStructures.TimeLineGroupList;
 import ENUM.GroupListType;
 import adapter.CategorysAdapter;
 import adapter.todoFragmentAdapter;
+import layout.TitleFragment;
 import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
 import layout.TodoOverDueFragment;
@@ -62,7 +63,7 @@ public class TodoFragment extends Fragment {
     private TodoOverDueFragment overDueFragment;
     private TodoNoDateFragment noDateFragment;
     private TodoMakeOutFragment makeOutFragment;
-    private List<ViewFragment> viewFragmentList;
+    private List<TitleFragment> viewFragmentList;
     private List<String> viewFragmentTitle;
     private ProgressBar progressBar;
     private View thisView;
@@ -86,16 +87,6 @@ public class TodoFragment extends Fragment {
         viewFragmentList.add(overDueFragment);
         viewFragmentList.add(noDateFragment);
         viewFragmentList.add(makeOutFragment);
-
-        String a = viewFragmentList.get(0).getTitle();
-        String b = viewFragmentList.get(1).getTitle();
-        String c = viewFragmentList.get(2).getTitle();
-        String d = viewFragmentList.get(3).getTitle();
-
-        viewFragmentTitle.add(DoMoment.getContext().getString(R.string.viewgroup_timeline_title));
-        viewFragmentTitle.add(DoMoment.getContext().getString(R.string.viewgroup_overdue_title));
-        viewFragmentTitle.add(DoMoment.getContext().getString(R.string.viewgroup_nodate_title));
-        viewFragmentTitle.add(DoMoment.getContext().getString(R.string.viewgroup_completed_title));
 
         currentCategory = DoMoment.getCurrentCategory();
 
@@ -214,7 +205,7 @@ public class TodoFragment extends Fragment {
         });
 
         viewPager = view.findViewById(R.id.todo_viewpager);
-        viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(),viewFragmentList, viewFragmentTitle));
+        viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(),viewFragmentList));
 
         //tabLayout = view.findViewById(R.id.todo_tabLayout);
         //tabLayout.setupWithViewPager(viewPager);

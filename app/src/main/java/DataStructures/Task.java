@@ -14,8 +14,9 @@ public class Task extends TaskBase{
 
     private int categoryID;
     private List<GroupBase> parentGroups;
-    private String context;
-    private String tags;
+    private String taskContext;
+    private String taskTags;
+    private boolean intoMoment;
 
     public Task(){
         super();

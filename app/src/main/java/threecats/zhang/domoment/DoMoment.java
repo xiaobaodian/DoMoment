@@ -2,6 +2,7 @@ package threecats.zhang.domoment;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import DataStructures.CategoryBase;
 import DataStructures.DataManger;
@@ -46,5 +47,8 @@ public class DoMoment extends Application {
     }
     public static String getRString(int StringID){
         return DoMoment.getContext().getString(StringID);
+    }
+    public static void Toast(String message){
+        android.widget.Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

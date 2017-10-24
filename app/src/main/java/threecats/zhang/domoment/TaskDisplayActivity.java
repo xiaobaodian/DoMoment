@@ -24,6 +24,8 @@ import DataStructures.GroupListBase;
 import DataStructures.Task;
 import adapter.TaskFragmentAdapter;
 import adapter.todoFragmentAdapter;
+import layout.TitleFragment;
+import layout.ViewFragment;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
@@ -32,8 +34,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private TextView tvCreatedDateTime;
     private TabLayout taskTab;
     private ViewPager viewPager;
-    private List<Fragment> viewFragmentList;
-    private List<String> viewFragmentTitle;
+    private List<TitleFragment> viewFragmentList;
     private TaskDetailsFragment taskDetailsFragment;
     private TaskCheckListFragment taskCheckListFragment;
 
@@ -44,29 +45,24 @@ public class TaskDisplayActivity extends AppCompatActivity {
         Toolbar editToolbar = (Toolbar) findViewById(R.id.TaskEditorToolbar);
         setSupportActionBar(editToolbar);
         etTaskTitle = (EditText) findViewById(R.id.editTextTitle);
-        tvCreatedDateTime = (TextView)findViewById(R.id.textViewCreatedDateTime);
+        tvCreatedDateTime = (TextView)findViewById(R.id.layCreatedDateTime);
         taskTab = (TabLayout)findViewById(R.id.lTaskTab);
         viewPager = (ViewPager)findViewById(R.id.lTaskPager);
         editToolbar.setNavigationOnClickListener(view -> {
-            //Toast.makeText(getApplicationContext(),"baceup -> home",Toast.LENGTH_SHORT).show();
             finish();
         });
         viewFragmentList = new ArrayList<>();
-        viewFragmentTitle = new ArrayList<>();
         taskDetailsFragment = new TaskDetailsFragment();
         taskCheckListFragment = new TaskCheckListFragment();
         viewFragmentList.add(taskDetailsFragment);
         viewFragmentList.add(taskCheckListFragment);
-        viewFragmentTitle.add("详情");
-        viewFragmentTitle.add("检查表");
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm == null) {
-            Toast.makeText(getApplicationContext(),"FragmentManager is null",Toast.LENGTH_SHORT).show();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager == null) {
+            DoMoment.Toast("FragmentManager is null");
         } else {
-            viewPager.setAdapter(new TaskFragmentAdapter(fm,viewFragmentList, viewFragmentTitle));
+            viewPager.setAdapter(new TaskFragmentAdapter(fragmentManager, viewFragmentList));
             taskTab.setupWithViewPager(viewPager);
         }
-
     }
 
     @Override
@@ -74,7 +70,6 @@ public class TaskDisplayActivity extends AppCompatActivity {
         super.onResume();
         etTaskTitle.setText(task.getTitle());
         tvCreatedDateTime.setText("创建于：" + task.getCreatedDateTimeStr());
-
     }
 
     @Override
