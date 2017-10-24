@@ -59,10 +59,10 @@ public class Task extends TaskBase{
         this.categoryID = ID;
     }
 
-    public @Nullable GroupBase getCurrentGroup(GroupListBase groupList){
+    public @Nullable GroupBase getCurrentGroup(GroupListBase parentGroupList){
         GroupBase currentGroup = null;
         for (GroupBase group : parentGroups) {
-            if (group.getParent() == groupList){
+            if (group.getParent() == parentGroupList){
                 currentGroup = group;
                 break;
             }

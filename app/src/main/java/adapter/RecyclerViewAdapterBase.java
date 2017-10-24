@@ -22,7 +22,6 @@ import threecats.zhang.domoment.DateTimeHelper;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 import DataStructures.Task;
-import threecats.zhang.domoment.TaskDetailsActivity;
 import threecats.zhang.domoment.TaskDisplayActivity;
 
 /**
@@ -33,6 +32,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
 
     protected DateTimeHelper dateTime = DoMoment.getDateTime();
     private GroupListBase groupList;
+    private GroupBase group;
     private List<ListItemBase>  items;
     private int itemLayoutID;
     private int groupLayoutID;
@@ -41,6 +41,9 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
 
     public void setGroupList(GroupListBase groupList){
         this.groupList = groupList;
+    }
+    public void setGroup(GroupBase group){
+        this.group = group;
     }
     public void setItemLayoutID(int itemLayoutID){
         this.itemLayoutID = itemLayoutID;
@@ -111,7 +114,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
         this.items = items;
     }
 
-    protected abstract void OnBindTask(ItemViewHolder holder, Task task, @Nullable GroupType groupType);
+    protected abstract void OnBindItem(ItemViewHolder holder, Task task, @Nullable GroupType groupType);
     protected abstract void OnBindGroup(GroupViewHolder holder, GroupBase group);
 
     @Override
@@ -164,7 +167,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 }
                 itemViewHolder.checkBox.setTag(task);
                 GroupType groupType = task.getCurrentGroup(groupList).getGroupType();
-                OnBindTask(itemViewHolder, task, groupType);
+                OnBindItem(itemViewHolder, task, groupType);
                 break;
             case Group:
                 GroupViewHolder groupViewHolder = (GroupViewHolder)holder;
@@ -183,4 +186,5 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
     public int getItemCount() {
         return items.size();
     }
+
 }

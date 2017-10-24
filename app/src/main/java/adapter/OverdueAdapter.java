@@ -21,7 +21,7 @@ public class OverdueAdapter extends RecyclerViewAdapterBase {
         setItemLayoutID(R.layout.taskitem_show);
     }
     @Override
-    protected void OnBindTask(ItemViewHolder holder, Task task, GroupType groupType) {
+    protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
         holder
                 .setText(R.id.taskTitle, task.getTitle())
                 .setText(R.id.taskPlace, task.getPlace()+"-"+groupType.toString())
