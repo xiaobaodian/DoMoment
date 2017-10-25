@@ -108,7 +108,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
             task.setPriority(TaskPriority.None);
         }
         btnPriority.setText(priorityTitle);
-        DoMoment.Toast("asas");
+        DoMoment.Toast("测试");
     }
 
     @Override
