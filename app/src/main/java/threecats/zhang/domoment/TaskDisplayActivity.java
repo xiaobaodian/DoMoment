@@ -33,6 +33,9 @@ import adapter.todoFragmentAdapter;
 import layout.TitleFragment;
 import layout.ViewFragment;
 
+import static android.os.SystemClock.sleep;
+
+
 public class TaskDisplayActivity extends AppCompatActivity {
 
     private final Task task = DoMoment.getDataManger().getCurrentTask();
@@ -170,6 +173,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
     private void setPriority(AlertDialog dialog, Object priority){
         task.setPriority((TaskPriority)priority);
+        sleep(800);
         dialog.dismiss();
     }
 }
