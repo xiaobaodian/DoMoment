@@ -173,7 +173,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
     private void setPriority(AlertDialog dialog, Object priority){
         task.setPriority((TaskPriority)priority);
-        sleep(800);
-        dialog.dismiss();
+        //sleep(800);
+        //dialog.dismiss();
     }
 }
