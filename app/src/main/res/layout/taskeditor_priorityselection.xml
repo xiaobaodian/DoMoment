@@ -22,6 +22,7 @@
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         android:paddingTop="10dp"
+        android:tag="0"
         android:touchscreenBlocksFocus="true">
 
         <TextView
@@ -54,7 +55,8 @@
         android:paddingBottom="10dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:tag="1">
 
         <TextView
             android:id="@+id/textView5"
@@ -86,7 +88,8 @@
         android:paddingBottom="10dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:tag="2">
 
         <TextView
             android:id="@+id/textView5"
@@ -118,7 +121,8 @@
         android:paddingBottom="10dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:tag="3">
 
         <TextView
             android:id="@+id/textView5"

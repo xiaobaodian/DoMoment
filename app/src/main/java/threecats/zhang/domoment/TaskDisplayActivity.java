@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import DataStructures.CategoryBase;
 import DataStructures.GroupBase;
 import DataStructures.GroupListBase;
 import DataStructures.Task;
+import ENUM.TaskPriority;
 import adapter.TaskFragmentAdapter;
 import adapter.todoFragmentAdapter;
 import layout.TitleFragment;
@@ -132,8 +134,26 @@ public class TaskDisplayActivity extends AppCompatActivity {
         //DoMoment.Toast("Click Priority Button");
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialong));
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("任务等级").setView(layout);
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.setTitle("任务等级");
+        dialog.setView(layout);
+        LinearLayout urgent = layout.findViewById(R.id.Urgent);
+        urgent.setTag(TaskPriority.Urgent);
+        LinearLayout improtant = layout.findViewById(R.id.Improtant);
+        improtant.setTag(TaskPriority.Improtant);
+        LinearLayout focus = layout.findViewById(R.id.Focus);
+        focus.setTag(TaskPriority.Focus);
+        LinearLayout none = layout.findViewById(R.id.None);
+        none.setTag(TaskPriority.None);
+        urgent.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
+        improtant.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
+        focus.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
+        none.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
+        //AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.show();
+    }
+    private void setPriority(AlertDialog dialog, Object priority){
+        task.setPriority((TaskPriority)priority);
+        dialog.dismiss();
     }
 }

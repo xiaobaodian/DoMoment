@@ -77,6 +77,12 @@ public class TaskBase extends ListItemBase implements Comparable{
     public boolean IsNoDate(){
         return isNoDate;
     }
+    public void setPriority(TaskPriority priority){
+        this.priority = priority;
+    }
+    public TaskPriority getPriority(){
+        return priority;
+    }
     public void setComplete(boolean isComplete){
         this.isComplete = isComplete;
     }
