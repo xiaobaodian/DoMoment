@@ -226,7 +226,7 @@ public class DataManger {
         Cursor cursor = null;
         if (db != null) {
             String sql = "select * from Tasks order by StartDateTime limit ?,?";
-            cursor = db.rawQuery(sql, new String[]{"0", "150"});
+            cursor = db.rawQuery(sql, new String[]{"0", "360"});
             while (cursor.moveToNext()) {
                 //Toast.makeText(DoMoment.getContext(),"Build Datasing ...",Toast.LENGTH_SHORT).show();
                 Task task = new Task();
@@ -258,7 +258,7 @@ public class DataManger {
 
     public void BuildDatas(){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
-        final int TotalTasks = 80;
+        final int TotalTasks = 360;
 
         List<String> titles = new ArrayList<>();
         titles.add("购买动车票");

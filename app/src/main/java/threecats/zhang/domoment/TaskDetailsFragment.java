@@ -261,7 +261,7 @@ public class TaskDetailsFragment extends TitleFragment {
         dialog.show();
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+    //@TargetApi(Build.VERSION_CODES.M)
     private void EditTime(){
         LayoutInflater inflater = getLayoutInflater(savedInstanceState);
         View layout = inflater.inflate(R.layout.taskeditor_timeselection,(ViewGroup)taskDetailsView.findViewById(R.id.TimeDialong));
@@ -283,8 +283,14 @@ public class TaskDetailsFragment extends TitleFragment {
                 title = "类型错误";
                 date = Calendar.getInstance();
         }
-        timePicker.setHour(date.get(Calendar.HOUR_OF_DAY));
-        timePicker.setMinute(date.get(Calendar.MINUTE));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            timePicker.setHour(date.get(Calendar.HOUR_OF_DAY));
+            timePicker.setMinute(date.get(Calendar.MINUTE));
+        } else {
+            timePicker.setCurrentHour(date.get(Calendar.HOUR_OF_DAY));
+            timePicker.setCurrentMinute(date.get(Calendar.MINUTE));
+        }
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
@@ -307,10 +313,18 @@ public class TaskDetailsFragment extends TitleFragment {
             final Task task = DoMoment.getDataManger().getCurrentTask();
             switch (EditType) {
                 case editStartTime:
-                    task.setStartTime(timePicker.getHour(), timePicker.getMinute());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        task.setStartTime(timePicker.getHour(), timePicker.getMinute());
+                    } else {
+                        task.setStartTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                    }
                     break;
                 case editDueTime:
-                    task.setDueTime(timePicker.getHour(), timePicker.getMinute());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        task.setDueTime(timePicker.getHour(), timePicker.getMinute());
+                    } else {
+                        task.setDueTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                    }
                     break;
             }
             DisplayDateTimeFields();

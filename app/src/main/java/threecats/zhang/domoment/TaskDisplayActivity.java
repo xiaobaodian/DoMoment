@@ -5,12 +5,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +34,10 @@ import layout.ViewFragment;
 public class TaskDisplayActivity extends AppCompatActivity {
 
     private final Task task = DoMoment.getDataManger().getCurrentTask();
+    private Bundle savedInstanceState;
     private EditText etTaskTitle;
     private TextView tvCreatedDateTime;
+    private View thisView;
     private TabLayout taskTab;
     private ViewPager viewPager;
     private List<TitleFragment> viewFragmentList;
@@ -41,15 +47,24 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_task_dispay);
         Toolbar editToolbar = (Toolbar) findViewById(R.id.TaskEditorToolbar);
         setSupportActionBar(editToolbar);
         etTaskTitle = (EditText) findViewById(R.id.editTextTitle);
         tvCreatedDateTime = (TextView)findViewById(R.id.layCreatedDateTime);
+        Button btnCategory = (Button)findViewById(R.id.btnCategory);
+        Button btnPriority = (Button)findViewById(R.id.btnPriority);
         taskTab = (TabLayout)findViewById(R.id.lTaskTab);
         viewPager = (ViewPager)findViewById(R.id.lTaskPager);
         editToolbar.setNavigationOnClickListener(view -> {
             finish();
+        });
+        btnCategory.setOnClickListener(view -> {
+            setTaskCategory();
+        });
+        btnPriority.setOnClickListener(view -> {
+            setTaskPriority();
         });
         viewFragmentList = new ArrayList<>();
         taskDetailsFragment = new TaskDetailsFragment();
@@ -63,6 +78,12 @@ public class TaskDisplayActivity extends AppCompatActivity {
             viewPager.setAdapter(new TaskFragmentAdapter(fragmentManager, viewFragmentList));
             taskTab.setupWithViewPager(viewPager);
         }
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        thisView = parent;
+        return super.onCreateView(parent, name, context, attrs);
     }
 
     @Override
@@ -102,5 +123,17 @@ public class TaskDisplayActivity extends AppCompatActivity {
             DoMoment.getDataManger().UpdateTask(task);
         }
         //======
+    }
+
+    private void setTaskCategory(){
+        DoMoment.Toast("Click Category Button");
+    }
+    private void setTaskPriority(){
+        //DoMoment.Toast("Click Priority Button");
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialong));
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("任务等级").setView(layout);
+        dialog.show();
     }
 }

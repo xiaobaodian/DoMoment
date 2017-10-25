@@ -149,8 +149,9 @@ public class TodoFragment extends Fragment {
 
         });
         toolbar.setOnLongClickListener(v -> {
-            Toast.makeText(v.getContext(), "生成测试数据",Toast.LENGTH_SHORT).show();
+            DoMoment.Toast("生成测试数据");
             DoMoment.getDataManger().BuildDatas();
+            DoMoment.Toast("测试数据已生成");
             return true;
         });
 

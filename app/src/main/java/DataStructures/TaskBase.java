@@ -163,7 +163,7 @@ public class TaskBase extends ListItemBase implements Comparable{
     }
     public void setStartTime(int hour, int minute){
         if (IsOneTime()) setDueTime(hour, minute);
-        startDateTime.set(Calendar.HOUR, hour);
+        startDateTime.set(Calendar.HOUR_OF_DAY, hour);
         startDateTime.set(Calendar.MINUTE, minute);
         isAllDay = false;
     }
