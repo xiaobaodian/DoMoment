@@ -39,6 +39,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private Bundle savedInstanceState;
     private EditText etTaskTitle;
     private TextView tvCreatedDateTime;
+    private Button btnCategory, btnPriority;
     private View thisView;
     private TabLayout taskTab;
     private ViewPager viewPager;
@@ -55,8 +56,8 @@ public class TaskDisplayActivity extends AppCompatActivity {
         setSupportActionBar(editToolbar);
         etTaskTitle = (EditText) findViewById(R.id.editTextTitle);
         tvCreatedDateTime = (TextView)findViewById(R.id.layCreatedDateTime);
-        Button btnCategory = (Button)findViewById(R.id.btnCategory);
-        Button btnPriority = (Button)findViewById(R.id.btnPriority);
+        btnCategory = (Button)findViewById(R.id.btnCategory);
+        btnPriority = (Button)findViewById(R.id.btnPriority);
         taskTab = (TabLayout)findViewById(R.id.lTaskTab);
         viewPager = (ViewPager)findViewById(R.id.lTaskPager);
         editToolbar.setNavigationOnClickListener(view -> {
@@ -93,6 +94,21 @@ public class TaskDisplayActivity extends AppCompatActivity {
         super.onResume();
         etTaskTitle.setText(task.getTitle());
         tvCreatedDateTime.setText("创建于：" + task.getCreatedDateTimeStr());
+        String priorityTitle = "";
+        if (task.getPriority() == TaskPriority.Urgent) {
+            priorityTitle = "紧急";
+        } else if (task.getPriority() == TaskPriority.Improtant) {
+            priorityTitle = "重要";
+        } else if(task.getPriority() == TaskPriority.Focus){
+            priorityTitle = "关注";
+        } else if (task.getPriority() == TaskPriority.None){
+            priorityTitle = "普通";
+        } else {
+            priorityTitle = "普通";
+            task.setPriority(TaskPriority.None);
+        }
+        btnPriority.setText(priorityTitle);
+        DoMoment.Toast("asas");
     }
 
     @Override
