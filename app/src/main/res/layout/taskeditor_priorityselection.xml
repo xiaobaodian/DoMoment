@@ -3,6 +3,7 @@
     android:id="@+id/PriorityDialong"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/super_light_grey"
     android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingEnd="5dp"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="紧急 ！"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:text="重要 ！"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -94,7 +95,7 @@
             android:layout_height="wrap_content"
             android:text="关注"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -126,7 +127,7 @@
             android:layout_height="wrap_content"
             android:text="普通"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textView6"
