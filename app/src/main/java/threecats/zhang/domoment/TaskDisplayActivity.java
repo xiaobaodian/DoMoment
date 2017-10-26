@@ -1,9 +1,13 @@
 package threecats.zhang.domoment;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +43,7 @@ import static android.os.SystemClock.sleep;
 public class TaskDisplayActivity extends AppCompatActivity {
 
     private final Task task = DoMoment.getDataManger().getCurrentTask();
-    private Bundle savedInstanceState;
+    private AlertDialog dialog;
     private EditText etTaskTitle;
     private TextView tvCreatedDateTime;
     private Button btnCategory, btnPriority;
@@ -53,7 +57,6 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_task_dispay);
         Toolbar editToolbar = (Toolbar) findViewById(R.id.TaskEditorToolbar);
         setSupportActionBar(editToolbar);
@@ -153,7 +156,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         //DoMoment.Toast("Click Priority Button");
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialong));
-        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog = new AlertDialog.Builder(this).create();
         dialog.setTitle("任务等级");
         dialog.setView(layout);
         LinearLayout urgent = layout.findViewById(R.id.Urgent);
@@ -173,7 +176,22 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
     private void setPriority(AlertDialog dialog, Object priority){
         task.setPriority((TaskPriority)priority);
-        //sleep(800);
-        //dialog.dismiss();
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 6668;
+                sleep(400);
+                handle.sendMessage(message);
+            }
+        }).start();
     }
+    private Handler handle = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 6668) { dialog.dismiss(); }
+        }
+    };
+
 }

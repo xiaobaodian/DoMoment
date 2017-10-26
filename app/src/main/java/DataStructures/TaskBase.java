@@ -37,6 +37,7 @@ public class TaskBase extends ListItemBase implements Comparable{
         dueDateTime = (Calendar) startDateTime.clone();
         createDateTime = Calendar.getInstance();
         completeDateTime = Calendar.getInstance();
+        priority = TaskPriority.None;
 
         isNoDate = true;
         isAllDay = true;
