@@ -211,7 +211,7 @@ public class DataManger {
         values.put("Title", task.getTitle());
         values.put("Place", task.getPlace());
         values.put("Note", task.getNote());
-        values.put("Priority", task.getDateRange());
+        values.put("Priority", task.getPriorityDB());
         values.put("CreateDateTime", task.getCreateDateTimeDB());
         values.put("StartDateTime", task.getStartDateTimeDB());
         values.put("DueDateTime", task.getDueDateTimeDB());
@@ -235,6 +235,7 @@ public class DataManger {
                 task.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 task.setPlace(cursor.getString(cursor.getColumnIndex("Place")));
                 task.setNote(cursor.getString(cursor.getColumnIndex("Note")));
+                task.setPriorityDB(cursor.getInt(cursor.getColumnIndex("Priority")));
                 task.setCreateDateTimeDB(cursor.getLong(cursor.getColumnIndex("CreateDateTime")));
                 task.setStartDateTimeDB(cursor.getLong(cursor.getColumnIndex("StartDateTime")));
                 task.setDueDateTimeDB(cursor.getLong(cursor.getColumnIndex("DueDateTime")));

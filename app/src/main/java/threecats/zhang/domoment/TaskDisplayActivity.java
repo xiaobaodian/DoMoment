@@ -114,7 +114,6 @@ public class TaskDisplayActivity extends AppCompatActivity {
             task.setPriority(TaskPriority.None);
         }
         btnPriority.setText(priorityTitle);
-        DoMoment.Toast("测试");
     }
 
     @Override
@@ -172,26 +171,22 @@ public class TaskDisplayActivity extends AppCompatActivity {
         focus.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
         none.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
         //AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        },200);
     }
     private void setPriority(AlertDialog dialog, Object priority){
         task.setPriority((TaskPriority)priority);
-        new Thread(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Message message = new Message();
-                message.what = 6668;
-                sleep(400);
-                handle.sendMessage(message);
+                dialog.dismiss();
             }
-        }).start();
+        },300);
+        onResume();
     }
-    private Handler handle = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 6668) { dialog.dismiss(); }
-        }
-    };
 
 }

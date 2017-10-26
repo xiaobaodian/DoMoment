@@ -81,8 +81,14 @@ public class TaskBase extends ListItemBase implements Comparable{
     public void setPriority(TaskPriority priority){
         this.priority = priority;
     }
+    public void setPriorityDB(int priorityDB){
+        priority = TaskPriority.values()[priorityDB];
+    }
     public TaskPriority getPriority(){
         return priority;
+    }
+    public int getPriorityDB(){
+        return priority.ordinal();
     }
     public void setComplete(boolean isComplete){
         this.isComplete = isComplete;
