@@ -27,7 +27,7 @@ public class TodoTimeLineFragment extends TitleFragment {
 
     @Override
     public String getTitle(){
-        return DoMoment.getRString(R.string.viewgroup_timeline_title);
+        return DoMoment.getRString(R.string.grouplist_timeline_title);
     }
 
     @Override

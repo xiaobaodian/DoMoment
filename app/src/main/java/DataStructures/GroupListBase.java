@@ -23,7 +23,8 @@ import threecats.zhang.domoment.DoMoment;
 
 public abstract class GroupListBase {
 
-    protected DateTimeHelper DateTime = DoMoment.getDateTime();;
+    protected DateTimeHelper DateTime = DoMoment.getDateTime();
+    private String title;
     protected RecyclerView GroupListRecyclerView;
     protected RecyclerViewAdapterBase GroupListAdapter;
     public TimeSeries timeSeries;
@@ -54,6 +55,12 @@ public abstract class GroupListBase {
     public abstract void BuildTimePoint();
     protected abstract void BuildGroups();
 
+    public void setTitle(String title){
+        this.title = title;
+    }
+    public String getTitle(){
+        return title;
+    }
     public CategoryBase getParent(){
         return parent;
     }

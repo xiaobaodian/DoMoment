@@ -29,7 +29,7 @@ public class TodoNoDateFragment extends TitleFragment {
 
     @Override
     public String getTitle(){
-        return DoMoment.getRString(R.string.viewgroup_nodate_title);
+        return DoMoment.getRString(R.string.grouplist_nodate_title);
     }
 
     @Override

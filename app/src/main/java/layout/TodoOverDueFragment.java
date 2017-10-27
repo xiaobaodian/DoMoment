@@ -26,7 +26,7 @@ public class TodoOverDueFragment extends TitleFragment {
 
     @Override
     public String getTitle(){
-        return DoMoment.getRString(R.string.viewgroup_overdue_title);
+        return DoMoment.getRString(R.string.grouplist_overdue_title);
     }
 
     @Override

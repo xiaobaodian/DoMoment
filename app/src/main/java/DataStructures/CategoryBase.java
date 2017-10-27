@@ -37,6 +37,9 @@ public abstract class CategoryBase extends ItemBase {
         return vGroup;
     }
 
+    public void setThemeBackground(int themeBackground){
+        this.themeBackground = themeBackground;
+    }
     public int getThemeBackground(){
         return themeBackground;
     }

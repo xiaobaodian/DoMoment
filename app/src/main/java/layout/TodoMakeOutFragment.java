@@ -2,7 +2,6 @@ package layout;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import threecats.zhang.domoment.R;
  */
 public class TodoMakeOutFragment extends TitleFragment {
 
-    private String title = DoMoment.getRString(R.string.viewgroup_completed_title);
+    private String title = DoMoment.getRString(R.string.grouplist_completed_title);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +23,7 @@ public class TodoMakeOutFragment extends TitleFragment {
 
     @Override
     public String getTitle(){
-        return DoMoment.getRString(R.string.viewgroup_completed_title);
+        return DoMoment.getRString(R.string.grouplist_completed_title);
     }
 
     @Override

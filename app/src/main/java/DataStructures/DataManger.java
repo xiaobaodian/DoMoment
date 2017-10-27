@@ -40,10 +40,12 @@ public class DataManger {
     }
 
     public void BuildCategorys(){
-        CategoryBase allTask = new AllTasksCategory();
-        CategoryBase noCategory = new NoCategory();
-        categorys.add(allTask);
-        categorys.add(noCategory);
+        categorys.add(new AllTasksCategory());
+        categorys.add(new NoCategory());
+        categorys.add(new PriorityCategory());
+        categorys.add(new CustomCategory("学习"));
+        categorys.add(new CustomCategory("宠物"));
+        categorys.add(new CustomCategory("公司事务"));
         // test
         currentCategory = categorys.get(0);
     }

@@ -1,5 +1,6 @@
 package adapter;
 
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,13 @@ public class CategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 int position = itemViewHolder.getAdapterPosition();
                 CategoryBase category = itemBases.get(position);
                 //Toast.makeText(v.getContext(), "点击了："+category.getTitle(),Toast.LENGTH_SHORT).show();
-                DoMoment.getDataManger().setCurrentCategory(category);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        DoMoment.getDataManger().setCurrentCategory(category);
+                    }
+                },350);
+
             }
         });
         return itemViewHolder;

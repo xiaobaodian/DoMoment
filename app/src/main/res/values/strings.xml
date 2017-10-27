@@ -36,11 +36,17 @@
     <string name="create_withinthreemonths_title">Created Within Three Months</string>
     <string name="create_withinsixmonths_title">Created Within Six Months</string>
     <string name="create_longtimeage_title">Created Long Time Ago</string>
-    <string name="viewgroup_timeline_title">Todo</string>
-    <string name="viewgroup_overdue_title">Overdue</string>
-    <string name="viewgroup_completed_title">Completed</string>
+    <string name="grouplist_timeline_title">Todo</string>
+    <string name="grouplist_overdue_title">Overdue</string>
+    <string name="grouplist_completed_title">Completed</string>
     <string name="create_today_title">Created Today</string>
-    <string name="viewgroup_nodate_title">No Date</string>
+    <string name="grouplist_nodate_title">No Date</string>
     <string name="category_nocategory_title">No Category</string>
     <string name="title_activity_task_edit">TaskEditActivity</string>
+    <string name="grouplist_urgent_title">Urgent</string>
+    <string name="overdue_all_title">All Overdue</string>
+    <string name="grouplist_improtant_title">Improtant</string>
+    <string name="grouplist_focus_title">Focus</string>
+    <string name="grouplist_none_title">None</string>
+    <string name="category_prioritycategory_title">Priority</string>
 </resources>

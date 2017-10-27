@@ -35,11 +35,17 @@
     <string name="create_withinthreemonths_title">三个月以内创建</string>
     <string name="create_withinsixmonths_title">六个月内创建</string>
     <string name="create_longtimeage_title">六个月以前创建</string>
-    <string name="viewgroup_timeline_title">待办</string>
-    <string name="viewgroup_overdue_title">逾期</string>
-    <string name="viewgroup_completed_title">完成</string>
+    <string name="grouplist_timeline_title">待办</string>
+    <string name="grouplist_overdue_title">逾期</string>
+    <string name="grouplist_completed_title">完成</string>
     <string name="create_today_title">今天创建</string>
-    <string name="viewgroup_nodate_title">待定</string>
+    <string name="grouplist_nodate_title">待定</string>
     <string name="category_nocategory_title">没有分类</string>
     <string name="title_activity_task_edit">编辑任务活动</string>
+    <string name="grouplist_urgent_title">紧急</string>
+    <string name="overdue_all_title">逾期</string>
+    <string name="grouplist_improtant_title">重要</string>
+    <string name="grouplist_focus_title">关注</string>
+    <string name="grouplist_none_title">普通</string>
+    <string name="category_prioritycategory_title">重要任务</string>
 </resources>
