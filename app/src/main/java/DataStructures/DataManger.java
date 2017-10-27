@@ -21,7 +21,7 @@ import threecats.zhang.domoment.TodoFragment;
 public class DataManger {
     private SQLManger sqlDB;
     private ContentValues values = new ContentValues();
-    private List<CategoryBase> categorys;
+    private CategoryList categoryList;
     private CategoryBase currentCategory;
     private GroupListBase currentViewGroup;
     private GroupBase currentGroup;
@@ -32,7 +32,7 @@ public class DataManger {
     public DataManger(){
         sqlDB = new SQLManger(DoMoment.getContext(), "IdoMoment.db", null, 1);
 
-        categorys = new ArrayList<>();
+        //categoryList = new CategoryList();
         isDataloaded = false;
         BuildCategorys();
         //加载测试数据
@@ -40,19 +40,16 @@ public class DataManger {
     }
 
     public void BuildCategorys(){
-        categorys.add(new AllTasksCategory());
-        categorys.add(new NoCategory());
-        categorys.add(new PriorityCategory());
-        categorys.add(new CustomCategory("学习"));
-        categorys.add(new CustomCategory("宠物"));
-        categorys.add(new CustomCategory("公司事务"));
-        // test
-        currentCategory = categorys.get(0);
-    }
-    public List<CategoryBase> getCategorys(){
-        return categorys;
+        categoryList = new CategoryList();
+        categoryList.AddCustomCategory(new CustomCategory("学习"));
+        categoryList.AddCustomCategory(new CustomCategory("宠物"));
+        categoryList.AddCustomCategory(new CustomCategory("公司事务"));
+        currentCategory = categoryList.getFirstCategory();
     }
 
+    public CategoryList getCategoryList(){
+        return categoryList;
+    }
 
     public void LoadDatas(){
         if (isDataloaded) return;
@@ -106,73 +103,29 @@ public class DataManger {
     }
 
     public void AddTask(Task task){
-        for (CategoryBase category : categorys) {
-            if (category.InCategory(task)) category.AddTask(task);
-        }
+        categoryList.AddTask(task);
     }
 
     public void InsertTask(Task task){
-        for (CategoryBase category : categorys) {
-            if (category.InCategory(task)) category.InsertTask(task);
-        }
+        categoryList.InsertTask(task);
     }
 
     public void RemoveTask(Task task){
-        //task.getParentGroups().forEach(group -> {
-        //    GroupListBase viewGroup = group.getParent();
-        //    viewGroup.RemoveTask(group, task);
-        //});
-        for (GroupBase group : task.getParentGroups()) {
-            GroupListBase groupList = group.getParent();
-            groupList.RemoveTask(group, task);
-        }
-        task.getParentGroups().clear();
+        categoryList.RemoveTask(task);
     }
 
     public void ChangeTask(Task task){
-        RemoveTask(task);
-        //AddTask(task);
-        InsertTask(task);
+        categoryList.ChangeTask(task);
         UpdateTaskToDataBase(task);
     }
 
     public void UpdateTask(Task task){
-        for (GroupBase group : task.getParentGroups()) {
-            GroupListBase groupList = group.getParent();
-            //groupList.UpdateTaskDisplay(group, task);
-            groupList.SortGroup(group);
-        }
+        categoryList.UpdateTask(task);
         UpdateTaskToDataBase(task);
     }
 
     public void CurrentDateChange(){
-        List<Task> dateChangeTasks = new ArrayList<>();
-        for (CategoryBase category : categorys){
-            for (GroupListBase gorupList : category.getGroupLists()) {
-                gorupList.BuildTimePoint();
-                for (GroupBase group : gorupList.getGroups()){
-                    group.BuildTimePoint();
-                }
-                gorupList.CheckArea();
-                gorupList.UpdateTitleMessage();
-            }
-        }
-        for (CategoryBase category : categorys){
-            for (GroupListBase gorupList : category.getGroupLists()) {
-                for (GroupBase group : gorupList.getGroups()){
-                    for (Task task : group.getTasks()) {
-                        if ( ! group.InGroup(task)) dateChangeTasks.add(task);
-                    }
-                }
-            }
-        }
-        if (dateChangeTasks.size() > 0) {
-            for (Task task : dateChangeTasks) {
-                RemoveTask(task);
-                AddTask(task);
-            }
-        }
-        dateChangeTasks.clear();
+        categoryList.CurrentDateChange();
     }
 
     private void AddTaskToDataBase(Task task){
@@ -252,11 +205,7 @@ public class DataManger {
         db.close();
 
         DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
-        for (CategoryBase category : DoMoment.getDataManger().getCategorys()) {
-            for (GroupListBase groupList : category.getGroupLists()) {
-                groupList.BindDatas();
-            }
-        }
+        categoryList.BindDatas();
     }
 
     public void BuildDatas(){

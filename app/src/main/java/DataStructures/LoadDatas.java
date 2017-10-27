@@ -34,11 +34,6 @@ public class LoadDatas extends AsyncTask<Void, Task, Boolean> {
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
         DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
-
-        for (CategoryBase category : DoMoment.getDataManger().getCategorys()) {
-            for (GroupListBase viewGroup : category.getGroupLists()) {
-               viewGroup.BindDatas();
-            }
-        }
+        DoMoment.getDataManger().getCategoryList().BindDatas();
     }
 }

@@ -50,11 +50,7 @@ public class DemoDatas {
 
         DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
 
-        for (CategoryBase category : DoMoment.getDataManger().getCategorys()) {
-            for (GroupListBase viewGroup : category.getGroupLists()) {
-                viewGroup.BindDatas();
-            }
-        }
+        DoMoment.getDataManger().getCategoryList().BindDatas();
     }
 
 

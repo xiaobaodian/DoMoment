@@ -40,7 +40,7 @@
     <string name="grouplist_completed_title">完成</string>
     <string name="create_today_title">今天创建</string>
     <string name="grouplist_nodate_title">待定</string>
-    <string name="category_nocategory_title">没有分类</string>
+    <string name="category_nocategory_title">未分类</string>
     <string name="title_activity_task_edit">编辑任务活动</string>
     <string name="grouplist_urgent_title">紧急</string>
     <string name="overdue_all_title">逾期</string>
