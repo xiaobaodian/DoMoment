@@ -15,11 +15,10 @@ public class CustomCategory extends CategoryBase {
 
     public CustomCategory(String title) {
         super();
-        setID(2);
         setTitle(title);
         categoryType = CategoryType.Custom;
         themeBackground = R.drawable.todo_themebackground_work1;
-        BuildViewGroups();
+        BuildGroupLists();
     }
 
     @Override
@@ -28,10 +27,10 @@ public class CustomCategory extends CategoryBase {
     }
 
     @Override
-    protected void BuildViewGroups() {
+    protected void BuildGroupLists() {
 
-        AddGroupList(new UrgentGroupList(this));
-        AddGroupList(new ImprotantGroupList(this));
+        AddGroupList(new TimeLineGroupList(this));
+        AddGroupList(new OverdueGroupList(this));
         AddGroupList(new NoDateGroupList(this));
     }
 

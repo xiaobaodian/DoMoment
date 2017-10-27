@@ -20,7 +20,7 @@ public abstract class CategoryBase extends ItemBase {
     }
 
     public abstract boolean InCategory(Task task);
-    protected abstract void BuildViewGroups();
+    protected abstract void BuildGroupLists();
 
     public void AddGroupList(GroupListBase groupList){
         GroupLists.add(groupList);

@@ -19,7 +19,7 @@ public class AllTasksCategory extends CategoryBase {
         setTitle(context.getString(R.string.category_alltask_title));
         categoryType = CategoryType.System;
         themeBackground = R.drawable.todo_themebackground_work0;
-        BuildViewGroups();
+        BuildGroupLists();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AllTasksCategory extends CategoryBase {
     }
 
     @Override
-    protected void BuildViewGroups() {
+    protected void BuildGroupLists() {
 
         AddGroupList(new TimeLineGroupList(this));
         AddGroupList(new OverdueGroupList(this));
