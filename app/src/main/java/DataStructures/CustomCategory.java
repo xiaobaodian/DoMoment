@@ -11,9 +11,8 @@ import threecats.zhang.domoment.R;
  */
 
 public class CustomCategory extends CategoryBase {
-    private Context context = DoMoment.getContext();
 
-    public CustomCategory(String title) {
+    CustomCategory(String title) {
         super();
         setTitle(title);
         categoryType = CategoryType.Custom;

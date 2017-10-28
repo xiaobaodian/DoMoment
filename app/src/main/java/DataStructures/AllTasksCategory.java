@@ -11,11 +11,11 @@ import threecats.zhang.domoment.R;
  */
 
 public class AllTasksCategory extends CategoryBase {
-    private Context context = DoMoment.getContext();
 
-    public AllTasksCategory() {
+    AllTasksCategory() {
         super();
         setID(0);
+        Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_alltask_title));
         categoryType = CategoryType.System;
         themeBackground = R.drawable.todo_themebackground_work0;

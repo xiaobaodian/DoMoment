@@ -264,7 +264,7 @@ public class TodoFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.todo_setup:
+            case R.id.todo_menu_removecategory:
                 Toast.makeText(thisView.getContext(), "点击了工具栏",Toast.LENGTH_SHORT).show();
                 break;
         }

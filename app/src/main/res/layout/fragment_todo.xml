@@ -28,12 +28,13 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/touch_bg"
                 android:fitsSystemWindows="true"
-                android:pointerIcon="arrow"
+                android:pointerIcon="hand"
                 android:saveEnabled="false"
                 android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="50dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:title="test"
                 app:toolbarId="@+id/todo_toolbar">
 
                 <ImageView
@@ -69,7 +70,7 @@
             app:layout_anchorGravity="bottom"
             app:layout_collapseMode="none"
             app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextColor="@color/white">
+            app:tabTextColor="@color/primary_lighttext">
 
         </android.support.design.widget.TabLayout>
 

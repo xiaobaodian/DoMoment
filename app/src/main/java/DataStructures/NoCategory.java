@@ -11,11 +11,11 @@ import threecats.zhang.domoment.R;
  */
 
 public class NoCategory extends CategoryBase {
-    private Context context = DoMoment.getContext();
 
-    public NoCategory() {
+    NoCategory() {
         super();
         setID(1);
+        Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_nocategory_title));
         categoryType = CategoryType.System;
         themeBackground = R.drawable.todo_themebackground_work1;

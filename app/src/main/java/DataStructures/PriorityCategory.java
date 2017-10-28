@@ -11,11 +11,11 @@ import threecats.zhang.domoment.R;
  */
 
 public class PriorityCategory extends CategoryBase {
-    private Context context = DoMoment.getContext();
 
-    public PriorityCategory() {
+    PriorityCategory() {
         super();
         setID(2);
+        Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_prioritycategory_title));
         categoryType = CategoryType.System;
         themeBackground = R.drawable.todo_themebackground_work1;
