@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -70,6 +71,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         btnPriority.setOnClickListener(view -> {
             setTaskPriority();
         });
+
         viewFragmentList = new ArrayList<>();
         taskDetailsFragment = new TaskDetailsFragment();
         taskCheckListFragment = new TaskCheckListFragment();
@@ -87,18 +89,18 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         thisView = parent;
-        oldCategoryID = task.getCategoryID();
         return super.onCreateView(parent, name, context, attrs);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        oldCategoryID = task.getCategoryID();
+        etTaskTitle.setText(task.getTitle());
         DisplayTaskItems();
     }
 
     private void DisplayTaskItems(){
-        etTaskTitle.setText(task.getTitle());
         tvCreatedDateTime.setText("创建于：" + task.getCreatedDateTimeStr());
         btnCategory.setText(DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
@@ -190,6 +192,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialog));
         TaskPriority oldPriority = task.getPriority();
+        final CheckedTextView[] currentPriority = {null};
         AlertDialog.Builder priorityDialog = new AlertDialog.Builder(this);
         priorityDialog.setTitle("任务等级");
         priorityDialog.setView(layout);
@@ -204,18 +207,53 @@ public class TaskDisplayActivity extends AppCompatActivity {
             task.setPriority(oldPriority);
         });
         priorityDialog.setOnCancelListener(view ->{task.setPriority(oldPriority);});
+
         LinearLayout urgent = layout.findViewById(R.id.Urgent);
+        CheckedTextView checkedUrgent = layout.findViewById(R.id.tvUrgent);
         urgent.setTag(TaskPriority.Urgent);
+        if (task.getPriority() == TaskPriority.Urgent) currentPriority[0] = checkedUrgent;
+
         LinearLayout veryImprotant = layout.findViewById(R.id.VeryImprotant);
+        CheckedTextView checkedVeryImprotant = layout.findViewById(R.id.tvVeryImprotant);
         veryImprotant.setTag(TaskPriority.VeryImprotant);
+        if (task.getPriority() == TaskPriority.VeryImprotant) currentPriority[0] = checkedVeryImprotant;
+
         LinearLayout improtant = layout.findViewById(R.id.Improtant);
+        CheckedTextView checkedImprotant = layout.findViewById(R.id.tvImprotant);
         improtant.setTag(TaskPriority.Improtant);
+        if (task.getPriority() == TaskPriority.Improtant) currentPriority[0] = checkedImprotant;
+
         LinearLayout focus = layout.findViewById(R.id.Focus);
+        CheckedTextView checkedFocus = layout.findViewById(R.id.tvFocus);
         focus.setTag(TaskPriority.Focus);
-        urgent.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
-        veryImprotant.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
-        improtant.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
-        focus.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
+        if (task.getPriority() == TaskPriority.Focus) currentPriority[0] = checkedFocus;
+
+        if (currentPriority[0] != null) currentPriority[0].setChecked(true);
+
+        urgent.setOnClickListener(view -> {
+            task.setPriority((TaskPriority) view.getTag());
+            if (currentPriority[0] != null) currentPriority[0].setChecked(false);
+            currentPriority[0] = checkedUrgent;
+            currentPriority[0].setChecked(true);
+        });
+        veryImprotant.setOnClickListener(view -> {
+            task.setPriority((TaskPriority) view.getTag());
+            if (currentPriority[0] != null) currentPriority[0].setChecked(false);
+            currentPriority[0] = checkedVeryImprotant;
+            currentPriority[0].setChecked(true);
+        });
+        improtant.setOnClickListener(view -> {
+            task.setPriority((TaskPriority) view.getTag());
+            if (currentPriority[0] != null) currentPriority[0].setChecked(false);
+            currentPriority[0] = checkedImprotant;
+            currentPriority[0].setChecked(true);
+        });
+        focus.setOnClickListener(view -> {
+            task.setPriority((TaskPriority) view.getTag());
+            if (currentPriority[0] != null) currentPriority[0].setChecked(false);
+            currentPriority[0] = checkedFocus;
+            currentPriority[0].setChecked(true);
+        });
 
         new Handler().postDelayed(new Runnable() {
             @Override

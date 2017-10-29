@@ -24,17 +24,18 @@
         android:paddingTop="6dp"
         android:touchscreenBlocksFocus="false">
 
-        <TextView
-            android:id="@+id/textView5"
+        <CheckedTextView
+            android:id="@+id/tvUrgent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center_vertical"
             android:text="紧急"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -57,17 +58,18 @@
         android:paddingStart="20dp"
         android:paddingTop="6dp">
 
-        <TextView
-            android:id="@+id/textView5"
+        <CheckedTextView
+            android:id="@+id/tvVeryImprotant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center_vertical"
             android:text="非常重要"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -90,17 +92,18 @@
         android:paddingStart="20dp"
         android:paddingTop="6dp">
 
-        <TextView
-            android:id="@+id/textView5"
+        <CheckedTextView
+            android:id="@+id/tvImprotant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center_vertical"
             android:text="重要"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -123,17 +126,18 @@
         android:paddingStart="20dp"
         android:paddingTop="6dp">
 
-        <TextView
-            android:id="@+id/textView5"
+        <CheckedTextView
+            android:id="@+id/tvFocus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center_vertical"
             android:text="关注"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

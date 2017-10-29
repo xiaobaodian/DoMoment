@@ -1,12 +1,11 @@
 package adapter;
 
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckedTextView;
 
 import java.util.List;
 
@@ -23,28 +22,19 @@ import threecats.zhang.domoment.R;
 public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private DateTimeHelper DateTime = DoMoment.getDateTime();
+    private Task task = DoMoment.getDataManger().getCurrentTask();
     private List<CategoryBase>  itemBases;
+    private int currentChecked = -1;
 
     //static
     public class ItemViewHolder extends RecyclerView.ViewHolder{
         View view;
-        TextView titleView;
+        CheckedTextView tvTitle;
 
         public ItemViewHolder(View view){
             super(view);
             this.view = view;
-            titleView = (TextView)view.findViewById(R.id.categorytitle);;
-        }
-    }
-
-    public class GroupViewHolder extends RecyclerView.ViewHolder{
-        View itemView;
-        TextView titleView;
-        TextView postView;
-        public GroupViewHolder(View view){
-            super(view);
-            itemView = view;
-            titleView = (TextView)view.findViewById(R.id.groupTitle);
+            tvTitle = (CheckedTextView)view.findViewById(R.id.CategoryTitle);;
         }
     }
 
@@ -56,7 +46,7 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view;
 
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_drawablelayoyt, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.taskeditor_categoryitems, parent, false);
         final ItemViewHolder itemViewHolder = new ItemViewHolder(view);
 
         itemViewHolder.view.setOnClickListener(new View.OnClickListener(){
@@ -64,12 +54,15 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
             public void onClick(View v){
                 int position = itemViewHolder.getAdapterPosition();
                 CategoryBase category = itemBases.get(position);
-                //Toast.makeText(v.getContext(), "点击了："+category.getTitle(),Toast.LENGTH_SHORT).show();
+                itemViewHolder.tvTitle.setChecked(true);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Task task = DoMoment.getDataManger().getCurrentTask();
                         task.setCategoryID(category.getID());
+                        if (currentChecked >= 0) {
+                            notifyItemChanged(currentChecked);
+                        }
+                        currentChecked = position;
                     }
                 },350);
 
@@ -83,7 +76,13 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
         CategoryBase item = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
         String title = item.getTitle();
-        itemViewHolder.titleView.setText(title);
+        itemViewHolder.tvTitle.setText(title);
+        if (task.getCategoryID() == item.getID()) {
+            itemViewHolder.tvTitle.setChecked(true);
+            currentChecked = position;
+        } else {
+            itemViewHolder.tvTitle.setChecked(false);
+        }
     }
 
     @Override
