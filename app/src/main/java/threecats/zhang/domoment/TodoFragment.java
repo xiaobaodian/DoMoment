@@ -39,7 +39,6 @@ import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
 import layout.TodoOverDueFragment;
 import layout.TodoTimeLineFragment;
-import layout.ViewFragment;
 
 /**
  * Created by zhang on 2017/7/25.
@@ -139,13 +138,14 @@ public class TodoFragment extends Fragment {
         //mAppCompatActivity.setSupportActionBar(toolbar);
         //setHasOptionsMenu(true);
         toolbar.setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.START);
             Toast.makeText(v.getContext(), "点击了工具栏",Toast.LENGTH_SHORT).show();
-            boolean check = DoMoment.getDataManger().getCurrentViewGroup().isItemChecked();
-            if (check){
-                DoMoment.getDataManger().getCurrentViewGroup().setItemChecked(false);
-            } else {
-                DoMoment.getDataManger().getCurrentViewGroup().setItemChecked(true);
-            }
+//            boolean check = DoMoment.getDataManger().getCurrentGroupList().isItemChecked();
+//            if (check){
+//                DoMoment.getDataManger().getCurrentGroupList().setItemChecked(false);
+//            } else {
+//                DoMoment.getDataManger().getCurrentGroupList().setItemChecked(true);
+//            }
 
         });
         toolbar.setOnLongClickListener(v -> {
@@ -219,18 +219,18 @@ public class TodoFragment extends Fragment {
                 switch (tab.getPosition()){
                     case 0:
                         //Toast.makeText(DoMoment.getContext(), "tab 1",Toast.LENGTH_SHORT).show();
-                        TimeLineGroupList timeLineViewGroup = (TimeLineGroupList) DoMoment
+                        TimeLineGroupList timeLineGroupList = (TimeLineGroupList) DoMoment
                                 .getCurrentCategory()
                                 .getGroupList(GroupListType.TimeLine);
-                        DoMoment.getDataManger().setCurrentViewGroup(timeLineViewGroup);
+                        DoMoment.getDataManger().setCurrentGroupList(timeLineGroupList);
                         break;
                     case 1:
-                        OverdueGroupList OverdueGroups = (OverdueGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
-                        DoMoment.getDataManger().setCurrentViewGroup(OverdueGroups);
+                        OverdueGroupList OverdueGroupList = (OverdueGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
+                        DoMoment.getDataManger().setCurrentGroupList(OverdueGroupList);
                         break;
                     case 2:
                         NoDateGroupList inBoxGroups = (NoDateGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Nodate);
-                        DoMoment.getDataManger().setCurrentViewGroup(inBoxGroups);
+                        DoMoment.getDataManger().setCurrentGroupList(inBoxGroups);
                 }
             }
 

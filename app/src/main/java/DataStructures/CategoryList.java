@@ -21,6 +21,17 @@ public class CategoryList {
         return allCategorys.get(0);
     }
 
+    public String getCategoryTitle(int site){
+        String title = "";
+        for (CategoryBase category : allCategorys) {
+            if (category.getID() == site) {
+                title = category.getTitle();
+                break;
+            }
+        }
+        return title;
+    }
+
     public void AddCustomCategory(CustomCategory customCategory){
         allCategorys.add(customCategory);
         //customCategories.add(customCategory);

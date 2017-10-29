@@ -140,7 +140,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                     if (isChecked) return false;
                     Task task = itemViewHolder.getTask();
                     DoMoment.getDataManger().setCurrentTask(task);
-                    DoMoment.getDataManger().getCurrentViewGroup().setItemChecked(true);
+                    DoMoment.getDataManger().getCurrentGroupList().setItemChecked(true);
                     return true;
                 });
                 return itemViewHolder;

@@ -12,9 +12,10 @@ import threecats.zhang.domoment.R;
 
 public class CustomCategory extends CategoryBase {
 
-    CustomCategory(String title) {
+    CustomCategory(String title, int ID) {
         super();
         setTitle(title);
+        setID(ID);
         categoryType = CategoryType.Custom;
         themeBackground = R.drawable.todo_themebackground_work1;
         BuildGroupLists();

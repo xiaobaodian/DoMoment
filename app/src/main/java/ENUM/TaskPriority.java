@@ -5,5 +5,5 @@ package ENUM;
  */
 
 public enum TaskPriority {
-    Urgent, Improtant, Focus, None
+    Urgent, VeryImprotant, Improtant, Focus, None
 }

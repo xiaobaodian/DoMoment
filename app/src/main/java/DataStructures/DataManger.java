@@ -41,9 +41,9 @@ public class DataManger {
 
     public void BuildCategorys(){
         categoryList = new CategoryList();
-        categoryList.AddCustomCategory(new CustomCategory("学习"));
-        categoryList.AddCustomCategory(new CustomCategory("宠物"));
-        categoryList.AddCustomCategory(new CustomCategory("公司事务"));
+        categoryList.AddCustomCategory(new CustomCategory("学习",10));
+        categoryList.AddCustomCategory(new CustomCategory("宠物",11));
+        categoryList.AddCustomCategory(new CustomCategory("公司事务",12));
         currentCategory = categoryList.getFirstCategory();
     }
 
@@ -76,10 +76,10 @@ public class DataManger {
         return currentCategory;
     }
 
-    public void setCurrentViewGroup(GroupListBase viewGroup){
+    public void setCurrentGroupList(GroupListBase viewGroup){
         this.currentViewGroup = viewGroup;
     }
-    public GroupListBase getCurrentViewGroup(){
+    public GroupListBase getCurrentGroupList(){
         return currentViewGroup;
     }
 
@@ -162,6 +162,7 @@ public class DataManger {
     }
 
     private void PutValues(Task task){
+        values.clear();
         values.put("CategoryID", task.getCategoryID());
         values.put("Title", task.getTitle());
         values.put("Place", task.getPlace());

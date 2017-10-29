@@ -55,6 +55,9 @@ public abstract class GroupListBase {
     public abstract void BuildTimePoint();
     protected abstract void BuildGroups();
 
+    public GroupListType getType(){
+        return selfType;
+    }
     public void setTitle(String title){
         this.title = title;
     }

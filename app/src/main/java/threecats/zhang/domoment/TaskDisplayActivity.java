@@ -1,17 +1,15 @@
 package threecats.zhang.domoment;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -22,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,18 +29,16 @@ import DataStructures.GroupBase;
 import DataStructures.GroupListBase;
 import DataStructures.Task;
 import ENUM.TaskPriority;
+import adapter.CategorysAdapter;
+import adapter.SetTaskCategorysAdapter;
 import adapter.TaskFragmentAdapter;
-import adapter.todoFragmentAdapter;
 import layout.TitleFragment;
-import layout.ViewFragment;
-
-import static android.os.SystemClock.sleep;
 
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
     private final Task task = DoMoment.getDataManger().getCurrentTask();
-    private AlertDialog dialog;
+    private int oldCategoryID;
     private EditText etTaskTitle;
     private TextView tvCreatedDateTime;
     private Button btnCategory, btnPriority;
@@ -92,17 +87,25 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         thisView = parent;
+        oldCategoryID = task.getCategoryID();
         return super.onCreateView(parent, name, context, attrs);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        DisplayTaskItems();
+    }
+
+    private void DisplayTaskItems(){
         etTaskTitle.setText(task.getTitle());
         tvCreatedDateTime.setText("创建于：" + task.getCreatedDateTimeStr());
+        btnCategory.setText(DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
         if (task.getPriority() == TaskPriority.Urgent) {
             priorityTitle = "紧急";
+        } else if (task.getPriority() == TaskPriority.VeryImprotant){
+            priorityTitle = "非常重要";
         } else if (task.getPriority() == TaskPriority.Improtant) {
             priorityTitle = "重要";
         } else if(task.getPriority() == TaskPriority.Focus){
@@ -128,17 +131,20 @@ public class TaskDisplayActivity extends AppCompatActivity {
         task.setTitle(etTaskTitle.getText().toString());
         //======
         boolean isChanged = true;
-        for (GroupBase group : task.getParentGroups()) {
-            GroupListBase groupList = group.getParent();
-            CategoryBase category = groupList.getParent();
-            if (category.InCategory(task)) {
-                if (groupList.InGroupList(task)) {
-                    if (group.InGroup(task)) {
-                        isChanged = false;
+        if (oldCategoryID == task.getCategoryID()) {
+            for (GroupBase group : task.getParentGroups()) {
+                GroupListBase groupList = group.getParent();
+                CategoryBase category = groupList.getParent();
+                if (category.InCategory(task)) {
+                    if (groupList.InGroupList(task)) {
+                        if (group.InGroup(task)) {
+                            isChanged = false;
+                        }
                     }
                 }
             }
         }
+
         //task.getStartDateTimeDB() != hashStartDateTime || task.getDueDateTimeDB() != hashDueDateTime || hashIsNoDate != task.IsNoDate()
         if (isChanged) {
             DoMoment.getDataManger().ChangeTask(task);
@@ -149,44 +155,74 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private void setTaskCategory(){
-        DoMoment.Toast("Click Category Button");
+        //DoMoment.Toast("Click Category Button");
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.taskeditor_categoryselection, (ViewGroup)findViewById(R.id.CategoryDialog));
+        int oldCategory = task.getCategoryID();
+        AlertDialog.Builder categoryDialog = new AlertDialog.Builder(this);
+        categoryDialog.setTitle("所属类目");
+        categoryDialog.setView(layout);
+        categoryDialog.setNeutralButton("删除", (dialogInterface, i) -> {
+            task.setCategoryID(1);
+            DisplayTaskItems();
+        });
+        categoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
+            DisplayTaskItems();
+        });
+        categoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
+            task.setCategoryID(oldCategory);
+        });
+        categoryDialog.setOnCancelListener(view ->{task.setCategoryID(oldCategory);});
+        RecyclerView recyclerView = layout.findViewById(R.id.CategoryRecyclerView);
+        SetTaskCategorysAdapter categoryAdapter = new SetTaskCategorysAdapter(DoMoment.getDataManger().getCategoryList().getCustomCategories());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(categoryAdapter);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                categoryDialog.show();
+            }
+        },200);
     }
     private void setTaskPriority(){
         //DoMoment.Toast("Click Priority Button");
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialong));
-        dialog = new AlertDialog.Builder(this).create();
-        dialog.setTitle("任务等级");
-        dialog.setView(layout);
+        View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialog));
+        TaskPriority oldPriority = task.getPriority();
+        AlertDialog.Builder priorityDialog = new AlertDialog.Builder(this);
+        priorityDialog.setTitle("任务等级");
+        priorityDialog.setView(layout);
+        priorityDialog.setNeutralButton("删除", (dialogInterface, i) -> {
+            task.setPriority(TaskPriority.None);
+            DisplayTaskItems();
+        });
+        priorityDialog.setPositiveButton("确定", (dialogInterface, i) -> {
+            DisplayTaskItems();
+        });
+        priorityDialog.setNegativeButton("取消", (dialogInterface, i) -> {
+            task.setPriority(oldPriority);
+        });
+        priorityDialog.setOnCancelListener(view ->{task.setPriority(oldPriority);});
         LinearLayout urgent = layout.findViewById(R.id.Urgent);
         urgent.setTag(TaskPriority.Urgent);
+        LinearLayout veryImprotant = layout.findViewById(R.id.VeryImprotant);
+        veryImprotant.setTag(TaskPriority.VeryImprotant);
         LinearLayout improtant = layout.findViewById(R.id.Improtant);
         improtant.setTag(TaskPriority.Improtant);
         LinearLayout focus = layout.findViewById(R.id.Focus);
         focus.setTag(TaskPriority.Focus);
-        LinearLayout none = layout.findViewById(R.id.None);
-        none.setTag(TaskPriority.None);
-        urgent.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
-        improtant.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
-        focus.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
-        none.setOnClickListener(view -> {setPriority(dialog, view.getTag());});
-        //AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        urgent.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
+        veryImprotant.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
+        improtant.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
+        focus.setOnClickListener(view -> {task.setPriority((TaskPriority) view.getTag());});
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                dialog.show();
+                priorityDialog.show();
             }
         },200);
-    }
-    private void setPriority(AlertDialog dialog, Object priority){
-        task.setPriority((TaskPriority)priority);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-            }
-        },300);
-        onResume();
     }
 
 }
