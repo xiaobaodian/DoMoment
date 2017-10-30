@@ -16,10 +16,10 @@ public class ImprotantGroupList extends GroupListBase {
     public ImprotantGroupList(CategoryBase parent){
         super();
         this.parent = parent;
-        this.selfType = GroupListType.Urgent;
+        this.selfType = GroupListType.Nodate;
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
-        setTitle(DoMoment.getContext().getString(R.string.grouplist_urgent_title));
+        setTitle(DoMoment.getContext().getString(R.string.grouplist_improtant_title));
         BuildGroups();
     }
 

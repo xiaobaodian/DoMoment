@@ -190,13 +190,13 @@ public abstract class GroupBase extends ListItemBase {
 
     //以下是分组里面的条目管理
     public int AddTask(Task task){
-        task.setParentGroups(this);
+        task.addParentGroup(this);
         tasks.add(task);
         if (State == DisplayState.Hide) State = DisplayState.Show;
         return tasks.size();      //返回加入的任务的位置序号，便于组列表处理
     }
     public int InsertTask(Task task){
-        task.setParentGroups(this);
+        task.addParentGroup(this);
         int post = 0;
         if (tasks.size() == 0) {
             post = AddTask(task);

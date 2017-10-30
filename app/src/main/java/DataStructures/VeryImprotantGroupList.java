@@ -1,8 +1,9 @@
 package DataStructures;
 
-import ENUM.TaskBasePoint;
-import ENUM.TimeSeries;
 import ENUM.GroupListType;
+import ENUM.TaskBasePoint;
+import ENUM.TaskPriority;
+import ENUM.TimeSeries;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
@@ -10,22 +11,21 @@ import threecats.zhang.domoment.R;
  * Created by zhang on 2017/8/14.
  */
 
-public class TimeLineGroupList extends GroupListBase {
+public class VeryImprotantGroupList extends GroupListBase {
 
-    public TimeLineGroupList(CategoryBase parent){
+    public VeryImprotantGroupList(CategoryBase parent){
         super();
         this.parent = parent;
-        this.selfType = GroupListType.TimeLine;
+        this.selfType = GroupListType.Overdue;
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
-        setTitle(DoMoment.getContext().getString(R.string.grouplist_timeline_title));
+        setTitle(DoMoment.getContext().getString(R.string.grouplist_veryimprotant_title));
         BuildGroups();
     }
 
     @Override
     public boolean InGroupList(Task task){
-        if (task.IsNoDate()) return false;
-        return task.getDueDateTime().after(timePoint);
+        return task.getPriority() == TaskPriority.VeryImprotant;
     }
 
     @Override
@@ -37,6 +37,7 @@ public class TimeLineGroupList extends GroupListBase {
     protected void BuildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
+        AddGroup(new AllOverdueGroup(this));
         AddGroup(new TimeLineTodayGroup(this));
         AddGroup(new TimeLineTomorrowGroup(this));
         AddGroup(new TimeLineAfterTomorrowGroup(this));

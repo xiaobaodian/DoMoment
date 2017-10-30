@@ -62,11 +62,13 @@ public class CategoryList {
     }
 
     public void RemoveTask(Task task){
+        // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
         for (GroupBase group : task.getParentGroups()) {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);
         }
-        task.getParentGroups().clear();
+        task.clearParentGroups();
+        //task.getParentGroups().clear();
     }
 
     public void ChangeTask(Task task){

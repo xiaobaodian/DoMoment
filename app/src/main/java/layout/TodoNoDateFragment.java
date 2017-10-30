@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import DataStructures.GroupListBase;
 import DataStructures.NoDateGroupList;
 import ENUM.GroupListType;
 import adapter.NoDateAdapter;
@@ -19,8 +20,8 @@ import threecats.zhang.domoment.R;
  */
 public class TodoNoDateFragment extends TitleFragment {
 
-    private View nodateFragment;
-    private NoDateGroupList noDateGroupList;
+    private View fragmentView;
+    private GroupListBase noDateGroupList = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,21 +36,22 @@ public class TodoNoDateFragment extends TitleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        nodateFragment = inflater.inflate(R.layout.fragment_todo_nodate, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_todo_nodate, container, false);
         BindDatas();
-        return nodateFragment;
+        return fragmentView;
     }
 
     public void BindDatas(){
-        if (nodateFragment == null) return;
-        noDateGroupList = (NoDateGroupList) DoMoment.getDataManger().getCurrentCategory().getGroupList(GroupListType.Nodate);
+        if (fragmentView == null) return;
+        noDateGroupList = DoMoment.getDataManger().getCurrentCategory().getGroupList(GroupListType.Nodate);
+        if (noDateGroupList == null) return;
         try {
-            RecyclerView recyclerView = (RecyclerView) nodateFragment.findViewById(R.id.NoDateRecyclerView);
+            RecyclerView recyclerView = fragmentView.findViewById(R.id.NoDateRecyclerView);
             //NoDateAdapter GroupListAdapter = new NoDateAdapter(noDateGroupList.getRecyclerViewItems());
-            NoDateAdapter viewGroupAdapter = new NoDateAdapter(noDateGroupList.getRecyclerViewItems());
-            noDateGroupList.BindRecyclerView(recyclerView, viewGroupAdapter, nodateFragment);
+            NoDateAdapter groupListAdapter = new NoDateAdapter(noDateGroupList.getRecyclerViewItems());
+            noDateGroupList.BindRecyclerView(recyclerView, groupListAdapter, fragmentView);
         } catch (Exception e){
-            Toast.makeText(nodateFragment.getContext(),"NoDate Groups is Null",Toast.LENGTH_SHORT).show();
+            Toast.makeText(fragmentView.getContext(),"NoDate Groups is Null",Toast.LENGTH_SHORT).show();
         }
     }
 

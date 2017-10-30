@@ -46,8 +46,11 @@ public class Task extends TaskBase{
         parentGroups = new ArrayList<>(3);
     }
 
-    public void setParentGroups(GroupBase group){
+    public void addParentGroup(GroupBase group){
         parentGroups.add(group);
+    }
+    public void clearParentGroups(){
+        parentGroups.clear();
     }
     public List<GroupBase> getParentGroups(){
         return parentGroups;

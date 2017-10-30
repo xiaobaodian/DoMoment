@@ -18,6 +18,7 @@ public class OverdueGroupList extends GroupListBase {
         this.selfType = GroupListType.Overdue;
         this.timeSeries = TimeSeries.Afterward;
         this.taskBasePoint = TaskBasePoint.EndDate;     //后面改为endDate
+        setTitle(DoMoment.getContext().getString(R.string.grouplist_overdue_title));
         BuildGroups();
     }
 

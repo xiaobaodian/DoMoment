@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -110,7 +111,9 @@ public class TodoFragment extends Fragment {
         AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
         viewTabLayout = view.findViewById(R.id.ViewTabLayout);
         toolbar = view.findViewById(R.id.todo_toolbar);
-        toolbar.inflateMenu(R.menu.todo_toolbar);
+        //toolbar.inflateMenu(R.menu.todo_toolbar);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         FloatingActionButton addActionButton = view.findViewById(R.id.AddActionButton);
 
 
@@ -139,7 +142,7 @@ public class TodoFragment extends Fragment {
         //setHasOptionsMenu(true);
         toolbar.setOnClickListener(v -> {
             drawerLayout.openDrawer(GravityCompat.START);
-            Toast.makeText(v.getContext(), "点击了工具栏",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(v.getContext(), "点击了工具栏",Toast.LENGTH_SHORT).show();
 //            boolean check = DoMoment.getDataManger().getCurrentGroupList().isItemChecked();
 //            if (check){
 //                DoMoment.getDataManger().getCurrentGroupList().setItemChecked(false);
@@ -147,12 +150,6 @@ public class TodoFragment extends Fragment {
 //                DoMoment.getDataManger().getCurrentGroupList().setItemChecked(true);
 //            }
 
-        });
-        toolbar.setOnLongClickListener(v -> {
-            DoMoment.Toast("生成测试数据");
-            DoMoment.getDataManger().BuildDatas();
-            DoMoment.Toast("测试数据已生成");
-            return true;
         });
 
         collapsingToolbar = view.findViewById(R.id.todo_collapsing_toolbar);
@@ -255,6 +252,8 @@ public class TodoFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.todo_toolbar, menu);
@@ -264,11 +263,17 @@ public class TodoFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.todo_menu_removecategory:
-                Toast.makeText(thisView.getContext(), "点击了工具栏",Toast.LENGTH_SHORT).show();
+            case R.id.TodoMenu_RemoveCategory:
+                Toast.makeText(thisView.getContext(), "点击了菜单",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.TodoMenu_EditCategoryTitle:
+                DoMoment.Toast("生成测试数据");
+                DoMoment.getDataManger().BuildDatas();
+                DoMoment.Toast("测试数据已生成");
                 break;
         }
-        return super.onOptionsItemSelected(item);
+        //return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -295,11 +300,13 @@ public class TodoFragment extends Fragment {
     }
 
     public void setCurrentCategory(){
+        drawerLayout.closeDrawer(GravityCompat.START);
+
         currentCategory = DoMoment.getCurrentCategory();
         SetGroupListTitle(currentCategory.getTitle());
         ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
         themebackground.setImageResource(currentCategory.getThemeBackground());
-        drawerLayout.closeDrawer(GravityCompat.START);
+
         timeLineFragment.BindDatas();
         overDueFragment.BindDatas();
         noDateFragment.BindDatas();

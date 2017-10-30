@@ -23,7 +23,7 @@ public class DataManger {
     private ContentValues values = new ContentValues();
     private CategoryList categoryList;
     private CategoryBase currentCategory;
-    private GroupListBase currentViewGroup;
+    private GroupListBase currentGroupList;
     private GroupBase currentGroup;
     private Task currentTask;
     private TodoFragment todoFragment;
@@ -41,9 +41,11 @@ public class DataManger {
 
     public void BuildCategorys(){
         categoryList = new CategoryList();
-        categoryList.AddCustomCategory(new CustomCategory("学习",10));
+        categoryList.AddCustomCategory(new CustomCategory("学习进修",10));
         categoryList.AddCustomCategory(new CustomCategory("宠物",11));
         categoryList.AddCustomCategory(new CustomCategory("公司事务",12));
+        categoryList.AddCustomCategory(new CustomCategory("休闲娱乐",13));
+        categoryList.AddCustomCategory(new CustomCategory("App应用开发",14));
         currentCategory = categoryList.getFirstCategory();
     }
 
@@ -76,11 +78,11 @@ public class DataManger {
         return currentCategory;
     }
 
-    public void setCurrentGroupList(GroupListBase viewGroup){
-        this.currentViewGroup = viewGroup;
+    public void setCurrentGroupList(GroupListBase groupList){
+        this.currentGroupList = groupList;
     }
     public GroupListBase getCurrentGroupList(){
-        return currentViewGroup;
+        return currentGroupList;
     }
 
     public void setCurrentGroup(GroupBase group){

@@ -18,6 +18,7 @@ public class NoDateGroupList extends GroupListBase {
         this.selfType = GroupListType.Nodate;
         this.taskBasePoint = TaskBasePoint.CreateDate;
         this.timeSeries = TimeSeries.Afterward;
+        setTitle(DoMoment.getContext().getString(R.string.grouplist_nodate_title));
         BuildGroups();
     }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import DataStructures.GroupListBase;
 import DataStructures.OverdueGroupList;
 import ENUM.GroupListType;
 import adapter.OverdueAdapter;
@@ -16,8 +17,8 @@ import threecats.zhang.domoment.R;
 
 public class TodoOverDueFragment extends TitleFragment {
 
-    private View overdueFragment;
-    private OverdueGroupList overdueGroupList;
+    private View fragmentView;
+    private GroupListBase overdueGroupList = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,20 +33,21 @@ public class TodoOverDueFragment extends TitleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        overdueFragment = inflater.inflate(R.layout.fragment_todo_overdue, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_todo_overdue, container, false);
         BindDatas();
-        return overdueFragment;
+        return fragmentView;
     }
 
     public void BindDatas(){
-        if (overdueFragment == null) return;
-        overdueGroupList = (OverdueGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
+        if (fragmentView == null) return;
+        overdueGroupList = DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
+        if (overdueGroupList == null) return;
         try {
-            RecyclerView recyclerView = (RecyclerView) overdueFragment.findViewById(R.id.OverdueRecyclerView);
+            RecyclerView recyclerView = fragmentView.findViewById(R.id.OverdueRecyclerView);
             OverdueAdapter viewGroupAdapter = new OverdueAdapter(overdueGroupList.getRecyclerViewItems());
-            overdueGroupList.BindRecyclerView(recyclerView, viewGroupAdapter, overdueFragment);
+            overdueGroupList.BindRecyclerView(recyclerView, viewGroupAdapter, fragmentView);
         } catch (Exception e){
-            Toast.makeText(overdueFragment.getContext(),"Overdue Groups is Null",Toast.LENGTH_SHORT).show();
+            Toast.makeText(fragmentView.getContext(),"Overdue Groups is Null",Toast.LENGTH_SHORT).show();
         }
     }
 

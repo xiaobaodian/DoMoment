@@ -31,8 +31,8 @@ public class PriorityCategory extends CategoryBase {
     protected void BuildGroupLists() {
 
         AddGroupList(new UrgentGroupList(this));
+        AddGroupList(new VeryImprotantGroupList(this));
         AddGroupList(new ImprotantGroupList(this));
-        AddGroupList(new NoDateGroupList(this));
     }
 
 }

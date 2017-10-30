@@ -24,7 +24,7 @@ import threecats.zhang.domoment.DoMoment;
 public abstract class GroupListBase {
 
     protected DateTimeHelper DateTime = DoMoment.getDateTime();
-    private String title;
+    private String title = "";
     protected RecyclerView GroupListRecyclerView;
     protected RecyclerViewAdapterBase GroupListAdapter;
     public TimeSeries timeSeries;
@@ -287,13 +287,6 @@ public abstract class GroupListBase {
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setAdapter(GroupListAdapter);
         if (isInit) recyclerView.setAdapter(GroupListAdapter);
-//        if (isInit){
-//            if (viewAdapterBase != null){
-//                recyclerView.setAdapter(viewAdapterBase);
-//            } else {
-//                recyclerView.setAdapter(GroupListAdapter);
-//            }
-//        }
     }
 
     public void BindDatas(){
