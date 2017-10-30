@@ -28,12 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataStructures.CategoryBase;
-import DataStructures.NoDateGroupList;
-import DataStructures.OverdueGroupList;
+import DataStructures.GroupListBase;
 import DataStructures.Task;
-import DataStructures.TimeLineGroupList;
 import ENUM.GroupListType;
-import adapter.CategorysAdapter;
+import adapter.CategoryAdapter;
 import adapter.todoFragmentAdapter;
 import layout.TitleFragment;
 import layout.TodoMakeOutFragment;
@@ -72,6 +70,7 @@ public class TodoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DoMoment.getDataManger().setTodoFragment(this);
+        currentCategory = DoMoment.getCurrentCategory();
 
         //setRetainInstance(true);
 
@@ -87,8 +86,6 @@ public class TodoFragment extends Fragment {
         viewFragmentList.add(overDueFragment);
         viewFragmentList.add(noDateFragment);
         viewFragmentList.add(makeOutFragment);
-
-        currentCategory = DoMoment.getCurrentCategory();
 
         DoMoment.getDataManger().LoadDatas();
         //new LoadDatas().execute();
@@ -213,22 +210,21 @@ public class TodoFragment extends Fragment {
         viewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                GroupListBase currentGroupList = null;
                 switch (tab.getPosition()){
                     case 0:
-                        //Toast.makeText(DoMoment.getContext(), "tab 1",Toast.LENGTH_SHORT).show();
-                        TimeLineGroupList timeLineGroupList = (TimeLineGroupList) DoMoment
-                                .getCurrentCategory()
-                                .getGroupList(GroupListType.TimeLine);
-                        DoMoment.getDataManger().setCurrentGroupList(timeLineGroupList);
+                        currentGroupList = currentCategory.getGroupList(GroupListType.TimeLine);
+                        DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
                         break;
                     case 1:
-                        OverdueGroupList OverdueGroupList = (OverdueGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
-                        DoMoment.getDataManger().setCurrentGroupList(OverdueGroupList);
+                        currentGroupList = currentCategory.getGroupList(GroupListType.Overdue);
+                        DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
                         break;
                     case 2:
-                        NoDateGroupList inBoxGroups = (NoDateGroupList) DoMoment.getCurrentCategory().getGroupList(GroupListType.Nodate);
-                        DoMoment.getDataManger().setCurrentGroupList(inBoxGroups);
+                        currentGroupList = currentCategory.getGroupList(GroupListType.Nodate);
+                        DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
                 }
+                //DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
             }
 
             @Override
@@ -301,7 +297,6 @@ public class TodoFragment extends Fragment {
 
     public void setCurrentCategory(){
         drawerLayout.closeDrawer(GravityCompat.START);
-
         currentCategory = DoMoment.getCurrentCategory();
         SetGroupListTitle(currentCategory.getTitle());
         ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
@@ -322,8 +317,7 @@ public class TodoFragment extends Fragment {
     // 构建侧滑的类目列表
     private void BuildsCategoryList(View v){
         RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.CategoryRecyclerView);
-        //CategorysAdapter categoryAdapter = new CategorysAdapter(DoMoment.getDataManger().getCategorys());
-        CategorysAdapter categoryAdapter = new CategorysAdapter(DoMoment.getDataManger().getCategoryList().getAllCategorys());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(DoMoment.getDataManger().getCategoryList().getAllCategorys());
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);

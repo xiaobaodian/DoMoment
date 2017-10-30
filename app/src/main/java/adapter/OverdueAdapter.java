@@ -24,9 +24,8 @@ public class OverdueAdapter extends RecyclerViewAdapterBase {
     protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
         holder
                 .setText(R.id.taskTitle, task.getTitle())
-                .setText(R.id.taskPlace, task.getPlace()+"-"+groupType.toString())
+                .setText(R.id.taskPlace, task.getPlace())
                 .setText(R.id.taskDateTime, task.getBeginDateString());
-
     }
 
     @Override

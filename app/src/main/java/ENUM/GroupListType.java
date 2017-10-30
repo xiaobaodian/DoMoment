@@ -9,5 +9,8 @@ public enum GroupListType {
     Overdue,
     Nodate,
     Complete,
-    Urgent
+    Urgent,
+    VeryImprotant,
+    Improtant,
+    Focus
 }

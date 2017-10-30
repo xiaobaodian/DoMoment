@@ -14,7 +14,7 @@ public class CategoryList {
     public CategoryList(){
         allCategorys.add(new AllTasksCategory());
         allCategorys.add(new NoCategory());
-        allCategorys.add(new PriorityCategory());
+        allCategorys.add(new TaskPriorityCategory());
     }
 
     public CategoryBase getFirstCategory(){

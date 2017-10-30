@@ -3,6 +3,7 @@ package DataStructures;
 import android.content.Context;
 
 import ENUM.CategoryType;
+import ENUM.TaskPriority;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
@@ -10,9 +11,9 @@ import threecats.zhang.domoment.R;
  * Created by zhang on 2017/8/21.
  */
 
-public class PriorityCategory extends CategoryBase {
+public class TaskPriorityCategory extends CategoryBase {
 
-    PriorityCategory() {
+    TaskPriorityCategory() {
         super();
         setID(2);
         Context context = DoMoment.getContext();
@@ -24,15 +25,19 @@ public class PriorityCategory extends CategoryBase {
 
     @Override
     public boolean InCategory(Task task) {
-        return task.getCategoryID() == getID();
+        return task.getPriority() != TaskPriority.None;
     }
 
     @Override
     protected void BuildGroupLists() {
 
         AddGroupList(new UrgentGroupList(this));
-        AddGroupList(new VeryImprotantGroupList(this));
-        AddGroupList(new ImprotantGroupList(this));
+        AddGroupList(new VeryImportanceGroupList(this));
+        AddGroupList(new ImportanceGroupList(this));
+
+        //AddGroupList(new TimeLineGroupList(this));
+        //AddGroupList(new OverdueGroupList(this));
+        //AddGroupList(new NoDateGroupList(this));
     }
 
 }

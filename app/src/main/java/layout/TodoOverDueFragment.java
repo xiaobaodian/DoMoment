@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import DataStructures.CategoryBase;
 import DataStructures.GroupListBase;
 import DataStructures.OverdueGroupList;
 import ENUM.GroupListType;
@@ -41,11 +42,11 @@ public class TodoOverDueFragment extends TitleFragment {
     public void BindDatas(){
         if (fragmentView == null) return;
         overdueGroupList = DoMoment.getCurrentCategory().getGroupList(GroupListType.Overdue);
-        if (overdueGroupList == null) return;
+
         try {
             RecyclerView recyclerView = fragmentView.findViewById(R.id.OverdueRecyclerView);
-            OverdueAdapter viewGroupAdapter = new OverdueAdapter(overdueGroupList.getRecyclerViewItems());
-            overdueGroupList.BindRecyclerView(recyclerView, viewGroupAdapter, fragmentView);
+            OverdueAdapter groupListAdapter = new OverdueAdapter(overdueGroupList.getRecyclerViewItems());
+            overdueGroupList.BindRecyclerView(recyclerView, groupListAdapter, fragmentView);
         } catch (Exception e){
             Toast.makeText(fragmentView.getContext(),"Overdue Groups is Null",Toast.LENGTH_SHORT).show();
         }

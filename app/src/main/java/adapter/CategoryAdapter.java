@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import threecats.zhang.domoment.R;
  * Created by zhang on 2017/8/1.
  */
 
-public class CategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private DateTimeHelper DateTime = DoMoment.getDateTime();
     private List<CategoryBase>  itemBases;
@@ -48,7 +49,7 @@ public class CategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public CategorysAdapter(List<CategoryBase> itemBases){
+    public CategoryAdapter(List<CategoryBase> itemBases){
         this.itemBases = itemBases;
     }
 
@@ -68,11 +69,11 @@ public class CategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        GroupListBase currentGroupList = DoMoment.getDataManger().getCurrentGroupList();
-                        currentGroupList.setItemChecked(false);
-                        GroupListType type = currentGroupList.getType();
+                        //GroupListBase currentGroupList = DoMoment.getDataManger().getCurrentGroupList();
+                        //currentGroupList.setItemChecked(false);
+                        //GroupListType type = currentGroupList.getType();
                         DoMoment.getDataManger().setCurrentCategory(category);
-                        DoMoment.getDataManger().setCurrentGroupList(category.getGroupList(type));
+                        //DoMoment.getDataManger().setCurrentGroupList(category.getGroupList(type));
                     }
                 },350);
 

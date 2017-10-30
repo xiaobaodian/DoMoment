@@ -44,10 +44,9 @@ public class TodoTimeLineFragment extends TitleFragment {
 
     public void BindDatas(){
         if (fragmentView == null) return;
-        CategoryBase currentCategory = DoMoment.getCurrentCategory();
-        //DoMoment.Toast(currentCategory.getTitle());
         timeLineGroupList = DoMoment.getCurrentCategory().getGroupList(GroupListType.TimeLine);
-        if (timeLineGroupList == null) return;
+        //DoMoment.Toast(timeLineGroupList.getTitle());
+
         try {
             RecyclerView recyclerView = fragmentView.findViewById(R.id.TimeLineRecyclerView);
             TimeLineAdapter groupListAdapter = new TimeLineAdapter(timeLineGroupList.getRecyclerViewItems());

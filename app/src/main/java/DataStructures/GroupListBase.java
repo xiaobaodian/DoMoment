@@ -290,14 +290,9 @@ public abstract class GroupListBase {
     }
 
     public void BindDatas(){
-        if (GroupListRecyclerView != null) GroupListRecyclerView.setAdapter(GroupListAdapter);
-//        if (GroupListRecyclerView != null){
-//            if (viewAdapterBase != null){
-//                GroupListRecyclerView.setAdapter(viewAdapterBase);
-//            } else {
-//                GroupListRecyclerView.setAdapter(GroupListAdapter);
-//            }
-//        }
+        if (GroupListRecyclerView != null) {
+            GroupListRecyclerView.setAdapter(GroupListAdapter);
+        }
         isInit = true;
     }
 

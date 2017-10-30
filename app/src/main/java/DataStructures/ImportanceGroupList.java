@@ -11,21 +11,21 @@ import threecats.zhang.domoment.R;
  * Created by zhang on 2017/8/14.
  */
 
-public class FocusGroupList extends GroupListBase {
+public class ImportanceGroupList extends GroupListBase {
 
-    public FocusGroupList(CategoryBase parent){
+    public ImportanceGroupList(CategoryBase parent){
         super();
         this.parent = parent;
-        this.selfType = GroupListType.Urgent;
+        this.selfType = GroupListType.Nodate;
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
-        setTitle(DoMoment.getContext().getString(R.string.grouplist_focus_title));
+        setTitle(DoMoment.getContext().getString(R.string.grouplist_timeline_title));
         BuildGroups();
     }
 
     @Override
     public boolean InGroupList(Task task){
-        return task.getPriority() == TaskPriority.Focus;
+        return task.getPriority() == TaskPriority.Improtant;
     }
 
     @Override
@@ -37,7 +37,6 @@ public class FocusGroupList extends GroupListBase {
     protected void BuildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
-        AddGroup(new AllOverdueGroup(this));
         AddGroup(new TimeLineTodayGroup(this));
         AddGroup(new TimeLineTomorrowGroup(this));
         AddGroup(new TimeLineAfterTomorrowGroup(this));

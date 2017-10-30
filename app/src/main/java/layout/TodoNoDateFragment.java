@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import DataStructures.CategoryBase;
 import DataStructures.GroupListBase;
 import DataStructures.NoDateGroupList;
 import ENUM.GroupListType;
@@ -43,8 +44,8 @@ public class TodoNoDateFragment extends TitleFragment {
 
     public void BindDatas(){
         if (fragmentView == null) return;
-        noDateGroupList = DoMoment.getDataManger().getCurrentCategory().getGroupList(GroupListType.Nodate);
-        if (noDateGroupList == null) return;
+        noDateGroupList = DoMoment.getCurrentCategory().getGroupList(GroupListType.Nodate);
+
         try {
             RecyclerView recyclerView = fragmentView.findViewById(R.id.NoDateRecyclerView);
             //NoDateAdapter GroupListAdapter = new NoDateAdapter(noDateGroupList.getRecyclerViewItems());

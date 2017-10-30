@@ -30,7 +30,6 @@ import DataStructures.GroupBase;
 import DataStructures.GroupListBase;
 import DataStructures.Task;
 import ENUM.TaskPriority;
-import adapter.CategorysAdapter;
 import adapter.SetTaskCategorysAdapter;
 import adapter.TaskFragmentAdapter;
 import layout.TitleFragment;
@@ -40,6 +39,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
     private final Task task = DoMoment.getDataManger().getCurrentTask();
     private int oldCategoryID;
+    private TaskPriority oldPriority;
     private EditText etTaskTitle;
     private TextView tvCreatedDateTime;
     private Button btnCategory, btnPriority;
@@ -96,6 +96,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         oldCategoryID = task.getCategoryID();
+        oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
         DisplayTaskItems();
     }
@@ -133,7 +134,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         task.setTitle(etTaskTitle.getText().toString());
         //======
         boolean isChanged = true;
-        if (oldCategoryID == task.getCategoryID()) {
+        if (oldCategoryID == task.getCategoryID() && oldPriority == task.getPriority()) {
             for (GroupBase group : task.getParentGroups()) {
                 GroupListBase groupList = group.getParent();
                 CategoryBase category = groupList.getParent();
