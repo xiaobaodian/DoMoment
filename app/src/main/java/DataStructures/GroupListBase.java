@@ -286,7 +286,8 @@ public abstract class GroupListBase {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setAdapter(GroupListAdapter);
-        if (isInit) recyclerView.setAdapter(GroupListAdapter);
+        //if (isInit) recyclerView.setAdapter(GroupListAdapter);
+        recyclerView.setAdapter(GroupListAdapter);
     }
 
     public void BindDatas(){

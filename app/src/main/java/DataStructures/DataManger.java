@@ -31,15 +31,11 @@ public class DataManger {
 
     public DataManger(){
         sqlDB = new SQLManger(DoMoment.getContext(), "IdoMoment.db", null, 1);
-
-        //categoryList = new CategoryList();
         isDataloaded = false;
         BuildCategorys();
-        //加载测试数据
-        //BuildDatas();
     }
 
-    public void BuildCategorys(){
+    private void BuildCategorys(){
         categoryList = new CategoryList();
         categoryList.AddCustomCategory(new CustomCategory("学习进修",10));
         categoryList.AddCustomCategory(new CustomCategory("宠物",11));
@@ -47,6 +43,7 @@ public class DataManger {
         categoryList.AddCustomCategory(new CustomCategory("休闲娱乐",13));
         categoryList.AddCustomCategory(new CustomCategory("App应用开发",14));
         currentCategory = categoryList.getFirstCategory();
+        currentGroupList = categoryList.getFirstGroupList();
     }
 
     public CategoryList getCategoryList(){
@@ -55,9 +52,6 @@ public class DataManger {
 
     public void LoadDatas(){
         if (isDataloaded) return;
-        //Toast.makeText(DoMoment.getContext(),"Load Datasing ...",Toast.LENGTH_SHORT).show();
-        //DemoDatas datas = new DemoDatas();
-        //datas.BuildDatas();
         //new LoadDatas().execute();
         Load();
         isDataloaded = true;
@@ -207,8 +201,8 @@ public class DataManger {
         }
         db.close();
 
-        DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
-        categoryList.BindDatas();
+        //DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
+        //categoryList.BindDatas();
     }
 
     public void BuildDatas(){

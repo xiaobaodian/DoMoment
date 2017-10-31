@@ -85,7 +85,7 @@ public class TodoFragment extends Fragment {
         viewFragmentList.add(noDateFragment);
         viewFragmentList.add(makeOutFragment);
 
-        DoMoment.getDataManger().LoadDatas();
+        //DoMoment.getDataManger().LoadDatas();
         //new LoadDatas().execute();
         if (savedInstanceState != null) {
             //Toast.makeText(getActivity(),"TabID:"+savedInstanceState.getInt("tablayout"),Toast.LENGTH_SHORT).show();
@@ -237,8 +237,6 @@ public class TodoFragment extends Fragment {
                 @Override
                 public void run() {
                     setCurrentCategory();
-                    GroupListBase currentGroupList = currentCategory.getGroupList(GroupListType.TimeLine);
-                    DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
                 }
             },500);
 
@@ -309,11 +307,6 @@ public class TodoFragment extends Fragment {
 
         noDateFragment.linkCategory(currentCategory);
         noDateFragment.LinkTab(viewTabLayout.getTabAt(2));
-
-
-        //timeLineFragment.BindDatas();
-        //overDueFragment.BindDatas();
-        //noDateFragment.BindDatas();
 
     }
 

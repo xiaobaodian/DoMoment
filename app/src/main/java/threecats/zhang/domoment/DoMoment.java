@@ -24,6 +24,7 @@ public class DoMoment extends Application {
         context = getApplicationContext();
         dateTime = new DateTimeHelper();
         dataManger = new DataManger();
+        dataManger.LoadDatas();
     }
 
     public static DateTimeHelper getDateTime(){

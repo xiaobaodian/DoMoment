@@ -3,6 +3,8 @@ package DataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import threecats.zhang.domoment.DoMoment;
+
 /**
  * Created by zhang on 2017/10/27.
  */
@@ -19,6 +21,9 @@ public class CategoryList {
 
     public CategoryBase getFirstCategory(){
         return allCategorys.get(0);
+    }
+    public GroupListBase getFirstGroupList(){
+        return allCategorys.get(0).getGroupLists().get(0);
     }
 
     public String getCategoryTitle(int site){
@@ -113,11 +118,4 @@ public class CategoryList {
         dateChangeTasks.clear();
     }
 
-    public void BindDatas(){
-        for (CategoryBase category : allCategorys) {
-            for (GroupListBase groupList : category.getGroupLists()) {
-                groupList.BindDatas();
-            }
-        }
-    }
 }

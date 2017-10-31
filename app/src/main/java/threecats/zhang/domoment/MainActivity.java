@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -26,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     //public List<Task> taskList = new ArrayList<>();
     private Application app;
     private BottomNavigationView navigation;
-    private TodoFragment todoFragment = new TodoFragment();
-    private MomentFragment momentFragment = new MomentFragment();
-    private FocusFragment focusFragment = new FocusFragment();
+    private TodoFragment todoFragment;
+    private MomentFragment momentFragment;
+    private FocusFragment focusFragment;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
@@ -45,9 +46,23 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(savedInstanceState.getInt("BottomNavigationView"));
         } else {
             //以后根据设置的参数来判断是首先进入哪一个活动（任务、回顾、关注）
-            mountFragment(todoFragment);
             //mountFragment(momentFragment);
         }
+
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        if (todoFragment == null) todoFragment = new TodoFragment();
+        if (momentFragment == null) momentFragment = new MomentFragment();
+        if (focusFragment == null) focusFragment = new FocusFragment();
+        mountFragment(todoFragment);
+        return super.onCreateView(parent, name, context, attrs);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 

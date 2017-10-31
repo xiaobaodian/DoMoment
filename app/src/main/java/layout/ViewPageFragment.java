@@ -40,7 +40,7 @@ public abstract class ViewPageFragment extends TitleFragment {
         this.title = title;
     }
     public String getTitle(){
-        if (groupList == null) return "aaaa";
+        if (groupList == null) return "UUUUUU";
         return title;
     }
 
@@ -52,7 +52,7 @@ public abstract class ViewPageFragment extends TitleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(fragmentLayoutID, container, false);
-        //BindDatas();
+        BindDatas();
         return fragmentView;
     }
 
@@ -61,11 +61,11 @@ public abstract class ViewPageFragment extends TitleFragment {
     }
 
     public void BindDatas(){
-        if (fragmentView == null) return;
+        if (fragmentView == null || groupList == null) return;
         RecyclerView recyclerView = fragmentView.findViewById(recyclerViewID);
         try {
             groupList.BindRecyclerView(recyclerView, groupListAdapter, fragmentView);
-            //TouchMode下默认没有Focus，只有设置如下才能获取OnFocusChange事件
+            //TouchMode（即手机触摸屏模式）下默认没有Focus，只有设置如下才能获取OnFocusChange事件
             recyclerView.setFocusableInTouchMode(true);
             recyclerView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
