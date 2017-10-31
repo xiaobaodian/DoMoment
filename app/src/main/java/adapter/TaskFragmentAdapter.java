@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import layout.TitleFragment;
-import layout.ViewFragment;
 
 /**
  * Created by zhang on 2017/7/31.

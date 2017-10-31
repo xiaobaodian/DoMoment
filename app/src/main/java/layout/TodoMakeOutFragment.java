@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import DataStructures.CategoryBase;
+import ENUM.GroupListType;
+import adapter.NoDateAdapter;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
 /**
 
  */
-public class TodoMakeOutFragment extends TitleFragment {
+public class TodoMakeOutFragment extends ViewPageFragment {
 
     private String title = DoMoment.getRString(R.string.grouplist_completed_title);
 
@@ -31,6 +34,10 @@ public class TodoMakeOutFragment extends TitleFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_todo_makeout, container, false);
+    }
+
+    public void linkCategory(CategoryBase category){
+
     }
 
     public int getTaskCount(){

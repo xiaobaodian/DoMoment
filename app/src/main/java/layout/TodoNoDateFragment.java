@@ -13,52 +13,25 @@ import DataStructures.GroupListBase;
 import DataStructures.NoDateGroupList;
 import ENUM.GroupListType;
 import adapter.NoDateAdapter;
+import adapter.OverdueAdapter;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
 /**
 
  */
-public class TodoNoDateFragment extends TitleFragment {
-
-    private View fragmentView;
-    private GroupListBase noDateGroupList = null;
+public class TodoNoDateFragment extends ViewPageFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentLayoutID = R.layout.fragment_todo_nodate;
+        recyclerViewID = R.id.NoDateRecyclerView;
     }
 
-    @Override
-    public String getTitle(){
-        return DoMoment.getRString(R.string.grouplist_nodate_title);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.fragment_todo_nodate, container, false);
+    public void linkCategory(CategoryBase category){
+        setGroupList(category.getGroupList(GroupListType.Nodate));
+        groupListAdapter = new NoDateAdapter(groupList.getRecyclerViewItems());
         BindDatas();
-        return fragmentView;
     }
-
-    public void BindDatas(){
-        if (fragmentView == null) return;
-        noDateGroupList = DoMoment.getCurrentCategory().getGroupList(GroupListType.Nodate);
-
-        try {
-            RecyclerView recyclerView = fragmentView.findViewById(R.id.NoDateRecyclerView);
-            //NoDateAdapter GroupListAdapter = new NoDateAdapter(noDateGroupList.getRecyclerViewItems());
-            NoDateAdapter groupListAdapter = new NoDateAdapter(noDateGroupList.getRecyclerViewItems());
-            noDateGroupList.BindRecyclerView(recyclerView, groupListAdapter, fragmentView);
-        } catch (Exception e){
-            Toast.makeText(fragmentView.getContext(),"NoDate Groups is Null",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public int getTaskCount(){
-        if (noDateGroupList == null) return 0;
-        return noDateGroupList.getTaskCount();
-    }
-
 }

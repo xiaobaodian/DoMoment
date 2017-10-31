@@ -1,15 +1,11 @@
 package threecats.zhang.domoment;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -21,14 +17,9 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import DataStructures.CategoryBase;
-import DataStructures.GroupBase;
-import DataStructures.GroupListBase;
 import DataStructures.Task;
-import ENUM.DATEFORMAT;
 import ENUM.OneDayBase;
 import layout.TitleFragment;
-import layout.ViewFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
 

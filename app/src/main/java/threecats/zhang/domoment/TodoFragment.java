@@ -1,6 +1,7 @@
 package threecats.zhang.domoment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -38,6 +39,7 @@ import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
 import layout.TodoOverDueFragment;
 import layout.TodoTimeLineFragment;
+import layout.ViewPageFragment;
 
 /**
  * Created by zhang on 2017/7/25.
@@ -61,8 +63,7 @@ public class TodoFragment extends Fragment {
     private TodoOverDueFragment overDueFragment;
     private TodoNoDateFragment noDateFragment;
     private TodoMakeOutFragment makeOutFragment;
-    private List<TitleFragment> viewFragmentList;
-    private List<String> viewFragmentTitle;
+    private List<ViewPageFragment> viewFragmentList;
     private ProgressBar progressBar;
     private View thisView;
 
@@ -70,13 +71,10 @@ public class TodoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DoMoment.getDataManger().setTodoFragment(this);
-        currentCategory = DoMoment.getCurrentCategory();
-
+        //currentCategory = DoMoment.getCurrentCategory();
         //setRetainInstance(true);
 
         viewFragmentList = new ArrayList<>();
-        viewFragmentTitle = new ArrayList<>();
-
         timeLineFragment = new TodoTimeLineFragment();
         overDueFragment = new TodoOverDueFragment();
         noDateFragment = new TodoNoDateFragment();
@@ -89,14 +87,11 @@ public class TodoFragment extends Fragment {
 
         DoMoment.getDataManger().LoadDatas();
         //new LoadDatas().execute();
-
-
         if (savedInstanceState != null) {
             //Toast.makeText(getActivity(),"TabID:"+savedInstanceState.getInt("tablayout"),Toast.LENGTH_SHORT).show();
         } else {
             //Toast.makeText(getActivity(), "on Create", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -108,11 +103,11 @@ public class TodoFragment extends Fragment {
         AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
         viewTabLayout = view.findViewById(R.id.ViewTabLayout);
         toolbar = view.findViewById(R.id.todo_toolbar);
-        //toolbar.inflateMenu(R.menu.todo_toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        //mAppCompatActivity.setSupportActionBar(toolbar);
+        //setHasOptionsMenu(true);
         FloatingActionButton addActionButton = view.findViewById(R.id.AddActionButton);
-
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -135,8 +130,6 @@ public class TodoFragment extends Fragment {
             }
         });
 
-        //mAppCompatActivity.setSupportActionBar(toolbar);
-        //setHasOptionsMenu(true);
         toolbar.setOnClickListener(v -> {
             drawerLayout.openDrawer(GravityCompat.START);
             //Toast.makeText(v.getContext(), "点击了工具栏",Toast.LENGTH_SHORT).show();
@@ -150,11 +143,11 @@ public class TodoFragment extends Fragment {
         });
 
         collapsingToolbar = view.findViewById(R.id.todo_collapsing_toolbar);
-        if (currentCategory != null){
-            SetGroupListTitle(currentCategory.getTitle());
-            ImageView themebackground = view.findViewById(R.id.todo_appbar_image);
-            themebackground.setImageResource(currentCategory.getThemeBackground());
-        }
+//        if (currentCategory != null){
+//            SetGroupListTitle(currentCategory.getTitle());
+//            ImageView themebackground = view.findViewById(R.id.todo_appbar_image);
+//            themebackground.setImageResource(currentCategory.getThemeBackground());
+//        }
 
 
         collapsingToolbar.setOnClickListener(new View.OnClickListener(){
@@ -201,12 +194,7 @@ public class TodoFragment extends Fragment {
 
         viewPager = view.findViewById(R.id.todo_viewpager);
         viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(),viewFragmentList));
-
-        //tabLayout = view.findViewById(R.id.todo_tabLayout);
-        //tabLayout.setupWithViewPager(viewPager);
-
         viewTabLayout.setupWithViewPager(viewPager);
-
         viewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -237,13 +225,24 @@ public class TodoFragment extends Fragment {
 
             }
         });
-        TabLayout.Tab tab = viewTabLayout.getTabAt(1);
-        tab.select();
-        tab = viewTabLayout.getTabAt(0);
-        tab.select();
+//        TabLayout.Tab tab = viewTabLayout.getTabAt(1);
+//        tab.select();
+//        tab = viewTabLayout.getTabAt(0);
+//        tab.select();
 
         BuildsCategoryList(view);
-        DoMoment.getDataManger().LoadDatas();
+        //DoMoment.getDataManger().LoadDatas();
+        if (currentCategory == null){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setCurrentCategory();
+                    GroupListBase currentGroupList = currentCategory.getGroupList(GroupListType.TimeLine);
+                    DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
+                }
+            },500);
+
+        }
 
         return view;
     }
@@ -302,9 +301,19 @@ public class TodoFragment extends Fragment {
         ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
         themebackground.setImageResource(currentCategory.getThemeBackground());
 
-        timeLineFragment.BindDatas();
-        overDueFragment.BindDatas();
-        noDateFragment.BindDatas();
+        timeLineFragment.linkCategory(currentCategory);
+        timeLineFragment.LinkTab(viewTabLayout.getTabAt(0));
+
+        overDueFragment.linkCategory(currentCategory);
+        overDueFragment.LinkTab(viewTabLayout.getTabAt(1));
+
+        noDateFragment.linkCategory(currentCategory);
+        noDateFragment.LinkTab(viewTabLayout.getTabAt(2));
+
+
+        //timeLineFragment.BindDatas();
+        //overDueFragment.BindDatas();
+        //noDateFragment.BindDatas();
 
     }
 
