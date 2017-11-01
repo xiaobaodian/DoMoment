@@ -72,6 +72,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         //GroupListBase currentGroupList = DoMoment.getDataManger().getCurrentGroupList();
                         //currentGroupList.setItemChecked(false);
                         //GroupListType type = currentGroupList.getType();
+                        DoMoment.getCurrentCategory().UnBind();
                         DoMoment.getDataManger().setCurrentCategory(category);
                         //DoMoment.getDataManger().setCurrentGroupList(category.getGroupList(type));
                     }

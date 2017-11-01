@@ -290,6 +290,11 @@ public abstract class GroupListBase {
         recyclerView.setAdapter(GroupListAdapter);
     }
 
+    public void UnBind(){
+        GroupListAdapter = null;
+        GroupListRecyclerView = null;
+    }
+
     public void BindDatas(){
         if (GroupListRecyclerView != null) {
             GroupListRecyclerView.setAdapter(GroupListAdapter);

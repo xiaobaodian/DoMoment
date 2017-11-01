@@ -71,4 +71,12 @@ public abstract class CategoryBase extends ItemBase {
         return GroupLists;
     }
 
+
+    public void UnBind(){
+        for (GroupListBase groupList : GroupLists){
+            groupList.UnBind();
+        }
+    }
+
+
 }
