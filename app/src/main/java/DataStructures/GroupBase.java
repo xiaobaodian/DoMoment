@@ -193,12 +193,16 @@ public abstract class GroupBase extends ListItemBase {
         task.addParentGroup(this);
         tasks.add(task);
         if (State == DisplayState.Hide) State = DisplayState.Show;
-        return tasks.size();      //返回加入的任务的位置序号，便于组列表处理
+        return tasks.size();      //返回加入的任务的位置序号，便于组列表处理（0位是组标题）
     }
     public int InsertTask(Task task){
+        //return AddTask(task);
+
         task.addParentGroup(this);
         int post = 0;
         if (tasks.size() == 0) {
+            post = AddTask(task);
+        } else if(task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
             post = AddTask(task);
         } else {
             Task nTask;
@@ -210,8 +214,9 @@ public abstract class GroupBase extends ListItemBase {
                 }
             }
             tasks.add(post, task);
-            post++;
+            post += 1;
         }
+        if (State == DisplayState.Hide) State = DisplayState.Show;
         return post;
     }
     

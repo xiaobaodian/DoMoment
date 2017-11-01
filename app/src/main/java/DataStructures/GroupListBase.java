@@ -127,13 +127,19 @@ public abstract class GroupListBase {
         }
     }
     private void HideGroup(GroupBase group){
-        if (group.getTaskCount() > 0) {
-            return;
+        if (group.getTaskCount() > 0) return;
+        if (group.SiteID > recyclerViewItems.size() - 1) {
+            int s = recyclerViewItems.size();
         }
-        recyclerViewItems.remove(group.SiteID);
-        if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(group.SiteID);
-        group.State = DisplayState.Hide;
-        CalculatorTitleSite();
+        if (group == recyclerViewItems.get(group.SiteID)) {
+            recyclerViewItems.remove(group.SiteID);
+            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(group.SiteID);
+            group.State = DisplayState.Hide;
+            CalculatorTitleSite();
+        } else {
+            DoMoment.Toast("HideGroup出现错误");
+        }
+
         UpdateTitleMessage();
     }
     private void ActiveGroup(GroupBase group){
@@ -195,9 +201,10 @@ public abstract class GroupListBase {
                 if (group.State == DisplayState.Hide) {
                     ActiveGroup(group);
                 }
-                int site = group.InsertTask(task);
+                //int site = group.InsertTask(task);
+                int site = group.AddTask(task);
                 AddTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目
-                //SortGroup(group);
+                SortGroup(group);
                 isOK = true;
             }
         }
@@ -254,9 +261,15 @@ public abstract class GroupListBase {
     }
     private void RemoveTaskFromListItems(GroupBase group, int position, Task task){
         int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
-        recyclerViewItems.remove(site);
-        if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
-        CalculatorTitleSite();
+        Task ntask = (Task) recyclerViewItems.get(site);
+        if (ntask == task) {
+            recyclerViewItems.remove(site);
+            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
+            CalculatorTitleSite();
+        } else {
+            DoMoment.Toast("GroupListBase中删除Task与ListItems不符");
+        }
+
 
         //测试用，更新显示组头的位置序号
         UpdateTitleMessage();
