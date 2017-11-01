@@ -152,7 +152,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         if (isChanged) {
             DoMoment.getDataManger().ChangeTask(task);
         } else {
-            DoMoment.getDataManger().UpdateTask(task);
+            //DoMoment.getDataManger().UpdateTask(task);
         }
         //======
     }

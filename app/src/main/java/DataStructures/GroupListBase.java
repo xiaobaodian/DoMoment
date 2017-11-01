@@ -128,18 +128,23 @@ public abstract class GroupListBase {
     }
     private void HideGroup(GroupBase group){
         if (group.getTaskCount() > 0) return;
-        if (group.SiteID > recyclerViewItems.size() - 1) {
-            //int s = recyclerViewItems.size();
-            return;
+        int site = recyclerViewItems.indexOf(group);
+        if (site >=0 ) {
+            recyclerViewItems.remove(site);
+            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
         }
-        if (group == recyclerViewItems.get(group.SiteID)) {
-            recyclerViewItems.remove(group.SiteID);
-            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(group.SiteID);
-            group.State = DisplayState.Hide;
-            CalculatorTitleSite();
-        } else {
-            DoMoment.Toast("HideGroup出现错误");
-        }
+//        if (group.SiteID > recyclerViewItems.size() - 1) {
+//            //int s = recyclerViewItems.size();
+//            return;
+//        }
+//        if (group == recyclerViewItems.get(group.SiteID)) {
+//            recyclerViewItems.remove(group.SiteID);
+//            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(group.SiteID);
+//            group.State = DisplayState.Hide;
+//            CalculatorTitleSite();
+//        } else {
+//            DoMoment.Toast("HideGroup出现错误");
+//        }
 
         UpdateTitleMessage();
     }
@@ -226,8 +231,9 @@ public abstract class GroupListBase {
         //task.getParentGroups().remove(group);  这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
         int site = group.RemoveTask(task);
         if (site >= 0) RemoveTaskFromListItems(group, site, task);
-        if (group.getTaskCount() == 0) HideGroup(group);
         CalculatorTitleSite();
+        if (group.getTaskCount() == 0) HideGroup(group);
+        //CalculatorTitleSite();
     }
 
     //下面是供RecycleView使用的列表(displayItems)的管理
@@ -261,15 +267,22 @@ public abstract class GroupListBase {
         UpdateTitleMessage();
     }
     private void RemoveTaskFromListItems(GroupBase group, int position, Task task){
-        int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
-        Task ntask = (Task) recyclerViewItems.get(site);
-        if (ntask == task) {
+        int site = recyclerViewItems.indexOf(task);
+        if (site>=0) {
             recyclerViewItems.remove(site);
             if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
-            CalculatorTitleSite();
-        } else {
-            DoMoment.Toast("GroupListBase中删除Task与ListItems不符");
         }
+//        CalculatorTitleSite();
+//        int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
+//        Task ntask = (Task) recyclerViewItems.get(site);
+//        if (ntask == task) {
+//            recyclerViewItems.remove(site);
+//            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
+//            CalculatorTitleSite();
+//        } else {
+
+//            DoMoment.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
+//        }
 
 
         //测试用，更新显示组头的位置序号

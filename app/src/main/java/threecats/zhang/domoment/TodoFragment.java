@@ -34,7 +34,6 @@ import DataStructures.Task;
 import ENUM.GroupListType;
 import adapter.CategoryAdapter;
 import adapter.todoFragmentAdapter;
-import layout.TitleFragment;
 import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
 import layout.TodoOverDueFragment;
@@ -63,7 +62,7 @@ public class TodoFragment extends Fragment {
     private TodoOverDueFragment overDueFragment;
     private TodoNoDateFragment noDateFragment;
     private TodoMakeOutFragment makeOutFragment;
-    private List<ViewPageFragment> viewFragmentList;
+    private List<ViewPageFragment> fragmentList;
     private ProgressBar progressBar;
     private View thisView;
 
@@ -74,16 +73,16 @@ public class TodoFragment extends Fragment {
         //currentCategory = DoMoment.getCurrentCategory();
         //setRetainInstance(true);
 
-        viewFragmentList = new ArrayList<>();
+        fragmentList = new ArrayList<>();
         timeLineFragment = new TodoTimeLineFragment();
         overDueFragment = new TodoOverDueFragment();
         noDateFragment = new TodoNoDateFragment();
         makeOutFragment = new TodoMakeOutFragment();
 
-        viewFragmentList.add(timeLineFragment);
-        viewFragmentList.add(overDueFragment);
-        viewFragmentList.add(noDateFragment);
-        viewFragmentList.add(makeOutFragment);
+        fragmentList.add(timeLineFragment);
+        fragmentList.add(overDueFragment);
+        fragmentList.add(noDateFragment);
+        fragmentList.add(makeOutFragment);
 
         //DoMoment.getDataManger().LoadDatas();
         //new LoadDatas().execute();
@@ -100,7 +99,7 @@ public class TodoFragment extends Fragment {
         thisView = view;
         drawerLayout = view.findViewById(R.id.drawer_layout);
         progressBar = view.findViewById(R.id.LoadDatasprogressBar);
-        AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
+        //AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
         viewTabLayout = view.findViewById(R.id.ViewTabLayout);
         toolbar = view.findViewById(R.id.todo_toolbar);
         setHasOptionsMenu(true);
@@ -193,7 +192,7 @@ public class TodoFragment extends Fragment {
         });
 
         viewPager = view.findViewById(R.id.todo_viewpager);
-        viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(),viewFragmentList));
+        viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(), fragmentList));
         viewTabLayout.setupWithViewPager(viewPager);
         viewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

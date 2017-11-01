@@ -198,30 +198,30 @@ public abstract class GroupBase extends ListItemBase {
     public int InsertTask(Task task){
         //return AddTask(task);
         task.addParentGroup(this);
-        int post = 0;
+        int site = 0;
         if (tasks.size() == 0) {
-            post = AddTask(task);
+            site = AddTask(task);
         } else if(task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
-            post = AddTask(task);
+            site = AddTask(task);
         } else {
             Task nTask;
             for (int i = 0; i <tasks.size(); i++) {
                 nTask = tasks.get(i);
                 if (task.compareTo(nTask) < 0) {
-                    post = i + 1;
+                    site = i + 1;
                     break;
                 }
             }
-            tasks.add(post, task);
+            tasks.add(site, task);
         }
         if (State == DisplayState.Hide) State = DisplayState.Show;
-        return post;
+        return site;
     }
     
     public int RemoveTask(Task task){
-        int post = tasks.indexOf(task);
-        if(post >= 0) tasks.remove(post);
-        return post;
+        int site = tasks.indexOf(task);
+        if(site >= 0) tasks.remove(site);
+        return site;
     }
     public int getTaskCount(){
         return tasks.size();
