@@ -129,7 +129,8 @@ public abstract class GroupListBase {
     private void HideGroup(GroupBase group){
         if (group.getTaskCount() > 0) return;
         if (group.SiteID > recyclerViewItems.size() - 1) {
-            int s = recyclerViewItems.size();
+            //int s = recyclerViewItems.size();
+            return;
         }
         if (group == recyclerViewItems.get(group.SiteID)) {
             recyclerViewItems.remove(group.SiteID);
@@ -201,10 +202,10 @@ public abstract class GroupListBase {
                 if (group.State == DisplayState.Hide) {
                     ActiveGroup(group);
                 }
-                //int site = group.InsertTask(task);
-                int site = group.AddTask(task);
+                int site = group.InsertTask(task);
+                //int site = group.AddTask(task);
                 AddTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目
-                SortGroup(group);
+                //SortGroup(group);
                 isOK = true;
             }
         }

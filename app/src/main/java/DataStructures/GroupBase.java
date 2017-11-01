@@ -197,7 +197,6 @@ public abstract class GroupBase extends ListItemBase {
     }
     public int InsertTask(Task task){
         //return AddTask(task);
-
         task.addParentGroup(this);
         int post = 0;
         if (tasks.size() == 0) {
@@ -207,14 +206,13 @@ public abstract class GroupBase extends ListItemBase {
         } else {
             Task nTask;
             for (int i = 0; i <tasks.size(); i++) {
-                post = i;
-                nTask = tasks.get(post);
+                nTask = tasks.get(i);
                 if (task.compareTo(nTask) < 0) {
+                    post = i + 1;
                     break;
                 }
             }
             tasks.add(post, task);
-            post += 1;
         }
         if (State == DisplayState.Hide) State = DisplayState.Show;
         return post;

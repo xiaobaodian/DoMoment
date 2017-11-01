@@ -47,14 +47,20 @@ public abstract class CategoryBase extends ItemBase {
     public void AddTask(Task task){
         if ( ! InCategory(task)) return;
         for (GroupListBase groupList : GroupLists) {
-            if (groupList.InGroupList(task)) groupList.AddTask(task);
+            if (groupList.InGroupList(task)) {
+                groupList.AddTask(task);
+                break;
+            }
         }
     }
 
     public void InsertTask(Task task){
         if ( ! InCategory(task)) return;
         for (GroupListBase groupList : GroupLists) {
-            if (groupList.InGroupList(task)) groupList.InsertTask(task);
+            if (groupList.InGroupList(task)){
+                groupList.InsertTask(task);
+                break;
+            }
         }
     }
 
