@@ -91,6 +91,7 @@ public class TodoFragment extends Fragment {
         } else {
             //Toast.makeText(getActivity(), "on Create", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
@@ -142,20 +143,10 @@ public class TodoFragment extends Fragment {
         });
 
         collapsingToolbar = view.findViewById(R.id.todo_collapsing_toolbar);
-//        if (currentCategory != null){
-//            SetGroupListTitle(currentCategory.getTitle());
-//            ImageView themebackground = view.findViewById(R.id.todo_appbar_image);
-//            themebackground.setImageResource(currentCategory.getThemeBackground());
-//        }
-
-
         collapsingToolbar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 drawerLayout.openDrawer(GravityCompat.START);
-
-                //Task task = DoMoment.getDataManger().getCurrentTask();
-                //Toast.makeText(DoMoment.getContext(),"Click "+task.getTitle()+" -> "+task.getParentGroups().size(),Toast.LENGTH_SHORT).show();
 
                 //更新记录测试
                 //if (DoMoment.getDataManger().getCurrentTask() == null) return;
@@ -230,17 +221,8 @@ public class TodoFragment extends Fragment {
 //        tab.select();
 
         BuildsCategoryList(view);
-        //DoMoment.getDataManger().LoadDatas();
-        if (currentCategory == null){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setCurrentCategory();
-                }
-            },500);
 
-        }
-
+        setCurrentCategory();
         return view;
     }
 

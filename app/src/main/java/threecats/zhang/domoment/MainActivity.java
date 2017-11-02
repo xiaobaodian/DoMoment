@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private MomentFragment momentFragment;
     private FocusFragment focusFragment;
     private FragmentManager fragmentManager = getSupportFragmentManager();
+    private int OP = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
             //以后根据设置的参数来判断是首先进入哪一个活动（任务、回顾、关注）
             //mountFragment(momentFragment);
         }
-
+        mountFragment(todoFragment);
+        OP++;
+        DoMoment.Toast("Main Menu: "+OP);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         if (todoFragment == null) todoFragment = new TodoFragment();
         if (momentFragment == null) momentFragment = new MomentFragment();
         if (focusFragment == null) focusFragment = new FocusFragment();
-        mountFragment(todoFragment);
+
         return super.onCreateView(parent, name, context, attrs);
     }
 
@@ -104,10 +107,11 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void mountFragment(Fragment frament){
-        //FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.main_frament, frament);
-        ft.commit();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frament, frament);
+        fragmentTransaction.commit();
+        //OP++;
+        //DoMoment.Toast("Main Menu: "+OP);
     }
 
     public void setMainToolBar(Toolbar toolbar){

@@ -157,9 +157,9 @@ public class TaskBase extends ListItemBase implements Comparable{
 
     public int compareTo(Object task) {// 实现Comparator接口的方法
         TaskBase taskBase = (TaskBase)task;
-        if (this.IsAllDay() && taskBase.IsAllDay()) {
-            return this.createDateTime.compareTo(taskBase.getCreateDateTime());
-        }
+        //if (this.IsAllDay() && taskBase.IsAllDay()) {
+        //    return this.createDateTime.compareTo(taskBase.getCreateDateTime());
+        //}
         if (!this.IsAllDay() && taskBase.IsAllDay()) return 1;
         if (this.IsAllDay() && !taskBase.IsAllDay()) return -1;
         return this.startDateTime.compareTo(taskBase.startDateTime);

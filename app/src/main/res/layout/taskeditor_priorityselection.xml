@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/PriorityDialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingEnd="5dp"
@@ -15,7 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/touch_bg"
         android:clickable="true"
         android:orientation="vertical"
         android:paddingBottom="6dp"
@@ -28,19 +29,16 @@
             android:id="@+id/tvUrgent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/touch_bg"
+            android:backgroundTint="@color/colorPrimary"
             android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:checkMarkTint="@color/primary_lighttext"
             android:gravity="center_vertical"
             android:text="紧急"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/primary_lighttext"
             android:textSize="14sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="此级别的任务很急迫，需要优先处理，最佳的做法是立即完成该任务"
-            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -50,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/touch_bg"
         android:clickable="true"
         android:orientation="vertical"
         android:paddingBottom="6dp"
@@ -62,19 +59,16 @@
             android:id="@+id/tvVeryImprotant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/touch_bg"
+            android:backgroundTint="@color/colorPrimary"
             android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:checkMarkTint="@color/primary_lighttext"
             android:gravity="center_vertical"
             android:text="非常重要"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/primary_lighttext"
             android:textSize="14sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="此级别的任务很重要，需要特别重视，应当保证在指定的时间内稳妥地完成"
-            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -84,7 +78,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/touch_bg"
         android:clickable="true"
         android:orientation="vertical"
         android:paddingBottom="6dp"
@@ -96,19 +89,16 @@
             android:id="@+id/tvImprotant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/touch_bg"
+            android:backgroundTint="@color/colorPrimary"
             android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:checkMarkTint="@color/primary_lighttext"
             android:gravity="center_vertical"
             android:text="重要"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/primary_lighttext"
             android:textSize="14sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="此级别的任务应给予特别地关注，时常回顾一下，并洞察实施环境，在最恰当的时刻完成它！"
-            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -118,7 +108,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/touch_bg"
         android:clickable="true"
         android:orientation="vertical"
         android:paddingBottom="6dp"
@@ -130,19 +119,16 @@
             android:id="@+id/tvFocus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/touch_bg"
+            android:backgroundTint="@color/colorPrimary"
             android:checkMark="?android:attr/listChoiceIndicatorSingle"
+            android:checkMarkTint="@color/primary_lighttext"
             android:gravity="center_vertical"
             android:text="关注"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/primary_lighttext"
             android:textSize="14sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="这是常规的任务，按照日常的习惯完成就好了"
-            android:textSize="12sp" />
 
     </LinearLayout>
 </LinearLayout>
