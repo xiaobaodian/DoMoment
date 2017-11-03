@@ -3,13 +3,13 @@ package DataStructures;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import ENUM.TaskPriority;
 import Sqlite.SQLManger;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.TodoFragment;
@@ -25,7 +25,8 @@ public class DataManger {
     private CategoryBase currentCategory;
     private GroupListBase currentGroupList;
     private GroupBase currentGroup;
-    private Task currentTask;
+    private Task currentTask = null;
+    private Task editorTask = null;
     private TodoFragment todoFragment;
     private boolean isDataloaded;
 
@@ -55,6 +56,25 @@ public class DataManger {
         //new LoadDatas().execute();
         Load();
         isDataloaded = true;
+    }
+
+    public void setEditorTask(Task task){
+        editorTask = task;
+    }
+    public Task getEditorTask(){
+        return  editorTask == null ? currentTask : editorTask;
+    }
+    public boolean hasEditorTask(){
+        return editorTask != null;
+    }
+    public void commitEditorTask(){
+        if (hasEditorTask()){
+            AddTask(editorTask);
+            AddTaskToDataBase(editorTask);
+        } else {
+            ChangeTask(currentTask);
+        }
+        editorTask = null;
     }
 
     public void setTodoFragment(TodoFragment todoFragment){
@@ -149,7 +169,7 @@ public class DataManger {
     private void RemoveTaskDBItem(SQLiteDatabase db, Task task){
         db.delete("Tasks", "id = ?", new String[]{task.getID()+""});
     }
-    public void RemoveTasksDB(List<Task> tasks){
+    private void RemoveTasksDB(List<Task> tasks){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         for (Task task : tasks) {
             RemoveTaskDBItem(db, task);
@@ -288,4 +308,22 @@ public class DataManger {
         }
         db.close();
     }
+
+    class EditorPoint {
+        private Task task;
+        private int categoryID;
+        private long titleHash;
+        private long placeHask;
+        private TaskPriority priority;
+
+        EditorPoint(Task task){
+            this.task = task;
+            categoryID = task.getCategoryID();
+            titleHash = task.getTitle().hashCode();
+            placeHask = task.getPlace().hashCode();
+            priority = task.getPriority();
+        }
+
+    }
+
 }

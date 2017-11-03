@@ -1,6 +1,5 @@
 package adapter;
 
-import java.util.Calendar;
 import java.util.List;
 
 import DataStructures.GroupBase;
@@ -22,7 +21,7 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
     }
     @Override
     protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
-        holder.setText(R.id.taskTitle, task.getTitle()).setText(R.id.taskPlace, task.getPlace());
+        holder.setText(R.id.taskTitle, task.getTitle()).setText(R.id.taskPlace, task.getPlace()+task.getParentGroup().size());
         String datetimeRange = "";
         if (groupType == GroupType.toDay || groupType == GroupType.Tomorrow ||groupType == GroupType.AfterTomorrow) {
             datetimeRange = task.getTimeRange();

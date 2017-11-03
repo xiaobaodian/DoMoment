@@ -66,7 +66,7 @@ public abstract class CategoryBase extends ItemBase {
 
     public void UpdateTask(Task task){
 
-        //GroupBase group = task.getParentGroups();
+        //GroupBase group = task.getParentGroup();
         //GroupListBase viewGroup = group.getParent();
         //viewGroup.ChangeTask(task);
         //viewGroup.ChangeTask(task);

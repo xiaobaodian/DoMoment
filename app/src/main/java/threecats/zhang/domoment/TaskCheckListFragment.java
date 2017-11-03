@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import DataStructures.Task;
 import layout.TitleFragment;
 
 public class TaskCheckListFragment extends TitleFragment {
+    private Task task = DoMoment.getDataManger().getEditorTask();
 
     @Override
     public String getTitle(){

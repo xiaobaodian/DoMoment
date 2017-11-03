@@ -37,7 +37,7 @@ import layout.TitleFragment;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
-    private final Task task = DoMoment.getDataManger().getCurrentTask();
+    private Task task = DoMoment.getDataManger().getEditorTask();
     private int oldCategoryID;
     private TaskPriority oldPriority;
     private EditText etTaskTitle;
@@ -62,9 +62,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         btnPriority = (Button)findViewById(R.id.btnPriority);
         taskTab = (TabLayout)findViewById(R.id.lTaskTab);
         viewPager = (ViewPager)findViewById(R.id.lTaskPager);
-        editToolbar.setNavigationOnClickListener(view -> {
-            finish();
-        });
+        editToolbar.setNavigationOnClickListener(view -> {finish();});
         btnCategory.setOnClickListener(view -> {
             setTaskCategory();
         });
@@ -132,28 +130,29 @@ public class TaskDisplayActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         task.setTitle(etTaskTitle.getText().toString());
+        DoMoment.getDataManger().commitEditorTask();
         //======
-        boolean isChanged = true;
-        if (oldCategoryID == task.getCategoryID() && oldPriority == task.getPriority()) {
-            for (GroupBase group : task.getParentGroups()) {
-                GroupListBase groupList = group.getParent();
-                CategoryBase category = groupList.getParent();
-                if (category.InCategory(task)) {
-                    if (groupList.InGroupList(task)) {
-                        if (group.InGroup(task)) {
-                            isChanged = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        //task.getStartDateTimeDB() != hashStartDateTime || task.getDueDateTimeDB() != hashDueDateTime || hashIsNoDate != task.IsNoDate()
-        if (isChanged) {
-            DoMoment.getDataManger().ChangeTask(task);
-        } else {
-            //DoMoment.getDataManger().UpdateTask(task);
-        }
+//        boolean isChanged = true;
+//        if (oldCategoryID == task.getCategoryID() && oldPriority == task.getPriority()) {
+//            for (GroupBase group : task.getParentGroup()) {
+//                GroupListBase groupList = group.getParent();
+//                CategoryBase category = groupList.getParent();
+//                if (category.InCategory(task)) {
+//                    if (groupList.InGroupList(task)) {
+//                        if (group.InGroup(task)) {
+//                            isChanged = false;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        //task.getStartDateTimeDB() != hashStartDateTime || task.getDueDateTimeDB() != hashDueDateTime || hashIsNoDate != task.IsNoDate()
+//        if (isChanged) {
+//            DoMoment.getDataManger().ChangeTask(task);
+//        } else {
+//            //DoMoment.getDataManger().UpdateTask(task);
+//        }
         //======
     }
 

@@ -3,8 +3,6 @@ package DataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
-import threecats.zhang.domoment.DoMoment;
-
 /**
  * Created by zhang on 2017/10/27.
  */
@@ -68,12 +66,11 @@ public class CategoryList {
 
     public void RemoveTask(Task task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
-        for (GroupBase group : task.getParentGroups()) {
+        for (GroupBase group : task.getParentGroup()) {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);
         }
-        task.clearParentGroups();
-        //task.getParentGroups().clear();
+        task.clearParentGroup();
     }
 
     public void ChangeTask(Task task){
@@ -82,7 +79,7 @@ public class CategoryList {
     }
 
     public void UpdateTask(Task task){
-        for (GroupBase group : task.getParentGroups()) {
+        for (GroupBase group : task.getParentGroup()) {
             GroupListBase groupList = group.getParent();
             groupList.SortGroup(group);
         }

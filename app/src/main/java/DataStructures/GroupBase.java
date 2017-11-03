@@ -131,17 +131,17 @@ public abstract class GroupBase extends ListItemBase {
             //if (!previousTimePoint.before(timePoint) ) { timePoint = previousTimePoint; }
             //isEmpty = nextTimePoint.after(timePoint) ? false : true;
 
-            if ( ! previousGroup.timePoint.before(timePoint)) {
+            if ( !previousGroup.timePoint.before(timePoint)) {
                 timePoint = previousGroup.timePoint;
-                isEmpty = ! timePoint.before(nextGroup.timePoint);
+                //isEmpty = ! timePoint.before(nextGroup.timePoint);
             }
-
+            isEmpty = ! timePoint.before(nextGroup.timePoint);
         } else {
             if ( ! previousGroup.timePoint.after(timePoint)) {
                 timePoint = previousGroup.timePoint;;
-                isEmpty = !timePoint.after(nextGroup.timePoint);
+                //isEmpty = !timePoint.after(nextGroup.timePoint);
             }
-
+            isEmpty = !timePoint.after(nextGroup.timePoint);
         }
 
     }

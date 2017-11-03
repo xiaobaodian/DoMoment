@@ -3,7 +3,6 @@ package threecats.zhang.domoment;
 import java.util.Calendar;
 
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -25,7 +24,6 @@ import DataStructures.CategoryBase;
 import DataStructures.GroupBase;
 import DataStructures.GroupListBase;
 import DataStructures.Task;
-import ENUM.DATEFORMAT;
 import ENUM.OneDayBase;
 
 public class TaskDetailsActivity extends AppCompatActivity {
@@ -326,7 +324,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         task.setPlace(placeBox.getText().toString());
         //======
         boolean isChanged = true;
-        for (GroupBase group : task.getParentGroups()) {
+        for (GroupBase group : task.getParentGroup()) {
             GroupListBase groupList = group.getParent();
             CategoryBase category = groupList.getParent();
             if (category.InCategory(task)) {

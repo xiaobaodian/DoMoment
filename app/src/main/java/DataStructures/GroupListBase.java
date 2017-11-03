@@ -127,33 +127,32 @@ public abstract class GroupListBase {
         }
     }
     private void HideGroup(GroupBase group){
-        if (group.getTaskCount() > 0) return;
-        int site = recyclerViewItems.indexOf(group);
-        if (site >=0 ) {
-            recyclerViewItems.remove(site);
-            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
-        }
-//        if (group.SiteID > recyclerViewItems.size() - 1) {
-//            //int s = recyclerViewItems.size();
-//            return;
-//        }
-//        if (group == recyclerViewItems.get(group.SiteID)) {
-//            recyclerViewItems.remove(group.SiteID);
-//            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(group.SiteID);
-//            group.State = DisplayState.Hide;
-//            CalculatorTitleSite();
-//        } else {
-//            DoMoment.Toast("HideGroup出现错误");
+//        if (group.getTaskCount() > 0) return;
+//        int site = recyclerViewItems.indexOf(group);
+//        if (site >=0 ) {
+//            recyclerViewItems.remove(site);
+//            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
 //        }
 
+        if (group.SiteID > recyclerViewItems.size() - 1) {
+            DoMoment.Toast("Hide Group : group.siteID > size()");
+            return;
+        }
+        if (group == recyclerViewItems.get(group.SiteID)) {
+            recyclerViewItems.remove(group.SiteID);
+            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(group.SiteID);
+            group.State = DisplayState.Hide;
+            CalculatorTitleSite();
+        } else {
+            int a= group.SiteID;
+            GroupBase g = (GroupBase) recyclerViewItems.get(group.SiteID);
+            DoMoment.Toast("HideGroup出现错误");
+        }
         UpdateTitleMessage();
     }
+
     private void ActiveGroup(GroupBase group){
-        if (group.State == DisplayState.Show || group.State == DisplayState.Fold) {
-            return;
-        } else {
-            group.State = DisplayState.Show;
-        }
+        if (group.State == DisplayState.Show || group.State == DisplayState.Fold) return;
         int nextGroupSite = getNextGroupSite(group);
         if (nextGroupSite >= 0) {
             group.SiteID = nextGroupSite;
@@ -165,17 +164,16 @@ public abstract class GroupListBase {
             group.SiteID = recyclerViewItems.size() - 1;
             if (isBindRecyclerView()) GroupListAdapter.notifyDataSetChanged();
         }
+        group.State = DisplayState.Show;
     }
+
     private int getNextGroupSite(GroupBase group){
-        int nextGroupSite = -2;
+        int nextGroupSite = -1;
+        boolean beforeGroup = true;
         for (GroupBase currentGroup : groups) {
-            if (nextGroupSite == -2) {
-                if (currentGroup != group) {
-                    continue;
-                } else {
-                    nextGroupSite = -1;
-                    continue;
-                }
+            if (beforeGroup) {
+                if (currentGroup == group) beforeGroup = false;
+                continue;
             }
             if (currentGroup.State == DisplayState.Show) {
                 nextGroupSite = currentGroup.SiteID;
@@ -224,16 +222,22 @@ public abstract class GroupListBase {
             }
         }
     }
+
     public void RemoveTask(GroupBase group, Task task){
         RemoveTaskFromGroup(group, task);
     }
+
     private void RemoveTaskFromGroup(GroupBase group, Task task){
-        //task.getParentGroups().remove(group);  这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
+        //task.getParentGroup().remove(group);  这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
         int site = group.RemoveTask(task);
-        if (site >= 0) RemoveTaskFromListItems(group, site, task);
-        CalculatorTitleSite();
-        if (group.getTaskCount() == 0) HideGroup(group);
-        //CalculatorTitleSite();
+        if (site >= 0){
+            RemoveTaskFromListItems(group, site, task);
+            CalculatorTitleSite();
+        }
+        if (group.getTaskCount() == 0) {
+            HideGroup(group);
+            CalculatorTitleSite();
+        }
     }
 
     //下面是供RecycleView使用的列表(displayItems)的管理
@@ -241,14 +245,9 @@ public abstract class GroupListBase {
         return recyclerViewItems;
     }
     private void AddGroupInListItems(GroupBase group){
-
         if (group.State == DisplayState.Hide) return;
-
-        //RecyclerView使用条目中加入组项，顺序加入
         recyclerViewItems.add(group);
-        //for (Task task : group.getTasks()) recyclerViewItems.add(task);
         recyclerViewItems.addAll(group.getTasks());
-
     }
     private void AddTaskToListItems(GroupBase group, int position, Task task){
         if (getNextGroupSite(group) >= 0) {

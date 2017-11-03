@@ -23,7 +23,7 @@ import layout.TitleFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
 
-    private final Task task = DoMoment.getDataManger().getCurrentTask();;
+    private Task task = DoMoment.getDataManger().getEditorTask();
     private final DateTimeHelper DateTime = DoMoment.getDateTime();
     private Context parentContext;
     private Bundle savedInstanceState;

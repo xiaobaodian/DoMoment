@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import threecats.zhang.domoment.DoMoment;
+
 /**
  * Created by zhang on 2017/7/26.
  */
@@ -13,14 +15,14 @@ import java.util.List;
 public class Task extends TaskBase{
 
     private int categoryID;
-    private List<GroupBase> parentGroups;
+    private List<GroupBase> parentGroup;
     private String taskContext;
     private String taskTags;
     private boolean intoMoment;
 
     public Task(){
         super();
-        parentGroups = new ArrayList<>(3);
+        parentGroup = new ArrayList<>(3);
     }
 
     public Task(String title, String place, Calendar createDate){
@@ -28,14 +30,14 @@ public class Task extends TaskBase{
         super.setTitle(title);
         super.setPlace(place);
         super.setCreateDateTime(createDate);
-        parentGroups = new ArrayList<>(3);
+        parentGroup = new ArrayList<>(3);
     }
 
     public Task(String title, String place){
         super();
         super.setTitle(title);
         super.setPlace(place);
-        parentGroups = new ArrayList<>(3);
+        parentGroup = new ArrayList<>(3);
     }
 
     public Task(String title, String place, int categoryID){
@@ -43,17 +45,24 @@ public class Task extends TaskBase{
         super.setTitle(title);
         super.setPlace(place);
         this.categoryID = categoryID;
-        parentGroups = new ArrayList<>(3);
+        parentGroup = new ArrayList<>(3);
     }
 
     public void addParentGroup(GroupBase group){
-        parentGroups.add(group);
+        //DoMoment.Toast("Add Parent :" + group.getTitle()+"/"+group.getParent().getTitle());
+        //DoMoment.Toast("Wait...");
+        if (!parentGroup.contains(group)) {
+            // 如果不判断group是不是已经存在parentGroup里，将会重复加入，原因待查
+            parentGroup.add(group);
+        }
     }
-    public void clearParentGroups(){
-        parentGroups.clear();
+    public void clearParentGroup(){
+        DoMoment.Toast("Parent Size : " + parentGroup.size());
+        parentGroup.clear();
+        DoMoment.Toast("Parent Size : " + parentGroup.size());
     }
-    public List<GroupBase> getParentGroups(){
-        return parentGroups;
+    public List<GroupBase> getParentGroup(){
+        return parentGroup;
     }
     public int getCategoryID(){
         return categoryID;
@@ -64,7 +73,7 @@ public class Task extends TaskBase{
 
     public @Nullable GroupBase getCurrentGroup(GroupListBase parentGroupList){
         GroupBase currentGroup = null;
-        for (GroupBase group : parentGroups) {
+        for (GroupBase group : parentGroup) {
             if (group.getParent() == parentGroupList){
                 currentGroup = group;
                 break;
