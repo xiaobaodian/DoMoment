@@ -130,13 +130,13 @@ public class DataManger {
         categoryList.RemoveTask(task);
     }
 
-    public void ChangeTask(Task task){
+    private void ChangeTask(Task task){
         categoryList.ChangeTask(task);
         UpdateTaskToDataBase(task);
     }
 
     public void UpdateTask(Task task){
-        categoryList.UpdateTask(task);
+        categoryList.UpdateTaskaa(task);
         UpdateTaskToDataBase(task);
     }
 

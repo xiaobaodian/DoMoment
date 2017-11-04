@@ -323,24 +323,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         task.setNote(noteBox.getText().toString());
         task.setPlace(placeBox.getText().toString());
         //======
-        boolean isChanged = true;
-        for (GroupBase group : task.getParentGroup()) {
-            GroupListBase groupList = group.getParent();
-            CategoryBase category = groupList.getParent();
-            if (category.InCategory(task)) {
-                if (groupList.InGroupList(task)) {
-                    if (group.InGroup(task)) {
-                        isChanged = false;
-                    }
-                }
-            }
-        }
-        //task.getStartDateTimeDB() != hashStartDateTime || task.getDueDateTimeDB() != hashDueDateTime || hashIsNoDate != task.IsNoDate()
-        if (isChanged) {
-            DoMoment.getDataManger().ChangeTask(task);
-        } else {
-            DoMoment.getDataManger().UpdateTask(task);
-        }
-        //======
+        DoMoment.getDataManger().commitEditorTask();
     }
 }

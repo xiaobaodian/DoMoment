@@ -196,8 +196,7 @@ public abstract class GroupBase extends ListItemBase {
         return tasks.size();      //返回加入的任务的位置序号，便于组列表处理（0位是组标题）
     }
     public int InsertTask(Task task){
-        //return AddTask(task);
-        task.addParentGroup(this);
+        //task.addParentGroup(this);  不能在此加入ParentGroup，要是执行了AddTask就会重复加入了
         int site = 0;
         if (tasks.size() == 0) {
             site = AddTask(task);
@@ -212,6 +211,7 @@ public abstract class GroupBase extends ListItemBase {
                     break;
                 }
             }
+            task.addParentGroup(this); // 放在这里加入ParentGroup才是正确的
             tasks.add(site, task);
         }
         if (State == DisplayState.Hide) State = DisplayState.Show;

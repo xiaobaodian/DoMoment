@@ -229,6 +229,7 @@ public abstract class GroupListBase {
 
     private void RemoveTaskFromGroup(GroupBase group, Task task){
         //task.getParentGroup().remove(group);  这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
+        task.getParentGroup().remove(group);
         int site = group.RemoveTask(task);
         if (site >= 0){
             RemoveTaskFromListItems(group, site, task);

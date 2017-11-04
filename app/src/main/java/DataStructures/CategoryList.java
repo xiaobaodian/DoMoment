@@ -64,6 +64,12 @@ public class CategoryList {
         }
     }
 
+    public void InsertTask(Task task, List<CategoryBase> Categorys){
+        for (CategoryBase category : Categorys) {
+            if (category.InCategory(task)) category.AddTask(task);
+        }
+    }
+
     public void RemoveTask(Task task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
         for (GroupBase group : task.getParentGroup()) {
@@ -73,12 +79,40 @@ public class CategoryList {
         task.clearParentGroup();
     }
 
-    public void ChangeTask(Task task){
+    public void ChangeTaskaa(Task task){
         RemoveTask(task);
         InsertTask(task);
     }
 
-    public void UpdateTask(Task task){
+    public void ChangeTask(Task task){
+        List<CategoryBase> updateCategorys = new ArrayList<>();
+        List<GroupBase> changeGroups = new ArrayList<>();
+        List<GroupBase> updateGroups = new ArrayList<>();
+        for (GroupBase group : task.getParentGroup()) {
+            GroupListBase groupList = group.getParent();
+            CategoryBase category = groupList.getParent();
+            if (category.InCategory(task) && groupList.InGroupList(task) && group.InGroup(task)){
+                updateGroups.add(group);
+                updateCategorys.add(category);
+            } else {
+                changeGroups.add(group);
+            }
+        }
+        for (GroupBase group : changeGroups) {
+            GroupListBase groupList = group.getParent();
+            groupList.RemoveTask(group, task);
+        }
+        for (CategoryBase category : allCategorys) {
+            if (updateCategorys.contains(category)) continue;
+            category.InsertTask(task);
+        }
+        for (GroupBase group : updateGroups) {
+            GroupListBase groupList = group.getParent();
+            groupList.SortGroup(group);
+        }
+    }
+
+    public void UpdateTaskaa(Task task){
         for (GroupBase group : task.getParentGroup()) {
             GroupListBase groupList = group.getParent();
             groupList.SortGroup(group);
