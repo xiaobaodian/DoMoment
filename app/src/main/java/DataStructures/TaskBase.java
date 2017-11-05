@@ -37,6 +37,7 @@ public class TaskBase extends ListItemBase implements Comparable{
         dueDateTime = (Calendar) startDateTime.clone();
         createDateTime = Calendar.getInstance();
         completeDateTime = Calendar.getInstance();
+
         priority = TaskPriority.None;
 
         isNoDate = true;
@@ -98,9 +99,6 @@ public class TaskBase extends ListItemBase implements Comparable{
     }
     public boolean IsOneDay(){
         return DateTime.SameYMD(startDateTime, dueDateTime);
-//        return startDateTime.get(Calendar.YEAR) == dueDateTime.get(Calendar.YEAR) &&
-//               startDateTime.get(Calendar.MONTH) == dueDateTime.get(Calendar.MONTH) &&
-//               startDateTime.get(Calendar.DAY_OF_MONTH) == dueDateTime.get(Calendar.DAY_OF_MONTH);
     }
     public boolean IsOneTime(){
         return startDateTime.get(Calendar.HOUR_OF_DAY) == dueDateTime.get(Calendar.HOUR_OF_DAY) &&
@@ -157,9 +155,6 @@ public class TaskBase extends ListItemBase implements Comparable{
 
     public int compareTo(Object task) {// 实现Comparator接口的方法
         TaskBase taskBase = (TaskBase)task;
-        //if (this.IsAllDay() && taskBase.IsAllDay()) {
-        //    return this.createDateTime.compareTo(taskBase.getCreateDateTime());
-        //}
         if (!this.IsAllDay() && taskBase.IsAllDay()) return 1;
         if (this.IsAllDay() && !taskBase.IsAllDay()) return -1;
         return this.startDateTime.compareTo(taskBase.startDateTime);
@@ -212,12 +207,6 @@ public class TaskBase extends ListItemBase implements Comparable{
             startDateTime.set(dueDateTime.get(Calendar.YEAR), dueDateTime.get(Calendar.MONTH), dueDateTime.get(Calendar.DAY_OF_MONTH));
             //setStartDateTime(tmpDateTime);
         }
-        int sy = startDateTime.get(Calendar.YEAR);
-        int dy = dueDateTime.get(Calendar.YEAR);
-        int sm = startDateTime.get(Calendar.MONTH);
-        int dm = dueDateTime.get(Calendar.MONTH);
-        int sd = startDateTime.get(Calendar.DAY_OF_MONTH);
-        int dd = dueDateTime.get(Calendar.DAY_OF_MONTH);
     }
     public void setOneTime(OneDayBase base){
         if (base == OneDayBase.Start) {

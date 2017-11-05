@@ -22,6 +22,7 @@ public class Task extends TaskBase{
 
     public Task(){
         super();
+        categoryID = 1;
         parentGroup = new ArrayList<>(3);
     }
 
@@ -30,6 +31,7 @@ public class Task extends TaskBase{
         super.setTitle(title);
         super.setPlace(place);
         super.setCreateDateTime(createDate);
+        categoryID = 1;
         parentGroup = new ArrayList<>(3);
     }
 
@@ -37,6 +39,7 @@ public class Task extends TaskBase{
         super();
         super.setTitle(title);
         super.setPlace(place);
+        categoryID = 1;
         parentGroup = new ArrayList<>(3);
     }
 
@@ -49,17 +52,14 @@ public class Task extends TaskBase{
     }
 
     public void addParentGroup(GroupBase group){
-        //DoMoment.Toast("Add Parent :" + group.getTitle()+"/"+group.getParent().getTitle());
-        //DoMoment.Toast("Wait...");
         if (!parentGroup.contains(group)) {
-            // 如果不判断group是不是已经存在parentGroup里，将会重复加入，原因待查
             parentGroup.add(group);
+        } else {
+            DoMoment.Toast("有重复的ParentGroup加入");
         }
     }
     public void clearParentGroup(){
-        DoMoment.Toast("Parent Size : " + parentGroup.size());
         parentGroup.clear();
-        DoMoment.Toast("Parent Size : " + parentGroup.size());
     }
     public List<GroupBase> getParentGroup(){
         return parentGroup;
