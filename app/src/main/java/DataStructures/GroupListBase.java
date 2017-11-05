@@ -127,13 +127,7 @@ public abstract class GroupListBase {
         }
     }
     private void HideGroup(GroupBase group){
-//        if (group.getTaskCount() > 0) return;
-//        int site = recyclerViewItems.indexOf(group);
-//        if (site >=0 ) {
-//            recyclerViewItems.remove(site);
-//            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
-//        }
-
+        if (group.getTaskCount() > 0) return;
         if (group.SiteID > recyclerViewItems.size() - 1) {
             DoMoment.Toast("Hide Group : group.siteID > size()");
             return;

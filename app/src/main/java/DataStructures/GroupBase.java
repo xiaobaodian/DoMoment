@@ -205,16 +205,16 @@ public abstract class GroupBase extends ListItemBase {
         } else {
             Task nTask;
             for (int i = 0; i <tasks.size(); i++) {
-                nTask = tasks.get(i);
-                if (task.compareTo(nTask) < 0) {
+                if (task.compareTo(tasks.get(i)) < 0) {
                     site = i + 1;
                     break;
                 }
             }
             task.addParentGroup(this); // 放在这里加入ParentGroup才是正确的
             tasks.add(site, task);
+            if (State == DisplayState.Hide) State = DisplayState.Show;
         }
-        if (State == DisplayState.Hide) State = DisplayState.Show;
+
         return site;
     }
     
