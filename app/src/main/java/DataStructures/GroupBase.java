@@ -189,12 +189,34 @@ public abstract class GroupBase extends ListItemBase {
     }
 
     //以下是分组里面的条目管理
+//    public int AddTask(Task task){
+//        task.addParentGroup(this);
+//        tasks.add(task);
+//        if (State == DisplayState.Hide) State = DisplayState.Show;
+//        return tasks.size();      //返回加入的任务的位置序号，便于组列表处理（0位是组标题）
+//    }
     public int AddTask(Task task){
         task.addParentGroup(this);
-        tasks.add(task);
+        int site = 0;
+        if (tasks.size() == 0) {
+            tasks.add(task);
+            site = tasks.size();
+        } else if(task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
+            tasks.add(task);
+            site = tasks.size();
+        } else {
+            for (int i = 0; i <tasks.size(); i++) {
+                if (task.compareTo(tasks.get(i)) < 0) {
+                    site = i + 1;
+                    break;
+                }
+            }
+            tasks.add(site, task);
+        }
         if (State == DisplayState.Hide) State = DisplayState.Show;
-        return tasks.size();      //返回加入的任务的位置序号，便于组列表处理（0位是组标题）
+        return site;
     }
+
     public int InsertTask(Task task){
         //task.addParentGroup(this);  不能在此加入ParentGroup，要是执行了AddTask就会重复加入了
         int site = 0;
@@ -203,7 +225,6 @@ public abstract class GroupBase extends ListItemBase {
         } else if(task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
             site = AddTask(task);
         } else {
-            Task nTask;
             for (int i = 0; i <tasks.size(); i++) {
                 if (task.compareTo(tasks.get(i)) < 0) {
                     site = i + 1;
@@ -214,7 +235,6 @@ public abstract class GroupBase extends ListItemBase {
             tasks.add(site, task);
             if (State == DisplayState.Hide) State = DisplayState.Show;
         }
-
         return site;
     }
     
