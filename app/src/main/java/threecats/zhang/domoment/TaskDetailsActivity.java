@@ -24,6 +24,7 @@ import DataStructures.CategoryBase;
 import DataStructures.GroupBase;
 import DataStructures.GroupListBase;
 import DataStructures.Task;
+import ENUM.EditorMode;
 import ENUM.OneDayBase;
 
 public class TaskDetailsActivity extends AppCompatActivity {
@@ -323,6 +324,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         task.setNote(noteBox.getText().toString());
         task.setPlace(placeBox.getText().toString());
         //======
-        DoMoment.getDataManger().commitEditorTask();
+        DoMoment.getDataManger().commitEditorTask(EditorMode.Edit);
     }
 }

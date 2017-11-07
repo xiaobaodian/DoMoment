@@ -30,14 +30,9 @@ public class TaskPriorityCategory extends CategoryBase {
 
     @Override
     protected void BuildGroupLists() {
-
         AddGroupList(new UrgentGroupList(this));
         AddGroupList(new VeryImportanceGroupList(this));
         AddGroupList(new ImportanceGroupList(this));
-
-        //AddGroupList(new TimeLineGroupList(this));
-        //AddGroupList(new OverdueGroupList(this));
-        //AddGroupList(new NoDateGroupList(this));
     }
 
 }

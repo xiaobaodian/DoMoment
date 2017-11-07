@@ -17,7 +17,7 @@ public class AllOverdueGroup extends GroupBase {
     public AllOverdueGroup(GroupListBase parent){
         super(parent);
         super.setTitle(context.getString(R.string.overdue_all_title));
-        groupType = GroupType.toDay;
+        groupType = GroupType.AllOverdue;
     }
 
     @Override

@@ -86,7 +86,8 @@ public abstract class GroupBase extends ListItemBase {
         }
         Calendar timePoint, secTimePoint;
         timePoint = null;
-        secTimePoint = task.IsOneDay() ? null : task.getDueDateTime();
+        //secTimePoint = task.IsOneDay() ? null : task.getDueDateTime();
+        secTimePoint = task.getDueDateTime();
         switch (parentGroupList.taskBasePoint){
             case BeginDate:
                 timePoint = task.getStartDateTime();

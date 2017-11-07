@@ -29,7 +29,6 @@ public class AllTasksCategory extends CategoryBase {
 
     @Override
     protected void BuildGroupLists() {
-
         AddGroupList(new TimeLineGroupList(this));
         AddGroupList(new OverdueGroupList(this));
         AddGroupList(new NoDateGroupList(this));

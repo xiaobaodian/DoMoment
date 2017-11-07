@@ -2,6 +2,7 @@ package threecats.zhang.domoment;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import DataStructures.CategoryBase;
@@ -51,5 +52,9 @@ public class DoMoment extends Application {
     }
     public static void Toast(String message){
         android.widget.Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+    public static void showTaskDisplayActivity(){
+        Intent taskIntent = new Intent(DoMoment.getMainActivity(),TaskDisplayActivity.class);
+        DoMoment.getMainActivity().startActivity(taskIntent);
     }
 }

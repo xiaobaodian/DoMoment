@@ -5,6 +5,7 @@ package ENUM;
  */
 
 public enum GroupType {
+    AllOverdue,
     LongTimeAgo,
     WithinLastMonth,
     WithinLastWeek,

@@ -26,6 +26,13 @@ public class Task extends TaskBase{
         parentGroup = new ArrayList<>(3);
     }
 
+    public Task(int categoryID, Calendar beginDate){
+        super();
+        setCategoryID(categoryID);
+        setStartDate(beginDate.get(Calendar.YEAR), beginDate.get(Calendar.MONTH)+1, beginDate.get(Calendar.DAY_OF_MONTH));
+        parentGroup = new ArrayList<>(3);
+    }
+
     public Task(String title, String place, Calendar createDate){
         super();
         super.setTitle(title);

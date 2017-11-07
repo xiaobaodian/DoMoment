@@ -12,11 +12,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 
+import DataStructures.AllTasksCategory;
+import DataStructures.CategoryBase;
 import DataStructures.GroupBase;
 import DataStructures.GroupListBase;
 import DataStructures.ListItemBase;
+import DataStructures.NoCategory;
+import DataStructures.TimeLineAfterTomorrowGroup;
+import DataStructures.TimeLineTodayGroup;
+import DataStructures.TimeLineTomorrowGroup;
 import ENUM.GroupType;
 import threecats.zhang.domoment.DateTimeHelper;
 import threecats.zhang.domoment.DoMoment;
@@ -147,6 +154,20 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
             case 1:
                 view = LayoutInflater.from(parent.getContext()).inflate(groupLayoutID, parent, false);
                 final GroupViewHolder groupViewHolder = new GroupViewHolder(view);
+                groupViewHolder.currentGroupView.setOnClickListener(v -> {
+                    GroupBase group = groupViewHolder.getGroup();
+                    if (group instanceof TimeLineTodayGroup) {
+                        DoMoment.getDataManger().NewTask(Calendar.getInstance());
+                    } else if (group instanceof TimeLineTomorrowGroup) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DATE,1);
+                        DoMoment.getDataManger().NewTask(calendar);
+                    } else if (group instanceof TimeLineAfterTomorrowGroup) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DATE,2);
+                        DoMoment.getDataManger().NewTask(calendar);
+                    }
+                });
                 return groupViewHolder;
         }
         return null;

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,10 +26,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataStructures.CategoryBase;
-import DataStructures.GroupBase;
-import DataStructures.GroupListBase;
 import DataStructures.Task;
+import ENUM.EditorMode;
 import ENUM.TaskPriority;
 import adapter.SetTaskCategorysAdapter;
 import adapter.TaskFragmentAdapter;
@@ -49,6 +48,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private List<TitleFragment> viewFragmentList;
     private TaskDetailsFragment taskDetailsFragment;
     private TaskCheckListFragment taskCheckListFragment;
+    private EditorMode editorMode = EditorMode.Edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,35 +125,26 @@ public class TaskDisplayActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.taskeditor, menu);
         return super.onCreateOptionsMenu(menu);
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.taskeditormenu_remove:
+                DoMoment.Toast("删除数据");
+                editorMode = EditorMode.Remove;
+                finish();
+                break;
+            case R.id.TodoMenu_EditCategoryTitle:
+                DoMoment.Toast("测试");
+                break;
+        }
+        //return super.onOptionsItemSelected(item);
+        return false;
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         task.setTitle(etTaskTitle.getText().toString());
-        DoMoment.getDataManger().commitEditorTask();
-        //======
-//        boolean isChanged = true;
-//        if (oldCategoryID == task.getCategoryID() && oldPriority == task.getPriority()) {
-//            for (GroupBase group : task.getParentGroup()) {
-//                GroupListBase groupList = group.getParent();
-//                CategoryBase category = groupList.getParent();
-//                if (category.InCategory(task)) {
-//                    if (groupList.InGroupList(task)) {
-//                        if (group.InGroup(task)) {
-//                            isChanged = false;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        //task.getStartDateTimeDB() != hashStartDateTime || task.getDueDateTimeDB() != hashDueDateTime || hashIsNoDate != task.IsNoDate()
-//        if (isChanged) {
-//            DoMoment.getDataManger().ChangeTask(task);
-//        } else {
-//            //DoMoment.getDataManger().UpdateTask(task);
-//        }
-        //======
+        DoMoment.getDataManger().commitEditorTask(editorMode);
     }
 
     private void setTaskCategory(){

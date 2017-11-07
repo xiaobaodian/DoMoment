@@ -37,6 +37,7 @@ public class UrgentGroupList extends GroupListBase {
     protected void BuildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
+        AddGroup(new AllOverdueGroup(this));
         AddGroup(new TimeLineTodayGroup(this));
         AddGroup(new TimeLineTomorrowGroup(this));
         AddGroup(new TimeLineAfterTomorrowGroup(this));
@@ -47,8 +48,6 @@ public class UrgentGroupList extends GroupListBase {
         AddGroup(new TimeLineWithinThreeMonthsGroup(this));
         AddGroup(new TimeLineWithinSixMonthsGroup(this));
         AddGroup(new TimeLineForwardGroup(this));
-
-        //TimeSeries t = this.getTimeSeries();
         CheckArea();
     }
 

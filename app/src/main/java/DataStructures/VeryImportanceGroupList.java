@@ -47,8 +47,6 @@ public class VeryImportanceGroupList extends GroupListBase {
         AddGroup(new TimeLineWithinThreeMonthsGroup(this));
         AddGroup(new TimeLineWithinSixMonthsGroup(this));
         AddGroup(new TimeLineForwardGroup(this));
-
-        //TimeSeries t = this.getTimeSeries();
         CheckArea();
     }
 

@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import DataStructures.CategoryBase;
@@ -164,22 +165,8 @@ public class TodoFragment extends Fragment {
             }
         });
 
-        //addActionButton.setOnClickListener11(new View.OnClickListener(){
-        //    @Override
-        //    public void onClick(View v){
-        //        //插入记录测试
-        //        Task t = new Task("插入新纪录====================","电脑");
-        //        Date date = t.getStartDateTime();
-        //        t.setStartDateTime(DateTime.SetDate(date,2017,8,27));
-        //        currentCategory.AddTask(t);
-        //    }
-        //});
-
         addActionButton.setOnClickListener(v -> {
-            //插入记录测试
-            Task t = new Task("插入新纪录====================","电脑");
-            t.setStartDate(2017,8,4);
-            DoMoment.getDataManger().AddTask(t);
+            DoMoment.getDataManger().NewTask(Calendar.getInstance());
         });
 
         viewPager = view.findViewById(R.id.todo_viewpager);

@@ -1,5 +1,6 @@
 package DataStructures;
 
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
@@ -153,7 +154,7 @@ public class TaskBase extends ListItemBase implements Comparable{
         return place;
     }
 
-    public int compareTo(Object task) {// 实现Comparator接口的方法
+    public int compareTo(@NonNull Object task) {  // 实现Comparator接口的方法
         TaskBase taskBase = (TaskBase)task;
         if (!this.IsAllDay() && taskBase.IsAllDay()) return 1;
         if (this.IsAllDay() && !taskBase.IsAllDay()) return -1;

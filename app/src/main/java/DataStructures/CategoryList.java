@@ -72,16 +72,14 @@ public class CategoryList {
 
     public void RemoveTask(Task task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
+        List<GroupBase> groups = new ArrayList<>();
         for (GroupBase group : task.getParentGroup()) {
+            groups.add(group);
+        }
+        for (GroupBase group : groups) {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);
         }
-        task.clearParentGroup();
-    }
-
-    public void ChangeTaskaa(Task task){
-        RemoveTask(task);
-        InsertTask(task);
     }
 
     public void ChangeTask(Task task){
@@ -142,8 +140,7 @@ public class CategoryList {
         }
         if (dateChangeTasks.size() > 0) {
             for (Task task : dateChangeTasks) {
-                RemoveTask(task);
-                AddTask(task);
+                ChangeTask(task);
             }
         }
         dateChangeTasks.clear();

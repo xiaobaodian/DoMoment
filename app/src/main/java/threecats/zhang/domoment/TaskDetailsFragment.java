@@ -1,5 +1,6 @@
 package threecats.zhang.domoment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -170,7 +171,7 @@ public class TaskDetailsFragment extends TitleFragment {
     }
 
     private void EditDate(){
-        LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+        @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
         View layout = inflater.inflate(R.layout.taskeditor_dateselection, (ViewGroup)taskDetailsView.findViewById(R.id.DateDialong));
         DatePicker datePicker = layout.findViewById(R.id.datePicker);
         datePicker.setFirstDayOfWeek(Calendar.MONDAY);
@@ -194,7 +195,7 @@ public class TaskDetailsFragment extends TitleFragment {
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getCurrentTask();
+            final Task task = DoMoment.getDataManger().getEditorTask();
             switch (EditType) {
                 case editStartDate:
                     if (task.IsOneDay()) {
@@ -210,7 +211,7 @@ public class TaskDetailsFragment extends TitleFragment {
             DisplayDateTimeFields();
         });
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getCurrentTask();
+            final Task task = DoMoment.getDataManger().getEditorTask();
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
@@ -254,7 +255,7 @@ public class TaskDetailsFragment extends TitleFragment {
 
     //@TargetApi(Build.VERSION_CODES.M)
     private void EditTime(){
-        LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+        @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
         View layout = inflater.inflate(R.layout.taskeditor_timeselection,(ViewGroup)taskDetailsView.findViewById(R.id.TimeDialong));
         TimePicker timePicker = layout.findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
@@ -285,7 +286,7 @@ public class TaskDetailsFragment extends TitleFragment {
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getCurrentTask();
+            final Task task = DoMoment.getDataManger().getEditorTask();
             switch (EditType) {
                 case editStartTime:
                     if (task.IsOneTime()) {
@@ -301,7 +302,7 @@ public class TaskDetailsFragment extends TitleFragment {
             DisplayDateTimeFields();
         });
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getCurrentTask();
+            final Task task = DoMoment.getDataManger().getEditorTask();
             switch (EditType) {
                 case editStartTime:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

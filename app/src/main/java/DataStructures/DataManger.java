@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import ENUM.EditorMode;
 import ENUM.TaskPriority;
 import Sqlite.SQLManger;
 import threecats.zhang.domoment.DoMoment;
@@ -67,12 +68,20 @@ public class DataManger {
     public boolean hasEditorTask(){
         return editorTask != null;
     }
-    public void commitEditorTask(){
-        if (hasEditorTask()){
-            AddTask(editorTask);
-            AddTaskToDataBase(editorTask);
+    public void commitEditorTask(EditorMode mode){
+        if (mode == EditorMode.Edit) {
+            if (hasEditorTask()){
+                if (editorTask.title.length() > 0) {
+                    AddTask(editorTask);
+                    AddTaskToDataBase(editorTask);
+                }
+            } else {
+                ChangeTask(currentTask);
+            }
         } else {
-            ChangeTask(currentTask);
+            if (!hasEditorTask()){
+                RemoveTask(currentTask);
+            }
         }
         editorTask = null;
     }
@@ -113,9 +122,15 @@ public class DataManger {
         return currentTask;
     }
 
-    public Task NewTask(){
-        Task task = new Task();
-        return task;
+    public void NewTask(Calendar day){
+        int categoryID = 1;
+        CategoryBase category = getCurrentCategory();
+        if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
+            categoryID = DoMoment.getCurrentCategory().getID();
+        }
+        Task task = new Task(categoryID, day);
+        setEditorTask(task);
+        DoMoment.showTaskDisplayActivity();
     }
 
     public void AddTask(Task task){
@@ -128,6 +143,7 @@ public class DataManger {
 
     public void RemoveTask(Task task){
         categoryList.RemoveTask(task);
+        RemoveTaskToDataBase(task);
     }
 
     private void ChangeTask(Task task){
@@ -153,6 +169,11 @@ public class DataManger {
     private void UpdateTaskToDataBase(Task task){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         UpdateTaskDBItem(db, task);
+        db.close();
+    }
+    private void RemoveTaskToDataBase(Task task){
+        SQLiteDatabase db = sqlDB.getWritableDatabase();
+        RemoveTaskDBItem(db, task);
         db.close();
     }
 

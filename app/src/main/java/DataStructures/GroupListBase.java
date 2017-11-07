@@ -200,9 +200,7 @@ public abstract class GroupListBase {
                     ActiveGroup(group);
                 }
                 int site = group.InsertTask(task);
-                //int site = group.AddTask(task);
                 AddTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目
-                //SortGroup(group);
                 isOK = true;
             }
         }
@@ -222,7 +220,11 @@ public abstract class GroupListBase {
     }
 
     private void RemoveTaskFromGroup(GroupBase group, Task task){
-        //task.getParentGroup().remove(group);  这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
+        //task.getParentGroup().remove(group);
+        //如果采用for(GroupBase group : Groups) 遍历调用
+        //这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
+        //目前采用的方法是另外new一个group的ArrayList,通过for(GroupBase group : Groups)将group加入进去
+        //然后遍历新建的ArrayList操作
         task.getParentGroup().remove(group);
         int site = group.RemoveTask(task);
         if (site >= 0){
