@@ -37,6 +37,7 @@ public class ImportanceGroupList extends GroupListBase {
     protected void BuildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
+        AddGroup(new AllOverdueGroup(this));
         AddGroup(new TimeLineTodayGroup(this));
         AddGroup(new TimeLineTomorrowGroup(this));
         AddGroup(new TimeLineAfterTomorrowGroup(this));
