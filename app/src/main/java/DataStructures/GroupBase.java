@@ -80,10 +80,6 @@ public abstract class GroupBase extends ListItemBase {
     }
 
     public boolean InGroup(Task task){
-        //测试用
-        if (timePoint == null) {
-            Toast.makeText(context,getTitle()+" : markday is null",Toast.LENGTH_SHORT).show();
-        }
         Calendar timePoint, secTimePoint;
         timePoint = null;
         //secTimePoint = task.IsOneDay() ? null : task.getDueDateTime();

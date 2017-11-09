@@ -40,7 +40,7 @@ public abstract class ViewPageFragment extends TitleFragment {
         this.title = title;
     }
     public String getTitle(){
-        if (groupList == null) return "UUUUUU";
+        if (groupList == null) return "U+";
         return title;
     }
 

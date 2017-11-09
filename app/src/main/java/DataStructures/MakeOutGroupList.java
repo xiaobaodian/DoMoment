@@ -17,7 +17,7 @@ public class MakeOutGroupList extends GroupListBase {
         this.parent = parent;
         this.selfType = GroupListType.Complete;
         this.timeSeries = TimeSeries.Afterward;
-        this.taskBasePoint = TaskBasePoint.EndDate;     //后面改为endDate
+        this.taskBasePoint = TaskBasePoint.CompleteDate;
         setTitle(DoMoment.getContext().getString(R.string.grouplist_overdue_title));
         BuildGroups();
     }

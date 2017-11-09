@@ -26,7 +26,7 @@ public class DueTodayGroup extends GroupBase {
 
     @Override
     public void BuildTimePoint(){
-        this.timePoint = DateTime.BuildTimePoint(1);
+        this.timePoint = DateTime.BuildTimePoint(0);
     }
 
     public String getDateTitle(){
