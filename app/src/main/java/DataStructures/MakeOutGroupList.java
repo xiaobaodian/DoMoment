@@ -1,8 +1,8 @@
 package DataStructures;
 
+import ENUM.GroupListType;
 import ENUM.TaskBasePoint;
 import ENUM.TimeSeries;
-import ENUM.GroupListType;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
@@ -10,12 +10,12 @@ import threecats.zhang.domoment.R;
  * Created by zhang on 2017/8/14.
  */
 
-public class OverdueGroupList extends GroupListBase {
+public class MakeOutGroupList extends GroupListBase {
 
-    public OverdueGroupList(CategoryBase parent){
+    public MakeOutGroupList(CategoryBase parent){
         super();
         this.parent = parent;
-        this.selfType = GroupListType.Overdue;
+        this.selfType = GroupListType.Complete;
         this.timeSeries = TimeSeries.Afterward;
         this.taskBasePoint = TaskBasePoint.EndDate;     //后面改为endDate
         setTitle(DoMoment.getContext().getString(R.string.grouplist_overdue_title));
@@ -24,8 +24,7 @@ public class OverdueGroupList extends GroupListBase {
 
     @Override
     public boolean InGroupList(Task task){
-        if (task.IsNoDate() || task.IsComplete()) return false;
-        return task.getDueDateTime().before(timePoint);
+        return task.IsComplete();
     }
 
     @Override
@@ -37,6 +36,7 @@ public class OverdueGroupList extends GroupListBase {
     protected void BuildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
+        AddGroup(new DueTodayGroup(this, "今天"));
         AddGroup(new DueYesterdayGroup(this, DoMoment.getContext().getString(R.string.overdue_yesterday_title)));                //今天零时
         AddGroup(new DueBeforeYesterdayGroup(this, DoMoment.getContext().getString(R.string.overdue_beforeyesterday_title)));   //昨天零时
         AddGroup(new DueThisWeekGroup(this, DoMoment.getContext().getString(R.string.overdue_thisweek_title)));                 //前天零时

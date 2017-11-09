@@ -32,6 +32,7 @@ public class CustomCategory extends CategoryBase {
         AddGroupList(new TimeLineGroupList(this));
         AddGroupList(new OverdueGroupList(this));
         AddGroupList(new NoDateGroupList(this));
+        AddGroupList(new MakeOutGroupList(this));
     }
 
 }

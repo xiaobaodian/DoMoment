@@ -211,7 +211,7 @@ public class DataManger {
         values.put("CompleteDateTime", task.getCompleteDateTimeDB());
         values.put("isAllDay", task.IsAllDay());
         values.put("isNoDate", task.IsNoDate());
-        values.put("isComplete", task.getComplete());
+        values.put("isComplete", task.IsComplete());
     }
 
     private void Load(){

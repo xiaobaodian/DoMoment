@@ -24,7 +24,7 @@ public class TimeLineGroupList extends GroupListBase {
 
     @Override
     public boolean InGroupList(Task task){
-        if (task.IsNoDate()) return false;
+        if (task.IsNoDate() || task.IsComplete()) return false;
         return task.getDueDateTime().after(timePoint);
     }
 

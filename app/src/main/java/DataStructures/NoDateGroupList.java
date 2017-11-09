@@ -24,6 +24,7 @@ public class NoDateGroupList extends GroupListBase {
 
     @Override
     public boolean InGroupList(Task task){
+        if (task.IsComplete()) return false;
         return task.IsNoDate();
     }
 

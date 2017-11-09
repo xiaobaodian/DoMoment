@@ -93,9 +93,10 @@ public class TaskBase extends ListItemBase implements Comparable{
         return priority.ordinal();
     }
     public void setComplete(boolean isComplete){
+        if (isComplete) completeDateTime = Calendar.getInstance();
         this.isComplete = isComplete;
     }
-    public boolean getComplete(){
+    public boolean IsComplete(){
         return isComplete;
     }
     public boolean IsOneDay(){
@@ -221,6 +222,12 @@ public class TaskBase extends ListItemBase implements Comparable{
         String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
         SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m");
         return createDateTimeFStr.format(createDateTime.getTime());
+    }
+
+    public String getCompleteDateTimeStr(){
+        String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
+        SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m");
+        return createDateTimeFStr.format(completeDateTime.getTime());
     }
 
     public String getBeginDateString(){

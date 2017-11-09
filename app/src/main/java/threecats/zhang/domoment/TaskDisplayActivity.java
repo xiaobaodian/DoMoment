@@ -132,8 +132,10 @@ public class TaskDisplayActivity extends AppCompatActivity {
                 editorMode = EditorMode.Remove;
                 finish();
                 break;
-            case R.id.TodoMenu_EditCategoryTitle:
-                DoMoment.Toast("测试");
+            case R.id.taskeditormenu_makeout:
+                DoMoment.Toast("任务标记完成");
+                task.setComplete(true);
+                finish();
                 break;
         }
         //return super.onOptionsItemSelected(item);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import DataStructures.CategoryBase;
 import ENUM.GroupListType;
+import adapter.MakeOutAdapter;
 import adapter.NoDateAdapter;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
@@ -17,31 +18,16 @@ import threecats.zhang.domoment.R;
  */
 public class TodoMakeOutFragment extends ViewPageFragment {
 
-    private String title = DoMoment.getRString(R.string.grouplist_completed_title);
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public String getTitle(){
-        return DoMoment.getRString(R.string.grouplist_completed_title);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo_makeout, container, false);
+        fragmentLayoutID = R.layout.fragment_todo_makeout;
+        recyclerViewID = R.id.MarkOutRecyclerView;
     }
 
     public void linkCategory(CategoryBase category){
-
+        setGroupList(category.getGroupList(GroupListType.Complete));
+        groupListAdapter = new MakeOutAdapter(groupList.getRecyclerViewItems());
+        BindDatas();
     }
-
-    public int getTaskCount(){
-        return 11;
-    }
-
 }
