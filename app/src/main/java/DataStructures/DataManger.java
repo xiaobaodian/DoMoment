@@ -240,6 +240,7 @@ public class DataManger {
             }
             cursor.close();
         }
+        assert db != null;
         db.close();
 
         //DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);

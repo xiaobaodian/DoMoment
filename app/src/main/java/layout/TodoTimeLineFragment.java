@@ -24,7 +24,7 @@ public class TodoTimeLineFragment extends ViewPageFragment {
         recyclerViewID = R.id.TimeLineRecyclerView;
     }
 
-    public void linkCategory(CategoryBase category){
+    public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.TimeLine));
         groupListAdapter = new TimeLineAdapter(groupList.getRecyclerViewItems());
         BindDatas();

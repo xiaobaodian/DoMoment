@@ -96,6 +96,7 @@ public abstract class GroupBase extends ListItemBase {
                 break;
             case CompleteDate:
                 timePoint = task.getCompleteDateTime();
+                //timePoint = task.getDueDateTime();
                 break;
         }
         return isEmpty ? false : isGroupMember(timePoint, secTimePoint);

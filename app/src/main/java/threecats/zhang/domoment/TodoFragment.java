@@ -1,9 +1,7 @@
 package threecats.zhang.domoment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -31,7 +29,6 @@ import java.util.List;
 
 import DataStructures.CategoryBase;
 import DataStructures.GroupListBase;
-import DataStructures.Task;
 import ENUM.GroupListType;
 import adapter.CategoryAdapter;
 import adapter.todoFragmentAdapter;
@@ -106,8 +103,7 @@ public class TodoFragment extends Fragment {
         toolbar = view.findViewById(R.id.todo_toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        //mAppCompatActivity.setSupportActionBar(toolbar);
-        //setHasOptionsMenu(true);
+
         FloatingActionButton addActionButton = view.findViewById(R.id.AddActionButton);
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -144,25 +140,22 @@ public class TodoFragment extends Fragment {
         });
 
         collapsingToolbar = view.findViewById(R.id.todo_collapsing_toolbar);
-        collapsingToolbar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                drawerLayout.openDrawer(GravityCompat.START);
+        collapsingToolbar.setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.START);
 
-                //更新记录测试
-                //if (DoMoment.getDataManger().getCurrentTask() == null) return;
-                //Task t = DoMoment.getDataManger().getCurrentTask();
-                //Date date = t.getStartDateTime();
-                //t.setStartDateTime(DateTime.SetDate(date,2017,8,29));
-                //t.isNoDate=false;
-                //DoMoment.getDataManger().ChangeTask(t);
+            //更新记录测试
+            //if (DoMoment.getDataManger().getCurrentTask() == null) return;
+            //Task t = DoMoment.getDataManger().getCurrentTask();
+            //Date date = t.getStartDateTime();
+            //t.setStartDateTime(DateTime.SetDate(date,2017,8,29));
+            //t.isNoDate=false;
+            //DoMoment.getDataManger().ChangeTask(t);
 
-                //删除测试
-                //DoMoment.getDataManger().RemoveTask(DM.getCurrentTask());
+            //删除测试
+            //DoMoment.getDataManger().RemoveTask(DM.getCurrentTask());
 
-                //排序测试
-                //timeLineGroups.SortAllGroup();
-            }
+            //排序测试
+            //timeLineGroups.SortAllGroup();
         });
 
         addActionButton.setOnClickListener(v -> {
@@ -187,6 +180,9 @@ public class TodoFragment extends Fragment {
                         break;
                     case 2:
                         currentGroupList = currentCategory.getGroupList(GroupListType.Nodate);
+                        DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
+                    case 3:
+                        currentGroupList = currentCategory.getGroupList(GroupListType.Complete);
                         DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
                 }
                 //DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
@@ -267,15 +263,17 @@ public class TodoFragment extends Fragment {
         ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
         themebackground.setImageResource(currentCategory.getThemeBackground());
 
-        timeLineFragment.linkCategory(currentCategory);
+        timeLineFragment.LinkCategory(currentCategory);
         timeLineFragment.LinkTab(viewTabLayout.getTabAt(0));
 
-        overDueFragment.linkCategory(currentCategory);
+        overDueFragment.LinkCategory(currentCategory);
         overDueFragment.LinkTab(viewTabLayout.getTabAt(1));
 
-        noDateFragment.linkCategory(currentCategory);
+        noDateFragment.LinkCategory(currentCategory);
         noDateFragment.LinkTab(viewTabLayout.getTabAt(2));
 
+        makeOutFragment.LinkCategory(currentCategory);
+        makeOutFragment.LinkTab(viewTabLayout.getTabAt(3));
     }
 
     @Override

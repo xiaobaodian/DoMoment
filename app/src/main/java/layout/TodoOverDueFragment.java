@@ -26,7 +26,7 @@ public class TodoOverDueFragment extends ViewPageFragment {
         recyclerViewID = R.id.OverdueRecyclerView;
     }
 
-    public void linkCategory(CategoryBase category){
+    public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.Overdue));
         groupListAdapter = new OverdueAdapter (groupList.getRecyclerViewItems());
         BindDatas();

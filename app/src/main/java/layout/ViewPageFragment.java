@@ -29,7 +29,7 @@ public abstract class ViewPageFragment extends TitleFragment {
     protected RecyclerViewAdapterBase groupListAdapter;
     protected GroupListBase groupList = null;
 
-    public abstract void linkCategory(CategoryBase category);
+    public abstract void LinkCategory(CategoryBase category);
 
     protected void setGroupList(GroupListBase groupList){
         this.groupList = groupList;

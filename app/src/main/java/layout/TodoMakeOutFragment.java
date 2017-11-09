@@ -25,7 +25,7 @@ public class TodoMakeOutFragment extends ViewPageFragment {
         recyclerViewID = R.id.MarkOutRecyclerView;
     }
 
-    public void linkCategory(CategoryBase category){
+    public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.Complete));
         groupListAdapter = new MakeOutAdapter(groupList.getRecyclerViewItems());
         BindDatas();

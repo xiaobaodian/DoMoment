@@ -29,7 +29,7 @@ public class TodoNoDateFragment extends ViewPageFragment {
         recyclerViewID = R.id.NoDateRecyclerView;
     }
 
-    public void linkCategory(CategoryBase category){
+    public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.Nodate));
         groupListAdapter = new NoDateAdapter(groupList.getRecyclerViewItems());
         BindDatas();

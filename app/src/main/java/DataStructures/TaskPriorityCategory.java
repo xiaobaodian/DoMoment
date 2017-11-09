@@ -33,7 +33,7 @@ public class TaskPriorityCategory extends CategoryBase {
         AddGroupList(new UrgentGroupList(this));
         AddGroupList(new VeryImportanceGroupList(this));
         AddGroupList(new ImportanceGroupList(this));
-        AddGroupList(new MakeOutGroupList(this));
+        AddGroupList(new FocusGroupList(this));
     }
 
 }
