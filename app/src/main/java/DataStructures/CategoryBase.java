@@ -12,8 +12,11 @@ import ENUM.GroupListType;
 
 public abstract class CategoryBase extends ItemBase {
     private List<GroupListBase> GroupLists;
+    protected int orderID;
+    protected int categoryID;
     protected CategoryType categoryType;
     protected int themeBackground;
+    protected int themeColor;
 
     public CategoryBase(){
         GroupLists = new ArrayList<>();
@@ -35,6 +38,25 @@ public abstract class CategoryBase extends ItemBase {
             }
         }
         return vGroup;
+    }
+
+    public void setOrderID(int orderID){
+        this.orderID = orderID;
+    }
+    public int getOrderID(){
+        return orderID;
+    }
+    public void setCategoryID(int categoryID){
+        this.categoryID = categoryID;
+    }
+    public int getCategoryID(){
+        return categoryID;
+    }
+    public void setThemeColor(int themeColor){
+        this.themeColor = themeColor;
+    }
+    public int getThemeColor(){
+        return themeColor;
     }
 
     public void setThemeBackground(int themeBackground){
@@ -62,15 +84,6 @@ public abstract class CategoryBase extends ItemBase {
                 break;
             }
         }
-    }
-
-    public void UpdateTask(Task task){
-
-        //GroupBase group = task.getParentGroup();
-        //GroupListBase viewGroup = group.getParent();
-        //viewGroup.ChangeTask(task);
-        //viewGroup.ChangeTask(task);
-
     }
 
     public List<GroupListBase> getGroupLists(){

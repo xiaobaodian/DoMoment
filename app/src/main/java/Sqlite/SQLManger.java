@@ -32,16 +32,12 @@ public class SQLManger extends SQLiteOpenHelper {
 
     public static final String CreateCategory = "create table Categorys ("
             + "id integer primary key autoincrement, "
+            + "OrderID int, "
             + "CategoryID int, "
             + "Title text, "
             + "Note text, "
-            + "themeBackground integer, "
-            + "StartDateTime integer, "
-            + "DueDateTime integer, "
-            + "CompleteDateTime integer, "
-            + "isAllDay boolean, "
-            + "isNoDate boolean, "
-            + "isComplete boolean)";
+            + "themeBackground int, "
+            + "themeColor int";
 
     public SQLManger(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
