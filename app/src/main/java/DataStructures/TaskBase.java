@@ -96,6 +96,9 @@ public class TaskBase extends ListItemBase implements Comparable{
         if (isComplete) completeDateTime = Calendar.getInstance();
         this.isComplete = isComplete;
     }
+    public void setCompleteDB(boolean isComplete){
+        this.isComplete = isComplete;
+    }
     public boolean IsComplete(){
         return isComplete;
     }

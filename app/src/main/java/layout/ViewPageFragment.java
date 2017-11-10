@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.security.DomainCombiner;
 
 import DataStructures.CategoryBase;
 import DataStructures.GroupListBase;
@@ -22,14 +25,22 @@ import threecats.zhang.domoment.R;
  */
 
 public abstract class ViewPageFragment extends TitleFragment {
-    private View fragmentView;
-    private String title;
+    protected View fragmentView;
+    protected String title;
+    protected int tipsTextID = 0;
     protected int fragmentLayoutID = 0;
     protected int recyclerViewID = 0;
     protected RecyclerViewAdapterBase groupListAdapter;
     protected GroupListBase groupList = null;
+    private TextView TipsText;
 
     public abstract void LinkCategory(CategoryBase category);
+    public void OpenTips(){
+        if (TipsText != null) TipsText.setVisibility(View.VISIBLE);
+    }
+    public void CloseTips(){
+        if (TipsText != null) TipsText.setVisibility(View.GONE);
+    }
 
     protected void setGroupList(GroupListBase groupList){
         this.groupList = groupList;
@@ -62,6 +73,7 @@ public abstract class ViewPageFragment extends TitleFragment {
 
     public void BindDatas(){
         if (fragmentView == null || groupList == null) return;
+        TipsText = fragmentView.findViewById(tipsTextID);
         RecyclerView recyclerView = fragmentView.findViewById(recyclerViewID);
         try {
             groupList.BindRecyclerView(recyclerView, groupListAdapter, fragmentView);

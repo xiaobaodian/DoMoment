@@ -23,11 +23,12 @@ public class TodoMakeOutFragment extends ViewPageFragment {
         super.onCreate(savedInstanceState);
         fragmentLayoutID = R.layout.fragment_todo_makeout;
         recyclerViewID = R.id.MarkOutRecyclerView;
+        tipsTextID = R.id.NullTips;
     }
 
     public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.Complete));
-        groupListAdapter = new MakeOutAdapter(groupList.getRecyclerViewItems());
+        groupListAdapter = new MakeOutAdapter(groupList.getRecyclerViewItems(),this);
         BindDatas();
     }
 }

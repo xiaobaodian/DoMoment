@@ -235,7 +235,7 @@ public class DataManger {
                 task.setCompleteDateTimeDB(cursor.getLong(cursor.getColumnIndex("CompleteDateTime")));
                 task.setAllDay(cursor.getInt(cursor.getColumnIndex("isAllDay")) == 1);
                 task.setNoDateDB(cursor.getInt(cursor.getColumnIndex("isNoDate")) == 1);
-                task.setComplete(cursor.getInt(cursor.getColumnIndex("isComplete")) == 1);
+                task.setCompleteDB(cursor.getInt(cursor.getColumnIndex("isComplete")) == 1);
                 AddTask(task);
             }
             cursor.close();

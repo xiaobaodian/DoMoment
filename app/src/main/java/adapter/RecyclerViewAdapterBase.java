@@ -123,6 +123,8 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
 
     protected abstract void OnBindItem(ItemViewHolder holder, Task task, @Nullable GroupType groupType);
     protected abstract void OnBindGroup(GroupViewHolder holder, GroupBase group);
+    protected abstract void OpenTips();
+    protected abstract void CloseTips();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -205,7 +207,13 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
 
     @Override
     public int getItemCount() {
-        return items.size();
+        int size = items.size();
+        if (size == 0) {
+            OpenTips();
+        } else {
+            CloseTips();
+        }
+        return size;
     }
 
 }

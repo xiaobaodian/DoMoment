@@ -27,11 +27,12 @@ public class TodoNoDateFragment extends ViewPageFragment {
         super.onCreate(savedInstanceState);
         fragmentLayoutID = R.layout.fragment_todo_nodate;
         recyclerViewID = R.id.NoDateRecyclerView;
+        tipsTextID = R.id.NullTips;
     }
 
     public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.Nodate));
-        groupListAdapter = new NoDateAdapter(groupList.getRecyclerViewItems());
+        groupListAdapter = new NoDateAdapter(groupList.getRecyclerViewItems(),this);
         BindDatas();
     }
 }

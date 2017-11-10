@@ -1,11 +1,14 @@
 package adapter;
 
+import android.widget.TextView;
+
 import java.util.List;
 
 import DataStructures.GroupBase;
 import DataStructures.ListItemBase;
 import DataStructures.Task;
 import ENUM.GroupType;
+import layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
 
 /**
@@ -13,9 +16,11 @@ import threecats.zhang.domoment.R;
  */
 
 public class MakeOutAdapter extends RecyclerViewAdapterBase {
+    private ViewPageFragment viewPageFragment;
 
-    public MakeOutAdapter(List<ListItemBase> items){
+    public MakeOutAdapter(List<ListItemBase> items, ViewPageFragment viewPageFragment){
         super(items);
+        this.viewPageFragment = viewPageFragment;
         setGroupLayoutID(R.layout.taskgroup_show);
         setItemLayoutID(R.layout.taskitem_show);
     }
@@ -52,6 +57,14 @@ public class MakeOutAdapter extends RecyclerViewAdapterBase {
             case LongTimeAgo:
                 break;
         }
+    }
 
+    @Override
+    protected void OpenTips(){
+        viewPageFragment.OpenTips();
+    }
+    @Override
+    protected void CloseTips(){
+        viewPageFragment.CloseTips();
     }
 }

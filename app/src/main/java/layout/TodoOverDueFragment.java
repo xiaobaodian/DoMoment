@@ -24,11 +24,12 @@ public class TodoOverDueFragment extends ViewPageFragment {
         super.onCreate(savedInstanceState);
         fragmentLayoutID = R.layout.fragment_todo_overdue;
         recyclerViewID = R.id.OverdueRecyclerView;
+        tipsTextID = R.id.NullTips;
     }
 
     public void LinkCategory(CategoryBase category){
         setGroupList(category.getGroupList(GroupListType.Overdue));
-        groupListAdapter = new OverdueAdapter (groupList.getRecyclerViewItems());
+        groupListAdapter = new OverdueAdapter (groupList.getRecyclerViewItems(), this);
         BindDatas();
     }
 }

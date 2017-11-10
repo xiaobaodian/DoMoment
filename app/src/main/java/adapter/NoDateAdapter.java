@@ -1,5 +1,7 @@
 package adapter;
 
+import android.widget.TextView;
+
 import java.util.List;
 
 import DataStructures.GroupBase;
@@ -7,6 +9,7 @@ import DataStructures.ListItemBase;
 import DataStructures.Task;
 import ENUM.DATEFORMAT;
 import ENUM.GroupType;
+import layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
 
 /**
@@ -14,9 +17,11 @@ import threecats.zhang.domoment.R;
  */
 
 public class NoDateAdapter extends RecyclerViewAdapterBase {
+    private ViewPageFragment viewPageFragment;
 
-    public NoDateAdapter(List<ListItemBase> items){
+    public NoDateAdapter(List<ListItemBase> items, ViewPageFragment viewPageFragment){
         super(items);
+        this.viewPageFragment = viewPageFragment;
         setGroupLayoutID(R.layout.taskgroup_show);
         setItemLayoutID(R.layout.taskitem_show);
     }
@@ -54,5 +59,14 @@ public class NoDateAdapter extends RecyclerViewAdapterBase {
                 break;
         }
 
+    }
+
+    @Override
+    protected void OpenTips(){
+        viewPageFragment.OpenTips();
+    }
+    @Override
+    protected void CloseTips(){
+        viewPageFragment.CloseTips();
     }
 }

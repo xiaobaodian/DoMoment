@@ -185,7 +185,6 @@ public class TodoFragment extends Fragment {
                         currentGroupList = currentCategory.getGroupList(GroupListType.Complete);
                         DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
                 }
-                //DoMoment.getDataManger().setCurrentGroupList(currentGroupList);
             }
 
             @Override
@@ -265,15 +264,13 @@ public class TodoFragment extends Fragment {
 
         timeLineFragment.LinkCategory(currentCategory);
         timeLineFragment.LinkTab(viewTabLayout.getTabAt(0));
-
         overDueFragment.LinkCategory(currentCategory);
         overDueFragment.LinkTab(viewTabLayout.getTabAt(1));
-
         noDateFragment.LinkCategory(currentCategory);
         noDateFragment.LinkTab(viewTabLayout.getTabAt(2));
-
         makeOutFragment.LinkCategory(currentCategory);
         makeOutFragment.LinkTab(viewTabLayout.getTabAt(3));
+
     }
 
     @Override

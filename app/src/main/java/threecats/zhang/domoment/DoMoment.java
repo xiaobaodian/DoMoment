@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import DataStructures.CategoryBase;
 import DataStructures.DataManger;
+import DataStructures.GroupListBase;
 
 /**
  * Created by zhang on 2017/8/14.
@@ -39,6 +40,9 @@ public class DoMoment extends Application {
     }
     public static CategoryBase getCurrentCategory(){
         return dataManger.getCurrentCategory();
+    }
+    public static GroupListBase getCurrentGroupList(){
+        return dataManger.getCurrentGroupList();
     }
 
     public static void setMainActivity(MainActivity activity){
