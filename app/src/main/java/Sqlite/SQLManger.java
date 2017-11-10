@@ -30,7 +30,7 @@ public class SQLManger extends SQLiteOpenHelper {
             + "isNoDate boolean, "
             + "isComplete boolean)";
 
-    public static final String CreateCategoy = "create table Categorys ("
+    public static final String CreateCategory = "create table Categorys ("
             + "id integer primary key autoincrement, "
             + "CategoryID int, "
             + "Title text, "
