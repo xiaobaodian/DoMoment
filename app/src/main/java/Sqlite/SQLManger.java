@@ -30,6 +30,19 @@ public class SQLManger extends SQLiteOpenHelper {
             + "isNoDate boolean, "
             + "isComplete boolean)";
 
+    public static final String CreateCategoy = "create table Categorys ("
+            + "id integer primary key autoincrement, "
+            + "CategoryID int, "
+            + "Title text, "
+            + "Note text, "
+            + "themeBackground integer, "
+            + "StartDateTime integer, "
+            + "DueDateTime integer, "
+            + "CompleteDateTime integer, "
+            + "isAllDay boolean, "
+            + "isNoDate boolean, "
+            + "isComplete boolean)";
+
     public SQLManger(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
         this.context = context;
