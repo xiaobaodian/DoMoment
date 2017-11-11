@@ -14,7 +14,7 @@ public class NoCategory extends CategoryBase {
 
     NoCategory() {
         super();
-        setID(1);
+        setCategoryID(1);
         Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_nocategory_title));
         categoryType = CategoryType.System;
@@ -24,7 +24,7 @@ public class NoCategory extends CategoryBase {
 
     @Override
     public boolean InCategory(Task task) {
-        return task.getCategoryID() == getID();
+        return task.getCategoryID() == getCategoryID();
     }
 
     @Override

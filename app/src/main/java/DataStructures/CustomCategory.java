@@ -12,10 +12,10 @@ import threecats.zhang.domoment.R;
 
 public class CustomCategory extends CategoryBase {
 
-    CustomCategory(String title, int ID) {
+    CustomCategory(String title, int categoryID) {
         super();
         setTitle(title);
-        setID(ID);
+        setCategoryID(categoryID);
         categoryType = CategoryType.Custom;
         themeBackground = R.drawable.todo_themebackground_work1;
         BuildGroupLists();
@@ -23,7 +23,7 @@ public class CustomCategory extends CategoryBase {
 
     @Override
     public boolean InCategory(Task task) {
-        return task.getCategoryID() == getID();
+        return task.getCategoryID() == getCategoryID();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class CategoryList {
     public String getCategoryTitle(int site){
         String title = "";
         for (CategoryBase category : allCategorys) {
-            if (category.getID() == site) {
+            if (category.getCategoryID() == site) {
                 title = category.getTitle();
                 break;
             }

@@ -55,7 +55,7 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
                 int position = itemViewHolder.getAdapterPosition();
                 CategoryBase category = itemBases.get(position);
                 itemViewHolder.tvTitle.setChecked(true);
-                task.setCategoryID(category.getID());
+                task.setCategoryID(category.getCategoryID());
                 if (currentChecked >= 0) {
                     notifyItemChanged(currentChecked);
                 }

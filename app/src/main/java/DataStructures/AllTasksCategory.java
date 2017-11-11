@@ -14,7 +14,7 @@ public class AllTasksCategory extends CategoryBase {
 
     AllTasksCategory() {
         super();
-        setID(0);
+        setCategoryID(0);
         Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_alltask_title));
         categoryType = CategoryType.System;

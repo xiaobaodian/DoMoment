@@ -15,7 +15,7 @@ public class TaskPriorityCategory extends CategoryBase {
 
     TaskPriorityCategory() {
         super();
-        setID(2);
+        setCategoryID(2);
         Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_prioritycategory_title));
         categoryType = CategoryType.System;
