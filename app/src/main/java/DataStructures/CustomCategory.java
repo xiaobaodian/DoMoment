@@ -12,6 +12,11 @@ import threecats.zhang.domoment.R;
 
 public class CustomCategory extends CategoryBase {
 
+    CustomCategory(){
+        super();
+        BuildGroupLists();
+    }
+
     CustomCategory(String title, int categoryID) {
         super();
         setTitle(title);

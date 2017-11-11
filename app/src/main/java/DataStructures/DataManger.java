@@ -55,7 +55,7 @@ public class DataManger {
     public void LoadDatas(){
         if (isDataloaded) return;
         //new LoadDatas().execute();
-        Load();
+        LoadTasks();
         isDataloaded = true;
     }
 
@@ -132,25 +132,20 @@ public class DataManger {
         setEditorTask(task);
         DoMoment.showTaskDisplayActivity();
     }
-
     public void AddTask(Task task){
         categoryList.AddTask(task);
     }
-
     public void InsertTask(Task task){
         categoryList.InsertTask(task);
     }
-
     public void RemoveTask(Task task){
         categoryList.RemoveTask(task);
         RemoveTaskToDataBase(task);
     }
-
     private void ChangeTask(Task task){
         categoryList.ChangeTask(task);
         UpdateTaskToDataBase(task);
     }
-
     public void UpdateTask(Task task){
         categoryList.UpdateTaskaa(task);
         UpdateTaskToDataBase(task);
@@ -165,7 +160,6 @@ public class DataManger {
         AddTaskDBItem(db, task);
         db.close();
     }
-
     private void UpdateTaskToDataBase(Task task){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         UpdateTaskDBItem(db, task);
@@ -176,17 +170,14 @@ public class DataManger {
         RemoveTaskDBItem(db, task);
         db.close();
     }
-
     private void AddTaskDBItem(SQLiteDatabase db, Task task){
-        PutValues(task);
+        PutTaskValues(task);
         db.insert("Tasks", null, values);
     }
-
     private void UpdateTaskDBItem(SQLiteDatabase db, Task task){
-        PutValues(task);
+        PutTaskValues(task);
         db.update("Tasks",values,"id = ?", new String[]{task.getID()+""});
     }
-
     private void RemoveTaskDBItem(SQLiteDatabase db, Task task){
         db.delete("Tasks", "id = ?", new String[]{task.getID()+""});
     }
@@ -198,7 +189,7 @@ public class DataManger {
         db.close();
     }
 
-    private void PutValues(Task task){
+    private void PutTaskValues(Task task){
         values.clear();
         values.put("CategoryID", task.getCategoryID());
         values.put("Title", task.getTitle());
@@ -214,7 +205,7 @@ public class DataManger {
         values.put("isComplete", task.IsComplete());
     }
 
-    private void Load(){
+    private void LoadTasks(){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -246,6 +237,66 @@ public class DataManger {
         //DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
         //categoryList.BindDatas();
     }
+
+    // Category操作
+    public void AddCategory(CustomCategory customCategory){
+        categoryList.AddCustomCategory(customCategory);
+    }
+
+    // Category数据库操作
+
+    private void AddCategoryToDataBase(CustomCategory customCategory){
+        SQLiteDatabase db = sqlDB.getWritableDatabase();
+        AddCategoryDBItem(db, customCategory);
+        db.close();
+    }
+    private void UpdateCategoryToDataBase(CustomCategory customCategory){
+        SQLiteDatabase db = sqlDB.getWritableDatabase();
+        UpdateCategoryDBItem(db, customCategory);
+        db.close();
+    }
+
+    private void AddCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
+        PutCategoryValues(customCategory);
+        db.insert("Categorys", null, values);
+    }
+    private void UpdateCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
+        PutCategoryValues(customCategory);
+        db.update("Tasks",values,"id = ?", new String[]{customCategory.getID()+""});
+    }
+    private void PutCategoryValues(CustomCategory customCategory){
+        values.clear();
+        values.put("orderID", customCategory.getOrderID());
+        values.put("CategoryID", customCategory.getCategoryID());
+        values.put("Title", customCategory.getTitle());
+        values.put("Note", customCategory.getNote());
+        values.put("themeBackground", customCategory.getThemeBackground());
+    }
+
+    private void LoadCategorys(){
+        SQLiteDatabase db = sqlDB.getWritableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            String sql = "select * from Categorys order by OrderID";
+            cursor = db.rawQuery(sql, new String[]{"0", "360"});
+            while (cursor.moveToNext()) {
+                CustomCategory customCategory = new CustomCategory();
+                customCategory.setID(cursor.getInt(cursor.getColumnIndex("id")));
+                customCategory.setOrderID(cursor.getInt(cursor.getColumnIndex("orderID")));
+                customCategory.setCategoryID(cursor.getInt(cursor.getColumnIndex("CategoryID")));
+                customCategory.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                customCategory.setNote(cursor.getString(cursor.getColumnIndex("Note")));
+                customCategory.setThemeBackground(cursor.getInt(cursor.getColumnIndex("themeBackground")));
+                AddCategory(customCategory);
+            }
+            cursor.close();
+        }
+        assert db != null;
+        db.close();
+    }
+
+
+    // 辅助操作
 
     public void BuildDatas(){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
