@@ -23,6 +23,17 @@ public class CategoryList {
     public GroupListBase getFirstGroupList(){
         return allCategorys.get(0).getGroupLists().get(0);
     }
+    public boolean IsNull(){
+        if (allCategorys.size() == 3 && getTaskCount() == 0) return true;
+        return false;
+    }
+    public int getTaskCount(){
+        int count = 0;
+        for (CategoryBase category : allCategorys) {
+            count += category.getTaskCount();
+        }
+        return count;
+    }
 
     public String getCategoryTitle(int site){
         String title = "";

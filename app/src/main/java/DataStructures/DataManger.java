@@ -39,11 +39,6 @@ public class DataManger {
 
     private void BuildCategorys(){
         categoryList = new CategoryList();
-        categoryList.AddCustomCategory(new CustomCategory("学习进修",10));
-        categoryList.AddCustomCategory(new CustomCategory("宠物",11));
-        categoryList.AddCustomCategory(new CustomCategory("公司事务",12));
-        categoryList.AddCustomCategory(new CustomCategory("休闲娱乐",13));
-        categoryList.AddCustomCategory(new CustomCategory("App应用开发",14));
         currentCategory = categoryList.getFirstCategory();
         currentGroupList = categoryList.getFirstGroupList();
     }
@@ -55,7 +50,9 @@ public class DataManger {
     public void LoadDatas(){
         if (isDataloaded) return;
         //new LoadDatas().execute();
+        LoadCategorys();
         LoadTasks();
+        if (categoryList.IsNull()) InitCategory();
         isDataloaded = true;
     }
 
@@ -126,7 +123,7 @@ public class DataManger {
         int categoryID = 1;
         CategoryBase category = getCurrentCategory();
         if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
-            categoryID = DoMoment.getCurrentCategory().getID();
+            categoryID = DoMoment.getCurrentCategory().getCategoryID();
         }
         Task task = new Task(categoryID, day);
         setEditorTask(task);
@@ -239,8 +236,12 @@ public class DataManger {
     }
 
     // Category操作
-    public void AddCategory(CustomCategory customCategory){
+    public void AddCustomCategory(CustomCategory customCategory){
         categoryList.AddCustomCategory(customCategory);
+    }
+    public void RemoveCustomCategory(CustomCategory customCategory){
+        categoryList.RemoveCustomCategory(customCategory);
+        RemoveCategoryToDataBase(customCategory);
     }
 
     // Category数据库操作
@@ -255,6 +256,11 @@ public class DataManger {
         UpdateCategoryDBItem(db, customCategory);
         db.close();
     }
+    private void RemoveCategoryToDataBase(CustomCategory customCategory){
+        SQLiteDatabase db = sqlDB.getWritableDatabase();
+        RemoveCategoryDBItem(db, customCategory);
+        db.close();
+    }
 
     private void AddCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
         PutCategoryValues(customCategory);
@@ -262,11 +268,14 @@ public class DataManger {
     }
     private void UpdateCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
         PutCategoryValues(customCategory);
-        db.update("Tasks",values,"id = ?", new String[]{customCategory.getID()+""});
+        db.update("Categorys", values,"id = ?", new String[]{customCategory.getID()+""});
+    }
+    private void RemoveCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
+        db.delete("Categorys", "id = ?", new String[]{customCategory.getID()+""});
     }
     private void PutCategoryValues(CustomCategory customCategory){
         values.clear();
-        values.put("orderID", customCategory.getOrderID());
+        values.put("OrderID", customCategory.getOrderID());
         values.put("CategoryID", customCategory.getCategoryID());
         values.put("Title", customCategory.getTitle());
         values.put("Note", customCategory.getNote());
@@ -277,22 +286,46 @@ public class DataManger {
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         Cursor cursor = null;
         if (db != null) {
-            String sql = "select * from Categorys order by OrderID";
-            cursor = db.rawQuery(sql, new String[]{"0", "360"});
+            String sql = "select * from Categorys";
+            cursor = db.rawQuery(sql, null);
             while (cursor.moveToNext()) {
                 CustomCategory customCategory = new CustomCategory();
                 customCategory.setID(cursor.getInt(cursor.getColumnIndex("id")));
-                customCategory.setOrderID(cursor.getInt(cursor.getColumnIndex("orderID")));
+                customCategory.setOrderID(cursor.getInt(cursor.getColumnIndex("OrderID")));
                 customCategory.setCategoryID(cursor.getInt(cursor.getColumnIndex("CategoryID")));
                 customCategory.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 customCategory.setNote(cursor.getString(cursor.getColumnIndex("Note")));
                 customCategory.setThemeBackground(cursor.getInt(cursor.getColumnIndex("themeBackground")));
-                AddCategory(customCategory);
+                AddCustomCategory(customCategory);
             }
             cursor.close();
         }
         assert db != null;
         db.close();
+    }
+
+    // 初始化操作
+
+    private void InitCategory(){
+        CustomCategory customCategory;
+        customCategory = new CustomCategory("学习与进修", 10);
+        AddCustomCategory(customCategory);
+        AddCategoryToDataBase(customCategory);
+        customCategory = new CustomCategory("工作", 11);
+        AddCustomCategory(customCategory);
+        AddCategoryToDataBase(customCategory);
+        customCategory = new CustomCategory("家庭", 12);
+        AddCustomCategory(customCategory);
+        AddCategoryToDataBase(customCategory);
+        customCategory = new CustomCategory("宠物花鸟", 13);
+        AddCustomCategory(customCategory);
+        AddCategoryToDataBase(customCategory);
+        customCategory = new CustomCategory("休闲娱乐", 14);
+        AddCustomCategory(customCategory);
+        AddCategoryToDataBase(customCategory);
+        customCategory = new CustomCategory("投资理财", 15);
+        AddCustomCategory(customCategory);
+        AddCategoryToDataBase(customCategory);
     }
 
 

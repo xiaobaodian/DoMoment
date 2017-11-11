@@ -24,6 +24,13 @@ public abstract class CategoryBase extends ItemBase {
 
     public abstract boolean InCategory(Task task);
     protected abstract void BuildGroupLists();
+    public int getTaskCount(){
+        int count = 0;
+        for (GroupListBase groupList : GroupLists) {
+            count += groupList.getTaskCount();
+        }
+        return count;
+    }
 
     public void AddGroupList(GroupListBase groupList){
         GroupLists.add(groupList);
