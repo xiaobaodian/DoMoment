@@ -1,5 +1,6 @@
 package adapter;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,29 +50,26 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.taskeditor_categoryitems, parent, false);
         final ItemViewHolder itemViewHolder = new ItemViewHolder(view);
 
-        itemViewHolder.view.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                int position = itemViewHolder.getAdapterPosition();
-                CategoryBase category = itemBases.get(position);
-                itemViewHolder.tvTitle.setChecked(true);
-                task.setCategoryID(category.getCategoryID());
-                if (currentChecked >= 0) {
-                    notifyItemChanged(currentChecked);
-                }
-                currentChecked = position;
+        itemViewHolder.view.setOnClickListener(v -> {
+            int position = itemViewHolder.getAdapterPosition();
+            CategoryBase category = itemBases.get(position);
+            itemViewHolder.tvTitle.setChecked(true);
+            task.setCategoryID(category.getCategoryID());
+            if (currentChecked >= 0) {
+                notifyItemChanged(currentChecked);
             }
+            currentChecked = position;
         });
         return itemViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CategoryBase item = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
         String title = item.getTitle();
         itemViewHolder.tvTitle.setText(title);
-        if (task.getCategoryID() == item.getID()) {
+        if (task.getCategoryID() == item.getCategoryID()) {
             itemViewHolder.tvTitle.setChecked(true);
             currentChecked = position;
         } else {

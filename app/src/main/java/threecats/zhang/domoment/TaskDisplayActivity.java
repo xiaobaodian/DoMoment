@@ -155,7 +155,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         View layout = inflater.inflate(R.layout.taskeditor_categoryselection, (ViewGroup)findViewById(R.id.CategoryDialog));
         int oldCategory = task.getCategoryID();
         AlertDialog.Builder categoryDialog = new AlertDialog.Builder(this);
-        categoryDialog.setTitle("所属类目");
+        categoryDialog.setTitle("设置类目");
         categoryDialog.setView(layout);
         categoryDialog.setNeutralButton("删除", (dialogInterface, i) -> {
             task.setCategoryID(1);
