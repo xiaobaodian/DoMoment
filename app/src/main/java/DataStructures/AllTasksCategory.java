@@ -18,7 +18,7 @@ public class AllTasksCategory extends CategoryBase {
         Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_alltask_title));
         categoryType = CategoryType.System;
-        themeBackground = R.drawable.todo_themebackground_work0;
+        themeBackgroundID = R.drawable.todo_themebackground_work0;
         BuildGroupLists();
     }
 

@@ -1,9 +1,6 @@
 package DataStructures;
 
-import android.content.Context;
-
 import ENUM.CategoryType;
-import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
 /**
@@ -22,7 +19,7 @@ public class CustomCategory extends CategoryBase {
         setTitle(title);
         setCategoryID(categoryID);
         categoryType = CategoryType.Custom;
-        themeBackground = R.drawable.todo_themebackground_work1;
+        themeBackgroundID = R.drawable.todo_themebackground_work1;
         BuildGroupLists();
     }
 

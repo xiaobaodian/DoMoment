@@ -260,7 +260,7 @@ public class TodoFragment extends Fragment {
         currentCategory = DoMoment.getCurrentCategory();
         SetGroupListTitle(currentCategory.getTitle());
         ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
-        themebackground.setImageResource(currentCategory.getThemeBackground());
+        themebackground.setImageResource(currentCategory.getThemeBackgroundID());
 
         timeLineFragment.LinkCategory(currentCategory);
         timeLineFragment.LinkTab(viewTabLayout.getTabAt(0));

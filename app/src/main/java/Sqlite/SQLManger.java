@@ -37,8 +37,9 @@ public class SQLManger extends SQLiteOpenHelper {
             + "CategoryID int, "
             + "Title text, "
             + "Note text, "
-            + "themeBackground int, "
-            + "themeColor int)";
+            + "iconID int, "
+            + "themeBackgroundID int, "
+            + "themeColorID int)";
 
     public SQLManger(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

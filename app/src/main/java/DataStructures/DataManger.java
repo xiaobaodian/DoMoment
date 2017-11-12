@@ -279,7 +279,8 @@ public class DataManger {
         values.put("CategoryID", customCategory.getCategoryID());
         values.put("Title", customCategory.getTitle());
         values.put("Note", customCategory.getNote());
-        values.put("themeBackground", customCategory.getThemeBackground());
+        values.put("iconID", customCategory.getIconId());
+        values.put("themeBackgroundID", customCategory.getThemeBackgroundID());
     }
 
     private void LoadCategorys(){
@@ -295,7 +296,8 @@ public class DataManger {
                 customCategory.setCategoryID(cursor.getInt(cursor.getColumnIndex("CategoryID")));
                 customCategory.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 customCategory.setNote(cursor.getString(cursor.getColumnIndex("Note")));
-                customCategory.setThemeBackground(cursor.getInt(cursor.getColumnIndex("themeBackground")));
+                customCategory.setIconId(cursor.getInt(cursor.getColumnIndex("iconID")));
+                customCategory.setThemeBackgroundID(cursor.getInt(cursor.getColumnIndex("themeBackgroundID")));
                 AddCustomCategory(customCategory);
             }
             cursor.close();

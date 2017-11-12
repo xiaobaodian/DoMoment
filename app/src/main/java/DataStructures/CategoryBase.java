@@ -15,8 +15,9 @@ public abstract class CategoryBase extends ItemBase {
     protected int orderID;
     protected int categoryID;
     protected CategoryType categoryType;
-    protected int themeBackground;
-    protected int themeColor;
+    protected int iconId;
+    protected int themeBackgroundID;
+    protected int themeColorID;
 
     public CategoryBase(){
         GroupLists = new ArrayList<>();
@@ -59,18 +60,23 @@ public abstract class CategoryBase extends ItemBase {
     public int getCategoryID(){
         return categoryID;
     }
-    public void setThemeColor(int themeColor){
-        this.themeColor = themeColor;
+    public void setThemeColorID(int themeColorID){
+        this.themeColorID = themeColorID;
     }
-    public int getThemeColor(){
-        return themeColor;
+    public int getThemeColorID(){
+        return themeColorID;
     }
-
-    public void setThemeBackground(int themeBackground){
-        this.themeBackground = themeBackground;
+    public void setIconId(int iconId){
+        this.iconId = iconId;
     }
-    public int getThemeBackground(){
-        return themeBackground;
+    public int getIconId(){
+        return iconId;
+    }
+    public void setThemeBackgroundID(int themeBackgroundID){
+        this.themeBackgroundID = themeBackgroundID;
+    }
+    public int getThemeBackgroundID(){
+        return themeBackgroundID;
     }
 
     public void AddTask(Task task){

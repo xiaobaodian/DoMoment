@@ -18,7 +18,7 @@ public class NoCategory extends CategoryBase {
         Context context = DoMoment.getContext();
         setTitle(context.getString(R.string.category_nocategory_title));
         categoryType = CategoryType.System;
-        themeBackground = R.drawable.todo_themebackground_work1;
+        themeBackgroundID = R.drawable.todo_themebackground_work1;
         BuildGroupLists();
     }
 
