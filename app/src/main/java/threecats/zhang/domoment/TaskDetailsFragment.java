@@ -246,7 +246,7 @@ public class TaskDetailsFragment extends TitleFragment {
             }
             DisplayDateTimeFields();
         });
-        dialog.setNegativeButton("取消", (dialogInterface, i) -> Toast.makeText(parentContext,"display task",Toast.LENGTH_SHORT).show());
+        dialog.setNegativeButton("取消", (dialogInterface, i) -> DoMoment.Toast("取消编辑"));
         dialog.setOnDismissListener((v) -> {
             //onResume();
         });

@@ -138,24 +138,11 @@ public class TodoFragment extends Fragment {
 //            }
 
         });
+        toolbar.setNavigationOnClickListener(v -> {drawerLayout.openDrawer(GravityCompat.START);});
 
         collapsingToolbar = view.findViewById(R.id.todo_collapsing_toolbar);
         collapsingToolbar.setOnClickListener(v -> {
             drawerLayout.openDrawer(GravityCompat.START);
-
-            //更新记录测试
-            //if (DoMoment.getDataManger().getCurrentTask() == null) return;
-            //Task t = DoMoment.getDataManger().getCurrentTask();
-            //Date date = t.getStartDateTime();
-            //t.setStartDateTime(DateTime.SetDate(date,2017,8,29));
-            //t.isNoDate=false;
-            //DoMoment.getDataManger().ChangeTask(t);
-
-            //删除测试
-            //DoMoment.getDataManger().RemoveTask(DM.getCurrentTask());
-
-            //排序测试
-            //timeLineGroups.SortAllGroup();
         });
 
         addActionButton.setOnClickListener(v -> {

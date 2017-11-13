@@ -4,7 +4,9 @@
 
     <item
         android:id="@+id/taskeditormenu_makeout"
-        android:title="标记完成" />
+        android:icon="@mipmap/ic_assignment_turned_in_white_24dp"
+        android:title="标记完成"
+        app:showAsAction="always" />
     <item
         android:id="@+id/taskeditormenu_remove"
         android:title="删除" />

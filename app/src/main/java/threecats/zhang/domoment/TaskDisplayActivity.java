@@ -93,8 +93,8 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        oldCategoryID = task.getCategoryID();
-        oldPriority = task.getPriority();
+        //oldCategoryID = task.getCategoryID();
+        //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
         DisplayTaskItems();
     }

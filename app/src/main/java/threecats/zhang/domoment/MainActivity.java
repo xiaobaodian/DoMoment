@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private MomentFragment momentFragment;
     private FocusFragment focusFragment;
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    private int OP = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
             //mountFragment(momentFragment);
         }
         mountFragment(todoFragment);
-        OP++;
-        DoMoment.Toast("Main Menu: "+OP);
     }
 
     @Override
@@ -110,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frament, frament);
         fragmentTransaction.commit();
-        //OP++;
-        //DoMoment.Toast("Main Menu: "+OP);
     }
 
     public void setMainToolBar(Toolbar toolbar){

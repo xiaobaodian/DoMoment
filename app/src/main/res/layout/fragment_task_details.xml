@@ -104,16 +104,16 @@
 
                     <ImageView
                         android:id="@+id/imageCal"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginBottom="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:layout_marginTop="0dp"
+                        android:alpha="0.8"
+                        android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.526"
-                        app:srcCompat="@mipmap/calendar" />
+                        app:srcCompat="@mipmap/ic_event_black_24dp" />
 
                     <TextView
                         android:id="@+id/tvStartDate"
@@ -188,15 +188,15 @@
 
                     <ImageView
                         android:id="@+id/imageClock"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginBottom="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:layout_marginTop="0dp"
+                        android:alpha="0.8"
+                        android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/time" />
+                        app:srcCompat="@mipmap/ic_schedule_black_24dp" />
 
                     <TextView
                         android:id="@+id/tvStartTime"
@@ -268,7 +268,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:drawableLeft="@android:drawable/ic_lock_idle_alarm"
                     android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:hint="每周重复，循环十次结束，现在是第三次"
@@ -301,7 +300,6 @@
                     android:id="@+id/tvTaskRemind"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@android:drawable/ic_lock_idle_alarm"
                     android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:hint="设置提醒"

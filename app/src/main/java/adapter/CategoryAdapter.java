@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import DataStructures.CategoryBase;
-import DataStructures.GroupListBase;
-import ENUM.GroupListType;
 import threecats.zhang.domoment.DateTimeHelper;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
@@ -29,12 +27,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //static
     public class ItemViewHolder extends RecyclerView.ViewHolder{
         View view;
-        TextView titleView;
+        TextView tvCategoryTitle;
+        ImageView ivCategoryIcon;
 
         public ItemViewHolder(View view){
             super(view);
             this.view = view;
-            titleView = (TextView)view.findViewById(R.id.categorytitle);;
+            tvCategoryTitle = (TextView)view.findViewById(R.id.categorytitle);
+            ivCategoryIcon = view.findViewById(R.id.categoryimage);
         }
     }
 
@@ -88,8 +88,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CategoryBase item = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
-        String title = item.getTitle();
-        itemViewHolder.titleView.setText(title);
+        itemViewHolder.tvCategoryTitle.setText(item.getTitle());
+        itemViewHolder.ivCategoryIcon.setImageResource(item.getIconId());
     }
 
     @Override
