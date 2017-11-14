@@ -3,33 +3,44 @@ package DataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import threecats.zhang.domoment.R;
+
 /**
  * Created by zhang on 2017/10/27.
  */
 
 public class CategoryList {
-    private List<CategoryBase> allCategorys = new ArrayList<>();
+    private List<CategoryBase> Categorys = new ArrayList<>();
+    private List<Integer> categoryThemebackground = new ArrayList<>();
     //private List<CustomCategory> customCategories;
 
     public CategoryList(){
-        allCategorys.add(new AllTasksCategory());
-        allCategorys.add(new NoCategory());
-        allCategorys.add(new TaskPriorityCategory());
+        Categorys.add(new AllTasksCategory());
+        Categorys.add(new NoCategory());
+        Categorys.add(new TaskPriorityCategory());
+        categoryThemebackground.add(R.drawable.category_themebackground_0);
+        categoryThemebackground.add(R.drawable.category_themebackground_1);
+        categoryThemebackground.add(R.drawable.category_themebackground_2);
+        categoryThemebackground.add(R.drawable.category_themebackground_3);
+        categoryThemebackground.add(R.drawable.category_themebackground_4);
+        categoryThemebackground.add(R.drawable.category_themebackground_5);
+        categoryThemebackground.add(R.drawable.category_themebackground_6);
+        categoryThemebackground.add(R.drawable.category_themebackground_7);
     }
 
     public CategoryBase getFirstCategory(){
-        return allCategorys.get(0);
+        return Categorys.get(0);
     }
     public GroupListBase getFirstGroupList(){
-        return allCategorys.get(0).getGroupLists().get(0);
+        return Categorys.get(0).getGroupLists().get(0);
     }
     public boolean IsNull(){
-        if (allCategorys.size() == 3 && getTaskCount() == 0) return true;
+        if (Categorys.size() == 3 && getTaskCount() == 0) return true;
         return false;
     }
     public int getTaskCount(){
         int count = 0;
-        for (CategoryBase category : allCategorys) {
+        for (CategoryBase category : Categorys) {
             count += category.getTaskCount();
         }
         return count;
@@ -37,7 +48,7 @@ public class CategoryList {
 
     public String getCategoryTitle(int site){
         String title = "";
-        for (CategoryBase category : allCategorys) {
+        for (CategoryBase category : Categorys) {
             if (category.getCategoryID() == site) {
                 title = category.getTitle();
                 break;
@@ -47,30 +58,30 @@ public class CategoryList {
     }
 
     public void AddCustomCategory(CustomCategory customCategory){
-        allCategorys.add(customCategory);
+        Categorys.add(customCategory);
         //customCategories.add(customCategory);
     }
 
     public void RemoveCustomCategory(CustomCategory customCategory){
-        allCategorys.remove(customCategory);
+        Categorys.remove(customCategory);
     }
 
-    public List<CategoryBase> getAllCategorys(){
-        return  allCategorys;
+    public List<CategoryBase> getCategorys(){
+        return Categorys;
     }
 
     public List<CategoryBase> getCustomCategories(){
-        return allCategorys.subList(3, allCategorys.size());
+        return Categorys.subList(3, Categorys.size());
     }
 
     public void AddTask(Task task){
-        for (CategoryBase category : allCategorys) {
+        for (CategoryBase category : Categorys) {
             if (category.InCategory(task)) category.AddTask(task);
         }
     }
 
     public void InsertTask(Task task){
-        for (CategoryBase category : allCategorys) {
+        for (CategoryBase category : Categorys) {
             if (category.InCategory(task)) category.InsertTask(task);
         }
     }
@@ -111,7 +122,7 @@ public class CategoryList {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);
         }
-        for (CategoryBase category : allCategorys) {
+        for (CategoryBase category : Categorys) {
             if (updateCategorys.contains(category)) continue;
             category.InsertTask(task);
         }
@@ -128,9 +139,13 @@ public class CategoryList {
         }
     }
 
+    public List<Integer> getCategoryThemebackground(){
+        return categoryThemebackground;
+    }
+
     public void CurrentDateChange(){
         List<Task> dateChangeTasks = new ArrayList<>();
-        for (CategoryBase category : allCategorys){
+        for (CategoryBase category : Categorys){
             for (GroupListBase gorupList : category.getGroupLists()) {
                 gorupList.BuildTimePoint();
                 for (GroupBase group : gorupList.getGroups()){
@@ -140,7 +155,7 @@ public class CategoryList {
                 gorupList.UpdateTitleMessage();
             }
         }
-        for (CategoryBase category : allCategorys){
+        for (CategoryBase category : Categorys){
             for (GroupListBase gorupList : category.getGroupLists()) {
                 for (GroupBase group : gorupList.getGroups()){
                     for (Task task : group.getTasks()) {

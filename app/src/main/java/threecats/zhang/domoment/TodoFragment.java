@@ -269,7 +269,7 @@ public class TodoFragment extends Fragment {
     // 构建侧滑的类目列表
     private void BuildsCategoryList(View v){
         RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.CategoryRecyclerView);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(DoMoment.getDataManger().getCategoryList().getAllCategorys());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(DoMoment.getDataManger().getCategoryList().getCategorys());
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);
