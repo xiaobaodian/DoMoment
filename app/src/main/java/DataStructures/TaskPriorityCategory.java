@@ -20,7 +20,7 @@ public class TaskPriorityCategory extends CategoryBase {
         setTitle(context.getString(R.string.category_prioritycategory_title));
         categoryType = CategoryType.System;
         iconId = R.mipmap.openbook;
-        themeBackgroundID = R.drawable.todo_themebackground_work1;
+        themeBackgroundID = R.drawable.category_themebackground_1;
         BuildGroupLists();
     }
 

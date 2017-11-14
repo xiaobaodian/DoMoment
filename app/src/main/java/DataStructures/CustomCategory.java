@@ -20,7 +20,7 @@ public class CustomCategory extends CategoryBase {
         setCategoryID(categoryID);
         categoryType = CategoryType.Custom;
         iconId = R.mipmap.list;
-        themeBackgroundID = R.drawable.todo_themebackground_work1;
+        themeBackgroundID = R.drawable.category_themebackground_1;
         BuildGroupLists();
     }
 

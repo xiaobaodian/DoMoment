@@ -19,7 +19,7 @@ public class AllTasksCategory extends CategoryBase {
         setTitle(context.getString(R.string.category_alltask_title));
         categoryType = CategoryType.System;
         iconId = R.mipmap.folder;
-        themeBackgroundID = R.drawable.todo_themebackground_work0;
+        themeBackgroundID = R.drawable.category_themebackground_0;
         BuildGroupLists();
     }
 
