@@ -239,6 +239,9 @@ public class DataManger {
     public void AddCustomCategory(CustomCategory customCategory){
         categoryList.AddCustomCategory(customCategory);
     }
+    public void UpdateCustomCategory(CustomCategory customCategory){
+        UpdateCategoryToDataBase(customCategory);
+    }
     public void RemoveCustomCategory(CustomCategory customCategory){
         categoryList.RemoveCustomCategory(customCategory);
         RemoveCategoryToDataBase(customCategory);

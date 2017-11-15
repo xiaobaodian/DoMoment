@@ -19,7 +19,7 @@ import threecats.zhang.domoment.R;
  * Created by zhang on 2017/8/1.
  */
 
-public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private DateTimeHelper DateTime = DoMoment.getDateTime();
     private List<CategoryBase>  itemBases;
@@ -38,18 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public class GroupViewHolder extends RecyclerView.ViewHolder{
-        View itemView;
-        TextView titleView;
-        TextView postView;
-        public GroupViewHolder(View view){
-            super(view);
-            itemView = view;
-            titleView = (TextView)view.findViewById(R.id.groupTitle);
-        }
-    }
-
-    public CategoryAdapter(List<CategoryBase> itemBases){
+    public CategorySelectedAdapter(List<CategoryBase> itemBases){
         this.itemBases = itemBases;
     }
 

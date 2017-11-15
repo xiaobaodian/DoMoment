@@ -11,21 +11,22 @@ import threecats.zhang.domoment.R;
 
 public class CategoryList {
     private List<CategoryBase> Categorys = new ArrayList<>();
-    private List<Integer> categoryThemebackground = new ArrayList<>();
+    private List<BackgroupBase> categoryThemebackground = new ArrayList<>();
     //private List<CustomCategory> customCategories;
 
     public CategoryList(){
         Categorys.add(new AllTasksCategory());
         Categorys.add(new NoCategory());
         Categorys.add(new TaskPriorityCategory());
-        categoryThemebackground.add(R.drawable.category_themebackground_0);
-        categoryThemebackground.add(R.drawable.category_themebackground_1);
-        categoryThemebackground.add(R.drawable.category_themebackground_2);
-        categoryThemebackground.add(R.drawable.category_themebackground_3);
-        categoryThemebackground.add(R.drawable.category_themebackground_4);
-        categoryThemebackground.add(R.drawable.category_themebackground_5);
-        categoryThemebackground.add(R.drawable.category_themebackground_6);
-        categoryThemebackground.add(R.drawable.category_themebackground_7);
+
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_0, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_1, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_2, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_3, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_4, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_5, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_6, "title"));
+        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_7, "title"));
     }
 
     public CategoryBase getFirstCategory(){
@@ -139,7 +140,7 @@ public class CategoryList {
         }
     }
 
-    public List<Integer> getCategoryThemebackground(){
+    public List<BackgroupBase> getCategoryThemebackground(){
         return categoryThemebackground;
     }
 

@@ -1,6 +1,9 @@
 package threecats.zhang.domoment;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,9 +32,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import DataStructures.CategoryBase;
+import DataStructures.CustomCategory;
 import DataStructures.GroupListBase;
 import ENUM.GroupListType;
-import adapter.CategoryAdapter;
+import adapter.CategoryBackgroupAdapter;
+import adapter.CategorySelectedAdapter;
+import adapter.SetTaskCategorysAdapter;
 import adapter.todoFragmentAdapter;
 import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
@@ -45,6 +52,8 @@ import layout.ViewPageFragment;
 public class TodoFragment extends Fragment {
 
     private DateTimeHelper DateTime = DoMoment.getDateTime();
+    private Bundle savedInstanceState;
+    private Context parentContext;
     private Toolbar toolbar = null;
     private CollapsingToolbarLayout collapsingToolbar = null;
 
@@ -65,8 +74,15 @@ public class TodoFragment extends Fragment {
     private View thisView;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        parentContext = context;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         DoMoment.getDataManger().setTodoFragment(this);
         //currentCategory = DoMoment.getCurrentCategory();
         //setRetainInstance(true);
@@ -209,6 +225,14 @@ public class TodoFragment extends Fragment {
             case R.id.TodoMenu_RemoveCategory:
                 Toast.makeText(thisView.getContext(), "点击了菜单",Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.TodoMenu_ChangedCategoryBackgroup:
+                setCategoryBackgroup();
+//                CategoryBase currentCategory = DoMoment.getCurrentCategory();
+//                currentCategory.setThemeBackgroundID(R.drawable.category_themebackground_3);
+//                ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+//                themebackground.setImageResource(currentCategory.getThemeBackgroundID());
+//                DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+                break;
             case R.id.TodoMenu_EditCategoryTitle:
                 DoMoment.Toast("生成测试数据");
                 DoMoment.getDataManger().BuildDatas();
@@ -217,6 +241,20 @@ public class TodoFragment extends Fragment {
         }
         //return super.onOptionsItemSelected(item);
         return false;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if (DoMoment.getCurrentCategory().getCategoryID() < 10) {
+            menu.findItem(R.id.TodoMenu_ChangedCategoryBackgroup).setVisible(false);
+            menu.findItem(R.id.TodoMenu_RemoveCategory).setVisible(false);
+            //menu.findItem(R.id.TodoMenu_EditCategoryTitle).setVisible(false);
+        } else {
+            menu.findItem(R.id.TodoMenu_ChangedCategoryBackgroup).setVisible(true);
+            menu.findItem(R.id.TodoMenu_RemoveCategory).setVisible(true);
+            menu.findItem(R.id.TodoMenu_EditCategoryTitle).setVisible(true);
+        }
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -260,6 +298,30 @@ public class TodoFragment extends Fragment {
 
     }
 
+    private void setCategoryBackgroup(){
+        int oldBackgroupID = DoMoment.getCurrentCategory().getThemeBackgroundID();
+        @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+        View layout = inflater.inflate(R.layout.fragment_todo_categorybackgroupselection, thisView.findViewById(R.id.CategoryBackgroupDialog));
+        AlertDialog.Builder backgroupDialog = new AlertDialog.Builder(parentContext);
+        backgroupDialog.setTitle("设置项目主题");
+        backgroupDialog.setView(layout);
+        backgroupDialog.setPositiveButton("确定", (dialogInterface, i) -> {
+            ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+            themebackground.setImageResource(currentCategory.getThemeBackgroundID());
+            DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+        });
+        backgroupDialog.setNegativeButton("取消", (dialogInterface, i) -> {
+            DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroupID);
+        });
+        backgroupDialog.setOnCancelListener(view ->{DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroupID);});
+        RecyclerView recyclerView = layout.findViewById(R.id.CategoryBackgroupRecyclerView);
+        CategoryBackgroupAdapter backgroupAdapter = new CategoryBackgroupAdapter(DoMoment.getDataManger().getCategoryList().getCategoryThemebackground());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(backgroupAdapter);
+        new Handler().postDelayed(() -> backgroupDialog.show(),200);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -269,7 +331,7 @@ public class TodoFragment extends Fragment {
     // 构建侧滑的类目列表
     private void BuildsCategoryList(View v){
         RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.CategoryRecyclerView);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(DoMoment.getDataManger().getCategoryList().getCategorys());
+        CategorySelectedAdapter categoryAdapter = new CategorySelectedAdapter(DoMoment.getDataManger().getCategoryList().getCategorys());
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);
