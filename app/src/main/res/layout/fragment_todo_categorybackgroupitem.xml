@@ -5,12 +5,15 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/backgroupImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +24,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:alpha="0.6"
+        android:alpha="0.7"
         android:background="@color/primary_light"
         android:paddingLeft="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/backgroupImage"
