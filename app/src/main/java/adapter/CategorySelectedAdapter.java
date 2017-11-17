@@ -54,18 +54,10 @@ public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.V
             public void onClick(View v){
                 int position = itemViewHolder.getAdapterPosition();
                 CategoryBase category = itemBases.get(position);
-                //Toast.makeText(v.getContext(), "点击了："+category.getTitle(),Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //GroupListBase currentGroupList = DoMoment.getDataManger().getCurrentGroupList();
-                        //currentGroupList.setItemChecked(false);
-                        //GroupListType type = currentGroupList.getType();
-                        CategoryBase oldCategory = DoMoment.getCurrentCategory();
-                        DoMoment.getDataManger().setCurrentCategory(category);
-                        oldCategory.UnBind();
-                        //DoMoment.getDataManger().setCurrentGroupList(category.getGroupList(type));
-                    }
+                new Handler().postDelayed(() -> {
+                    CategoryBase oldCategory = DoMoment.getCurrentCategory();
+                    DoMoment.getDataManger().setCurrentCategory(category);
+                    oldCategory.UnBind();
                 },350);
 
             }

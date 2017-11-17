@@ -2,6 +2,7 @@ package threecats.zhang.domoment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,7 +39,6 @@ import DataStructures.GroupListBase;
 import ENUM.GroupListType;
 import adapter.CategoryBackgroupAdapter;
 import adapter.CategorySelectedAdapter;
-import adapter.SetTaskCategorysAdapter;
 import adapter.todoFragmentAdapter;
 import layout.TodoMakeOutFragment;
 import layout.TodoNoDateFragment;
@@ -64,6 +65,7 @@ public class TodoFragment extends Fragment {
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
     private TabLayout viewTabLayout;
+    private ImageButton btnAddCategory;
     private TabLayout tabLayout;
     private TodoTimeLineFragment timeLineFragment;
     private TodoOverDueFragment overDueFragment;
@@ -121,6 +123,13 @@ public class TodoFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         FloatingActionButton addActionButton = view.findViewById(R.id.AddActionButton);
+
+        btnAddCategory = view.findViewById(R.id.btnAddCategory);
+        btnAddCategory.setOnClickListener(v -> {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            Intent categoryEditorIntent = new Intent(DoMoment.getMainActivity(),CategoryEditorActivity.class);
+            DoMoment.getMainActivity().startActivity(categoryEditorIntent);
+        });
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -226,7 +235,7 @@ public class TodoFragment extends Fragment {
                 Toast.makeText(thisView.getContext(), "点击了菜单",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
-                setCategoryBackgroup();
+                setCategoryBackground();
 //                CategoryBase currentCategory = DoMoment.getCurrentCategory();
 //                currentCategory.setThemeBackgroundID(R.drawable.category_themebackground_3);
 //                ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
@@ -260,6 +269,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        setBackgroundImage();
         //检查是不是当前日期是新的一天
         if (DoMoment.getDateTime().IsCurrentDateChanged()) {
             DoMoment.getDataManger().CurrentDateChange();
@@ -276,6 +286,16 @@ public class TodoFragment extends Fragment {
         //Toast.makeText(self.getContext(),"ToolBar Title is "+toolbar.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
+    private void setBackgroundImage(){
+        currentCategory = DoMoment.getCurrentCategory();
+        ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+        int oldBackgroundID = themebackground.getTag() == null ? -1 : (int)themebackground.getTag();
+        if (oldBackgroundID < 0 || oldBackgroundID != currentCategory.getThemeBackgroundID()) {
+            themebackground.setImageResource(currentCategory.getThemeBackgroundID());
+            themebackground.setTag(currentCategory.getThemeBackgroundID());
+        }
+    }
+
     public void SetGroupListTitle(String title){
         collapsingToolbar.setTitle(title);
     }
@@ -284,8 +304,9 @@ public class TodoFragment extends Fragment {
         drawerLayout.closeDrawer(GravityCompat.START);
         currentCategory = DoMoment.getCurrentCategory();
         SetGroupListTitle(currentCategory.getTitle());
-        ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
-        themebackground.setImageResource(currentCategory.getThemeBackgroundID());
+        setBackgroundImage();
+        //ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+        //themebackground.setImageResource(currentCategory.getThemeBackgroundID());
 
         timeLineFragment.LinkCategory(currentCategory);
         timeLineFragment.LinkTab(viewTabLayout.getTabAt(0));
@@ -298,8 +319,8 @@ public class TodoFragment extends Fragment {
 
     }
 
-    private void setCategoryBackgroup(){
-        int oldBackgroupID = DoMoment.getCurrentCategory().getThemeBackgroundID();
+    private void setCategoryBackground(){
+        int oldBackgroundID = DoMoment.getCurrentCategory().getThemeBackgroundID();
         @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
         View layout = inflater.inflate(R.layout.fragment_todo_categorybackgroupselection, thisView.findViewById(R.id.CategoryBackgroupDialog));
         AlertDialog.Builder backgroupDialog = new AlertDialog.Builder(parentContext);
@@ -311,9 +332,9 @@ public class TodoFragment extends Fragment {
             DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
         });
         backgroupDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroupID);
+            DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroundID);
         });
-        backgroupDialog.setOnCancelListener(view ->{DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroupID);});
+        backgroupDialog.setOnCancelListener(view ->{DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroundID);});
         RecyclerView recyclerView = layout.findViewById(R.id.CategoryBackgroupRecyclerView);
         CategoryBackgroupAdapter backgroupAdapter = new CategoryBackgroupAdapter(DoMoment.getDataManger().getCategoryList().getCategoryThemebackground());
         LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());

@@ -50,4 +50,5 @@
     <string name="grouplist_none_title">None</string>
     <string name="category_prioritycategory_title">Priority</string>
     <string name="grouplist_veryimprotant_title">Very Improtant</string>
+    <string name="inputtext_category_hint">Category Title</string>
 </resources>
