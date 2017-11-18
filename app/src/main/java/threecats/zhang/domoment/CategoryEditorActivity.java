@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,13 +33,16 @@ public class CategoryEditorActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(backgroupAdapter);
+        new LinearSnapHelper().attachToRecyclerView(recyclerView);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         CategoryBase currentCategory = DoMoment.getCurrentCategory();
-        DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+        if (currentCategory.getCategoryID() >= 10) {
+            DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+        }
     }
 
 }

@@ -33,7 +33,7 @@
                 android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="50dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:statusBarScrim="@color/colorPrimaryDark"
                 app:title="Title"
                 app:toolbarId="@+id/todo_toolbar">

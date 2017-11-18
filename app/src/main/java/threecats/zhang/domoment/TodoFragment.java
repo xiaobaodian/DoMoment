@@ -127,8 +127,10 @@ public class TodoFragment extends Fragment {
         btnAddCategory = view.findViewById(R.id.btnAddCategory);
         btnAddCategory.setOnClickListener(v -> {
             drawerLayout.closeDrawer(GravityCompat.START);
-            Intent categoryEditorIntent = new Intent(DoMoment.getMainActivity(),CategoryEditorActivity.class);
-            DoMoment.getMainActivity().startActivity(categoryEditorIntent);
+            new Handler().postDelayed(() -> {
+                Intent categoryEditorIntent = new Intent(DoMoment.getMainActivity(),CategoryEditorActivity.class);
+                DoMoment.getMainActivity().startActivity(categoryEditorIntent);
+            },200);
         });
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
