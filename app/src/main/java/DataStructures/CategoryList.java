@@ -11,7 +11,7 @@ import threecats.zhang.domoment.R;
 
 public class CategoryList {
     private List<CategoryBase> Categorys = new ArrayList<>();
-    private List<BackgroupBase> categoryThemebackground = new ArrayList<>();
+    private List<BackgroundBase> categoryThemebackground = new ArrayList<>();
     //private List<CustomCategory> customCategories;
 
     public CategoryList(){
@@ -19,14 +19,14 @@ public class CategoryList {
         Categorys.add(new NoCategory());
         Categorys.add(new TaskPriorityCategory());
 
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_0, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_1, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_2, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_3, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_4, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_5, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_6, "title"));
-        categoryThemebackground.add(new BackgroupBase(R.drawable.category_themebackground_7, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_0, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_1, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_2, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_3, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_4, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_5, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_6, "title"));
+        categoryThemebackground.add(new BackgroundBase(R.drawable.category_themebackground_7, "title"));
     }
 
     public CategoryBase getFirstCategory(){
@@ -140,7 +140,7 @@ public class CategoryList {
         }
     }
 
-    public List<BackgroupBase> getCategoryThemebackgrounds(){
+    public List<BackgroundBase> getCategoryThemebackgrounds(){
         return categoryThemebackground;
     }
 

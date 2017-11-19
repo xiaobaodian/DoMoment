@@ -36,6 +36,8 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -300,11 +302,13 @@ public class TodoFragment extends Fragment {
 
     public void setBackgroundImage(){
         currentCategory = DoMoment.getCurrentCategory();
-        ImageView themebackground = (ImageView) fragmentView.findViewById(R.id.todo_appbar_image);
-        int oldBackgroundID = themebackground.getTag() == null ? -1 : (int)themebackground.getTag();
+        if (currentCategory == null) return;
+        ImageView themeBackground = (ImageView) fragmentView.findViewById(R.id.todo_appbar_image);
+        int oldBackgroundID = themeBackground.getTag() == null ? -1 : (int)themeBackground.getTag();
         if (oldBackgroundID < 0 || oldBackgroundID != currentCategory.getThemeBackgroundID()) {
-            themebackground.setImageResource(currentCategory.getThemeBackgroundID());
-            themebackground.setTag(currentCategory.getThemeBackgroundID());
+            themeBackground.setImageResource(currentCategory.getThemeBackgroundID());
+            //Glide.with(parentContext).load(currentCategory.getThemeBackgroundID()).into(themeBackground);
+            themeBackground.setTag(currentCategory.getThemeBackgroundID());
         }
     }
 

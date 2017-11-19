@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-import DataStructures.BackgroupBase;
+import DataStructures.BackgroundBase;
 import DataStructures.CategoryBase;
 import threecats.zhang.domoment.DateTimeHelper;
 import threecats.zhang.domoment.DoMoment;
@@ -24,7 +26,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
 
     private DateTimeHelper DateTime = DoMoment.getDateTime();
     private TodoFragment fragment;
-    private List<BackgroupBase>  itemBases;
+    private List<BackgroundBase>  itemBases;
     private int currentChecked = -1;
 
     //static
@@ -41,7 +43,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    public CategoryBackgroundAdapter(List<BackgroupBase> itemBases, TodoFragment fragment){
+    public CategoryBackgroundAdapter(List<BackgroundBase> itemBases, TodoFragment fragment){
         this.itemBases = itemBases;
         this.fragment = fragment;
     }
@@ -55,9 +57,9 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
             @Override
             public void onClick(View v){
                 int position = itemViewHolder.getAdapterPosition();
-                BackgroupBase backgroup = itemBases.get(position);
+                BackgroundBase background = itemBases.get(position);
                 CategoryBase currentCategory = DoMoment.getCurrentCategory();
-                currentCategory.setThemeBackgroundID(backgroup.getID());
+                currentCategory.setThemeBackgroundID(background.getID());
                 itemViewHolder.radioButton.setChecked(true);
                 if (currentChecked >= 0) {
                     notifyItemChanged(currentChecked);
@@ -71,11 +73,12 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        BackgroupBase backgroup = itemBases.get(position);
+        BackgroundBase background = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
-        itemViewHolder.backgroundImage.setImageResource(backgroup.getID());
+        //itemViewHolder.backgroundImage.setImageResource(backgroup.getID());
+        Glide.with(fragment).load(background.getID()).into(itemViewHolder.backgroundImage);
         CategoryBase currentCategory = DoMoment.getCurrentCategory();
-        if (currentCategory.getThemeBackgroundID() == backgroup.getID()) {
+        if (currentCategory.getThemeBackgroundID() == background.getID()) {
             itemViewHolder.radioButton.setChecked(true);
             currentChecked = position;
         } else {

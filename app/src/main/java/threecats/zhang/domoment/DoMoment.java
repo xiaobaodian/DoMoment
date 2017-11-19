@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import DataStructures.BackgroupBase;
+import DataStructures.BackgroundBase;
 import DataStructures.CategoryBase;
 import DataStructures.DataManger;
 import DataStructures.GroupListBase;
@@ -78,7 +78,7 @@ public class DoMoment extends Application {
             popupWindow = null;
         }
     }
-    public static List<BackgroupBase> getCategoryThemebackgrounds(){
+    public static List<BackgroundBase> getCategoryThemebackgrounds(){
         return dataManger.getCategoryList().getCategoryThemebackgrounds();
     }
 }
