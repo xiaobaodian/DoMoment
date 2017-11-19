@@ -140,7 +140,7 @@ public class CategoryList {
         }
     }
 
-    public List<BackgroupBase> getCategoryThemebackground(){
+    public List<BackgroupBase> getCategoryThemebackgrounds(){
         return categoryThemebackground;
     }
 

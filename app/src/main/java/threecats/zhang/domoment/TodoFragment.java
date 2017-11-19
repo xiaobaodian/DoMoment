@@ -2,13 +2,16 @@ package threecats.zhang.domoment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -16,8 +19,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +33,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -37,7 +46,7 @@ import DataStructures.CategoryBase;
 import DataStructures.CustomCategory;
 import DataStructures.GroupListBase;
 import ENUM.GroupListType;
-import adapter.CategoryBackgroupAdapter;
+import adapter.CategoryBackgroundAdapter;
 import adapter.CategorySelectedAdapter;
 import adapter.todoFragmentAdapter;
 import layout.TodoMakeOutFragment;
@@ -57,6 +66,7 @@ public class TodoFragment extends Fragment {
     private Context parentContext;
     private Toolbar toolbar = null;
     private CollapsingToolbarLayout collapsingToolbar = null;
+    private PopupWindow popupWindowCategoryEditor;
 
     //private TimeLineAdapter adapter;
     //AppCompatActivity mAppCompatActivity;
@@ -73,7 +83,7 @@ public class TodoFragment extends Fragment {
     private TodoMakeOutFragment makeOutFragment;
     private List<ViewPageFragment> fragmentList;
     private ProgressBar progressBar;
-    private View thisView;
+    private View fragmentView;
 
     @Override
     public void onAttach(Context context) {
@@ -113,7 +123,7 @@ public class TodoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
-        thisView = view;
+        fragmentView = view;
         drawerLayout = view.findViewById(R.id.drawer_layout);
         progressBar = view.findViewById(R.id.LoadDatasprogressBar);
         //AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
@@ -128,8 +138,9 @@ public class TodoFragment extends Fragment {
         btnAddCategory.setOnClickListener(v -> {
             drawerLayout.closeDrawer(GravityCompat.START);
             new Handler().postDelayed(() -> {
-                Intent categoryEditorIntent = new Intent(DoMoment.getMainActivity(),CategoryEditorActivity.class);
-                DoMoment.getMainActivity().startActivity(categoryEditorIntent);
+                //Intent categoryEditorIntent = new Intent(DoMoment.getMainActivity(),CategoryEditorActivity.class);
+                //DoMoment.getMainActivity().startActivity(categoryEditorIntent);
+                popupCategoryEditor();
             },200);
         });
 
@@ -234,13 +245,14 @@ public class TodoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.TodoMenu_RemoveCategory:
-                Toast.makeText(thisView.getContext(), "点击了菜单",Toast.LENGTH_SHORT).show();
+                Toast.makeText(fragmentView.getContext(), "点击了菜单",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
-                setCategoryBackground();
+                //setCategoryBackground();
+                popupCategoryEditor();
 //                CategoryBase currentCategory = DoMoment.getCurrentCategory();
 //                currentCategory.setThemeBackgroundID(R.drawable.category_themebackground_3);
-//                ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+//                ImageView themebackground = (ImageView)fragmentView.findViewById(R.id.todo_appbar_image);
 //                themebackground.setImageResource(currentCategory.getThemeBackgroundID());
 //                DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 break;
@@ -288,9 +300,9 @@ public class TodoFragment extends Fragment {
         //Toast.makeText(self.getContext(),"ToolBar Title is "+toolbar.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
-    private void setBackgroundImage(){
+    public void setBackgroundImage(){
         currentCategory = DoMoment.getCurrentCategory();
-        ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+        ImageView themebackground = (ImageView) fragmentView.findViewById(R.id.todo_appbar_image);
         int oldBackgroundID = themebackground.getTag() == null ? -1 : (int)themebackground.getTag();
         if (oldBackgroundID < 0 || oldBackgroundID != currentCategory.getThemeBackgroundID()) {
             themebackground.setImageResource(currentCategory.getThemeBackgroundID());
@@ -307,7 +319,7 @@ public class TodoFragment extends Fragment {
         currentCategory = DoMoment.getCurrentCategory();
         SetGroupListTitle(currentCategory.getTitle());
         setBackgroundImage();
-        //ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+        //ImageView themebackground = (ImageView)fragmentView.findViewById(R.id.todo_appbar_image);
         //themebackground.setImageResource(currentCategory.getThemeBackgroundID());
 
         timeLineFragment.LinkCategory(currentCategory);
@@ -324,12 +336,12 @@ public class TodoFragment extends Fragment {
     private void setCategoryBackground(){
         int oldBackgroundID = DoMoment.getCurrentCategory().getThemeBackgroundID();
         @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
-        View layout = inflater.inflate(R.layout.fragment_todo_categorybackgroupselection, thisView.findViewById(R.id.CategoryBackgroupDialog));
+        View layout = inflater.inflate(R.layout.fragment_todo_categorybackgroupselection, fragmentView.findViewById(R.id.CategoryBackgroupDialog));
         AlertDialog.Builder backgroupDialog = new AlertDialog.Builder(parentContext);
         backgroupDialog.setTitle("设置项目主题");
         backgroupDialog.setView(layout);
         backgroupDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            ImageView themebackground = (ImageView)thisView.findViewById(R.id.todo_appbar_image);
+            ImageView themebackground = (ImageView) fragmentView.findViewById(R.id.todo_appbar_image);
             themebackground.setImageResource(currentCategory.getThemeBackgroundID());
             DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
         });
@@ -338,7 +350,7 @@ public class TodoFragment extends Fragment {
         });
         backgroupDialog.setOnCancelListener(view ->{DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroundID);});
         RecyclerView recyclerView = layout.findViewById(R.id.CategoryBackgroupRecyclerView);
-        CategoryBackgroupAdapter backgroupAdapter = new CategoryBackgroupAdapter(DoMoment.getDataManger().getCategoryList().getCategoryThemebackground());
+        CategoryBackgroundAdapter backgroupAdapter = new CategoryBackgroundAdapter(DoMoment.getCategoryThemebackgrounds(),this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(backgroupAdapter);
@@ -362,6 +374,76 @@ public class TodoFragment extends Fragment {
 
     public void setProgressBarVisibility(int Visibility){
         if (progressBar != null) progressBar.setVisibility(Visibility);
+    }
+
+    private void popupCategoryEditor(){
+        if (currentCategory.getCategoryID() < 10) {
+            return;
+        }
+        View contentView = LayoutInflater.from(parentContext).inflate(R.layout.popupwindow_categroy_editor, null, false);
+        //实例化PopupWindow并设置宽高
+        PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
+        popupWindow.setOutsideTouchable(true);
+        //设置可以点击
+        popupWindow.setTouchable(true);
+        popupWindow.setFocusable(true);
+        //进入退出的动画
+        //popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
+
+        ConstraintLayout root = contentView.findViewById(R.id.Root);
+        root.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        TextInputLayout textInputLayout = contentView.findViewById(R.id.TextInputLayout);
+        TextInputEditText categoryTitle = contentView.findViewById(R.id.CategoryTitle);
+        categoryTitle.setText(DoMoment.getCurrentCategory().getTitle());
+        categoryTitle.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                if (categoryTitle.getText().toString().isEmpty()) {
+                    DoMoment.Toast("标题设置错误，恢复到以前");
+                    SetGroupListTitle(currentCategory.getTitle());
+                } else {
+                    currentCategory.setTitle(categoryTitle.getText().toString());
+                    DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+                }
+            }
+        });
+        categoryTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    textInputLayout.setErrorEnabled(true);
+                    textInputLayout.setError("不能为空");
+                } else {
+                    textInputLayout.setErrorEnabled(false);
+                    SetGroupListTitle(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        RecyclerView recyclerView = contentView.findViewById(R.id.RecyclerView);
+        CategoryBackgroundAdapter backgroupAdapter = new CategoryBackgroundAdapter(DoMoment.getCategoryThemebackgrounds(), this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(backgroupAdapter);
+        new LinearSnapHelper().attachToRecyclerView(recyclerView);
+        //popupWindowCategoryEditor = popupWindow;
+        DoMoment.setPopupWindow(popupWindow);
+        popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
     }
 
 }

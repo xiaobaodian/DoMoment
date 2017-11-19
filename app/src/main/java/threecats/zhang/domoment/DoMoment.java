@@ -3,8 +3,12 @@ package threecats.zhang.domoment;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import java.util.List;
+
+import DataStructures.BackgroupBase;
 import DataStructures.CategoryBase;
 import DataStructures.DataManger;
 import DataStructures.GroupListBase;
@@ -19,6 +23,7 @@ public class DoMoment extends Application {
     private static DateTimeHelper dateTime;
     private static DataManger dataManger;
     private static MainActivity mainActivity;
+    private static PopupWindow popupWindow;
 
     @Override
     public void onCreate() {
@@ -60,5 +65,20 @@ public class DoMoment extends Application {
     public static void showTaskDisplayActivity(){
         Intent taskIntent = new Intent(DoMoment.getMainActivity(),TaskDisplayActivity.class);
         DoMoment.getMainActivity().startActivity(taskIntent);
+    }
+    public static void setPopupWindow(PopupWindow pWin){
+        popupWindow = pWin;
+    }
+    public static boolean hasPopupWindow(){
+        return popupWindow != null;
+    }
+    public static void closePopupWindow(){
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+            popupWindow = null;
+        }
+    }
+    public static List<BackgroupBase> getCategoryThemebackgrounds(){
+        return dataManger.getCategoryList().getCategoryThemebackgrounds();
     }
 }

@@ -27,7 +27,6 @@
             android:name=".TaskDetailsActivity"
             android:theme="@style/IDoMomentTheme" />
         <activity android:name=".TaskDisplayActivity" />
-        <activity android:name=".CategoryEditorActivity"></activity>
     </application>
 
 </manifest>

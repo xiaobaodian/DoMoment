@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (DoMoment.hasPopupWindow()) {
+                DoMoment.closePopupWindow();
+                return true;
+            }
             if ((System.currentTimeMillis()-mExitTime)>1000) {
                 DoMoment.Toast("再按一次退出程序");
                 mExitTime = System.currentTimeMillis();
