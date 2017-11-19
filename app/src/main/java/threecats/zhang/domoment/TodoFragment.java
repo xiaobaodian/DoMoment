@@ -1,6 +1,5 @@
 package threecats.zhang.domoment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -66,7 +64,7 @@ public class TodoFragment extends Fragment {
     private Context parentContext;
     private Toolbar toolbar = null;
     private CollapsingToolbarLayout collapsingToolbar = null;
-    private PopupWindow popupWindowCategoryEditor;
+    private CategorySelectedAdapter categoryAdapter;
 
     //private TimeLineAdapter adapter;
     //AppCompatActivity mAppCompatActivity;
@@ -227,7 +225,7 @@ public class TodoFragment extends Fragment {
 //        tab = viewTabLayout.getTabAt(0);
 //        tab.select();
 
-        BuildsCategoryList(view);
+        buildsDrawerCategoryList(view);
 
         setCurrentCategory();
         return view;
@@ -333,30 +331,6 @@ public class TodoFragment extends Fragment {
 
     }
 
-    private void setCategoryBackground(){
-        int oldBackgroundID = DoMoment.getCurrentCategory().getThemeBackgroundID();
-        @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
-        View layout = inflater.inflate(R.layout.fragment_todo_categorybackgroupselection, fragmentView.findViewById(R.id.CategoryBackgroupDialog));
-        AlertDialog.Builder backgroupDialog = new AlertDialog.Builder(parentContext);
-        backgroupDialog.setTitle("设置项目主题");
-        backgroupDialog.setView(layout);
-        backgroupDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            ImageView themebackground = (ImageView) fragmentView.findViewById(R.id.todo_appbar_image);
-            themebackground.setImageResource(currentCategory.getThemeBackgroundID());
-            DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
-        });
-        backgroupDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroundID);
-        });
-        backgroupDialog.setOnCancelListener(view ->{DoMoment.getCurrentCategory().setThemeBackgroundID(oldBackgroundID);});
-        RecyclerView recyclerView = layout.findViewById(R.id.CategoryBackgroupRecyclerView);
-        CategoryBackgroundAdapter backgroupAdapter = new CategoryBackgroundAdapter(DoMoment.getCategoryThemebackgrounds(),this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(backgroupAdapter);
-        new Handler().postDelayed(() -> backgroupDialog.show(),200);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -364,12 +338,15 @@ public class TodoFragment extends Fragment {
     }
 
     // 构建侧滑的类目列表
-    private void BuildsCategoryList(View v){
+    private void buildsDrawerCategoryList(View v){
         RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.CategoryRecyclerView);
-        CategorySelectedAdapter categoryAdapter = new CategorySelectedAdapter(DoMoment.getDataManger().getCategoryList().getCategorys());
+        categoryAdapter = new CategorySelectedAdapter(DoMoment.getDataManger().getCategoryList().getCategorys());
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);
+    }
+    private void updateDrawerCategoryList(){
+        categoryAdapter.notifyDataSetChanged();
     }
 
     public void setProgressBarVisibility(int Visibility){
@@ -401,15 +378,7 @@ public class TodoFragment extends Fragment {
         TextInputEditText categoryTitle = contentView.findViewById(R.id.CategoryTitle);
         categoryTitle.setText(DoMoment.getCurrentCategory().getTitle());
         categoryTitle.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                if (categoryTitle.getText().toString().isEmpty()) {
-                    DoMoment.Toast("标题设置错误，恢复到以前");
-                    SetGroupListTitle(currentCategory.getTitle());
-                } else {
-                    currentCategory.setTitle(categoryTitle.getText().toString());
-                    DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
-                }
-            }
+
         });
         categoryTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -431,6 +400,16 @@ public class TodoFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+        popupWindow.setOnDismissListener(() -> {
+            if (categoryTitle.getText().toString().isEmpty()) {
+                DoMoment.Toast("标题设置错误，恢复到以前");
+                SetGroupListTitle(currentCategory.getTitle());
+            } else {
+                currentCategory.setTitle(categoryTitle.getText().toString());
+                DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+                updateDrawerCategoryList();
             }
         });
 

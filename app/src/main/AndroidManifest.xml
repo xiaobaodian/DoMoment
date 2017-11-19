@@ -23,9 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TaskDetailsActivity"
-            android:theme="@style/IDoMomentTheme" />
         <activity android:name=".TaskDisplayActivity" />
     </application>
 
