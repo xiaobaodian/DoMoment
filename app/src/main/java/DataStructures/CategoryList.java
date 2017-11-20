@@ -46,6 +46,26 @@ public class CategoryList {
         }
         return count;
     }
+    public int getUsabilityID(){
+        boolean find = true;
+        int ID = 0;
+        int count = Categorys.size();
+        for (int d = 10; d < 1000; d++) {
+            find = true;
+            for (int i = 3 ; i < count ; i++){
+                CategoryBase category = Categorys.get(i);
+                if (category.getCategoryID() == d) {
+                    find = false;
+                    break;
+                }
+            }
+            if (find) {
+                ID = d;
+                break;
+            }
+        }
+        return ID;
+    }
 
     public String getCategoryTitle(int site){
         String title = "";

@@ -31,6 +31,8 @@ public class DataManger {
     private TodoFragment todoFragment;
     private boolean isDataloaded;
 
+    public CategoryEditor categoryEditor;
+
     public DataManger(){
         sqlDB = new SQLManger(DoMoment.getContext(), "IdoMoment.db", null, 1);
         isDataloaded = false;
@@ -41,6 +43,7 @@ public class DataManger {
         categoryList = new CategoryList();
         currentCategory = categoryList.getFirstCategory();
         currentGroupList = categoryList.getFirstGroupList();
+        categoryEditor = new CategoryEditor();
     }
 
     public CategoryList getCategoryList(){
@@ -57,24 +60,35 @@ public class DataManger {
     }
 
     public class CategoryEditor {
-        CategoryBase category;
+        CategoryBase editorCategory;
         EditorMode editorMode;
         public CategoryEditor(){
-            editorMode = EditorMode.Edit;
+            editorCategory = null;
+            //editorMode = EditorMode.Edit;
         }
-        public CategoryBase getCategory(){
-            if (editorMode == EditorMode.Add) {
-                category = new CustomCategory();
+        public CategoryBase newCategory(int ID){
+            editorCategory = new CustomCategory("新的项目", ID);
+            return editorCategory;
+        }
+        public CategoryBase getEditorCategory(){
+            return editorCategory == null ? currentCategory : editorCategory;
+        }
+        public void Commit(EditorMode mode){
+            if (mode == EditorMode.Edit) {
+                if (editorCategory != null){
+                    if (editorCategory.title.length() > 0) {
+                        AddCustomCategory((CustomCategory) editorCategory);
+                        AddCategoryToDataBase((CustomCategory) editorCategory);
+                    }
+                } else {
+                    UpdateCategoryToDataBase((CustomCategory) currentCategory);
+                }
             } else {
-                category = currentCategory;
+                if (editorCategory == null){
+                    RemoveCategoryToDataBase((CustomCategory) currentCategory);
+                }
             }
-            return category;
-        }
-        public void setEditorMode(EditorMode editorMode){
-            this.editorMode = editorMode;
-        }
-        public void Commit(){
-
+            editorCategory = null;
         }
     }
 
@@ -338,16 +352,16 @@ public class DataManger {
         customCategory = new CustomCategory("学习与进修", 10);
         AddCustomCategory(customCategory);
         AddCategoryToDataBase(customCategory);
-        customCategory = new CustomCategory("工作", 11);
+        customCategory = new CustomCategory("工作", 17);
         AddCustomCategory(customCategory);
         AddCategoryToDataBase(customCategory);
-        customCategory = new CustomCategory("家庭", 12);
+        customCategory = new CustomCategory("家庭", 16);
         AddCustomCategory(customCategory);
         AddCategoryToDataBase(customCategory);
         customCategory = new CustomCategory("宠物花鸟", 13);
         AddCustomCategory(customCategory);
         AddCategoryToDataBase(customCategory);
-        customCategory = new CustomCategory("休闲娱乐", 14);
+        customCategory = new CustomCategory("休闲娱乐", 18);
         AddCustomCategory(customCategory);
         AddCategoryToDataBase(customCategory);
         customCategory = new CustomCategory("投资理财", 15);

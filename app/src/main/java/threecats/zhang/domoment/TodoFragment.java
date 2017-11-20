@@ -45,6 +45,7 @@ import java.util.List;
 import DataStructures.CategoryBase;
 import DataStructures.CustomCategory;
 import DataStructures.GroupListBase;
+import ENUM.EditorMode;
 import ENUM.GroupListType;
 import adapter.CategoryBackgroundAdapter;
 import adapter.CategorySelectedAdapter;
@@ -139,8 +140,9 @@ public class TodoFragment extends Fragment {
         btnAddCategory.setOnClickListener(v -> {
             drawerLayout.closeDrawer(GravityCompat.START);
             new Handler().postDelayed(() -> {
-                //Intent categoryEditorIntent = new Intent(DoMoment.getMainActivity(),CategoryEditorActivity.class);
-                //DoMoment.getMainActivity().startActivity(categoryEditorIntent);
+                //popupCategoryEditor();
+                int id = DoMoment.getDataManger().getCategoryList().getUsabilityID();
+                DoMoment.getDataManger().categoryEditor.newCategory(id);
                 popupCategoryEditor();
             },200);
         });
@@ -352,7 +354,8 @@ public class TodoFragment extends Fragment {
     }
 
     private void popupCategoryEditor(){
-        if (currentCategory.getCategoryID() < 10) {
+        CategoryBase editorCategory = DoMoment.getDataManger().categoryEditor.getEditorCategory();
+        if (editorCategory.getCategoryID() < 10) {
             return;
         }
         View contentView = LayoutInflater.from(parentContext).inflate(R.layout.popupwindow_categroy_editor, null, false);
@@ -374,7 +377,7 @@ public class TodoFragment extends Fragment {
 
         TextInputLayout textInputLayout = contentView.findViewById(R.id.TextInputLayout);
         TextInputEditText categoryTitle = contentView.findViewById(R.id.CategoryTitle);
-        categoryTitle.setText(DoMoment.getCurrentCategory().getTitle());
+        categoryTitle.setText(editorCategory.getTitle());
         categoryTitle.setOnFocusChangeListener((v, hasFocus) -> {
 
         });
@@ -403,10 +406,11 @@ public class TodoFragment extends Fragment {
         popupWindow.setOnDismissListener(() -> {
             if (categoryTitle.getText().toString().isEmpty()) {
                 DoMoment.Toast("标题设置错误，恢复到以前");
-                SetGroupListTitle(currentCategory.getTitle());
+                SetGroupListTitle(editorCategory.getTitle());
             } else {
-                currentCategory.setTitle(categoryTitle.getText().toString());
-                DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+                editorCategory.setTitle(categoryTitle.getText().toString());
+                DoMoment.getDataManger().categoryEditor.Commit(EditorMode.Edit);
+                //DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 updateDrawerCategoryList();
             }
         });
