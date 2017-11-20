@@ -56,6 +56,28 @@ public class DataManger {
         isDataloaded = true;
     }
 
+    public class CategoryEditor {
+        CategoryBase category;
+        EditorMode editorMode;
+        public CategoryEditor(){
+            editorMode = EditorMode.Edit;
+        }
+        public CategoryBase getCategory(){
+            if (editorMode == EditorMode.Add) {
+                category = new CustomCategory();
+            } else {
+                category = currentCategory;
+            }
+            return category;
+        }
+        public void setEditorMode(EditorMode editorMode){
+            this.editorMode = editorMode;
+        }
+        public void Commit(){
+
+        }
+    }
+
     public void setEditorTask(Task task){
         editorTask = task;
     }

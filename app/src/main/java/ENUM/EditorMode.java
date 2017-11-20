@@ -5,5 +5,5 @@ package ENUM;
  */
 
 public enum EditorMode {
-    Edit, Remove
+    Add, Edit, Remove
 }

@@ -72,7 +72,6 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         BackgroundBase background = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
-        //itemViewHolder.backgroundImage.setImageResource(backgroup.getID());
         Glide.with(fragment).load(background.getID()).into(itemViewHolder.backgroundImage);
         CategoryBase currentCategory = DoMoment.getCurrentCategory();
         if (currentCategory.getThemeBackgroundID() == background.getID()) {
