@@ -27,7 +27,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
     private DateTimeHelper DateTime = DoMoment.getDateTime();
     private TodoFragment fragment;
     private List<BackgroundBase>  itemBases;
-    private int currentChecked = -1;
+    private int currentCheckedSite = -1;
 
     //static
     public class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -38,7 +38,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         public ItemViewHolder(View view){
             super(view);
             this.view = view;
-            radioButton = (RadioButton)view.findViewById(R.id.backgroupSelectedButton);
+            radioButton = view.findViewById(R.id.backgroupSelectedButton);
             backgroundImage = view.findViewById(R.id.backgroupImage);
         }
     }
@@ -53,20 +53,18 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_todo_categorybackgrounditem, parent, false);
         final ItemViewHolder itemViewHolder = new ItemViewHolder(view);
 
-        itemViewHolder.view.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                int position = itemViewHolder.getAdapterPosition();
-                BackgroundBase background = itemBases.get(position);
-                CategoryBase currentCategory = DoMoment.getCurrentCategory();
-                currentCategory.setThemeBackgroundID(background.getID());
-                itemViewHolder.radioButton.setChecked(true);
-                if (currentChecked >= 0) {
-                    notifyItemChanged(currentChecked);
-                }
-                currentChecked = position;
-                fragment.setBackgroundImage();
+        itemViewHolder.view.setOnClickListener(v -> {
+            int position = itemViewHolder.getAdapterPosition();
+            BackgroundBase background = itemBases.get(position);
+            CategoryBase currentCategory = DoMoment.getCurrentCategory();
+            currentCategory.setThemeBackgroundID(background.getID());
+            itemViewHolder.radioButton.setChecked(true);
+            if (currentCheckedSite >= 0) {
+                DoMoment.Toast("更新原来的背景"+currentCheckedSite);
+                notifyItemChanged(currentCheckedSite);
             }
+            currentCheckedSite = position;
+            fragment.setBackgroundImage(currentCategory);
         });
         return itemViewHolder;
     }
@@ -80,7 +78,8 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         CategoryBase currentCategory = DoMoment.getCurrentCategory();
         if (currentCategory.getThemeBackgroundID() == background.getID()) {
             itemViewHolder.radioButton.setChecked(true);
-            currentChecked = position;
+            currentCheckedSite = position;
+            DoMoment.Toast("匹配到了背景图");
         } else {
             itemViewHolder.radioButton.setChecked(false);
         }

@@ -127,6 +127,7 @@ public class TodoFragment extends Fragment {
         drawerLayout = view.findViewById(R.id.drawer_layout);
         progressBar = view.findViewById(R.id.LoadDatasprogressBar);
         //AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
+        viewPager = view.findViewById(R.id.todo_viewpager);
         viewTabLayout = view.findViewById(R.id.ViewTabLayout);
         toolbar = view.findViewById(R.id.todo_toolbar);
         setHasOptionsMenu(true);
@@ -187,7 +188,6 @@ public class TodoFragment extends Fragment {
             DoMoment.getDataManger().NewTask(Calendar.getInstance());
         });
 
-        viewPager = view.findViewById(R.id.todo_viewpager);
         viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(), fragmentList));
         viewTabLayout.setupWithViewPager(viewPager);
         viewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -283,7 +283,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setBackgroundImage();
+        setBackgroundImage(currentCategory);
         //检查是不是当前日期是新的一天
         if (DoMoment.getDateTime().IsCurrentDateChanged()) {
             DoMoment.getDataManger().CurrentDateChange();
@@ -300,16 +300,10 @@ public class TodoFragment extends Fragment {
         //Toast.makeText(self.getContext(),"ToolBar Title is "+toolbar.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
-    public void setBackgroundImage(){
-        currentCategory = DoMoment.getCurrentCategory();
+    public void setBackgroundImage(CategoryBase currentCategory){
         if (currentCategory == null) return;
-        ImageView themeBackground = (ImageView) fragmentView.findViewById(R.id.todo_appbar_image);
-        int oldBackgroundID = themeBackground.getTag() == null ? -1 : (int)themeBackground.getTag();
-        if (oldBackgroundID < 0 || oldBackgroundID != currentCategory.getThemeBackgroundID()) {
-            themeBackground.setImageResource(currentCategory.getThemeBackgroundID());
-            //Glide.with(parentContext).load(currentCategory.getThemeBackgroundID()).into(themeBackground);
-            themeBackground.setTag(currentCategory.getThemeBackgroundID());
-        }
+        ImageView backgroundImage = fragmentView.findViewById(R.id.todo_appbar_image);
+        Glide.with(parentContext).load(currentCategory.getThemeBackgroundID()).into(backgroundImage);
     }
 
     public void SetGroupListTitle(String title){
@@ -320,7 +314,7 @@ public class TodoFragment extends Fragment {
         drawerLayout.closeDrawer(GravityCompat.START);
         currentCategory = DoMoment.getCurrentCategory();
         SetGroupListTitle(currentCategory.getTitle());
-        setBackgroundImage();
+        setBackgroundImage(currentCategory);
         //ImageView themebackground = (ImageView)fragmentView.findViewById(R.id.todo_appbar_image);
         //themebackground.setImageResource(currentCategory.getThemeBackgroundID());
 
