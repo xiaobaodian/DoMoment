@@ -32,13 +32,13 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
     //static
     public class ItemViewHolder extends RecyclerView.ViewHolder{
         View view;
-        RadioButton radioButton;
+        ImageView CheckImage;
         ImageView backgroundImage;
 
         public ItemViewHolder(View view){
             super(view);
             this.view = view;
-            radioButton = view.findViewById(R.id.backgroupSelectedButton);
+            CheckImage = view.findViewById(R.id.CheckImage);
             backgroundImage = view.findViewById(R.id.backgroupImage);
         }
     }
@@ -58,9 +58,8 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
             BackgroundBase background = itemBases.get(position);
             CategoryBase currentCategory = DoMoment.getCurrentCategory();
             currentCategory.setThemeBackgroundID(background.getID());
-            itemViewHolder.radioButton.setChecked(true);
+            itemViewHolder.CheckImage.setVisibility(View.VISIBLE);
             if (currentCheckedSite >= 0) {
-                DoMoment.Toast("更新原来的背景"+currentCheckedSite);
                 notifyItemChanged(currentCheckedSite);
             }
             currentCheckedSite = position;
@@ -77,11 +76,10 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         Glide.with(fragment).load(background.getID()).into(itemViewHolder.backgroundImage);
         CategoryBase currentCategory = DoMoment.getCurrentCategory();
         if (currentCategory.getThemeBackgroundID() == background.getID()) {
-            itemViewHolder.radioButton.setChecked(true);
+            itemViewHolder.CheckImage.setVisibility(View.VISIBLE);
             currentCheckedSite = position;
-            DoMoment.Toast("匹配到了背景图");
         } else {
-            itemViewHolder.radioButton.setChecked(false);
+            itemViewHolder.CheckImage.setVisibility(View.GONE);
         }
     }
 

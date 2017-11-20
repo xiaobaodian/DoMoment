@@ -28,32 +28,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/category_themebackground_2" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:alpha="0.7"
-            android:background="@color/primary_light"
-            android:paddingLeft="48dp"
-            app:layout_constraintBottom_toBottomOf="@+id/backgroupImage"
-            app:layout_constraintEnd_toEndOf="@+id/backgroupImage"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/backgroupImage"
-            app:layout_constraintTop_toTopOf="@+id/backgroupImage" />
-
-        <RadioButton
-            android:id="@+id/backgroupSelectedButton"
+        <ImageView
+            android:id="@+id/CheckImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:buttonTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="@+id/backgroupImage"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="@+id/backgroupImage" />
+            app:layout_constraintEnd_toEndOf="@+id/backgroupImage"
+            app:layout_constraintStart_toStartOf="@+id/backgroupImage"
+            app:layout_constraintTop_toTopOf="@+id/backgroupImage"
+            app:srcCompat="@drawable/ic_check_circle" />
 
     </android.support.constraint.ConstraintLayout>
 
