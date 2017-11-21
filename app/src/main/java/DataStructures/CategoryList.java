@@ -3,6 +3,7 @@ package DataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
 /**
@@ -84,7 +85,20 @@ public class CategoryList {
     }
 
     public void RemoveCustomCategory(CustomCategory customCategory){
+        List<Task> removeTasks = customCategory.getAllTasks();
+        for (Task task : removeTasks) {
+            RemoveTask(task);
+            //恢复原始的分类ID，这很重要，不然AddTask的时候就丢失了
+            task.setCategoryID(1);
+        }
         Categorys.remove(customCategory);
+        DoMoment.getDataManger().setCurrentCategory(getFirstCategory());
+        for (Task task : removeTasks) {
+            AddTask(task);
+        }
+        for (Task task : removeTasks) {
+            DoMoment.getDataManger().UpdateTask(task);
+        }
     }
 
     public List<CategoryBase> getCategorys(){

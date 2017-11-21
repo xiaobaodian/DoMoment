@@ -61,9 +61,10 @@ public class DataManger {
 
     public class CategoryEditor {
         CategoryBase editorCategory;
-        EditorMode editorMode;
+        CategoryBase oldCategory;
         public CategoryEditor(){
             editorCategory = null;
+            oldCategory = null;
             //editorMode = EditorMode.Edit;
         }
         public CategoryBase newCategory(int ID){
@@ -71,7 +72,16 @@ public class DataManger {
             return editorCategory;
         }
         public CategoryBase getEditorCategory(){
-            return editorCategory == null ? currentCategory : editorCategory;
+            CategoryBase category = null;
+            if (editorCategory == null) {
+                category = currentCategory;
+            } else {
+                category = editorCategory;
+                oldCategory = currentCategory;
+                currentCategory = editorCategory;
+                todoFragment.setCurrentCategory();
+            }
+            return category;
         }
         public void Commit(EditorMode mode){
             if (mode == EditorMode.Edit) {
@@ -86,6 +96,10 @@ public class DataManger {
             } else {
                 if (editorCategory == null){
                     RemoveCategoryToDataBase((CustomCategory) currentCategory);
+                } else {
+                    currentCategory = oldCategory;
+                    todoFragment.setCurrentCategory();
+                    oldCategory = null;
                 }
             }
             editorCategory = null;
@@ -180,7 +194,7 @@ public class DataManger {
         UpdateTaskToDataBase(task);
     }
     public void UpdateTask(Task task){
-        categoryList.UpdateTaskaa(task);
+        //categoryList.UpdateTaskaa(task);
         UpdateTaskToDataBase(task);
     }
 

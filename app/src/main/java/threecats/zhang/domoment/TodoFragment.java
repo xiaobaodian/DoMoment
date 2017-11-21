@@ -247,7 +247,8 @@ public class TodoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.TodoMenu_RemoveCategory:
-                Toast.makeText(fragmentView.getContext(), "点击了菜单",Toast.LENGTH_SHORT).show();
+                DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+                updateDrawerCategoryList();
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
                 //setCategoryBackground();

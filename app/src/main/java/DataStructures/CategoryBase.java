@@ -32,6 +32,17 @@ public abstract class CategoryBase extends ItemBase {
         }
         return count;
     }
+    public List<Task> getAllTasks(){
+        List<Task> allTasks = new ArrayList<>();
+        for (GroupListBase groupList : GroupLists) {
+            for (GroupBase group : groupList.getGroups()) {
+                for (Task task : group.getTasks()) {
+                    allTasks.add(task);
+                }
+            }
+        }
+        return allTasks;
+    }
 
     public void AddGroupList(GroupListBase groupList){
         GroupLists.add(groupList);
