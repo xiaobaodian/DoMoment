@@ -56,6 +56,8 @@ import layout.TodoOverDueFragment;
 import layout.TodoTimeLineFragment;
 import layout.ViewPageFragment;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
 /**
  * Created by zhang on 2017/7/25.
  */
@@ -248,6 +250,8 @@ public class TodoFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.TodoMenu_RemoveCategory:
                 DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+                CategoryBase firstCategory = DoMoment.getDataManger().getCategoryList().getFirstCategory();
+                DoMoment.getDataManger().setCurrentCategory(firstCategory);
                 updateDrawerCategoryList();
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
@@ -306,7 +310,7 @@ public class TodoFragment extends Fragment {
     public void setBackgroundImage(CategoryBase currentCategory){
         if (currentCategory == null) return;
         ImageView backgroundImage = fragmentView.findViewById(R.id.todo_appbar_image);
-        Glide.with(parentContext).load(currentCategory.getThemeBackgroundID()).into(backgroundImage);
+        Glide.with(parentContext).load(currentCategory.getThemeBackgroundID()).transition(withCrossFade()).into(backgroundImage);
     }
 
     public void SetGroupListTitle(String title){

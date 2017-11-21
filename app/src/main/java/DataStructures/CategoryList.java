@@ -92,13 +92,14 @@ public class CategoryList {
             task.setCategoryID(1);
         }
         Categorys.remove(customCategory);
-        DoMoment.getDataManger().setCurrentCategory(getFirstCategory());
+        //DoMoment.getDataManger().setCurrentCategory(getFirstCategory());
         for (Task task : removeTasks) {
             AddTask(task);
-        }
-        for (Task task : removeTasks) {
             DoMoment.getDataManger().UpdateTask(task);
         }
+//        for (Task task : removeTasks) {
+//            DoMoment.getDataManger().UpdateTask(task);
+//        }
     }
 
     public List<CategoryBase> getCategorys(){

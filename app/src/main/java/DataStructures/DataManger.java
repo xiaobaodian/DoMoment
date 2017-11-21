@@ -95,7 +95,7 @@ public class DataManger {
                 }
             } else {
                 if (editorCategory == null){
-                    RemoveCategoryToDataBase((CustomCategory) currentCategory);
+                    RemoveCategoryFromDataBase((CustomCategory) currentCategory);
                 } else {
                     currentCategory = oldCategory;
                     todoFragment.setCurrentCategory();
@@ -294,7 +294,7 @@ public class DataManger {
     }
     public void RemoveCustomCategory(CustomCategory customCategory){
         categoryList.RemoveCustomCategory(customCategory);
-        RemoveCategoryToDataBase(customCategory);
+        RemoveCategoryFromDataBase(customCategory);
     }
 
     // Category数据库操作
@@ -309,7 +309,7 @@ public class DataManger {
         UpdateCategoryDBItem(db, customCategory);
         db.close();
     }
-    private void RemoveCategoryToDataBase(CustomCategory customCategory){
+    private void RemoveCategoryFromDataBase(CustomCategory customCategory){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         RemoveCategoryDBItem(db, customCategory);
         db.close();
