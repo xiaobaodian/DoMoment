@@ -3,6 +3,8 @@ package threecats.zhang.domoment;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class DoMoment extends Application {
     private static DataManger dataManger;
     private static MainActivity mainActivity;
     private static PopupWindow popupWindow;
+    private static DrawerLayout drawerLayout;
 
     @Override
     public void onCreate() {
@@ -77,6 +80,18 @@ public class DoMoment extends Application {
             popupWindow.dismiss();
             popupWindow = null;
         }
+    }
+    public static void setDrawerMenu(DrawerLayout drawer){
+        drawerLayout = drawer;
+    }
+    public static void closeDrawerMenu(){
+        if (drawerLayout != null){
+            drawerLayout.closeDrawer(GravityCompat.START);
+            drawerLayout = null;
+        }
+    }
+    public static boolean hasDrawerMenu(){
+        return drawerLayout != null;
     }
     public static List<BackgroundBase> getCategoryThemebackgrounds(){
         return dataManger.getCategoryList().getCategoryThemebackgrounds();

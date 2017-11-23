@@ -152,17 +152,16 @@ public class TodoFragment extends Fragment {
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                //tv.setText(slideOffset+"");
                 if (slideOffset > 0.02) DoMoment.getMainActivity().setNavigationState(View.GONE);
                 if (slideOffset < 0.02) DoMoment.getMainActivity().setNavigationState(View.VISIBLE);
             }
             @Override
             public void onDrawerOpened(View drawerView) {
-                //DoMoment.getMainActivity().setNavigationState(View.GONE);
+                DoMoment.setDrawerMenu(drawerLayout);
             }
             @Override
             public void onDrawerClosed(View drawerView) {
-                //DoMoment.getMainActivity().setNavigationState(View.VISIBLE);
+                DoMoment.setDrawerMenu(null);
             }
             @Override
             public void onDrawerStateChanged(int newState) {
