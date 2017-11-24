@@ -220,6 +220,12 @@ public class DataManger {
     private void AddTaskDBItem(SQLiteDatabase db, Task task){
         PutTaskValues(task);
         db.insert("Tasks", null, values);
+        int lastID = -1;
+        Cursor curosr = db.rawQuery("select last_insert_rowid() from Tasks", null);
+        if (curosr.moveToFirst()) {
+            lastID = curosr.getInt(0);
+            task.setID(lastID);
+        }
     }
     private void UpdateTaskDBItem(SQLiteDatabase db, Task task){
         PutTaskValues(task);
@@ -318,6 +324,12 @@ public class DataManger {
     private void AddCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
         PutCategoryValues(customCategory);
         db.insert("Categorys", null, values);
+        int lastID = -1;
+        Cursor curosr = db.rawQuery("select last_insert_rowid() from Categorys", null);
+        if (curosr.moveToFirst()) {
+            lastID = curosr.getInt(0);
+            customCategory.setID(lastID);
+        }
     }
     private void UpdateCategoryDBItem(SQLiteDatabase db, CustomCategory customCategory){
         PutCategoryValues(customCategory);
