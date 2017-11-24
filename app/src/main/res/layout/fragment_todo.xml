@@ -144,13 +144,16 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="parent" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/btnAddCategory"
-                    style="@style/Base.AlertDialog.AppCompat"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
+                    android:text="➕"
                     android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintRight_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_dashboard_black_24dp" />

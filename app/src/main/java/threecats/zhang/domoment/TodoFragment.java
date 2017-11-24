@@ -29,6 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -78,7 +79,7 @@ public class TodoFragment extends Fragment {
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
     private TabLayout viewTabLayout;
-    private ImageButton btnAddCategory;
+    private Button btnAddCategory;
     private TabLayout tabLayout;
     private TodoTimeLineFragment timeLineFragment;
     private TodoOverDueFragment overDueFragment;
@@ -429,6 +430,10 @@ public class TodoFragment extends Fragment {
         //popupWindowCategoryEditor = popupWindow;
         DoMoment.setPopupWindow(popupWindow);
         popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
+    }
+
+    private void safeRemoveCategory(){
+
     }
 
 }
