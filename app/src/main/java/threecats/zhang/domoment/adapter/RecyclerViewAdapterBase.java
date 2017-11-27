@@ -83,7 +83,12 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
         }
         public ItemViewHolder setText(int R, String text){
             TextView textView = currentItemView.findViewById(R);
-            textView.setText(text);
+            if (text.length() == 0) {
+                textView.setVisibility(View.GONE);
+            } else {
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(text);
+            }
             return ItemViewHolder.this;
         }
         public ItemViewHolder setImageResource(int R, int imageResId) {

@@ -5,6 +5,7 @@ import java.util.List;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
@@ -24,7 +25,8 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
     }
     @Override
     protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
-        holder.setText(R.id.taskTitle, task.getTitle()).setText(R.id.taskPlace, task.getPlace()+task.getParentGroup().size()+","+task.getPriority().ordinal());
+        holder.setText(R.id.taskTitle, task.getTitle())
+                .setText(R.id.taskPlace, task.getPlace());
         String datetimeRange = "";
         if (groupType == GroupType.toDay || groupType == GroupType.Tomorrow ||groupType == GroupType.AfterTomorrow) {
             datetimeRange = task.getTimeRange();
@@ -33,6 +35,9 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
         }
         if (datetimeRange.length() > 0) datetimeRange += "   ";
         holder.setText(R.id.taskDateTime, datetimeRange);
+        if (DoMoment.getCurrentCategory().getID() == 0) {
+            holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        }
     }
 
     @Override

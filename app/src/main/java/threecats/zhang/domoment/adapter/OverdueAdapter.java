@@ -5,6 +5,7 @@ import java.util.List;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
@@ -24,10 +25,12 @@ public class OverdueAdapter extends RecyclerViewAdapterBase {
     }
     @Override
     protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
-        holder
-                .setText(R.id.taskTitle, task.getTitle())
+        holder.setText(R.id.taskTitle, task.getTitle())
                 .setText(R.id.taskPlace, task.getPlace())
                 .setText(R.id.taskDateTime, task.getBeginDateString());
+        if (DoMoment.getCurrentCategory().getID() == 0) {
+            holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        }
     }
 
     @Override
