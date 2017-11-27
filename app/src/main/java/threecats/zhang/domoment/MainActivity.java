@@ -14,14 +14,6 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import DataStructures.Task;
 
 public class MainActivity extends AppCompatActivity {
 

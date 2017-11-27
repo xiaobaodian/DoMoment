@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import DataStructures.Task;
-import layout.TitleFragment;
+import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskCheckListFragment extends TitleFragment {
     private Task task = DoMoment.getDataManger().getEditorTask();

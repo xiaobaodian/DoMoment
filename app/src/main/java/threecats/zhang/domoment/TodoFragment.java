@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -30,32 +31,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataStructures.CategoryBase;
-import DataStructures.CustomCategory;
-import DataStructures.GroupListBase;
-import ENUM.EditorMode;
-import ENUM.GroupListType;
-import adapter.CategoryBackgroundAdapter;
-import adapter.CategorySelectedAdapter;
-import adapter.todoFragmentAdapter;
-import layout.TodoMakeOutFragment;
-import layout.TodoNoDateFragment;
-import layout.TodoOverDueFragment;
-import layout.TodoTimeLineFragment;
-import layout.ViewPageFragment;
+import threecats.zhang.domoment.DataStructures.CategoryBase;
+import threecats.zhang.domoment.DataStructures.CustomCategory;
+import threecats.zhang.domoment.DataStructures.GroupListBase;
+import threecats.zhang.domoment.ENUM.EditorMode;
+import threecats.zhang.domoment.ENUM.GroupListType;
+import threecats.zhang.domoment.EventClass.TaskEditorEvent;
+import threecats.zhang.domoment.adapter.CategoryBackgroundAdapter;
+import threecats.zhang.domoment.adapter.CategorySelectedAdapter;
+import threecats.zhang.domoment.adapter.todoFragmentAdapter;
+import threecats.zhang.domoment.layout.TodoMakeOutFragment;
+import threecats.zhang.domoment.layout.TodoNoDateFragment;
+import threecats.zhang.domoment.layout.TodoOverDueFragment;
+import threecats.zhang.domoment.layout.TodoTimeLineFragment;
+import threecats.zhang.domoment.layout.ViewPageFragment;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -232,8 +237,9 @@ public class TodoFragment extends Fragment {
 //        tab.select();
 
         buildsDrawerCategoryList(view);
-
         setCurrentCategory();
+        EventBus.getDefault().register(this);
+        DoMoment.Toast("注册了EventBus");
         return view;
     }
 
@@ -249,10 +255,8 @@ public class TodoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.TodoMenu_RemoveCategory:
-                DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
-                CategoryBase firstCategory = DoMoment.getDataManger().getCategoryList().getFirstCategory();
-                DoMoment.getDataManger().setCurrentCategory(firstCategory);
-                updateDrawerCategoryList();
+                String notice = "确实准备删除类目《"+currentCategory.getTitle()+"》吗？如果确认删除，该类目下所有的任务将移动到未分类类目中";
+                safeRemoveCategory(notice);
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
                 //setCategoryBackground();
@@ -302,9 +306,18 @@ public class TodoFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        //Toast.makeText(self.getContext(),"ToolBar Title is "+toolbar.getTitle(), Toast.LENGTH_SHORT).show();
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe  //(sticky = true, threadMode = ThreadMode.MAIN)
+    public void doTaskEditor(TaskEditorEvent taskEditorEvent){
+        if (taskEditorEvent.getEditorMode() == EditorMode.Edit) {
+            DoMoment.Toast("调用了编辑模式");
+        } else {
+            DoMoment.Toast("调用了其他的模式");
+        }
     }
 
     public void setBackgroundImage(CategoryBase currentCategory){
@@ -432,8 +445,26 @@ public class TodoFragment extends Fragment {
         popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
     }
 
-    private void safeRemoveCategory(){
-
+    private void safeRemoveCategory(String notice){
+        LayoutInflater layoutInflater = LayoutInflater.from(parentContext);
+        View dialogView = layoutInflater.inflate(R.layout.dialog_information_yesorno, null, false);
+        View contentView = layoutInflater.inflate(R.layout.dialog_information_yesorno,dialogView.findViewById(R.id.dialoglayout));
+        TextView noticeView = dialogView.findViewById(R.id.notice);//imageView
+        ImageView imageView = dialogView.findViewById(R.id.imageView);
+        noticeView.setText(notice);
+        imageView.setImageResource(R.drawable.ic_action_warning);
+        AlertDialog.Builder removeCategoryDialog = new AlertDialog.Builder(parentContext);
+        removeCategoryDialog.setView(contentView);
+        removeCategoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
+            DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+            CategoryBase firstCategory = DoMoment.getDataManger().getCategoryList().getFirstCategory();
+            DoMoment.getDataManger().setCurrentCategory(firstCategory);
+            updateDrawerCategoryList();
+        });
+        removeCategoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
+            DoMoment.Toast("取消");
+        });
+        removeCategoryDialog.show();
     }
 
 }

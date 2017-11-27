@@ -23,15 +23,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import DataStructures.Task;
-import ENUM.EditorMode;
-import ENUM.TaskPriority;
-import adapter.SetTaskCategorysAdapter;
-import adapter.TaskFragmentAdapter;
-import layout.TitleFragment;
+import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.ENUM.EditorMode;
+import threecats.zhang.domoment.ENUM.TaskPriority;
+import threecats.zhang.domoment.EventClass.TaskEditorEvent;
+import threecats.zhang.domoment.adapter.SetTaskCategorysAdapter;
+import threecats.zhang.domoment.adapter.TaskFragmentAdapter;
+import threecats.zhang.domoment.layout.TitleFragment;
 
 
 public class TaskDisplayActivity extends AppCompatActivity {
@@ -147,6 +150,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         super.onDestroy();
         task.setTitle(etTaskTitle.getText().toString());
         DoMoment.getDataManger().commitEditorTask(editorMode);
+        //EventBus.getDefault().post(new TaskEditorEvent(editorMode));
     }
 
     private void setTaskCategory(){

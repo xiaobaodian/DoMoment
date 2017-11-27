@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import DataStructures.BackgroundBase;
-import DataStructures.CategoryBase;
-import DataStructures.DataManger;
-import DataStructures.GroupListBase;
+import threecats.zhang.domoment.DataStructures.BackgroundBase;
+import threecats.zhang.domoment.DataStructures.CategoryBase;
+import threecats.zhang.domoment.DataStructures.DataManger;
+import threecats.zhang.domoment.DataStructures.GroupListBase;
 
 /**
  * Created by zhang on 2017/8/14.

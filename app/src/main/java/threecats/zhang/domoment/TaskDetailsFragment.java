@@ -14,13 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
-import DataStructures.Task;
-import ENUM.OneDayBase;
-import layout.TitleFragment;
+import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.ENUM.OneDayBase;
+import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
 
