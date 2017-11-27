@@ -26,9 +26,9 @@ public class MakeOutAdapter extends RecyclerViewAdapterBase {
     @Override
     protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
         holder.setText(R.id.taskTitle, task.getTitle())
-                .setText(R.id.taskPlace, task.getPlace())
+                .setText(R.id.taskPlace, "")
                 .setText(R.id.taskDateTime, "完成于：" + task.getCompleteDateTimeStr());
-        if (DoMoment.getCurrentCategory().getID() == 0) {
+        if (DoMoment.getCurrentCategory().getCategoryID() == 0) {
             holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }

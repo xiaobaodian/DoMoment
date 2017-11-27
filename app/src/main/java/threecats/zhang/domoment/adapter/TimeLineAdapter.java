@@ -25,8 +25,7 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
     }
     @Override
     protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
-        holder.setText(R.id.taskTitle, task.getTitle())
-                .setText(R.id.taskPlace, task.getPlace());
+        holder.setText(R.id.taskTitle, task.getTitle()).setText(R.id.taskPlace, task.getPlace());
         String datetimeRange = "";
         if (groupType == GroupType.toDay || groupType == GroupType.Tomorrow ||groupType == GroupType.AfterTomorrow) {
             datetimeRange = task.getTimeRange();
@@ -35,7 +34,7 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
         }
         if (datetimeRange.length() > 0) datetimeRange += "   ";
         holder.setText(R.id.taskDateTime, datetimeRange);
-        if (DoMoment.getCurrentCategory().getID() == 0) {
+        if (DoMoment.getCurrentCategory().getCategoryID() == 0) {
             holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }
