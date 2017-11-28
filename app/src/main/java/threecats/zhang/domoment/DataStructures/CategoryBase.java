@@ -100,15 +100,6 @@ public abstract class CategoryBase extends ItemBase {
         }
     }
 
-    public void InsertTask(Task task){
-        if ( ! InCategory(task)) return;
-        for (GroupListBase groupList : GroupLists) {
-            if (groupList.InGroupList(task)){
-                groupList.InsertTask(task);
-                break;
-            }
-        }
-    }
 
     public List<GroupListBase> getGroupLists(){
         return GroupLists;

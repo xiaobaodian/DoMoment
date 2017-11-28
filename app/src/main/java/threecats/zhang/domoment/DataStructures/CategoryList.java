@@ -117,18 +117,6 @@ public class CategoryList {
         }
     }
 
-    public void InsertTask(Task task){
-        for (CategoryBase category : Categorys) {
-            if (category.InCategory(task)) category.InsertTask(task);
-        }
-    }
-
-    public void InsertTask(Task task, List<CategoryBase> Categorys){
-        for (CategoryBase category : Categorys) {
-            if (category.InCategory(task)) category.AddTask(task);
-        }
-    }
-
     public void RemoveTask(Task task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
         List<GroupBase> groups = new ArrayList<>();
@@ -159,20 +147,24 @@ public class CategoryList {
                 changeGroups.add(group);
             }
         }
-        //从需要改变的groups里面移除task
-        for (GroupBase group : changeGroups) {
-            GroupListBase groupList = group.getParent();
-            groupList.RemoveTask(group, task);
+        if (changeGroups.size() > 0) {
+            //从需要改变的groups里面移除task
+            for (GroupBase group : changeGroups) {
+                GroupListBase groupList = group.getParent();
+                groupList.RemoveTask(group, task);
+            }
+            //将task重新加入到Categroy里面，但排除只是需要更新的Category(在更新Category里面不需要移动task的顺序)
+            for (CategoryBase category : Categorys) {
+                if (updateCategorys.contains(category)) continue;
+                category.AddTask(task);
+            }
         }
-        //将task重新加入到Categroy里面，但排除只是需要更新的Category(在更新Category里面不需要移动task的顺序)
-        for (CategoryBase category : Categorys) {
-            if (updateCategorys.contains(category)) continue;
-            category.InsertTask(task);
-        }
-        for (GroupBase group : updateGroups) {
-            GroupListBase groupList = group.getParent();
-            //groupList.SortGroup(group);
-            groupList.UpdateTaskDisplay(group, task);
+        if (updateGroups.size() > 0) {
+            for (GroupBase group : updateGroups) {
+                GroupListBase groupList = group.getParent();
+                //groupList.SortGroup(group);
+                groupList.UpdateTaskDisplay(group, task);
+            }
         }
     }
 

@@ -182,9 +182,7 @@ public class DataManger {
     public void AddTask(Task task){
         categoryList.AddTask(task);
     }
-    public void InsertTask(Task task){
-        categoryList.InsertTask(task);
-    }
+
     public void RemoveTask(Task task){
         categoryList.RemoveTask(task);
         RemoveTaskToDataBase(task);

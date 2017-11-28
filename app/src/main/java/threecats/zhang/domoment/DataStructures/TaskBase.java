@@ -161,6 +161,7 @@ public class TaskBase extends ListItemBase implements Comparable{
         TaskBase taskBase = (TaskBase)task;
         if (!this.IsAllDay() && taskBase.IsAllDay()) return 1;
         if (this.IsAllDay() && !taskBase.IsAllDay()) return -1;
+        if (this.IsAllDay() && taskBase.IsAllDay()) return 0;
         return this.startDateTime.compareTo(taskBase.startDateTime);
     }
 

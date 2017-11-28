@@ -213,27 +213,6 @@ public abstract class GroupBase extends ListItemBase {
         if (State == DisplayState.Hide) State = DisplayState.Show;
         return site;
     }
-
-    public int InsertTask(Task task){
-        //task.addParentGroup(this);  不能在此加入ParentGroup，要是执行了AddTask就会重复加入了
-        int site = 0;
-        if (tasks.size() == 0) {
-            site = AddTask(task);
-        } else if(task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
-            site = AddTask(task);
-        } else {
-            for (int i = 0; i <tasks.size(); i++) {
-                if (task.compareTo(tasks.get(i)) < 0) {
-                    site = i + 1;
-                    break;
-                }
-            }
-            task.addParentGroup(this); // 放在这里加入ParentGroup才是正确的
-            tasks.add(site, task);
-            if (State == DisplayState.Hide) State = DisplayState.Show;
-        }
-        return site;
-    }
     
     public int RemoveTask(Task task){
         int site = tasks.indexOf(task);
@@ -254,6 +233,9 @@ public abstract class GroupBase extends ListItemBase {
         } else if (nextTask == null) {
             if (task.compareTo(prevTask) < 0) needChange = true;
         } else if (task.compareTo(prevTask) < 0 || task.compareTo(nextTask) > 0) {
+            DoMoment.Toast("有了要变更的task");
+            DoMoment.Toast("prve: "+prevTask.getTitle());
+            DoMoment.Toast("next: "+nextTask.getTitle());
             needChange = true;
         }
         return needChange;
