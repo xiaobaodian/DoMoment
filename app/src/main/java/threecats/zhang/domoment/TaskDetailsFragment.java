@@ -26,7 +26,6 @@ public class TaskDetailsFragment extends TitleFragment {
     private Task task = DoMoment.getDataManger().getEditorTask();
     private final DateTimeHelper DateTime = DoMoment.getDateTime();
     private Context parentContext;
-    private Bundle savedInstanceState;
     private View taskDetailsView;
     private final int editStartDate = 1;
     private final int editDueDate = 2;
@@ -66,7 +65,6 @@ public class TaskDetailsFragment extends TitleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.savedInstanceState = savedInstanceState;
         taskDetailsView = inflater.inflate(R.layout.fragment_task_details, container, false);
 
         //==========setNavigationOnClickListener
@@ -123,6 +121,7 @@ public class TaskDetailsFragment extends TitleFragment {
         noteBox.setText(task.getNote());
         placeBox.setText(task.getPlace());
     }
+    @SuppressLint("SetTextI18n")
     private void DisplayDateTimeFields(){
         if (task.IsNoDate()) {
             startDateBox.setText("");
@@ -170,8 +169,8 @@ public class TaskDetailsFragment extends TitleFragment {
     }
 
     private void EditDate(){
-        @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
-        View layout = inflater.inflate(R.layout.taskeditor_dateselection, (ViewGroup)taskDetailsView.findViewById(R.id.DateDialong));
+        LayoutInflater layoutInflater = LayoutInflater.from(parentContext);
+        View layout = layoutInflater.inflate(R.layout.taskeditor_dateselection, taskDetailsView.findViewById(R.id.DateDialong));
         DatePicker datePicker = layout.findViewById(R.id.datePicker);
         datePicker.setFirstDayOfWeek(Calendar.MONDAY);
         Calendar date;
@@ -254,8 +253,8 @@ public class TaskDetailsFragment extends TitleFragment {
 
     //@TargetApi(Build.VERSION_CODES.M)
     private void EditTime(){
-        @SuppressLint("RestrictedApi") LayoutInflater inflater = getLayoutInflater(savedInstanceState);
-        View layout = inflater.inflate(R.layout.taskeditor_timeselection,(ViewGroup)taskDetailsView.findViewById(R.id.TimeDialong));
+        LayoutInflater layoutInflater = LayoutInflater.from(parentContext);
+        View layout = layoutInflater.inflate(R.layout.taskeditor_timeselection, taskDetailsView.findViewById(R.id.TimeDialong));
         TimePicker timePicker = layout.findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
         Calendar date;

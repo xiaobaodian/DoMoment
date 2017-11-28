@@ -98,18 +98,18 @@ public abstract class GroupBase extends ListItemBase {
                 //timePoint = task.getDueDateTime();
                 break;
         }
-        return isEmpty ? false : isGroupMember(timePoint, secTimePoint);
+        return !isEmpty && isGroupMember(timePoint, secTimePoint);
     }
 
-    public void setPreviousGroup(GroupBase group){
+    void setPreviousGroup(GroupBase group){
         this.previousGroup = group;
-
     }
+    void setNextGroup(GroupBase group){
+        this.nextGroup = group;
+    }
+
     public GroupBase getPreviousGroup(){
         return previousGroup;
-    }
-    public void setNextGroup(GroupBase group){
-        this.nextGroup = group;
     }
     public GroupBase getNextGroup(){
         return nextGroup;
@@ -233,9 +233,6 @@ public abstract class GroupBase extends ListItemBase {
         } else if (nextTask == null) {
             if (task.compareTo(prevTask) < 0) needChange = true;
         } else if (task.compareTo(prevTask) < 0 || task.compareTo(nextTask) > 0) {
-            DoMoment.Toast("有了要变更的task");
-            DoMoment.Toast("prve: "+prevTask.getTitle());
-            DoMoment.Toast("next: "+nextTask.getTitle());
             needChange = true;
         }
         return needChange;

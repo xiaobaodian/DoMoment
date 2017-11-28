@@ -38,8 +38,7 @@ public class CategoryList {
         return Categorys.get(0).getGroupLists().get(0);
     }
     public boolean IsNull(){
-        if (Categorys.size() == 3 && getTaskCount() == 0) return true;
-        return false;
+        return Categorys.size() == 3 && getTaskCount() == 0;
     }
     public int getTaskCount(){
         int count = 0;
@@ -120,9 +119,7 @@ public class CategoryList {
     public void RemoveTask(Task task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
         List<GroupBase> groups = new ArrayList<>();
-        for (GroupBase group : task.getParentGroup()) {
-            groups.add(group);
-        }
+        groups.addAll(task.getParentGroup());
         for (GroupBase group : groups) {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);

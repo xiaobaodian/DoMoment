@@ -178,8 +178,7 @@ public abstract class GroupListBase {
     }
 
     //分组列表的任务项管理，在这里管理分组项里的任务可以执行自动进入分组、重新调整分组、从分组中删除的操作
-    public boolean AddTask(Task task){
-        boolean isOK = false;
+    public void AddTask(Task task){
         for(GroupBase group : groups){
             if (group.InGroup(task)){
                 if (group.State == DisplayState.Hide) {
@@ -187,11 +186,9 @@ public abstract class GroupListBase {
                 }
                 int site = group.AddTask(task);
                 AddTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目
-                isOK = true;
             }
         }
         CalculatorTitleSite();
-        return isOK;
     }
 
     public void RemoveTask(Task task){
@@ -240,40 +237,22 @@ public abstract class GroupListBase {
         recyclerViewItems.add(site, task);
         //执行插入动画
         if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
-//        if (getNextGroupSite(group) >= 0) {
-//            //根据任务在分组中的位置计算出任务在RecyclerView列表中的位置
-//            int site = group.SiteID + position + 1;
-//            //根据上面计算的位置执行插入操作
-//            recyclerViewItems.add(site, task);
-//            //执行插入动画
-//            if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
-//            //CalculatorTitleSite();
-//        } else {
-//            int site = group.SiteID + position + 1;
-//            recyclerViewItems.add(site, task);
-//            if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
-//        }
         //测试用，更新显示组头的位置序号
-        UpdateTitleMessage();
+        //UpdateTitleMessage();
     }
     private void RemoveTaskFromListItems(GroupBase group, int position, Task task){
-        int site = recyclerViewItems.indexOf(task);
-        if (site>=0) {
+
+        int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
+        Task ntask = (Task) recyclerViewItems.get(site);
+        if (ntask == task) {
             recyclerViewItems.remove(site);
             if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
+            //CalculatorTitleSite();
+        } else {
+            DoMoment.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
         }
-        //CalculatorTitleSite();
-//        int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
-//        Task ntask = (Task) recyclerViewItems.get(site);
-//        if (ntask == task) {
-//            recyclerViewItems.remove(site);
-//            if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
-//            //CalculatorTitleSite();
-//        } else {
-//            DoMoment.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
-//        }
         //测试用，更新显示组头的位置序号
-        UpdateTitleMessage();
+        //UpdateTitleMessage();
     }
 
     //测试用，更新显示组头的位置序号
