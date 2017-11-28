@@ -234,19 +234,25 @@ public abstract class GroupListBase {
         recyclerViewItems.addAll(group.getTasks());
     }
     private void AddTaskToListItems(GroupBase group, int position, Task task){
-        if (getNextGroupSite(group) >= 0) {
-            //根据任务在分组中的位置计算出任务在RecyclerView列表中的位置
-            int site = group.SiteID + position;
-            //根据上面计算的位置执行插入操作
-            recyclerViewItems.add(site, task);
-            //执行插入动画
-            if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
-            CalculatorTitleSite();
-        } else {
-            int site = group.SiteID + position;
-            recyclerViewItems.add(site, task);
-            if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
-        }
+        //根据任务在分组中的位置计算出任务在RecyclerView列表中的位置
+        int site = group.SiteID + position + 1;
+        //根据上面计算的位置执行插入操作
+        recyclerViewItems.add(site, task);
+        //执行插入动画
+        if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
+//        if (getNextGroupSite(group) >= 0) {
+//            //根据任务在分组中的位置计算出任务在RecyclerView列表中的位置
+//            int site = group.SiteID + position + 1;
+//            //根据上面计算的位置执行插入操作
+//            recyclerViewItems.add(site, task);
+//            //执行插入动画
+//            if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
+//            //CalculatorTitleSite();
+//        } else {
+//            int site = group.SiteID + position + 1;
+//            recyclerViewItems.add(site, task);
+//            if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
+//        }
         //测试用，更新显示组头的位置序号
         UpdateTitleMessage();
     }

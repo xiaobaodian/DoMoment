@@ -197,14 +197,14 @@ public abstract class GroupBase extends ListItemBase {
         int site = 0;
         if (tasks.size() == 0) {
             tasks.add(task);
-            site = tasks.size();
-        } else if(task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
+            site = 0;
+        } else if (task.compareTo(tasks.get(tasks.size() - 1)) >= 0) {
             tasks.add(task);
-            site = tasks.size();
+            site = tasks.size() - 1;
         } else {
             for (int i = 0; i <tasks.size(); i++) {
                 if (task.compareTo(tasks.get(i)) < 0) {
-                    site = i + 1;
+                    site = i;
                     break;
                 }
             }
