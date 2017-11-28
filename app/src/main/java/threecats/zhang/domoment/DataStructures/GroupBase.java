@@ -240,6 +240,25 @@ public abstract class GroupBase extends ListItemBase {
         if(site >= 0) tasks.remove(site);
         return site;
     }
+
+    public boolean needChangedPosition(Task task){
+        int pose = tasks.indexOf(task);
+        if (pose < 0) return false;
+        Task prevTask = pose == 0 ? null : tasks.get(pose - 1);
+        Task nextTask = pose == tasks.size() - 1 ? null : tasks.get(pose + 1);
+        boolean needChange = false;
+        if (prevTask == null && nextTask == null) {
+            needChange = false;
+        } else if (prevTask == null) {
+            if (task.compareTo(nextTask) > 0) needChange = true;
+        } else if (nextTask == null) {
+            if (task.compareTo(prevTask) < 0) needChange = true;
+        } else if (task.compareTo(prevTask) < 0 || task.compareTo(nextTask) > 0) {
+            needChange = true;
+        }
+        return needChange;
+    }
+
     public int getTaskCount(){
         return tasks.size();
     }

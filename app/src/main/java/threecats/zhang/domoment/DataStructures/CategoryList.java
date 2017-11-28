@@ -1,5 +1,6 @@
 package threecats.zhang.domoment.DataStructures;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,23 +149,30 @@ public class CategoryList {
             GroupListBase groupList = group.getParent();
             CategoryBase category = groupList.getParent();
             if (category.InCategory(task) && groupList.InGroupList(task) && group.InGroup(task)){
-                updateGroups.add(group);
-                updateCategorys.add(category);
+                if (group.needChangedPosition(task)) {
+                    changeGroups.add(group);
+                } else {
+                    updateGroups.add(group);
+                    updateCategorys.add(category);
+                }
             } else {
                 changeGroups.add(group);
             }
         }
+        //从需要改变的groups里面移除task
         for (GroupBase group : changeGroups) {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);
         }
+        //将task重新加入到Categroy里面，但排除只是需要更新的Category(在更新Category里面不需要移动task的顺序)
         for (CategoryBase category : Categorys) {
             if (updateCategorys.contains(category)) continue;
             category.InsertTask(task);
         }
         for (GroupBase group : updateGroups) {
             GroupListBase groupList = group.getParent();
-            groupList.SortGroup(group);
+            //groupList.SortGroup(group);
+            groupList.UpdateTaskDisplay(group, task);
         }
     }
 
