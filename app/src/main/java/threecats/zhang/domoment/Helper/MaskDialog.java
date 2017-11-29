@@ -22,26 +22,29 @@ import threecats.zhang.domoment.R;
 public class MaskDialog {
 
     private PopupWindow popupWindow;
-    private Button doOK;
-    private Button doNo;
-    View.OnClickListener onOKClickListener = null;
-    View.OnClickListener onNoClickListener = null;
-    ConstraintLayout root;
+    private Button doBottonOK;
+    private Button doBottonNo;
+    private ConstraintLayout root;
+
+    public MaskDialog(Context context, String notice){
+        BuildWindow(context, "", notice);
+    }
 
     public MaskDialog(Context context, String title, String notice){
+        BuildWindow(context, title, notice);
+    }
 
+    private void BuildWindow(Context context, String title, String notice){
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View contentView = layoutInflater.inflate(R.layout.popupwindow_dialog, null, false);
         popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
         popupWindow.setOutsideTouchable(true);
         //设置可以点击
         popupWindow.setTouchable(true);
         popupWindow.setFocusable(true);
         //进入退出的动画
         popupWindow.setAnimationStyle(R.style.PopupDialog);
-        //popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
 
         root = contentView.findViewById(R.id.Root);
         root.setOnClickListener(v -> {
@@ -51,19 +54,16 @@ public class MaskDialog {
             setBackgroundAlpha(1f);
         });
 
-        ConstraintLayout dialog = contentView.findViewById(R.id.Dialog);
-        //dialog.setAnimationStyle(R.style.PopupDialog);
-
-        doOK = new Button(context);
-        doNo = new Button(context);
+        doBottonOK = new Button(context);
+        doBottonNo = new Button(context);
         Button btnOK = contentView.findViewById(R.id.YesButton);
         btnOK.setOnClickListener(view -> {
-            doOK.performClick();
+            doBottonOK.performClick();
             popupWindow.dismiss();
         });
         Button btnNo = contentView.findViewById(R.id.NoButton);
         btnNo.setOnClickListener(view -> {
-            doNo.performClick();
+            doBottonNo.performClick();
             popupWindow.dismiss();
         });
 
@@ -77,22 +77,18 @@ public class MaskDialog {
             tvTitle.setText(title);
         }
         tvNotice.setText(notice);
-
     }
 
-    public void setOnOKClickListener(View.OnClickListener onClickListener){
-        doOK.setOnClickListener(onClickListener);
+    public void setBtnOKOnClickListener(View.OnClickListener onClickListener){
+        doBottonOK.setOnClickListener(onClickListener);
     }
-    public void setOnNoClickListener(View.OnClickListener onClickListener){
-        onNoClickListener = onClickListener;
-        doNo.setOnClickListener(onClickListener);
+    public void setBtnCancelOnClickListener(View.OnClickListener onClickListener){
+        doBottonNo.setOnClickListener(onClickListener);
     }
 
     public void showAtLocation(View parent){
         setBackgroundAlpha(0.5f);
-        //popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
-        int h = root.getTop();
-        popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, h);
+        popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, root.getTop());
     }
 
     public void dismiss(){
@@ -100,8 +96,8 @@ public class MaskDialog {
     }
 
     public void setBackgroundAlpha(float alpha) {
-        WindowManager.LayoutParams lp = DoMoment.getMainActivity().getWindow().getAttributes();
-        lp.alpha = alpha;
-        DoMoment.getMainActivity().getWindow().setAttributes(lp);
+        WindowManager.LayoutParams layoutParams = DoMoment.getCurrentActivity().getWindow().getAttributes();
+        layoutParams.alpha = alpha;
+        DoMoment.getCurrentActivity().getWindow().setAttributes(layoutParams);
     }
 }

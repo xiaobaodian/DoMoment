@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        DoMoment.setCurrentActivity(this);
     }
 
     public void setNavigationState(int visibility){

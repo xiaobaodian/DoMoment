@@ -27,8 +27,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import threecats.zhang.domoment.DataStructures.CategoryBase;
-import threecats.zhang.domoment.DataStructures.CustomCategory;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
@@ -102,6 +100,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        DoMoment.setCurrentActivity(this);
         //oldCategoryID = task.getCategoryID();
         //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
@@ -155,26 +154,15 @@ public class TaskDisplayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.taskeditormenu_remove:
-                MaskDialog maskDialog = new MaskDialog(thisContext, "删除", "确认需要删除此任务吗");
-                maskDialog.setOnOKClickListener(view -> {
+                MaskDialog maskDialog = new MaskDialog(thisContext, "确认需要删除此任务吗");
+                maskDialog.setBtnOKOnClickListener(view -> {
                     editorMode = EditorMode.Remove;
                     finish();
                 });
-                maskDialog.setOnNoClickListener(view -> {
+                maskDialog.setBtnCancelOnClickListener(view -> {
                     UIHelper.Toast("取消");
                 });
                 maskDialog.showAtLocation(thisView);
-
-//                AlertDialog.Builder dialog = UIHelper.getYNDialog(this,"确认需要删除此任务吗");
-//                dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-//                    editorMode = EditorMode.Remove;
-//                    finish();
-//                });
-//                dialog.setNegativeButton("取消", (dialogInterface, i) -> {
-//                    DoMoment.Toast("取消");
-//                });
-//                dialog.show();
-
                 break;
             case R.id.taskeditormenu_makeout:
                 UIHelper.Toast("任务标记完成");

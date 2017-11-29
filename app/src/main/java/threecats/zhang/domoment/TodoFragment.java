@@ -30,13 +30,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -462,16 +460,16 @@ public class TodoFragment extends Fragment {
         removeCategoryDialog.show();
     }
     private void RemoveCategory(){
-        String title = "删除《"+currentCategory.getTitle()+"》";
-        String notice = "如果确认删除，该类目下所有的任务将移动到<未分类>类目中";
+        String title = "删除类目《"+currentCategory.getTitle()+"》";
+        String notice = "如果确认删除，该类目下所有的任务将移动到(未分类)类目中";
         MaskDialog maskDialog = new MaskDialog(parentContext, title, notice);
-        maskDialog.setOnOKClickListener(view -> {
+        maskDialog.setBtnOKOnClickListener(view -> {
             DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
             CategoryBase firstCategory = DoMoment.getDataManger().getCategoryList().getFirstCategory();
             DoMoment.getDataManger().setCurrentCategory(firstCategory);
             updateDrawerCategoryList();
         });
-        maskDialog.setOnNoClickListener(view -> {
+        maskDialog.setBtnCancelOnClickListener(view -> {
             UIHelper.Toast("取消");
         });
         maskDialog.showAtLocation(fragmentView);

@@ -4,11 +4,15 @@
 
     <item
         android:id="@+id/taskeditormenu_makeout"
-        android:icon="@mipmap/ic_assignment_turned_in_white_24dp"
+        android:icon="@mipmap/ic_done_black_48dp"
+        android:iconTint="@color/colorAccent"
         android:title="标记完成"
         app:showAsAction="always" />
     <item
         android:id="@+id/taskeditormenu_remove"
-        android:title="删除" />
+        android:icon="@android:drawable/ic_delete"
+        android:iconTint="@color/colorAccent"
+        android:title="删除"
+        app:showAsAction="always" />
     <item android:title="转为待定任务" />
 </menu>

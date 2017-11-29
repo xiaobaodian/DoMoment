@@ -1,5 +1,6 @@
 package threecats.zhang.domoment;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ public class DoMoment extends Application {
     private static DateTimeHelper dateTime;
     private static DataManger dataManger;
     private static MainActivity mainActivity;
+    private static Activity currentActivity;
     private static PopupWindow popupWindow;
     private static DrawerLayout drawerLayout;
 
@@ -59,6 +61,12 @@ public class DoMoment extends Application {
     }
     public static MainActivity getMainActivity(){
         return mainActivity;
+    }
+    public static void setCurrentActivity(Activity activity){
+        currentActivity = activity;
+    }
+    public static Activity getCurrentActivity(){
+        return currentActivity;
     }
     public static String getRString(int StringID){
         return DoMoment.getContext().getString(StringID);
