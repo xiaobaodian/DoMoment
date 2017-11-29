@@ -95,7 +95,7 @@ public class MaskDialog {
         popupWindow.dismiss();
     }
 
-    public void setBackgroundAlpha(float alpha) {
+    private void setBackgroundAlpha(float alpha) {
         WindowManager.LayoutParams layoutParams = DoMoment.getCurrentActivity().getWindow().getAttributes();
         layoutParams.alpha = alpha;
         DoMoment.getCurrentActivity().getWindow().setAttributes(layoutParams);
