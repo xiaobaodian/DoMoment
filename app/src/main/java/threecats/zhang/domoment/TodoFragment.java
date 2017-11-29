@@ -41,7 +41,6 @@ import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +52,9 @@ import threecats.zhang.domoment.DataStructures.GroupListBase;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.EventClass.TaskEditorEvent;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
+import threecats.zhang.domoment.Helper.MaskDialog;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.CategoryBackgroundAdapter;
 import threecats.zhang.domoment.adapter.CategorySelectedAdapter;
 import threecats.zhang.domoment.adapter.todoFragmentAdapter;
@@ -268,9 +270,18 @@ public class TodoFragment extends Fragment {
 //                DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 break;
             case R.id.TodoMenu_EditCategoryTitle:
-                DoMoment.Toast("生成测试数据");
-                DoMoment.getDataManger().BuildDatas();
-                DoMoment.Toast("测试数据已生成");
+                //DoMoment.Toast("生成测试数据");
+                //DoMoment.getDataManger().BuildDatas();
+                MaskDialog maskDialog = new MaskDialog(parentContext,"这里是标题","这里是提示内容");
+                maskDialog.setOnOKClickListener(view -> {
+                    UIHelper.Toast("点击了OK");
+                    //maskDialog.dismiss();
+                });
+                maskDialog.setOnNoClickListener(view -> {
+                    UIHelper.Toast("点击了No");
+                });
+                maskDialog.showAtLocation(fragmentView);
+                //DoMoment.Toast("测试数据已生成");
                 break;
         }
         //return super.onOptionsItemSelected(item);
@@ -446,15 +457,7 @@ public class TodoFragment extends Fragment {
     }
 
     private void safeRemoveCategory(String notice){
-        LayoutInflater layoutInflater = LayoutInflater.from(parentContext);
-        View dialogView = layoutInflater.inflate(R.layout.dialog_information_yesorno, null, false);
-        View contentView = layoutInflater.inflate(R.layout.dialog_information_yesorno,dialogView.findViewById(R.id.dialoglayout));
-        TextView noticeView = dialogView.findViewById(R.id.notice);//imageView
-        ImageView imageView = dialogView.findViewById(R.id.imageView);
-        noticeView.setText(notice);
-        imageView.setImageResource(R.drawable.ic_action_warning);
-        AlertDialog.Builder removeCategoryDialog = new AlertDialog.Builder(parentContext);
-        removeCategoryDialog.setView(contentView);
+        AlertDialog.Builder removeCategoryDialog = UIHelper.getYNDialog(parentContext, notice);
         removeCategoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
             DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
             CategoryBase firstCategory = DoMoment.getDataManger().getCategoryList().getFirstCategory();

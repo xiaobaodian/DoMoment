@@ -20,10 +20,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ import java.util.List;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
-import threecats.zhang.domoment.EventClass.TaskEditorEvent;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.SetTaskCategorysAdapter;
 import threecats.zhang.domoment.adapter.TaskFragmentAdapter;
 import threecats.zhang.domoment.layout.TitleFragment;
@@ -43,6 +42,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private int oldCategoryID;
     private TaskPriority oldPriority;
     private EditText etTaskTitle;
+    private ImageView doneflag;
     private TextView tvCreatedDateTime;
     private Button btnCategory, btnPriority;
     private View thisView;
@@ -63,6 +63,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         tvCreatedDateTime = (TextView)findViewById(R.id.layCreatedDateTime);
         btnCategory = (Button)findViewById(R.id.btnCategory);
         btnPriority = (Button)findViewById(R.id.btnPriority);
+        doneflag = (ImageView)findViewById(R.id.doneflag);
         taskTab = (TabLayout)findViewById(R.id.lTaskTab);
         viewPager = (ViewPager)findViewById(R.id.lTaskPager);
         editToolbar.setNavigationOnClickListener(view -> {finish();});
@@ -103,7 +104,13 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private void DisplayTaskItems(){
-        tvCreatedDateTime.setText("创建于：" + task.getCreatedDateTimeStr());
+        if (task.IsComplete()) {
+            doneflag.setVisibility(View.VISIBLE);
+        } else {
+            doneflag.setVisibility(View.GONE);
+        }
+        String createDateTimeStr = "创建于：" + task.getCreatedDateTimeStr();
+        tvCreatedDateTime.setText(createDateTimeStr);
         btnCategory.setText(DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
         if (task.getPriority() == TaskPriority.Urgent) {
@@ -128,15 +135,33 @@ public class TaskDisplayActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.taskeditor, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (task.IsComplete()) {
+            menu.findItem(R.id.taskeditormenu_makeout).setVisible(false);
+        } else {
+            menu.findItem(R.id.taskeditormenu_makeout).setVisible(true);
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.taskeditormenu_remove:
-                DoMoment.Toast("删除数据");
-                editorMode = EditorMode.Remove;
-                finish();
+                AlertDialog.Builder dialog = UIHelper.getYNDialog(this,"确认需要删除此任务吗");
+                dialog.setPositiveButton("确定", (dialogInterface, i) -> {
+                    editorMode = EditorMode.Remove;
+                    finish();
+                });
+                dialog.setNegativeButton("取消", (dialogInterface, i) -> {
+                    DoMoment.Toast("取消");
+                });
+                dialog.show();
                 break;
             case R.id.taskeditormenu_makeout:
-                DoMoment.Toast("任务标记完成");
+                UIHelper.Toast("任务标记完成");
                 task.setComplete(true);
                 finish();
                 break;

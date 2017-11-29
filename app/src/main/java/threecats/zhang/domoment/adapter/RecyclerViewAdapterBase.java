@@ -22,7 +22,7 @@ import threecats.zhang.domoment.DataStructures.TimeLineAfterTomorrowGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTodayGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTomorrowGroup;
 import threecats.zhang.domoment.ENUM.GroupType;
-import threecats.zhang.domoment.DateTimeHelper;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 import threecats.zhang.domoment.DataStructures.Task;
@@ -151,7 +151,8 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                     if (isChecked) return false;
                     Task task = itemViewHolder.getTask();
                     DoMoment.getDataManger().setCurrentTask(task);
-                    DoMoment.getDataManger().getCurrentGroupList().setItemChecked(true);
+                    //暂时关闭长安多选功能
+                    //DoMoment.getDataManger().getCurrentGroupList().setItemChecked(true);
                     return true;
                 });
                 return itemViewHolder;

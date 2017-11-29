@@ -100,6 +100,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
 
+        <ImageView
+            android:id="@+id/doneflag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:tint="@android:color/holo_red_light"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_action_done_all" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.TabLayout

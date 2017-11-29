@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import threecats.zhang.domoment.DataStructures.CategoryBase;
-import threecats.zhang.domoment.DateTimeHelper;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
