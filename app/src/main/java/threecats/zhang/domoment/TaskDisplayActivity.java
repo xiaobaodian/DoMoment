@@ -27,9 +27,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import threecats.zhang.domoment.DataStructures.CategoryBase;
+import threecats.zhang.domoment.DataStructures.CustomCategory;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
+import threecats.zhang.domoment.Helper.MaskDialog;
 import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.SetTaskCategorysAdapter;
 import threecats.zhang.domoment.adapter.TaskFragmentAdapter;
@@ -46,6 +49,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private TextView tvCreatedDateTime;
     private Button btnCategory, btnPriority;
     private View thisView;
+    private Context thisContext;
     private TabLayout taskTab;
     private ViewPager viewPager;
     private List<TitleFragment> viewFragmentList;
@@ -91,6 +95,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         thisView = parent;
+        thisContext = context;
         return super.onCreateView(parent, name, context, attrs);
     }
 
@@ -150,15 +155,26 @@ public class TaskDisplayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.taskeditormenu_remove:
-                AlertDialog.Builder dialog = UIHelper.getYNDialog(this,"确认需要删除此任务吗");
-                dialog.setPositiveButton("确定", (dialogInterface, i) -> {
+                MaskDialog maskDialog = new MaskDialog(thisContext, "删除", "确认需要删除此任务吗");
+                maskDialog.setOnOKClickListener(view -> {
                     editorMode = EditorMode.Remove;
                     finish();
                 });
-                dialog.setNegativeButton("取消", (dialogInterface, i) -> {
-                    DoMoment.Toast("取消");
+                maskDialog.setOnNoClickListener(view -> {
+                    UIHelper.Toast("取消");
                 });
-                dialog.show();
+                maskDialog.showAtLocation(thisView);
+
+//                AlertDialog.Builder dialog = UIHelper.getYNDialog(this,"确认需要删除此任务吗");
+//                dialog.setPositiveButton("确定", (dialogInterface, i) -> {
+//                    editorMode = EditorMode.Remove;
+//                    finish();
+//                });
+//                dialog.setNegativeButton("取消", (dialogInterface, i) -> {
+//                    DoMoment.Toast("取消");
+//                });
+//                dialog.show();
+
                 break;
             case R.id.taskeditormenu_makeout:
                 UIHelper.Toast("任务标记完成");

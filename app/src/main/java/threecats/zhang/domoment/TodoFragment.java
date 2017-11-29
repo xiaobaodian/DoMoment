@@ -30,6 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -257,8 +258,8 @@ public class TodoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.TodoMenu_RemoveCategory:
-                String notice = "确实准备删除类目《"+currentCategory.getTitle()+"》吗？如果确认删除，该类目下所有的任务将移动到未分类类目中";
-                safeRemoveCategory(notice);
+                //safeRemoveCategory(notice);
+                RemoveCategory();
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
                 //setCategoryBackground();
@@ -270,18 +271,9 @@ public class TodoFragment extends Fragment {
 //                DoMoment.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 break;
             case R.id.TodoMenu_EditCategoryTitle:
-                //DoMoment.Toast("生成测试数据");
-                //DoMoment.getDataManger().BuildDatas();
-                MaskDialog maskDialog = new MaskDialog(parentContext,"这里是标题","这里是提示内容");
-                maskDialog.setOnOKClickListener(view -> {
-                    UIHelper.Toast("点击了OK");
-                    //maskDialog.dismiss();
-                });
-                maskDialog.setOnNoClickListener(view -> {
-                    UIHelper.Toast("点击了No");
-                });
-                maskDialog.showAtLocation(fragmentView);
-                //DoMoment.Toast("测试数据已生成");
+                UIHelper.Toast("生成测试数据");
+                DoMoment.getDataManger().BuildDatas();
+                UIHelper.Toast("测试数据已生成");
                 break;
         }
         //return super.onOptionsItemSelected(item);
@@ -468,6 +460,21 @@ public class TodoFragment extends Fragment {
             DoMoment.Toast("取消");
         });
         removeCategoryDialog.show();
+    }
+    private void RemoveCategory(){
+        String title = "删除《"+currentCategory.getTitle()+"》";
+        String notice = "如果确认删除，该类目下所有的任务将移动到<未分类>类目中";
+        MaskDialog maskDialog = new MaskDialog(parentContext, title, notice);
+        maskDialog.setOnOKClickListener(view -> {
+            DoMoment.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+            CategoryBase firstCategory = DoMoment.getDataManger().getCategoryList().getFirstCategory();
+            DoMoment.getDataManger().setCurrentCategory(firstCategory);
+            updateDrawerCategoryList();
+        });
+        maskDialog.setOnNoClickListener(view -> {
+            UIHelper.Toast("取消");
+        });
+        maskDialog.showAtLocation(fragmentView);
     }
 
 }

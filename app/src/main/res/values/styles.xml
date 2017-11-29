@@ -13,4 +13,10 @@
     <style name="IDoMomentTheme" parent="AppTheme"></style>
     <style name="IDoMomentMainTheme" parent="AppTheme"></style>
 
+    <!--弹窗动画-->
+    <style name="PopupDialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
+
 </resources>

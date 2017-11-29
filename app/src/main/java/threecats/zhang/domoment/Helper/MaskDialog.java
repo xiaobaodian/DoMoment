@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -20,20 +21,18 @@ import threecats.zhang.domoment.R;
 
 public class MaskDialog {
 
-    private Context context;
     private PopupWindow popupWindow;
-    private String title, notice;
-    private Button btnOK, btnNo, doOK, doNo;
+    private Button doOK;
+    private Button doNo;
     View.OnClickListener onOKClickListener = null;
     View.OnClickListener onNoClickListener = null;
+    ConstraintLayout root;
 
     public MaskDialog(Context context, String title, String notice){
-        this.context = context;
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View contentView = layoutInflater.inflate(R.layout.popupwindow_dialog, null, false);
-        //实例化PopupWindow并设置宽高
-        popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
         popupWindow.setOutsideTouchable(true);
@@ -41,25 +40,28 @@ public class MaskDialog {
         popupWindow.setTouchable(true);
         popupWindow.setFocusable(true);
         //进入退出的动画
+        popupWindow.setAnimationStyle(R.style.PopupDialog);
         //popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
 
-        ConstraintLayout root = contentView.findViewById(R.id.Root);
+        root = contentView.findViewById(R.id.Root);
         root.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
-
         popupWindow.setOnDismissListener(() -> {
-
+            setBackgroundAlpha(1f);
         });
+
+        ConstraintLayout dialog = contentView.findViewById(R.id.Dialog);
+        //dialog.setAnimationStyle(R.style.PopupDialog);
 
         doOK = new Button(context);
         doNo = new Button(context);
-        btnOK = contentView.findViewById(R.id.YesButton);
+        Button btnOK = contentView.findViewById(R.id.YesButton);
         btnOK.setOnClickListener(view -> {
             doOK.performClick();
             popupWindow.dismiss();
         });
-        btnNo = contentView.findViewById(R.id.NoButton);
+        Button btnNo = contentView.findViewById(R.id.NoButton);
         btnNo.setOnClickListener(view -> {
             doNo.performClick();
             popupWindow.dismiss();
@@ -87,10 +89,19 @@ public class MaskDialog {
     }
 
     public void showAtLocation(View parent){
-        popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        setBackgroundAlpha(0.5f);
+        //popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        int h = root.getTop();
+        popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, h);
     }
 
     public void dismiss(){
         popupWindow.dismiss();
+    }
+
+    public void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = DoMoment.getMainActivity().getWindow().getAttributes();
+        lp.alpha = alpha;
+        DoMoment.getMainActivity().getWindow().setAttributes(lp);
     }
 }
