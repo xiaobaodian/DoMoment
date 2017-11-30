@@ -14,7 +14,7 @@ import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.ENUM.ItemType;
 import threecats.zhang.domoment.ENUM.TimeSeries;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 
 /**
  * Created by zhang on 2017/8/3.
@@ -22,7 +22,7 @@ import threecats.zhang.domoment.DoMoment;
 
 public abstract class GroupBase extends ListItemBase {
 
-    protected DateTimeHelper DateTime = DoMoment.getDateTime();
+    protected DateTimeHelper DateTime = App.getDateTime();
 
     protected Context context;
     protected GroupType groupType;
@@ -45,7 +45,7 @@ public abstract class GroupBase extends ListItemBase {
         this.SiteID = -1;
         this.State = DisplayState.Hide;
         this.tasks = new ArrayList<>();
-        this.context = DoMoment.getContext();
+        this.context = App.getContext();
         this.parentGroupList = parent;
         BuildTimePoint();
     }

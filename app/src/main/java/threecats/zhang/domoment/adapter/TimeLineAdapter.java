@@ -5,7 +5,7 @@ import java.util.List;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.Task;
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
@@ -34,8 +34,8 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
         }
         if (datetimeRange.length() > 0) datetimeRange += "   ";
         holder.setText(R.id.taskDateTime, datetimeRange);
-        if (DoMoment.getCurrentCategory().getCategoryID() == 0) {
-            holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        if (App.getCurrentCategory().getCategoryID() == 0) {
+            holder.setText(R.id.taskCategory, App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }
 

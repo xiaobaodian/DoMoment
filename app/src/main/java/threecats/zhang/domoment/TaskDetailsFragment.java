@@ -24,8 +24,8 @@ import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
 
-    private Task task = DoMoment.getDataManger().getEditorTask();
-    private final DateTimeHelper DateTime = DoMoment.getDateTime();
+    private Task task = App.getDataManger().getEditorTask();
+    private final DateTimeHelper DateTime = App.getDateTime();
     private Context parentContext;
     private View taskDetailsView;
     private final int editStartDate = 1;
@@ -194,7 +194,7 @@ public class TaskDetailsFragment extends TitleFragment {
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getEditorTask();
+            final Task task = App.getDataManger().getEditorTask();
             switch (EditType) {
                 case editStartDate:
                     if (task.IsOneDay()) {
@@ -210,7 +210,7 @@ public class TaskDetailsFragment extends TitleFragment {
             DisplayDateTimeFields();
         });
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getEditorTask();
+            final Task task = App.getDataManger().getEditorTask();
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
@@ -245,7 +245,7 @@ public class TaskDetailsFragment extends TitleFragment {
             }
             DisplayDateTimeFields();
         });
-        dialog.setNegativeButton("取消", (dialogInterface, i) -> DoMoment.Toast("取消编辑"));
+        dialog.setNegativeButton("取消", (dialogInterface, i) -> App.Toast("取消编辑"));
         dialog.setOnDismissListener((v) -> {
             //onResume();
         });
@@ -285,7 +285,7 @@ public class TaskDetailsFragment extends TitleFragment {
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getEditorTask();
+            final Task task = App.getDataManger().getEditorTask();
             switch (EditType) {
                 case editStartTime:
                     if (task.IsOneTime()) {
@@ -301,7 +301,7 @@ public class TaskDetailsFragment extends TitleFragment {
             DisplayDateTimeFields();
         });
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final Task task = DoMoment.getDataManger().getEditorTask();
+            final Task task = App.getDataManger().getEditorTask();
             switch (EditType) {
                 case editStartTime:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

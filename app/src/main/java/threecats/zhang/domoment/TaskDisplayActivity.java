@@ -39,7 +39,7 @@ import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
-    private Task task = DoMoment.getDataManger().getEditorTask();
+    private Task task = App.getDataManger().getEditorTask();
     private int oldCategoryID;
     private TaskPriority oldPriority;
     private EditText etTaskTitle;
@@ -83,7 +83,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         viewFragmentList.add(taskCheckListFragment);
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager == null) {
-            DoMoment.Toast("FragmentManager is null");
+            App.Toast("FragmentManager is null");
         } else {
             viewPager.setAdapter(new TaskFragmentAdapter(fragmentManager, viewFragmentList));
             taskTab.setupWithViewPager(viewPager);
@@ -100,7 +100,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DoMoment.setCurrentActivity(this);
+        App.setCurrentActivity(this);
         //oldCategoryID = task.getCategoryID();
         //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
@@ -115,7 +115,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         }
         String createDateTimeStr = "创建于：" + task.getCreatedDateTimeStr();
         tvCreatedDateTime.setText(createDateTimeStr);
-        btnCategory.setText(DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        btnCategory.setText(App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
         if (task.getPriority() == TaskPriority.Urgent) {
             priorityTitle = "紧急";
@@ -178,12 +178,12 @@ public class TaskDisplayActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         task.setTitle(etTaskTitle.getText().toString());
-        DoMoment.getDataManger().commitEditorTask(editorMode);
+        App.getDataManger().commitEditorTask(editorMode);
         //EventBus.getDefault().post(new TaskEditorEvent(editorMode));
     }
 
     private void setTaskCategory(){
-        //DoMoment.Toast("Click Category Button");
+        //App.Toast("Click Category Button");
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_categoryselection, (ViewGroup)findViewById(R.id.CategoryDialog));
         int oldCategory = task.getCategoryID();
@@ -202,7 +202,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         });
         categoryDialog.setOnCancelListener(view ->{task.setCategoryID(oldCategory);});
         RecyclerView recyclerView = layout.findViewById(R.id.CategoryRecyclerView);
-        SetTaskCategorysAdapter categoryAdapter = new SetTaskCategorysAdapter(DoMoment.getDataManger().getCategoryList().getCustomCategories());
+        SetTaskCategorysAdapter categoryAdapter = new SetTaskCategorysAdapter(App.getDataManger().getCategoryList().getCustomCategories());
         LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);
@@ -214,7 +214,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         },200);
     }
     private void setTaskPriority(){
-        //DoMoment.Toast("Click Priority Button");
+        //App.Toast("Click Priority Button");
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialog));
         TaskPriority oldPriority = task.getPriority();

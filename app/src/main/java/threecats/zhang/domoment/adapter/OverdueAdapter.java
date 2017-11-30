@@ -2,10 +2,10 @@ package threecats.zhang.domoment.adapter;
 
 import java.util.List;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.Task;
-import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
@@ -28,8 +28,8 @@ public class OverdueAdapter extends RecyclerViewAdapterBase {
         holder.setText(R.id.taskTitle, task.getTitle())
                 .setText(R.id.taskPlace, task.getPlace())
                 .setText(R.id.taskDateTime, task.getBeginDateString() + "   ");
-        if (DoMoment.getCurrentCategory().getCategoryID() == 0) {
-            holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        if (App.getCurrentCategory().getCategoryID() == 0) {
+            holder.setText(R.id.taskCategory, App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }
 

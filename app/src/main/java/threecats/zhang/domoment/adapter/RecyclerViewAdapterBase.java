@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
@@ -23,7 +24,6 @@ import threecats.zhang.domoment.DataStructures.TimeLineTodayGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTomorrowGroup;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
-import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.TaskDisplayActivity;
@@ -34,7 +34,7 @@ import threecats.zhang.domoment.TaskDisplayActivity;
 
 public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    protected DateTimeHelper dateTime = DoMoment.getDateTime();
+    protected DateTimeHelper dateTime = App.getDateTime();
     private GroupListBase groupList;
     private GroupBase group;
     private List<ListItemBase>  items;
@@ -137,22 +137,22 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 final ItemViewHolder itemViewHolder = new ItemViewHolder(view);
                 itemViewHolder.currentItemView.setOnClickListener(v -> {
                     Task task = itemViewHolder.getTask();
-                    DoMoment.getDataManger().setCurrentTask(task);
+                    App.getDataManger().setCurrentTask(task);
                     if (isChecked) {
                         itemViewHolder.checkBox.setChecked(! task.getChecked());
                         task.setChecked(itemViewHolder.checkBox.isChecked());
                     } else {
-                        //Intent taskIntent = new Intent(DoMoment.getMainActivity(),TaskDetailsActivity.class);
-                        Intent taskIntent = new Intent(DoMoment.getMainActivity(),TaskDisplayActivity.class);
-                        DoMoment.getMainActivity().startActivity(taskIntent);
+                        //Intent taskIntent = new Intent(App.getMainActivity(),TaskDetailsActivity.class);
+                        Intent taskIntent = new Intent(App.getMainActivity(),TaskDisplayActivity.class);
+                        App.getMainActivity().startActivity(taskIntent);
                     }
                 });
                 itemViewHolder.currentItemView.setOnLongClickListener(v -> {
                     if (isChecked) return false;
                     Task task = itemViewHolder.getTask();
-                    DoMoment.getDataManger().setCurrentTask(task);
+                    App.getDataManger().setCurrentTask(task);
                     //暂时关闭长安多选功能
-                    //DoMoment.getDataManger().getCurrentGroupList().setItemChecked(true);
+                    //App.getDataManger().getCurrentGroupList().setItemChecked(true);
                     return true;
                 });
                 return itemViewHolder;
@@ -162,15 +162,15 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 groupViewHolder.currentGroupView.setOnClickListener(v -> {
                     GroupBase group = groupViewHolder.getGroup();
                     if (group instanceof TimeLineTodayGroup) {
-                        DoMoment.getDataManger().NewTask(Calendar.getInstance());
+                        App.getDataManger().NewTask(Calendar.getInstance());
                     } else if (group instanceof TimeLineTomorrowGroup) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.add(Calendar.DATE,1);
-                        DoMoment.getDataManger().NewTask(calendar);
+                        App.getDataManger().NewTask(calendar);
                     } else if (group instanceof TimeLineAfterTomorrowGroup) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.add(Calendar.DATE,2);
-                        DoMoment.getDataManger().NewTask(calendar);
+                        App.getDataManger().NewTask(calendar);
                     }
                 });
                 return groupViewHolder;

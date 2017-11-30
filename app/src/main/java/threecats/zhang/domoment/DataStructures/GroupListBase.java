@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.DisplayState;
 import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TimeSeries;
@@ -15,7 +16,6 @@ import threecats.zhang.domoment.ENUM.GroupListDisplayType;
 import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.adapter.RecyclerViewAdapterBase;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
-import threecats.zhang.domoment.DoMoment;
 
 /**
  * Created by zhang on 2017/8/3.
@@ -23,7 +23,7 @@ import threecats.zhang.domoment.DoMoment;
 
 public abstract class GroupListBase {
 
-    protected DateTimeHelper DateTime = DoMoment.getDateTime();
+    protected DateTimeHelper DateTime = App.getDateTime();
     private String title = "";
     protected RecyclerView GroupListRecyclerView;
     protected RecyclerViewAdapterBase GroupListAdapter;
@@ -129,7 +129,7 @@ public abstract class GroupListBase {
     private void HideGroup(GroupBase group){
         if (group.getTaskCount() > 0) return;
         if (group.SiteID > recyclerViewItems.size() - 1) {
-            DoMoment.Toast("Hide Group : group.siteID > size()");
+            App.Toast("Hide Group : group.siteID > size()");
             return;
         }
         if (group == recyclerViewItems.get(group.SiteID)) {
@@ -140,7 +140,7 @@ public abstract class GroupListBase {
         } else {
             int a= group.SiteID;
             GroupBase g = (GroupBase) recyclerViewItems.get(group.SiteID);
-            DoMoment.Toast("HideGroup出现错误");
+            App.Toast("HideGroup出现错误");
         }
         UpdateTitleMessage();
     }
@@ -249,7 +249,7 @@ public abstract class GroupListBase {
             if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
             //CalculatorTitleSite();
         } else {
-            DoMoment.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
+            App.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
         }
         //测试用，更新显示组头的位置序号
         //UpdateTitleMessage();
@@ -299,7 +299,7 @@ public abstract class GroupListBase {
         isItemChecked = checked;
         GroupListAdapter.isChecked = checked;
         GroupListAdapter.notifyDataSetChanged();
-        //Toast.makeText(DoMoment.getContext(),"<"+className+">",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(App.getContext(),"<"+className+">",Toast.LENGTH_SHORT).show();
     }
 
     public boolean isItemChecked(){

@@ -1,10 +1,9 @@
 package threecats.zhang.domoment.DataStructures;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
@@ -92,13 +91,13 @@ public class CategoryList {
             task.setCategoryID(1);
         }
         Categorys.remove(customCategory);
-        //DoMoment.getDataManger().setCurrentCategory(getFirstCategory());
+        //App.getDataManger().setCurrentCategory(getFirstCategory());
         for (Task task : removeTasks) {
             AddTask(task);
-            DoMoment.getDataManger().UpdateTask(task);
+            App.getDataManger().UpdateTask(task);
         }
 //        for (Task task : removeTasks) {
-//            DoMoment.getDataManger().UpdateTask(task);
+//            App.getDataManger().UpdateTask(task);
 //        }
     }
 

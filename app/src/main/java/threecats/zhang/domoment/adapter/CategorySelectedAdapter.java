@@ -12,7 +12,7 @@ import java.util.List;
 
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
@@ -21,7 +21,7 @@ import threecats.zhang.domoment.R;
 
 public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private DateTimeHelper DateTime = DoMoment.getDateTime();
+    private DateTimeHelper DateTime = App.getDateTime();
     private List<CategoryBase>  itemBases;
 
     //static
@@ -55,8 +55,8 @@ public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.V
                 int position = itemViewHolder.getAdapterPosition();
                 CategoryBase category = itemBases.get(position);
                 new Handler().postDelayed(() -> {
-                    CategoryBase oldCategory = DoMoment.getCurrentCategory();
-                    DoMoment.getDataManger().setCurrentCategory(category);
+                    CategoryBase oldCategory = App.getCurrentCategory();
+                    App.getDataManger().setCurrentCategory(category);
                     oldCategory.UnBind();
                 },350);
 

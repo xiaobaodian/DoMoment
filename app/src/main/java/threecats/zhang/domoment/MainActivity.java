@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DoMoment.setMainActivity(this);
+        App.Init();
+        App.setMainActivity(this);
         setContentView(R.layout.activity_main);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DoMoment.setCurrentActivity(this);
+        App.setCurrentActivity(this);
     }
 
     public void setNavigationState(int visibility){
@@ -112,16 +113,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (DoMoment.hasPopupWindow()) {
-                DoMoment.closePopupWindow();
+            if (App.hasPopupWindow()) {
+                App.closePopupWindow();
                 return true;
             }
-            if (DoMoment.hasDrawerMenu()) {
-                DoMoment.closeDrawerMenu();
+            if (App.hasDrawerMenu()) {
+                App.closeDrawerMenu();
                 return true;
             }
             if ((System.currentTimeMillis()-mExitTime)>1000) {
-                DoMoment.Toast("再按一次退出程序");
+                App.Toast("再按一次退出程序");
                 mExitTime = System.currentTimeMillis();
             }else{
                 finish();

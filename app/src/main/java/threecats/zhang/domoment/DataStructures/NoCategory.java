@@ -2,8 +2,8 @@ package threecats.zhang.domoment.DataStructures;
 
 import android.content.Context;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.CategoryType;
-import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 
 /**
@@ -15,7 +15,7 @@ public class NoCategory extends CategoryBase {
     NoCategory() {
         super();
         setCategoryID(1);
-        Context context = DoMoment.getContext();
+        Context context = App.getContext();
         setTitle(context.getString(R.string.category_nocategory_title));
         categoryType = CategoryType.System;
         iconId = R.mipmap.brightness;

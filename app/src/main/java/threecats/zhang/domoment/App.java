@@ -11,17 +11,19 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import io.objectbox.BoxStore;
 import threecats.zhang.domoment.DataStructures.BackgroundBase;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.DataManger;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
+import threecats.zhang.domoment.DataStructures.MyObjectBox;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * Created by zhang on 2017/8/14.
  */
 
-public class DoMoment extends Application {
+public class App extends Application {
 
     private static Context context;
     private static DateTimeHelper dateTime;
@@ -30,16 +32,23 @@ public class DoMoment extends Application {
     private static Activity currentActivity;
     private static PopupWindow popupWindow;
     private static DrawerLayout drawerLayout;
+    private static BoxStore boxStore;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        boxStore = MyObjectBox.builder().androidContext(App.this).build();
         context = getApplicationContext();
+        //dateTime = new DateTimeHelper();
+        //dataManger = new DataManger();
+        //dataManger.LoadDatas();
+    }
+
+    public static void Init(){
         dateTime = new DateTimeHelper();
         dataManger = new DataManger();
         dataManger.LoadDatas();
     }
-
     public static DateTimeHelper getDateTime(){
         return dateTime;
     }
@@ -69,14 +78,14 @@ public class DoMoment extends Application {
         return currentActivity;
     }
     public static String getRString(int StringID){
-        return DoMoment.getContext().getString(StringID);
+        return App.getContext().getString(StringID);
     }
     public static void Toast(String message){
         android.widget.Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
     public static void showTaskDisplayActivity(){
-        Intent taskIntent = new Intent(DoMoment.getMainActivity(),TaskDisplayActivity.class);
-        DoMoment.getMainActivity().startActivity(taskIntent);
+        Intent taskIntent = new Intent(App.getMainActivity(),TaskDisplayActivity.class);
+        App.getMainActivity().startActivity(taskIntent);
     }
     public static void setPopupWindow(PopupWindow pWin){
         popupWindow = pWin;
@@ -105,4 +114,9 @@ public class DoMoment extends Application {
     public static List<BackgroundBase> getCategoryThemebackgrounds(){
         return dataManger.getCategoryList().getCategoryThemebackgrounds();
     }
+
+    public static BoxStore getBoxStore() {
+        return boxStore;
+    }
+
 }

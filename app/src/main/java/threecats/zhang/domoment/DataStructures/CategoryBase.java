@@ -7,7 +7,7 @@ import threecats.zhang.domoment.ENUM.CategoryType;
 import threecats.zhang.domoment.ENUM.GroupListType;
 
 /**
- * Created by zhang on 2017/8/14.
+ * 由 zhang 于 2017/8/14 创建
  */
 
 public abstract class CategoryBase extends ItemBase {

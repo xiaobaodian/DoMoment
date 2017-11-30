@@ -5,7 +5,7 @@ import java.util.List;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.Task;
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
@@ -28,8 +28,8 @@ public class MakeOutAdapter extends RecyclerViewAdapterBase {
         holder.setText(R.id.taskTitle, task.getTitle())
                 .setText(R.id.taskPlace, "")
                 .setText(R.id.taskDateTime, "完成于：" + task.getCompleteDateTimeStr());
-        if (DoMoment.getCurrentCategory().getCategoryID() == 0) {
-            holder.setText(R.id.taskCategory, DoMoment.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        if (App.getCurrentCategory().getCategoryID() == 0) {
+            holder.setText(R.id.taskCategory, App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }
 

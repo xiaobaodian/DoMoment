@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.BackgroundBase;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
-import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.R;
 import threecats.zhang.domoment.TodoFragment;
 
@@ -23,7 +23,7 @@ import threecats.zhang.domoment.TodoFragment;
 
 public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private DateTimeHelper DateTime = DoMoment.getDateTime();
+    private DateTimeHelper DateTime = App.getDateTime();
     private TodoFragment fragment;
     private List<BackgroundBase>  itemBases;
     private int currentCheckedSite = -1;
@@ -55,7 +55,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         itemViewHolder.view.setOnClickListener(v -> {
             int position = itemViewHolder.getAdapterPosition();
             BackgroundBase background = itemBases.get(position);
-            CategoryBase currentCategory = DoMoment.getCurrentCategory();
+            CategoryBase currentCategory = App.getCurrentCategory();
             currentCategory.setThemeBackgroundID(background.getID());
             itemViewHolder.CheckImage.setVisibility(View.VISIBLE);
             if (currentCheckedSite >= 0) {
@@ -72,7 +72,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         BackgroundBase background = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
         Glide.with(fragment).load(background.getID()).into(itemViewHolder.backgroundImage);
-        CategoryBase currentCategory = DoMoment.getCurrentCategory();
+        CategoryBase currentCategory = App.getCurrentCategory();
         if (currentCategory.getThemeBackgroundID() == background.getID()) {
             itemViewHolder.CheckImage.setVisibility(View.VISIBLE);
             currentCheckedSite = position;

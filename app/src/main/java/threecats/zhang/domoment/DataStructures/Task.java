@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 
 /**
  * Created by zhang on 2017/7/26.
@@ -62,7 +62,7 @@ public class Task extends TaskBase{
         if (!parentGroup.contains(group)) {
             parentGroup.add(group);
         } else {
-            DoMoment.Toast("有重复的ParentGroup加入");
+            App.Toast("有重复的ParentGroup加入");
         }
     }
     public void clearParentGroup(){

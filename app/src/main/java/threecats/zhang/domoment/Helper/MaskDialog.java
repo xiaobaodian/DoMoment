@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
@@ -96,8 +96,8 @@ public class MaskDialog {
     }
 
     private void setBackgroundAlpha(float alpha) {
-        WindowManager.LayoutParams layoutParams = DoMoment.getCurrentActivity().getWindow().getAttributes();
+        WindowManager.LayoutParams layoutParams = App.getCurrentActivity().getWindow().getAttributes();
         layoutParams.alpha = alpha;
-        DoMoment.getCurrentActivity().getWindow().setAttributes(layoutParams);
+        App.getCurrentActivity().getWindow().setAttributes(layoutParams);
     }
 }

@@ -10,7 +10,7 @@ import threecats.zhang.domoment.ENUM.ItemType;
 import threecats.zhang.domoment.ENUM.OneDayBase;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 
 /**
  * Created by zhang on 2017/8/3.
@@ -18,7 +18,7 @@ import threecats.zhang.domoment.DoMoment;
 
 public class TaskBase extends ListItemBase implements Comparable{
 
-    private DateTimeHelper DateTime = DoMoment.getDateTime();
+    private DateTimeHelper DateTime = App.getDateTime();
 
     private String place;
     private TaskPriority priority;

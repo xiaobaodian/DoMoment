@@ -9,10 +9,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.SQLite.SQLManger;
-import threecats.zhang.domoment.DoMoment;
 import threecats.zhang.domoment.TodoFragment;
 
 /**
@@ -34,7 +34,7 @@ public class DataManger {
     public CategoryEditor categoryEditor;
 
     public DataManger(){
-        sqlDB = new SQLManger(DoMoment.getContext(), "IdoMoment.db", null, 1);
+        sqlDB = new SQLManger(App.getContext(), "IdoMoment.db", null, 1);
         isDataloaded = false;
         BuildCategorys();
     }
@@ -173,11 +173,11 @@ public class DataManger {
         int categoryID = 1;
         CategoryBase category = getCurrentCategory();
         if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
-            categoryID = DoMoment.getCurrentCategory().getCategoryID();
+            categoryID = App.getCurrentCategory().getCategoryID();
         }
         Task task = new Task(categoryID, day);
         setEditorTask(task);
-        DoMoment.showTaskDisplayActivity();
+        App.showTaskDisplayActivity();
     }
     public void AddTask(Task task){
         categoryList.AddTask(task);
@@ -263,7 +263,7 @@ public class DataManger {
             String sql = "select * from Tasks order by StartDateTime limit ?,?";
             cursor = db.rawQuery(sql, new String[]{"0", "360"});
             while (cursor.moveToNext()) {
-                //Toast.makeText(DoMoment.getContext(),"Build Datasing ...",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(App.getContext(),"Build Datasing ...",Toast.LENGTH_SHORT).show();
                 Task task = new Task();
                 task.setID(cursor.getInt(cursor.getColumnIndex("id")));
                 task.setCategoryID(cursor.getInt(cursor.getColumnIndex("CategoryID")));
@@ -285,7 +285,7 @@ public class DataManger {
         assert db != null;
         db.close();
 
-        //DoMoment.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
+        //App.getDataManger().getTodoFragment().setProgressBarVisibility(View.GONE);
         //categoryList.BindDatas();
     }
 

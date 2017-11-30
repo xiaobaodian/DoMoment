@@ -4,7 +4,7 @@ import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.ENUM.TimeSeries;
-import threecats.zhang.domoment.DoMoment;
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
@@ -19,7 +19,7 @@ public class FocusGroupList extends GroupListBase {
         this.selfType = GroupListType.Complete;
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
-        setTitle(DoMoment.getContext().getString(R.string.grouplist_focus_title));
+        setTitle(App.getContext().getString(R.string.grouplist_focus_title));
         BuildGroups();
     }
 

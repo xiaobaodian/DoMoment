@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
 import threecats.zhang.domoment.adapter.RecyclerViewAdapterBase;
-import threecats.zhang.domoment.DoMoment;
 
 /**
  * Created by zhang on 2017/10/23.
@@ -77,14 +77,14 @@ public abstract class ViewPageFragment extends TitleFragment {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if(b) {
-                        //Toast.makeText(DoMoment.getContext(),"get Focus",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(App.getContext(),"get Focus",Toast.LENGTH_SHORT).show();
                     } else {
-                        //Toast.makeText(DoMoment.getContext(),"lost Focus",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(App.getContext(),"lost Focus",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         } catch (Exception e){
-            DoMoment.Toast("TimeLine Groups is Null");
+            App.Toast("TimeLine Groups is Null");
         }
     }
 
