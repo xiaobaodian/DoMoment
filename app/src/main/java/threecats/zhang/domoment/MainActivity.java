@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LayoutAnimationController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        App.Exit();
     }
 
     @Override

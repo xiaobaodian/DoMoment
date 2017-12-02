@@ -25,6 +25,8 @@ import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 public class App extends Application {
 
+    public static final String TAG = "IDoMoment";
+
     private static Context context;
     private static DateTimeHelper dateTime;
     private static DataManger dataManger;
@@ -119,4 +121,14 @@ public class App extends Application {
         return boxStore;
     }
 
+    public static void Exit() {
+        context = null;
+        dateTime = null;
+        dataManger = null;
+        mainActivity = null;
+        currentActivity = null;
+        popupWindow = null;
+        drawerLayout = null;
+        boxStore = null;
+    }
 }
