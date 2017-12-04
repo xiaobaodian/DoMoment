@@ -60,6 +60,11 @@ public class MakeOutAdapter extends RecyclerViewAdapterBase {
     }
 
     @Override
+    protected void OnGroupClick(GroupBase group) {
+
+    }
+
+    @Override
     protected void OpenTips(){
         viewPageFragment.OpenTips();
     }

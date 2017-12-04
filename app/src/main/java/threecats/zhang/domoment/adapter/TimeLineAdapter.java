@@ -1,11 +1,15 @@
 package threecats.zhang.domoment.adapter;
 
+import java.util.Calendar;
 import java.util.List;
 
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.App;
+import threecats.zhang.domoment.DataStructures.TimeLineAfterTomorrowGroup;
+import threecats.zhang.domoment.DataStructures.TimeLineTodayGroup;
+import threecats.zhang.domoment.DataStructures.TimeLineTomorrowGroup;
 import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 import threecats.zhang.domoment.R;
@@ -69,6 +73,21 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
                 break;
         }
 
+    }
+
+    @Override
+    protected void OnGroupClick(GroupBase group) {
+        if (group instanceof TimeLineTodayGroup) {
+            App.getDataManger().NewTask(Calendar.getInstance());
+        } else if (group instanceof TimeLineTomorrowGroup) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE,1);
+            App.getDataManger().NewTask(calendar);
+        } else if (group instanceof TimeLineAfterTomorrowGroup) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE,2);
+            App.getDataManger().NewTask(calendar);
+        }
     }
 
     @Override

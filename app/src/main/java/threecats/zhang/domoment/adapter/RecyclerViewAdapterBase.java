@@ -125,6 +125,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
 
     protected abstract void OnBindItem(ItemViewHolder holder, Task task, @Nullable GroupType groupType);
     protected abstract void OnBindGroup(GroupViewHolder holder, GroupBase group);
+    protected abstract void OnGroupClick(GroupBase group);
     protected abstract void OpenTips();
     protected abstract void CloseTips();
 
@@ -160,18 +161,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 view = LayoutInflater.from(parent.getContext()).inflate(groupLayoutID, parent, false);
                 final GroupViewHolder groupViewHolder = new GroupViewHolder(view);
                 groupViewHolder.currentGroupView.setOnClickListener(v -> {
-                    GroupBase group = groupViewHolder.getGroup();
-                    if (group instanceof TimeLineTodayGroup) {
-                        App.getDataManger().NewTask(Calendar.getInstance());
-                    } else if (group instanceof TimeLineTomorrowGroup) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.add(Calendar.DATE,1);
-                        App.getDataManger().NewTask(calendar);
-                    } else if (group instanceof TimeLineAfterTomorrowGroup) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.add(Calendar.DATE,2);
-                        App.getDataManger().NewTask(calendar);
-                    }
+                    OnGroupClick(groupViewHolder.getGroup());
                 });
                 return groupViewHolder;
         }
