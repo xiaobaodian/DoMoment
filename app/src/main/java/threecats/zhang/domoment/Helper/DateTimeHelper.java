@@ -3,6 +3,8 @@ package threecats.zhang.domoment.Helper;
 import android.widget.DatePicker;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -95,10 +97,21 @@ public class DateTimeHelper {
         return calendar;
     }
 
+    public LocalDate makeTimePoint(long days){
+        LocalDate timePoint = LocalDate.now();
+        timePoint.plusDays(days);
+        return timePoint;
+    }
+
     public int GetDayOfWeek(Calendar day){
         int Site = day.get(Calendar.DAY_OF_WEEK);
         if (Site == 1) Site = 8;
         return --Site;
+    }
+
+    public int getDayOfWeek(LocalDate day){
+        //DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
+        return day.getDayOfWeek().ordinal();
     }
 
     public boolean IsCurrentDateChanged(){

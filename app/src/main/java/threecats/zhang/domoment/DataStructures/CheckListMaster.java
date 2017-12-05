@@ -20,13 +20,6 @@ public class CheckListMaster {
         checkListBox = boxStore.boxFor(CheckItem.class);
     }
 
-    public List<CheckItem> getCheckList(Task task){
-        Query<CheckItem> checkListQuery = checkListBox
-                .query()
-                .equal(CheckItem_.taskID, task.getID())
-                .build();
-        return checkListQuery.find();
-    }
 
     public long put(CheckItem item){
         return checkListBox.put(item);

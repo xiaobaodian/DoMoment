@@ -38,7 +38,8 @@
         },
         {
           "id": "2:5428725713264645982",
-          "name": "taskID"
+          "indexId": "1:2848095304511055794",
+          "name": "taskId"
         },
         {
           "id": "3:6162972117562917661",
@@ -50,11 +51,72 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:4554521837685696536",
+      "lastPropertyId": "12:6614065195700281623",
+      "name": "TaskItem",
+      "properties": [
+        {
+          "id": "1:5534354523993758311",
+          "name": "id"
+        },
+        {
+          "id": "2:5490702063737050443",
+          "name": "title"
+        },
+        {
+          "id": "3:8514953979853624809",
+          "name": "note"
+        },
+        {
+          "id": "4:7946242769178028283",
+          "name": "place"
+        },
+        {
+          "id": "5:7568463301984341595",
+          "name": "priority"
+        },
+        {
+          "id": "6:8085170944096638521",
+          "name": "createDateTime"
+        },
+        {
+          "id": "7:5161966827458597282",
+          "name": "startDateTime"
+        },
+        {
+          "id": "8:5474368193100235252",
+          "name": "dueDateTime"
+        },
+        {
+          "id": "9:1224347284518635336",
+          "name": "completeDateTime"
+        },
+        {
+          "id": "10:8902755907494601879",
+          "name": "isAllDay"
+        },
+        {
+          "id": "11:7008516300376694603",
+          "name": "isNoDate"
+        },
+        {
+          "id": "12:6614065195700281623",
+          "name": "isComplete"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:1197170313697174701",
+          "name": "checkList"
+        }
+      ]
     }
   ],
-  "lastEntityId": "3:2314559943227908621",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastEntityId": "4:4554521837685696536",
+  "lastIndexId": "1:2848095304511055794",
+  "lastRelationId": "1:1197170313697174701",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,

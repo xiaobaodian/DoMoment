@@ -2,6 +2,7 @@ package threecats.zhang.domoment.DataStructures;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.relation.ToOne;
 
 /**
  * 由 zhang 于 2017/11/30 创建
@@ -11,15 +12,16 @@ import io.objectbox.annotation.Id;
 public class CheckItem {
 
     @Id
-    private long id;
+    long id;
 
-    private long taskID;
     private boolean Checked;
     private String title;
+    ToOne<TaskItem> taskItemToOne;
 
+    public CheckItem(){
+    }
     public CheckItem(String title){
         id = 0;
-        taskID = 0;
         Checked = false;
         this.title = title;
     }
@@ -29,12 +31,6 @@ public class CheckItem {
     }
     public long getId(){
         return this.id;
-    }
-    public void setTaskID(long taskID){
-        this.taskID = taskID;
-    }
-    public long getTaskID(){
-        return this.taskID;
     }
     public void setChecked(boolean checked){
         this.Checked = checked;

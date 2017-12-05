@@ -9,6 +9,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
+import io.objectbox.query.Query;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
@@ -20,6 +23,15 @@ import threecats.zhang.domoment.TodoFragment;
  */
 
 public class DataManger {
+
+    private Box<TaskItem> taskBox;
+    private Query<TaskItem> taskQuery;
+    //private TasksAdapter tasksAdapter;
+
+    private Box<CheckItem> checkListBox;
+    private Query<CheckItem> checkListQuery;
+    //private CheckListAdapter checkListAdapter;
+
     private SQLManger sqlDB;
     private ContentValues values = new ContentValues();
     private CategoryList categoryList;
@@ -34,7 +46,20 @@ public class DataManger {
     public CategoryEditor categoryEditor;
 
     public DataManger(){
+
         sqlDB = new SQLManger(App.getContext(), "IdoMoment.db", null, 1);
+
+        //----------------------------
+
+        BoxStore boxStore = App.getBoxStore();
+
+        taskBox = boxStore.boxFor(TaskItem.class);
+        checkListBox = boxStore.boxFor(CheckItem.class);
+
+        taskQuery = taskBox.query().order(TaskItem_.startDateTime).build();
+        checkListQuery = checkListBox.query().build();
+
+
         isDataloaded = false;
         BuildCategorys();
     }
