@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -42,6 +43,12 @@ public class TaskExt {
     public TaskExt(TaskItem taskItem){
         setTaskItem(taskItem);
     }
+    public TaskExt(int categoryID, Calendar beginDate){
+        taskItem = new TaskItem();
+        taskItem.setCategoryID(categoryID);
+        setStartDate(beginDate.get(Calendar.YEAR), beginDate.get(Calendar.MONTH)+1, beginDate.get(Calendar.DAY_OF_MONTH));
+    }
+
 
     public void setTaskItem(TaskItem taskItem){
 
@@ -68,6 +75,9 @@ public class TaskExt {
         completeDateTime.setTime(taskItem.getCompleteDateTime());
 
         priority = TaskPriority.values()[taskItem.getPriority()];
+    }
+    public TaskItem getTaskItem(){
+        return taskItem;
     }
 
     public void setCreateDateTime(Calendar createDateTime){

@@ -54,7 +54,7 @@
     },
     {
       "id": "4:4554521837685696536",
-      "lastPropertyId": "12:6614065195700281623",
+      "lastPropertyId": "16:4009839224168199385",
       "name": "TaskItem",
       "properties": [
         {
@@ -104,14 +104,25 @@
         {
           "id": "12:6614065195700281623",
           "name": "isComplete"
+        },
+        {
+          "id": "13:1386251179328828095",
+          "name": "categoryID"
+        },
+        {
+          "id": "14:232137637953980016",
+          "name": "taskContext"
+        },
+        {
+          "id": "15:1908860119848768761",
+          "name": "taskTags"
+        },
+        {
+          "id": "16:4009839224168199385",
+          "name": "isMoment"
         }
       ],
-      "relations": [
-        {
-          "id": "1:1197170313697174701",
-          "name": "checkList"
-        }
-      ]
+      "relations": []
     }
   ],
   "lastEntityId": "4:4554521837685696536",
@@ -133,6 +144,8 @@
     4727850971625648063,
     5428725713264645982
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    1197170313697174701
+  ],
   "version": 1
 }

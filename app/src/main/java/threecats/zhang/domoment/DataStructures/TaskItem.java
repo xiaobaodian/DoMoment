@@ -5,12 +5,15 @@ import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToMany;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.ItemType;
@@ -32,6 +35,7 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     private String note;
     private String place;
     private int priority;
+    private int categoryID;
     private Date createDateTime;
     private Date startDateTime;
     private Date dueDateTime;
@@ -39,11 +43,18 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     private boolean isAllDay;
     private boolean isNoDate;
     private boolean isComplete;
+    private String taskContext;
+    private String taskTags;
+    private boolean isMoment;
 
-    //@Backlink
+    @Transient
+    private List<GroupBase> parentGroups;
+
+    @Backlink
     ToMany<CheckItem> checkList;
 
     public TaskItem(){
+        super();
 
         itemType = ItemType.Item;
 
@@ -53,10 +64,13 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
         completeDateTime = new Date();
 
         priority = TaskPriority.None.ordinal();
+        categoryID = 1;
 
         isNoDate = true;
         isAllDay = true;
         isComplete = false;
+
+        parentGroups = new ArrayList<>(3);
     }
 
     public void setID(int ID){
@@ -89,6 +103,13 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     public int getPriority(){
         return priority;
     }
+    public void setCategoryID(int categoryID){
+        this.categoryID = categoryID;
+    }
+    public int getCategoryID(){
+        return categoryID;
+    }
+
 
     public void setCreateDateTime(Date createDateTime){
         this.createDateTime = createDateTime;
@@ -136,6 +157,25 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     }
     public boolean getIsComplete(){
         return isComplete;
+    }
+
+    public void setTaskContext(String taskContext){
+        this.taskContext = taskContext;
+    }
+    public String getTaskContext(){
+        return taskContext;
+    }
+    public void setTaskTags(String taskTags){
+        this.taskTags = taskTags;
+    }
+    public String getTaskTags(){
+        return taskTags;
+    }
+    public void setMoment(boolean isMoment){
+        this.isMoment = isMoment;
+    }
+    public boolean isMoment(){
+        return isMoment;
     }
 
     public int compareTo(@NonNull Object task) {  // 实现Comparator接口的方法
