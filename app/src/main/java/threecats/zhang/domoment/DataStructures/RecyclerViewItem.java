@@ -10,6 +10,10 @@ public class RecyclerViewItem {
     protected ItemType itemType;
     protected boolean checked = false;
 
+    public RecyclerViewItem(){
+        itemType = ItemType.Item;
+    }
+
     public void setItemType(ItemType type){
         this.itemType = type;
     }
