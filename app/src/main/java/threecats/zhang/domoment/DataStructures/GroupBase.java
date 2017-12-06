@@ -20,7 +20,7 @@ import threecats.zhang.domoment.App;
  * Created by zhang on 2017/8/3.
  */
 
-public abstract class GroupBase extends ListItemBase {
+public abstract class GroupBase extends RecyclerViewItem {
 
     protected DateTimeHelper DateTime = App.getDateTime();
 
@@ -36,7 +36,7 @@ public abstract class GroupBase extends ListItemBase {
     public int SiteID;
     public DisplayState State;
     private int imageID;
-    private List<Task> tasks;
+    private List<TaskItem> tasks;
 
     public GroupBase(GroupListBase parent){
         super();
@@ -78,7 +78,8 @@ public abstract class GroupBase extends ListItemBase {
         return nextGroup.timePoint;
     }
 
-    public boolean InGroup(Task task){
+    public boolean InGroup(TaskItem taskItem){
+        TaskExt task = new TaskExt(taskItem);
         Calendar timePoint, secTimePoint;
         timePoint = null;
         //secTimePoint = task.IsOneDay() ? null : task.getDueDateTime();
@@ -192,7 +193,7 @@ public abstract class GroupBase extends ListItemBase {
 //        if (State == DisplayState.Hide) State = DisplayState.Show;
 //        return tasks.size();      //返回加入的任务的位置序号，便于组列表处理（0位是组标题）
 //    }
-    public int AddTask(Task task){
+    public int AddTask(TaskItem task){
         task.addParentGroup(this);
         int site = 0;
         if (tasks.size() == 0) {
@@ -214,17 +215,17 @@ public abstract class GroupBase extends ListItemBase {
         return site;
     }
     
-    public int RemoveTask(Task task){
+    public int RemoveTask(TaskItem task){
         int site = tasks.indexOf(task);
         if(site >= 0) tasks.remove(site);
         return site;
     }
 
-    public boolean needChangedPosition(Task task){
+    public boolean needChangedPosition(TaskItem task){
         int pose = tasks.indexOf(task);
         if (pose < 0) return false;
-        Task prevTask = pose == 0 ? null : tasks.get(pose - 1);
-        Task nextTask = pose == tasks.size() - 1 ? null : tasks.get(pose + 1);
+        TaskItem prevTask = pose == 0 ? null : tasks.get(pose - 1);
+        TaskItem nextTask = pose == tasks.size() - 1 ? null : tasks.get(pose + 1);
         boolean needChange = false;
         if (prevTask == null && nextTask == null) {
             needChange = false;
@@ -241,7 +242,7 @@ public abstract class GroupBase extends ListItemBase {
     public int getTaskCount(){
         return tasks.size();
     }
-    public List<Task> getTasks(){
+    public List<TaskItem> getTasks(){
         return tasks;
     }
     public void Sort(){

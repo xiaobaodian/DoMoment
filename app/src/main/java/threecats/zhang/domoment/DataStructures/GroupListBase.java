@@ -38,7 +38,7 @@ public abstract class GroupListBase {
     private boolean isInit;
 
     //用于RecyclerView使用的条目列表
-    private List<ListItemBase> recyclerViewItems;
+    private List<RecyclerViewItem> recyclerViewItems;
     //分组中每个组项的列表
     private List<GroupBase> groups;
 
@@ -51,7 +51,7 @@ public abstract class GroupListBase {
         groups = new ArrayList<>();
         BuildTimePoint();
     }
-    public abstract boolean InGroupList(Task task);
+    public abstract boolean InGroupList(TaskItem task);
     public abstract void BuildTimePoint();
     protected abstract void BuildGroups();
 
@@ -115,7 +115,7 @@ public abstract class GroupListBase {
     public void SortGroup(GroupBase group){
         group.Sort();
         int I = group.SiteID +1;
-        for (Task task : group.getTasks()) {
+        for (TaskItem task : group.getTasks()) {
             recyclerViewItems.set(I++,task);
         }
         if (isBindRecyclerView()) GroupListAdapter.notifyItemRangeChanged(group.SiteID + 1,group.getTaskCount());
@@ -178,7 +178,7 @@ public abstract class GroupListBase {
     }
 
     //分组列表的任务项管理，在这里管理分组项里的任务可以执行自动进入分组、重新调整分组、从分组中删除的操作
-    public void AddTask(Task task){
+    public void AddTask(TaskItem task){
         for(GroupBase group : groups){
             if (group.InGroup(task)){
                 if (group.State == DisplayState.Hide) {
@@ -191,7 +191,7 @@ public abstract class GroupListBase {
         CalculatorTitleSite();
     }
 
-    public void RemoveTask(Task task){
+    public void RemoveTask(TaskItem task){
         for (GroupBase group : groups) {
             if (group.InGroup(task)) {
                 RemoveTaskFromGroup(group, task);
@@ -200,17 +200,17 @@ public abstract class GroupListBase {
         }
     }
 
-    public void RemoveTask(GroupBase group, Task task){
+    public void RemoveTask(GroupBase group, TaskItem task){
         RemoveTaskFromGroup(group, task);
     }
 
-    private void RemoveTaskFromGroup(GroupBase group, Task task){
+    private void RemoveTaskFromGroup(GroupBase group, TaskItem task){
         //task.getParentGroup().remove(group);
         //如果采用for(GroupBase group : Groups) 遍历调用
         //这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
         //目前采用的方法是另外new一个group的ArrayList,通过for(GroupBase group : Groups)将group加入进去
         //然后遍历新建的ArrayList操作
-        task.getParentGroup().remove(group);
+        task.getParentGroups().remove(group);
         int site = group.RemoveTask(task);
         if (site >= 0){
             RemoveTaskFromListItems(group, site, task);
@@ -222,7 +222,7 @@ public abstract class GroupListBase {
     }
 
     //下面是供RecycleView使用的列表(displayItems)的管理
-    public List<ListItemBase> getRecyclerViewItems(){
+    public List<RecyclerViewItem> getRecyclerViewItems(){
         return recyclerViewItems;
     }
     private void AddGroupInListItems(GroupBase group){
@@ -230,7 +230,7 @@ public abstract class GroupListBase {
         recyclerViewItems.add(group);
         recyclerViewItems.addAll(group.getTasks());
     }
-    private void AddTaskToListItems(GroupBase group, int position, Task task){
+    private void AddTaskToListItems(GroupBase group, int position, TaskItem task){
         //根据任务在分组中的位置计算出任务在RecyclerView列表中的位置
         int site = group.SiteID + position + 1;
         //根据上面计算的位置执行插入操作
@@ -240,10 +240,10 @@ public abstract class GroupListBase {
         //测试用，更新显示组头的位置序号
         //UpdateTitleMessage();
     }
-    private void RemoveTaskFromListItems(GroupBase group, int position, Task task){
+    private void RemoveTaskFromListItems(GroupBase group, int position, TaskItem task){
 
         int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
-        Task ntask = (Task) recyclerViewItems.get(site);
+        TaskItem ntask = (TaskItem) recyclerViewItems.get(site);
         if (ntask == task) {
             recyclerViewItems.remove(site);
             if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
@@ -264,7 +264,7 @@ public abstract class GroupListBase {
         }
     }
 
-    public void UpdateTaskDisplay(GroupBase group, Task task){
+    public void UpdateTaskDisplay(GroupBase group, TaskItem task){
         int site = group.getTasks().indexOf(task) + group.SiteID + 1;
         if (isBindRecyclerView()) GroupListAdapter.notifyItemChanged(site);
     }

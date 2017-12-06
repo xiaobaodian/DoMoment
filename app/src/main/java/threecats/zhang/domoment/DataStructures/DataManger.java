@@ -24,13 +24,14 @@ import threecats.zhang.domoment.TodoFragment;
 
 public class DataManger {
 
-    private Box<TaskItem> taskBox;
-    private Query<TaskItem> taskQuery;
-    //private TasksAdapter tasksAdapter;
+    Box<TaskItem> taskBox;
+    Query<TaskItem> taskQuery;
 
-    private Box<CheckItem> checkListBox;
-    private Query<CheckItem> checkListQuery;
-    //private CheckListAdapter checkListAdapter;
+    Box<CheckItem> checkListBox;
+    Query<CheckItem> checkListQuery;
+
+    Box<CategoryItem> categoryBox;
+    Query<CategoryItem> categoryQuery;
 
     private SQLManger sqlDB;
     private ContentValues values = new ContentValues();
@@ -38,8 +39,8 @@ public class DataManger {
     private CategoryBase currentCategory;
     private GroupListBase currentGroupList;
     private GroupBase currentGroup;
-    private Task currentTask = null;
-    private Task editorTask = null;
+    private TaskItem currentTask = null;
+    private TaskItem editorTask = null;
     private TodoFragment todoFragment;
     private boolean isDataloaded;
 
@@ -59,6 +60,8 @@ public class DataManger {
         taskQuery = taskBox.query().order(TaskItem_.startDateTime).build();
         checkListQuery = checkListBox.query().build();
 
+        categoryBox = boxStore.boxFor(CategoryItem.class);
+        categoryQuery = categoryBox.query().order(CategoryItem_.orderID).build();
 
         isDataloaded = false;
         BuildCategorys();
@@ -131,10 +134,10 @@ public class DataManger {
         }
     }
 
-    public void setEditorTask(Task task){
+    public void setEditorTask(TaskItem task){
         editorTask = task;
     }
-    public Task getEditorTask(){
+    public TaskItem getEditorTask(){
         return  editorTask == null ? currentTask : editorTask;
     }
     public boolean hasEditorTask(){
@@ -143,9 +146,10 @@ public class DataManger {
     public void commitEditorTask(EditorMode mode){
         if (mode == EditorMode.Edit) {
             if (hasEditorTask()){
-                if (editorTask.title.length() > 0) {
+                if (editorTask.getTitle().length() > 0) {
                     AddTask(editorTask);
-                    AddTaskToDataBase(editorTask);
+                    taskBox.put(editorTask);
+                    //AddTaskToDataBase(editorTask);
                 }
             } else {
                 ChangeTask(currentTask);
@@ -187,10 +191,10 @@ public class DataManger {
         return currentGroup;
     }
 
-    public void setCurrentTask(Task task){
+    public void setCurrentTask(TaskItem task){
         this.currentTask = task;
     }
-    public Task getCurrentTask(){
+    public TaskItem getCurrentTask(){
         return currentTask;
     }
 
@@ -200,25 +204,29 @@ public class DataManger {
         if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
             categoryID = App.getCurrentCategory().getCategoryID();
         }
-        Task task = new Task(categoryID, day);
+        //TaskItem task = new TaskItem(categoryID, day);
+        TaskItem task = new TaskExt(categoryID, day).getTaskItem();
         setEditorTask(task);
         App.showTaskDisplayActivity();
     }
-    public void AddTask(Task task){
+    public void AddTask(TaskItem task){
         categoryList.AddTask(task);
     }
 
-    public void RemoveTask(Task task){
+    public void RemoveTask(TaskItem task){
         categoryList.RemoveTask(task);
-        RemoveTaskToDataBase(task);
+        taskBox.remove(task);
+        //RemoveTaskToDataBase(task);
     }
-    private void ChangeTask(Task task){
+    private void ChangeTask(TaskItem task){
         categoryList.ChangeTask(task);
-        UpdateTaskToDataBase(task);
+        taskBox.put(task);
+        //UpdateTaskToDataBase(task);
     }
-    public void UpdateTask(Task task){
+    public void UpdateTask(TaskItem task){
+        taskBox.put(task);
         //categoryList.UpdateTaskaa(task);
-        UpdateTaskToDataBase(task);
+        //UpdateTaskToDataBase(task);
     }
 
     public void CurrentDateChange(){
@@ -282,6 +290,14 @@ public class DataManger {
     }
 
     private void LoadTasks(){
+
+        List<TaskItem> taskItems = taskQuery.find();
+        for (TaskItem taskItem : taskItems) {
+            AddTask(taskItem);
+        }
+    }
+
+    private void LoadTasksOld(){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -303,7 +319,7 @@ public class DataManger {
                 task.setAllDay(cursor.getInt(cursor.getColumnIndex("isAllDay")) == 1);
                 task.setNoDateDB(cursor.getInt(cursor.getColumnIndex("isNoDate")) == 1);
                 task.setCompleteDB(cursor.getInt(cursor.getColumnIndex("isComplete")) == 1);
-                AddTask(task);
+                //AddTask(task);
             }
             cursor.close();
         }
@@ -372,56 +388,167 @@ public class DataManger {
     }
 
     private void LoadCategorys(){
-        SQLiteDatabase db = sqlDB.getWritableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            String sql = "select * from Categorys";
-            cursor = db.rawQuery(sql, null);
-            while (cursor.moveToNext()) {
-                CustomCategory customCategory = new CustomCategory();
-                customCategory.setID(cursor.getInt(cursor.getColumnIndex("id")));
-                customCategory.setOrderID(cursor.getInt(cursor.getColumnIndex("OrderID")));
-                customCategory.setCategoryID(cursor.getInt(cursor.getColumnIndex("CategoryID")));
-                customCategory.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
-                customCategory.setNote(cursor.getString(cursor.getColumnIndex("Note")));
-                customCategory.setIconId(cursor.getInt(cursor.getColumnIndex("iconID")));
-                customCategory.setThemeBackgroundID(cursor.getInt(cursor.getColumnIndex("themeBackgroundID")));
-                AddCustomCategory(customCategory);
-            }
-            cursor.close();
+//        SQLiteDatabase db = sqlDB.getWritableDatabase();
+//        Cursor cursor = null;
+//        if (db != null) {
+//            String sql = "select * from Categorys";
+//            cursor = db.rawQuery(sql, null);
+//            while (cursor.moveToNext()) {
+//                CustomCategory customCategory = new CustomCategory();
+//                customCategory.setID(cursor.getInt(cursor.getColumnIndex("id")));
+//                customCategory.setOrderID(cursor.getInt(cursor.getColumnIndex("OrderID")));
+//                customCategory.setCategoryID(cursor.getInt(cursor.getColumnIndex("CategoryID")));
+//                customCategory.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+//                customCategory.setNote(cursor.getString(cursor.getColumnIndex("Note")));
+//                customCategory.setIconId(cursor.getInt(cursor.getColumnIndex("iconID")));
+//                customCategory.setThemeBackgroundID(cursor.getInt(cursor.getColumnIndex("themeBackgroundID")));
+//                AddCustomCategory(customCategory);
+//            }
+//            cursor.close();
+//        }
+//        assert db != null;
+//        db.close();
+        List<CategoryItem> categoryItems = categoryQuery.find();
+        for (CategoryItem categoryItem : categoryItems) {
+            CustomCategory customCategory = new CustomCategory();
+            customCategory.setID(categoryItem.getId());
+            customCategory.setOrderID(categoryItem.getOrderID());
+            customCategory.setCategoryID(categoryItem.getCategoryID());
+            customCategory.setTitle(categoryItem.getTitle());
+            customCategory.setNote(categoryItem.getNote());
+            customCategory.setIconId(categoryItem.getIconId());
+            customCategory.setThemeBackgroundID(categoryItem.getThemeBackgroundID());
+            AddCustomCategory(customCategory);
         }
-        assert db != null;
-        db.close();
     }
 
     // 初始化操作
 
     private void InitCategory(){
+        List<CategoryItem> categoryItems = new ArrayList<>();
         CustomCategory customCategory;
         customCategory = new CustomCategory("学习与进修", 10);
         AddCustomCategory(customCategory);
-        AddCategoryToDataBase(customCategory);
+        categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
+        //AddCategoryToDataBase(customCategory);
+
         customCategory = new CustomCategory("工作", 17);
         AddCustomCategory(customCategory);
-        AddCategoryToDataBase(customCategory);
+        categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
+        //AddCategoryToDataBase(customCategory);
+
         customCategory = new CustomCategory("家庭", 16);
         AddCustomCategory(customCategory);
-        AddCategoryToDataBase(customCategory);
+        categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
+        //AddCategoryToDataBase(customCategory);
+
         customCategory = new CustomCategory("宠物花鸟", 13);
         AddCustomCategory(customCategory);
-        AddCategoryToDataBase(customCategory);
+        categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
+        //AddCategoryToDataBase(customCategory);
+
         customCategory = new CustomCategory("休闲娱乐", 18);
         AddCustomCategory(customCategory);
-        AddCategoryToDataBase(customCategory);
+        categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
+        //AddCategoryToDataBase(customCategory);
+
         customCategory = new CustomCategory("投资理财", 15);
         AddCustomCategory(customCategory);
-        AddCategoryToDataBase(customCategory);
+        categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
+        //AddCategoryToDataBase(customCategory);
+
+        categoryBox.put(categoryItems);
     }
 
 
     // 辅助操作
 
     public void BuildDatas(){
+        final int TotalTasks = 360;
+        List<TaskItem> taskItems = new ArrayList<>();
+
+        List<String> titles = new ArrayList<>();
+        titles.add("购买动车票");
+        titles.add("办理图书证");
+        titles.add("下载一些todo软件参考");
+        titles.add("测试滑动界面效果");
+        titles.add("买小龙虾");
+        titles.add("共享单车退押金");
+        titles.add("修理鞋柜门");
+        titles.add("去预定联欢会的糖果");
+        titles.add("参观宠物展");
+        titles.add("购买猫粮及猫砂");
+        titles.add("交下半年物业费");
+        titles.add("去银行更换密钥");
+        titles.add("去看牙医");
+        titles.add("办理新的上网套餐");
+        titles.add("购买汽车年票");
+        titles.add("去看看梨花展");
+        titles.add("去聚餐");
+        titles.add("下载新的电视剧");
+        titles.add("联系旅游团");
+        titles.add("了解周边商业区");
+        titles.add("给比尔打电话");
+
+        List<String> places = new ArrayList<>();
+        places.add("办公室");
+        places.add("家里");
+        places.add("楚河汉街");
+        places.add("南湖");
+        places.add("广埠屯");
+        places.add("武汉站");
+        places.add("销品茂");
+        places.add("武汉大学");
+        places.add("墨水湖");
+        places.add("二七路");
+        places.add("同济");
+        places.add("航空路");
+        places.add("步行街");
+        places.add("洪山广场");
+        places.add("中南");
+        places.add("徐东");
+
+        int titleSum = titles.size();
+        int pacleSum = places.size();
+        Random random = new Random();
+        for (int i = 0; i < TotalTasks; i++) {
+            int dueDate = -1;
+
+            TaskItem taskItem = new TaskItem();
+            TaskExt taskExt = new TaskExt();
+            taskExt.setTaskItem(taskItem);
+
+            taskExt.setTitle(titles.get(random.nextInt(titleSum)));
+            taskExt.setPlace(places.get(random.nextInt(pacleSum)));
+
+            Calendar day = Calendar.getInstance();
+            int dayRange = random.nextInt(11);
+            if (dayRange < 6) {
+                day.add(Calendar.DATE, random.nextInt(15));
+            } else if (dayRange >= 6 && dayRange < 9) {
+                day.add(Calendar.DATE, random.nextInt(90));
+            } else if (dayRange == 9){
+                day.add(Calendar.DATE, 0-random.nextInt(10));
+            } else if (dayRange == 10){
+                dueDate = 1 + random.nextInt(7);
+                day.add(Calendar.DATE, 0-dueDate);
+            }
+            if (dueDate == -1) {
+                taskExt.setStartDate(day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH));
+            } else {
+                taskExt.setCreateDateTime(day);
+            }
+
+            int categoryRange = random.nextInt(10);
+            if (categoryRange >= 8) {
+                taskExt.setCategoryID(1);
+            }
+            taskItems.add(taskExt.getTaskItem());
+        }
+        taskBox.put(taskItems);
+    }
+
+    public void BuildDatasOld(){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         final int TotalTasks = 360;
 

@@ -5,14 +5,14 @@ package threecats.zhang.domoment.DataStructures;
  */
 
 public class ItemBase {
-    protected int ID;
+    protected long ID;
     protected String title;
     protected String note;
 
-    public void setID(int ID){
+    public void setID(long ID){
         this.ID = ID;
     }
-    public int getID(){
+    public long getID(){
         return ID;
     }
 

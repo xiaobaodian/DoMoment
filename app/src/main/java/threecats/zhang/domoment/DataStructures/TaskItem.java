@@ -1,16 +1,19 @@
 package threecats.zhang.domoment.DataStructures;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToMany;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.ItemType;
@@ -31,6 +34,9 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     private String title;
     private String note;
     private String place;
+    private String taskContext;
+    private String taskTags;
+    private int categoryID;
     private int priority;
     private Date createDateTime;
     private Date startDateTime;
@@ -39,9 +45,16 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     private boolean isAllDay;
     private boolean isNoDate;
     private boolean isComplete;
-
-    //@Backlink
+    private boolean isMoment;
+    @Backlink
     ToMany<CheckItem> checkList;
+
+    @Transient
+    private List<GroupBase> parentGroups;
+
+
+
+
 
     public TaskItem(){
 
@@ -81,6 +94,27 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     }
     public String getPlace(){
         return place;
+    }
+
+    public void setTaskContext(String taskContext){
+        this.taskContext = taskContext;
+    }
+    public String getTaskContext(){
+        return taskContext;
+    }
+
+    public void setTaskTags(String taskTags){
+        this.taskTags = taskTags;
+    }
+    public String getTaskTags(){
+        return taskTags;
+    }
+
+    public void setCategoryID(int categoryID){
+        this.categoryID = categoryID;
+    }
+    public int getCategoryID(){
+        return categoryID;
     }
 
     public void setPriority(int priority){
@@ -138,12 +172,41 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
         return isComplete;
     }
 
+    public void setMoment(boolean isMoment){
+        this.isMoment = isMoment;
+    }
+    public boolean isMoment(){
+        return isMoment;
+    }
+
     public int compareTo(@NonNull Object task) {  // 实现Comparator接口的方法
         TaskItem taskItem = (TaskItem)task;
         if (!this.getIsAllDay() && taskItem.getIsAllDay()) return 1;
         if (this.getIsAllDay() && !taskItem.getIsAllDay()) return -1;
         if (this.getIsAllDay() && taskItem.getIsAllDay()) return 0;
         return this.startDateTime.compareTo(taskItem.startDateTime);
+    }
+
+    public void addParentGroup(GroupBase group){
+        if (!parentGroups.contains(group)) {
+            parentGroups.add(group);
+        } else {
+            App.Toast("有重复的ParentGroup加入");
+        }
+    }
+    public List<GroupBase> getParentGroups(){
+        return parentGroups;
+    }
+
+    public @Nullable GroupBase getCurrentGroup(GroupListBase parentGroupList){
+        GroupBase currentGroup = null;
+        for (GroupBase group : parentGroups) {
+            if (group.getParent() == parentGroupList){
+                currentGroup = group;
+                break;
+            }
+        }
+        return currentGroup;
     }
 
 

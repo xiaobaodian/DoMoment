@@ -23,7 +23,7 @@ public abstract class CategoryBase extends ItemBase {
         GroupLists = new ArrayList<>();
     }
 
-    public abstract boolean InCategory(Task task);
+    public abstract boolean InCategory(TaskItem task);
     protected abstract void BuildGroupLists();
     public int getTaskCount(){
         int count = 0;
@@ -32,12 +32,12 @@ public abstract class CategoryBase extends ItemBase {
         }
         return count;
     }
-    public List<Task> getAllTasks(){
-        List<Task> allTasks = new ArrayList<>();
+    public List<TaskItem> getAllTasks(){
+        List<TaskItem> allTasks = new ArrayList<>();
         for (GroupListBase groupList : GroupLists) {
             for (GroupBase group : groupList.getGroups()) {
-                for (Task task : group.getTasks()) {
-                    allTasks.add(task);
+                for (TaskItem task : group.getTasks()) {
+                    allTasks.add(task);  //以后这里改成将group的task列表整体加入addAll
                 }
             }
         }
@@ -90,7 +90,7 @@ public abstract class CategoryBase extends ItemBase {
         return themeBackgroundID;
     }
 
-    public void AddTask(Task task){
+    public void AddTask(TaskItem task){
         if ( ! InCategory(task)) return;
         for (GroupListBase groupList : GroupLists) {
             if (groupList.InGroupList(task)) {

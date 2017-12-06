@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -42,6 +43,12 @@ public class TaskExt {
     public TaskExt(TaskItem taskItem){
         setTaskItem(taskItem);
     }
+    public TaskExt(int categoryID, Calendar beginDate){
+        super();
+        taskItem = new TaskItem();
+        setCategoryID(categoryID);
+        setStartDate(beginDate.get(Calendar.YEAR), beginDate.get(Calendar.MONTH)+1, beginDate.get(Calendar.DAY_OF_MONTH));
+    }
 
     public void setTaskItem(TaskItem taskItem){
 
@@ -68,6 +75,9 @@ public class TaskExt {
         completeDateTime.setTime(taskItem.getCompleteDateTime());
 
         priority = TaskPriority.values()[taskItem.getPriority()];
+    }
+    public TaskItem getTaskItem(){
+        return this.taskItem;
     }
 
     public void setCreateDateTime(Calendar createDateTime){
@@ -133,6 +143,12 @@ public class TaskExt {
         }
         taskItem.setIsComplete(isComplete);
     }
+    public void setCategoryID(int categoryID){
+        taskItem.setCategoryID(categoryID);
+    }
+    public int getCategoryID(){
+        return taskItem.getCategoryID();
+    }
 
     public boolean IsComplete(){
         return taskItem.getIsComplete();
@@ -144,7 +160,12 @@ public class TaskExt {
         return beginTime.Hour == endTime.Hour && beginTime.Minute == endTime.Minute;
     }
 
-
+    public void setTitle(String title){
+        taskItem.setTitle(title);
+    }
+    public String getTitle(){
+        return taskItem.getTitle();
+    }
     public void setPlace(String place){
         taskItem.setPlace(place);
     }

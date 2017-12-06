@@ -84,15 +84,15 @@ public class CategoryList {
     }
 
     public void RemoveCustomCategory(CustomCategory customCategory){
-        List<Task> removeTasks = customCategory.getAllTasks();
-        for (Task task : removeTasks) {
+        List<TaskItem> removeTasks = customCategory.getAllTasks();
+        for (TaskItem task : removeTasks) {
             RemoveTask(task);
             //恢复原始的分类ID，这很重要，不然AddTask的时候就丢失了
             task.setCategoryID(1);
         }
         Categorys.remove(customCategory);
         //App.getDataManger().setCurrentCategory(getFirstCategory());
-        for (Task task : removeTasks) {
+        for (TaskItem task : removeTasks) {
             AddTask(task);
             App.getDataManger().UpdateTask(task);
         }
@@ -109,27 +109,27 @@ public class CategoryList {
         return Categorys.subList(3, Categorys.size());
     }
 
-    public void AddTask(Task task){
+    public void AddTask(TaskItem task){
         for (CategoryBase category : Categorys) {
             if (category.InCategory(task)) category.AddTask(task);
         }
     }
 
-    public void RemoveTask(Task task){
+    public void RemoveTask(TaskItem task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
         List<GroupBase> groups = new ArrayList<>();
-        groups.addAll(task.getParentGroup());
+        groups.addAll(task.getParentGroups());
         for (GroupBase group : groups) {
             GroupListBase groupList = group.getParent();
             groupList.RemoveTask(group, task);
         }
     }
 
-    public void ChangeTask(Task task){
+    public void ChangeTask(TaskItem task){
         List<CategoryBase> updateCategorys = new ArrayList<>();
         List<GroupBase> changeGroups = new ArrayList<>();
         List<GroupBase> updateGroups = new ArrayList<>();
-        for (GroupBase group : task.getParentGroup()) {
+        for (GroupBase group : task.getParentGroups()) {
             GroupListBase groupList = group.getParent();
             CategoryBase category = groupList.getParent();
             if (category.InCategory(task) && groupList.InGroupList(task) && group.InGroup(task)){
@@ -176,7 +176,7 @@ public class CategoryList {
     }
 
     public void CurrentDateChange(){
-        List<Task> dateChangeTasks = new ArrayList<>();
+        List<TaskItem> dateChangeTasks = new ArrayList<>();
         for (CategoryBase category : Categorys){
             for (GroupListBase gorupList : category.getGroupLists()) {
                 gorupList.BuildTimePoint();
@@ -190,14 +190,14 @@ public class CategoryList {
         for (CategoryBase category : Categorys){
             for (GroupListBase gorupList : category.getGroupLists()) {
                 for (GroupBase group : gorupList.getGroups()){
-                    for (Task task : group.getTasks()) {
+                    for (TaskItem task : group.getTasks()) {
                         if ( ! group.InGroup(task)) dateChangeTasks.add(task);
                     }
                 }
             }
         }
         if (dateChangeTasks.size() > 0) {
-            for (Task task : dateChangeTasks) {
+            for (TaskItem task : dateChangeTasks) {
                 ChangeTask(task);
             }
         }
