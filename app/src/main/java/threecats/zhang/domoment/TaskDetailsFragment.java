@@ -129,7 +129,7 @@ public class TaskDetailsFragment extends TitleFragment {
     }
     @SuppressLint("SetTextI18n")
     private void DisplayDateTimeFields(){
-        taskExt.setTaskItem(task);  //刷新taskExt内部字段
+        //taskExt.setTaskItem(task);  //刷新taskExt内部字段
         if (taskExt.IsNoDate()) {
             startDateBox.setText("");
             dueDateBox.setVisibility(View.GONE);
