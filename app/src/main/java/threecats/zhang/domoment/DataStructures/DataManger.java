@@ -25,14 +25,14 @@ import threecats.zhang.domoment.TodoFragment;
 
 public class DataManger {
 
-    Box<TaskItem> taskBox;
-    Query<TaskItem> taskQuery;
+    private Box<TaskItem> taskBox;
+    private Query<TaskItem> taskQuery;
 
-    Box<CheckItem> checkListBox;
-    Query<CheckItem> checkListQuery;
+    private Box<CheckItem> checkListBox;
+    private Query<CheckItem> checkListQuery;
 
-    Box<CategoryItem> categoryBox;
-    Query<CategoryItem> categoryQuery;
+    private Box<CategoryItem> categoryBox;
+    private Query<CategoryItem> categoryQuery;
 
     private SQLManger sqlDB;
     private ContentValues values = new ContentValues();
@@ -66,6 +66,10 @@ public class DataManger {
 
         isDataloaded = false;
         BuildCategorys();
+    }
+
+    public Box<TaskItem> getTaskBox(){
+        return taskBox;
     }
 
     private void BuildCategorys(){
@@ -410,8 +414,11 @@ public class DataManger {
 //        assert db != null;
 //        db.close();
         List<CategoryItem> categoryItems = categoryQuery.find();
+
         for (CategoryItem categoryItem : categoryItems) {
+
             CustomCategory customCategory = new CustomCategory();
+
             customCategory.setID(categoryItem.getId());
             customCategory.setOrderID(categoryItem.getOrderID());
             customCategory.setCategoryID(categoryItem.getCategoryID());
@@ -419,44 +426,48 @@ public class DataManger {
             customCategory.setNote(categoryItem.getNote());
             customCategory.setIconId(categoryItem.getIconId());
             customCategory.setThemeBackgroundID(categoryItem.getThemeBackgroundID());
+
             AddCustomCategory(customCategory);
+
         }
     }
 
     // 初始化操作
 
     private void InitCategory(){
+
         List<CategoryItem> categoryItems = new ArrayList<>();
+
         CustomCategory customCategory;
         customCategory = new CustomCategory("学习与进修", 10);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        //AddCategoryToDataBase(customCategory);
+        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         customCategory = new CustomCategory("工作", 17);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        //AddCategoryToDataBase(customCategory);
+        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         customCategory = new CustomCategory("家庭", 16);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        //AddCategoryToDataBase(customCategory);
+        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         customCategory = new CustomCategory("宠物花鸟", 13);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        //AddCategoryToDataBase(customCategory);
+        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         customCategory = new CustomCategory("休闲娱乐", 18);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        //AddCategoryToDataBase(customCategory);
+        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         customCategory = new CustomCategory("投资理财", 15);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        //AddCategoryToDataBase(customCategory);
+        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         categoryBox.put(categoryItems);
     }
@@ -546,7 +557,7 @@ public class DataManger {
             }
             taskItems.add(taskExt.getTaskItem());
             TaskItem item = taskExt.getTaskItem();
-            Log.d(App.TAG, "Start DateTime : " + item.getStartDateTime());
+            //Log.d(App.TAG, "Start DateTime : " + item.getStartDateTime());
         }
         taskBox.put(taskItems);
     }

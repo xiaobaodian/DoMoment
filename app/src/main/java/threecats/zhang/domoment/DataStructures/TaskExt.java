@@ -142,6 +142,7 @@ public class TaskExt {
         taskItem.setIsNoDate(true);
         setAllDay(true);
         dueDateTime = (Calendar) startDateTime.clone();
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
     public boolean IsNoDate(){
         return taskItem.getIsNoDate();
@@ -156,6 +157,7 @@ public class TaskExt {
     public void setComplete(boolean isComplete){
         if (isComplete) {
             completeDateTime = Calendar.getInstance();
+            taskItem.setCompleteDateTime(completeDateTime.getTime());
         }
         taskItem.setIsComplete(isComplete);
     }

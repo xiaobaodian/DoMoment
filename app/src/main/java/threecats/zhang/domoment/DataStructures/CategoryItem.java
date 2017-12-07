@@ -25,9 +25,9 @@ public class CategoryItem {
 
     public CategoryItem(){
     }
-    public CategoryItem(String string, int categoryID){
-        setTitle(title);
-        setCategoryID(categoryID);
+    public CategoryItem(String title, int categoryID){
+        this.title = title;
+        this.categoryID = categoryID;
         iconId = R.mipmap.list;
         themeBackgroundID = R.drawable.category_themebackground_1;
     }
