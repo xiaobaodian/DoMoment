@@ -5,8 +5,11 @@ import java.util.List;
 
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
+import threecats.zhang.domoment.DataStructures.RecyclerViewItem;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.App;
+import threecats.zhang.domoment.DataStructures.TaskExt;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.DataStructures.TimeLineAfterTomorrowGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTodayGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTomorrowGroup;
@@ -21,20 +24,21 @@ import threecats.zhang.domoment.R;
 public class TimeLineAdapter extends RecyclerViewAdapterBase {
     private ViewPageFragment viewPageFragment;
 
-    public TimeLineAdapter(List<ListItemBase> items, ViewPageFragment viewPageFragment){
+    public TimeLineAdapter(List<RecyclerViewItem> items, ViewPageFragment viewPageFragment){
         super(items);
         this.viewPageFragment = viewPageFragment;
         setGroupLayoutID(R.layout.taskgroup_show);
         setItemLayoutID(R.layout.taskitem_show);
     }
     @Override
-    protected void OnBindItem(ItemViewHolder holder, Task task, GroupType groupType) {
+    protected void OnBindItem(ItemViewHolder holder, TaskItem task, GroupType groupType) {
         holder.setText(R.id.taskTitle, task.getTitle()).setText(R.id.taskPlace, task.getPlace());
         String datetimeRange = "";
+        TaskExt taskExt = new TaskExt(task);
         if (groupType == GroupType.toDay || groupType == GroupType.Tomorrow ||groupType == GroupType.AfterTomorrow) {
-            datetimeRange = task.getTimeRange();
+            datetimeRange = taskExt.getTimeRangeStr();
         } else {
-            datetimeRange =  task.getDateRange();
+            datetimeRange =  taskExt.getDateRangeStr();
         }
         if (datetimeRange.length() > 0) datetimeRange += "   ";
         holder.setText(R.id.taskDateTime, datetimeRange);

@@ -24,6 +24,9 @@ public abstract class GroupBase extends RecyclerViewItem {
 
     protected DateTimeHelper DateTime = App.getDateTime();
 
+    protected long ID;
+    protected String title;
+    protected String note;
     protected Context context;
     protected GroupType groupType;
     private GroupListBase parentGroupList;
@@ -54,18 +57,37 @@ public abstract class GroupBase extends RecyclerViewItem {
     protected abstract boolean isGroupMember(Calendar timePoint, @Nullable Calendar secTimePoint);
     public abstract void BuildTimePoint();
 
+    public void setID(long ID){
+        this.ID = ID;
+    }
+    public long getID(){
+        return ID;
+    }
+
+    public void setTitle(String title){
+        this.title = title;
+    }
+    public String getTitle(){
+        return title;
+    }
+
+    public void setNote(String note){ this.note = note; }
+    public String getNote(){ return note; }
+
     public void setFlag(String type){
         this.flag = type;
     }
     public String getFlag(){
         return flag;
     }
+
     public void setImageID(int imageID){
         this.imageID = imageID;
     }
     public int getImageID(){
         return imageID;
     }
+
     public GroupListBase getParent(){
         return parentGroupList;
     }

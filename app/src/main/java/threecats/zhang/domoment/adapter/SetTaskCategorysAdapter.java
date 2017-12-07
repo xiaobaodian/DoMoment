@@ -12,6 +12,7 @@ import java.util.List;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
 
@@ -22,7 +23,7 @@ import threecats.zhang.domoment.R;
 public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private DateTimeHelper DateTime = App.getDateTime();
-    private Task task = App.getDataManger().getCurrentTask();
+    private TaskItem task = App.getDataManger().getCurrentTask();
     private List<CategoryBase>  itemBases;
     private int currentChecked = -1;
 

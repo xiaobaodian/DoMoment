@@ -19,6 +19,8 @@ import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
 import threecats.zhang.domoment.DataStructures.ListItemBase;
+import threecats.zhang.domoment.DataStructures.RecyclerViewItem;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.DataStructures.TimeLineAfterTomorrowGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTodayGroup;
 import threecats.zhang.domoment.DataStructures.TimeLineTomorrowGroup;
@@ -37,7 +39,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
     protected DateTimeHelper dateTime = App.getDateTime();
     private GroupListBase groupList;
     private GroupBase group;
-    private List<ListItemBase>  items;
+    private List<RecyclerViewItem>  items;
     private int itemLayoutID;
     private int groupLayoutID;
     public boolean isChecked = false;
@@ -78,8 +80,8 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 //doClickCheckBox();
             });
         }
-        public Task getTask(){
-            return (Task)items.get(getAdapterPosition());
+        public TaskItem getTask(){
+            return (TaskItem)items.get(getAdapterPosition());
         }
         public ItemViewHolder setText(int R, String text){
             TextView textView = currentItemView.findViewById(R);
@@ -119,11 +121,11 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
         }
     }
 
-    public RecyclerViewAdapterBase(List<ListItemBase> items){
+    public RecyclerViewAdapterBase(List<RecyclerViewItem> items){
         this.items = items;
     }
 
-    protected abstract void OnBindItem(ItemViewHolder holder, Task task, @Nullable GroupType groupType);
+    protected abstract void OnBindItem(ItemViewHolder holder, TaskItem task, @Nullable GroupType groupType);
     protected abstract void OnBindGroup(GroupViewHolder holder, GroupBase group);
     protected abstract void OnGroupClick(GroupBase group);
     protected abstract void OpenTips();
@@ -137,7 +139,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 view = LayoutInflater.from(parent.getContext()).inflate(itemLayoutID, parent, false);
                 final ItemViewHolder itemViewHolder = new ItemViewHolder(view);
                 itemViewHolder.currentItemView.setOnClickListener(v -> {
-                    Task task = itemViewHolder.getTask();
+                    TaskItem task = itemViewHolder.getTask();
                     App.getDataManger().setCurrentTask(task);
                     if (isChecked) {
                         itemViewHolder.checkBox.setChecked(! task.getChecked());
@@ -150,7 +152,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 });
                 itemViewHolder.currentItemView.setOnLongClickListener(v -> {
                     if (isChecked) return false;
-                    Task task = itemViewHolder.getTask();
+                    TaskItem task = itemViewHolder.getTask();
                     App.getDataManger().setCurrentTask(task);
                     //暂时关闭长安多选功能
                     //App.getDataManger().getCurrentGroupList().setItemChecked(true);
@@ -170,11 +172,11 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ListItemBase item = items.get(position);
+        RecyclerViewItem item = items.get(position);
         switch (item.getItemType()){
             case Item:
                 ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
-                Task task = (Task)item;
+                TaskItem task = (TaskItem)item;
                 if (isChecked){
                     itemViewHolder.checkBox.setVisibility(View.VISIBLE);
                     itemViewHolder.checkBox.setChecked(task.getChecked());
