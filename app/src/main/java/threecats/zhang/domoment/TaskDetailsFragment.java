@@ -18,13 +18,16 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DataStructures.TaskExt;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.OneDayBase;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
 
-    private Task task = App.getDataManger().getEditorTask();
+    private TaskItem task = App.getDataManger().getEditorTask();
+    private TaskExt taskExt = new TaskExt();
     private final DateTimeHelper DateTime = App.getDateTime();
     private Context parentContext;
     private View taskDetailsView;
@@ -61,6 +64,7 @@ public class TaskDetailsFragment extends TitleFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        taskExt.setTaskItem(task);
     }
 
     @Override
@@ -124,34 +128,34 @@ public class TaskDetailsFragment extends TitleFragment {
     }
     @SuppressLint("SetTextI18n")
     private void DisplayDateTimeFields(){
-        if (task.IsNoDate()) {
+        if (taskExt.IsNoDate()) {
             startDateBox.setText("");
             dueDateBox.setVisibility(View.GONE);
             addDateButton.setVisibility(View.GONE);
             HideTimeRecylerItems();
-        } else if (task.IsOneDay()){
-            startDateBox.setText(task.getBeginDateString() + "日");
+        } else if (taskExt.IsOneDay()){
+            startDateBox.setText(taskExt.getBeginDateStr() + "日");
             dueDateBox.setVisibility(View.GONE);
             addDateButton.setVisibility(View.VISIBLE);
             DisplayTimeRecyclerItems();
         } else {
-            startDateBox.setText(task.getBeginDateString() + "日");
-            dueDateBox.setText(" -   " + task.getEndDateString() + "日");
+            startDateBox.setText(taskExt.getBeginDateStr() + "日");
+            dueDateBox.setText(" -   " + taskExt.getEndDateStr() + "日");
             dueDateBox.setVisibility(View.VISIBLE);
             addDateButton.setVisibility(View.GONE);
         }
-        if (task.IsAllDay()) {
+        if (taskExt.IsAllDay()) {
             startTimeBox.setText("");
             dueTimeBox.setVisibility(View.GONE);
             addTimeButton.setVisibility(View.GONE);
-        } else if (task.IsOneTime()) {
-            startTimeBox.setText(task.getStartTime());
+        } else if (taskExt.IsOneTime()) {
+            startTimeBox.setText(taskExt.getBeginTimeStr());
             dueTimeBox.setVisibility(View.GONE);
             addTimeButton.setVisibility(View.VISIBLE);
             //dueTimeBox.setText(task.getDueTime());
         } else {
-            startTimeBox.setText(task.getStartTime());
-            dueTimeBox.setText(" -   " + task.getDueTime());
+            startTimeBox.setText(taskExt.getBeginTimeStr());
+            dueTimeBox.setText(" -   " + taskExt.getEndTimeStr());
             dueTimeBox.setVisibility(View.VISIBLE);
             addTimeButton.setVisibility(View.GONE);
         }
@@ -178,13 +182,13 @@ public class TaskDetailsFragment extends TitleFragment {
         String title;
         switch (EditType) {
             case editStartDate:
-                title = task.IsOneDay() ? "设置日期" : "设置开始日期";
-                date = task.IsNoDate() ? Calendar.getInstance() : (Calendar)task.getStartDateTime().clone();
+                title = taskExt.IsOneDay() ? "设置日期" : "设置开始日期";
+                date = taskExt.IsNoDate() ? Calendar.getInstance() : (Calendar)task.getStartDateTime().clone();
                 break;
             case editDueDate:
                 title = "设置结束日期";
                 date = (Calendar)task.getDueDateTime().clone();
-                if (task.IsOneDay()) date.add(Calendar.DATE, 1);
+                if (taskExt.IsOneDay()) date.add(Calendar.DATE, 1);
                 break;
             default:
                 title = "类型错误";
@@ -194,52 +198,54 @@ public class TaskDetailsFragment extends TitleFragment {
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final Task task = App.getDataManger().getEditorTask();
+            final TaskItem task = App.getDataManger().getEditorTask();
+            TaskExt taskExt = new TaskExt(task);
             switch (EditType) {
                 case editStartDate:
-                    if (task.IsOneDay()) {
-                        task.setNoDate();
+                    if (taskExt.IsOneDay()) {
+                        taskExt.setNoDate();
                     } else {
-                        task.setOneDay(OneDayBase.Due);
+                        taskExt.setOneDay(OneDayBase.Due);
                     }
                     break;
                 case editDueDate:
-                    task.setOneDay(OneDayBase.Start);
+                    taskExt.setOneDay(OneDayBase.Start);
                     break;
             }
             DisplayDateTimeFields();
         });
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final Task task = App.getDataManger().getEditorTask();
+            final TaskItem task = App.getDataManger().getEditorTask();
+            TaskExt taskExt = new TaskExt(task);
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
                     SelectedDate = (Calendar)task.getDueDateTime().clone();
                     DateTime.BlendCalendar(SelectedDate, datePicker);
                     if (SelectedDate.after(task.getDueDateTime())) {
-                        long timeSpan = task.getDueDateTimeDB() - task.getStartDateTimeDB();
-                        task.setStartDate(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
-                        task.setDueDateTimeDB(task.getStartDateTimeDB() + timeSpan);
+                        long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
+                        taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
+                        taskExt.setLongDueDateTime(taskExt.getLongStartDateTime() + timeSpan);
                     } else {
-                        task.setStartDate(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
+                        taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
                     }
-                    task.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
+                    taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                     break;
                 case editDueDate:
                     SelectedDate = (Calendar)task.getStartDateTime().clone();
                     DateTime.BlendCalendar(SelectedDate, datePicker);
                     Calendar tmpStartDate = (Calendar)task.getStartDateTime().clone();
                     if (SelectedDate.before(task.getStartDateTime())) {
-                        if (task.IsOneDay()) {
-                            task.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
-                            task.setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH)+1,tmpStartDate.get(Calendar.DAY_OF_MONTH));
+                        if (taskExt.IsOneDay()) {
+                            taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
+                            taskExt.setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH)+1,tmpStartDate.get(Calendar.DAY_OF_MONTH));
                         } else {
-                            long timeSpan = task.getDueDateTimeDB() - task.getStartDateTimeDB();
-                            task.setDueDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
-                            task.setStartDateTimeDB(task.getDueDateTimeDB()-timeSpan);
+                            long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
+                            taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
+                            taskExt.setLongStartDateTime(taskExt.getLongDueDateTime()-timeSpan);
                         }
                     } else {
-                        task.setDueDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
+                        taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                     }
                     break;
             }
@@ -262,13 +268,13 @@ public class TaskDetailsFragment extends TitleFragment {
         String title;
         switch (EditType) {
             case editStartTime:
-                title = task.IsOneTime() ? "设置时间" : "设置开始时间";
-                date = task.IsAllDay() ? Calendar.getInstance() : (Calendar)task.getStartDateTime().clone();
+                title = taskExt.IsOneTime() ? "设置时间" : "设置开始时间";
+                date = taskExt.IsAllDay() ? Calendar.getInstance() : (Calendar)task.getStartDateTime().clone();
                 break;
             case editDueTime:
                 title = "设置结束时间";
-                date = (Calendar)task.getDueDateTime().clone();
-                if (task.IsOneTime()) date.add(Calendar.MINUTE, 5);
+                date = (Calendar)taskExt.getDueDateTime().clone();
+                if (taskExt.IsOneTime()) date.add(Calendar.MINUTE, 5);
                 break;
             default:
                 title = "类型错误";
@@ -285,36 +291,38 @@ public class TaskDetailsFragment extends TitleFragment {
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final Task task = App.getDataManger().getEditorTask();
+            final TaskItem task = App.getDataManger().getEditorTask();
+            TaskExt taskExt = new TaskExt(task);
             switch (EditType) {
                 case editStartTime:
-                    if (task.IsOneTime()) {
-                        task.setAllDay(true);
+                    if (taskExt.IsOneTime()) {
+                        taskExt.setAllDay(true);
                     } else {
-                        task.setOneTime(OneDayBase.Due);
+                        taskExt.setOneTime(OneDayBase.Due);
                     }
                     break;
                 case editDueTime:
-                    task.setOneTime(OneDayBase.Start);
+                    taskExt.setOneTime(OneDayBase.Start);
                     break;
             }
             DisplayDateTimeFields();
         });
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final Task task = App.getDataManger().getEditorTask();
+            final TaskItem task = App.getDataManger().getEditorTask();
+            TaskExt taskExt = new TaskExt(task);
             switch (EditType) {
                 case editStartTime:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        task.setStartTime(timePicker.getHour(), timePicker.getMinute());
+                        taskExt.setBeginTime(timePicker.getHour(), timePicker.getMinute());
                     } else {
-                        task.setStartTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                        taskExt.setBeginTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                     }
                     break;
                 case editDueTime:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        task.setDueTime(timePicker.getHour(), timePicker.getMinute());
+                        taskExt.setEndTime(timePicker.getHour(), timePicker.getMinute());
                     } else {
-                        task.setDueTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                        taskExt.setEndTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                     }
                     break;
             }

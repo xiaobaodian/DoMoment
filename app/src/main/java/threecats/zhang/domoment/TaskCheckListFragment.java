@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskCheckListFragment extends TitleFragment {
-    private Task task = App.getDataManger().getEditorTask();
+    private TaskItem task = App.getDataManger().getEditorTask();
 
     @Override
     public String getTitle(){

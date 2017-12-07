@@ -91,8 +91,16 @@ public class TaskExt {
         taskItem.setIsNoDate(false);
         setStartDateAndTime(startDateTime);
     }
+    public void setLongStartDateTime(long longStartDateTime){
+        startDateTime.setTimeInMillis(longStartDateTime);
+        taskItem.setIsNoDate(false);
+        setStartDateAndTime(startDateTime);
+    }
     public Calendar getStartDateTime(){
         return this.startDateTime;
+    }
+    public long getLongStartDateTime(){
+        return this.startDateTime.getTimeInMillis();
     }
 
     public void setDueDateTime(Calendar dueDateTime){
@@ -100,8 +108,16 @@ public class TaskExt {
         taskItem.setIsNoDate(false);
         setDueDateAndTime(dueDateTime);
     }
+    public void setLongDueDateTime(long longDueDateTime){
+        this.dueDateTime.setTimeInMillis(longDueDateTime);
+        taskItem.setIsNoDate(false);
+        setDueDateAndTime(dueDateTime);
+    }
     public Calendar getDueDateTime(){
         return dueDateTime;
+    }
+    public long getLongDueDateTime(){
+        return dueDateTime.getTimeInMillis();
     }
 
     public void setCompleteDateTime(Calendar completeDateTime){
