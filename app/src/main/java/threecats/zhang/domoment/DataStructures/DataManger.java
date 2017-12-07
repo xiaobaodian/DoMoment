@@ -626,7 +626,7 @@ public class DataManger {
                 task.setCategoryID(1);
             }
 
-            AddTaskDBItem(db, task);
+            //AddTaskDBItem(db, task);
 
         }
         db.close();
