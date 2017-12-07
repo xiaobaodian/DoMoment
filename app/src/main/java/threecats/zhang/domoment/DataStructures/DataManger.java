@@ -238,40 +238,40 @@ public class DataManger {
 //        AddTaskDBItem(db, task);
 //        db.close();
 //    }
-    private void UpdateTaskToDataBase(Task task){
-        SQLiteDatabase db = sqlDB.getWritableDatabase();
-        UpdateTaskDBItem(db, task);
-        db.close();
-    }
-    private void RemoveTaskToDataBase(Task task){
-        SQLiteDatabase db = sqlDB.getWritableDatabase();
-        RemoveTaskDBItem(db, task);
-        db.close();
-    }
-    private void AddTaskDBItem(SQLiteDatabase db, Task task){
-        PutTaskValues(task);
-        db.insert("Tasks", null, values);
-        int lastID = -1;
-        Cursor curosr = db.rawQuery("select last_insert_rowid() from Tasks", null);
-        if (curosr.moveToFirst()) {
-            lastID = curosr.getInt(0);
-            task.setID(lastID);
-        }
-    }
-    private void UpdateTaskDBItem(SQLiteDatabase db, Task task){
-        PutTaskValues(task);
-        db.update("Tasks",values,"id = ?", new String[]{task.getID()+""});
-    }
-    private void RemoveTaskDBItem(SQLiteDatabase db, Task task){
-        db.delete("Tasks", "id = ?", new String[]{task.getID()+""});
-    }
-    private void RemoveTasksDB(List<Task> tasks){
-        SQLiteDatabase db = sqlDB.getWritableDatabase();
-        for (Task task : tasks) {
-            RemoveTaskDBItem(db, task);
-        }
-        db.close();
-    }
+//    private void UpdateTaskToDataBase(Task task){
+//        SQLiteDatabase db = sqlDB.getWritableDatabase();
+//        UpdateTaskDBItem(db, task);
+//        db.close();
+//    }
+//    private void RemoveTaskToDataBase(Task task){
+//        SQLiteDatabase db = sqlDB.getWritableDatabase();
+//        RemoveTaskDBItem(db, task);
+//        db.close();
+//    }
+//    private void AddTaskDBItem(SQLiteDatabase db, Task task){
+//        PutTaskValues(task);
+//        db.insert("Tasks", null, values);
+//        int lastID = -1;
+//        Cursor curosr = db.rawQuery("select last_insert_rowid() from Tasks", null);
+//        if (curosr.moveToFirst()) {
+//            lastID = curosr.getInt(0);
+//            task.setID(lastID);
+//        }
+//    }
+//    private void UpdateTaskDBItem(SQLiteDatabase db, Task task){
+//        PutTaskValues(task);
+//        db.update("Tasks",values,"id = ?", new String[]{task.getID()+""});
+//    }
+//    private void RemoveTaskDBItem(SQLiteDatabase db, Task task){
+//        db.delete("Tasks", "id = ?", new String[]{task.getID()+""});
+//    }
+//    private void RemoveTasksDB(List<Task> tasks){
+//        SQLiteDatabase db = sqlDB.getWritableDatabase();
+//        for (Task task : tasks) {
+//            RemoveTaskDBItem(db, task);
+//        }
+//        db.close();
+//    }
 
     private void PutTaskValues(Task task){
         values.clear();
