@@ -24,8 +24,8 @@ public class VeryImportanceGroupList extends GroupListBase {
     }
 
     @Override
-    public boolean InGroupList(Task task){
-        return task.getPriority() == TaskPriority.VeryImprotant;
+    public boolean InGroupList(TaskItem task){
+        return task.getPriority() == TaskPriority.VeryImprotant.ordinal();
     }
 
     @Override
