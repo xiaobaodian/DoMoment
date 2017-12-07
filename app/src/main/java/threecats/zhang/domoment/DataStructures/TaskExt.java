@@ -203,6 +203,7 @@ public class TaskExt {
         Date e = startDateTime.getTime();
         Date s = taskItem.getStartDateTime();
         Date d = taskItem.getDueDateTime();
+
     }
     public void setDueDate(int year, int month, int day){
         dueDay.setDate(year, month, day);
