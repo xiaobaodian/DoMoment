@@ -233,11 +233,11 @@ public class DataManger {
         categoryList.CurrentDateChange();
     }
 
-    private void AddTaskToDataBase(Task task){
-        SQLiteDatabase db = sqlDB.getWritableDatabase();
-        AddTaskDBItem(db, task);
-        db.close();
-    }
+//    private void AddTaskToDataBase(Task task){
+//        SQLiteDatabase db = sqlDB.getWritableDatabase();
+//        AddTaskDBItem(db, task);
+//        db.close();
+//    }
     private void UpdateTaskToDataBase(Task task){
         SQLiteDatabase db = sqlDB.getWritableDatabase();
         UpdateTaskDBItem(db, task);
