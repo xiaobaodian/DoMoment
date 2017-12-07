@@ -7,7 +7,7 @@ import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/10/27.
+ * 由 zhang 于 2017/10/27 创建
  */
 
 public class CategoryList {

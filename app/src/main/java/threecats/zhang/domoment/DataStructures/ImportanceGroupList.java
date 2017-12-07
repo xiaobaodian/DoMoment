@@ -8,7 +8,7 @@ import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/8/14.
+ * 由 zhang 于 2017/8/14 创建
  */
 
 public class ImportanceGroupList extends GroupListBase {
@@ -24,8 +24,8 @@ public class ImportanceGroupList extends GroupListBase {
     }
 
     @Override
-    public boolean InGroupList(Task task){
-        return task.getPriority() == TaskPriority.Improtant;
+    public boolean InGroupList(TaskItem task){
+        return task.getPriority() == TaskPriority.Improtant.ordinal();
     }
 
     @Override

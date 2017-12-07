@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhang on 2017/8/21.
+ * 由 zhang 于 2017/8/21 创建
  */
 
 public class GroupStructure<T> {

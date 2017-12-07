@@ -24,7 +24,7 @@ public class NoCategory extends CategoryBase {
     }
 
     @Override
-    public boolean InCategory(Task task) {
+    public boolean InCategory(TaskItem task) {
         return task.getCategoryID() == getCategoryID();
     }
 

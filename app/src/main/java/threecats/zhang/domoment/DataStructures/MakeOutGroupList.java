@@ -23,8 +23,9 @@ public class MakeOutGroupList extends GroupListBase {
     }
 
     @Override
-    public boolean InGroupList(Task task){
-        return task.IsComplete();
+    public boolean InGroupList(TaskItem task){
+        TaskExt taskExt = new TaskExt(task);
+        return taskExt.IsComplete();
     }
 
     @Override

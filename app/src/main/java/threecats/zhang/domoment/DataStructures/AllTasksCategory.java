@@ -24,7 +24,7 @@ public class AllTasksCategory extends CategoryBase {
     }
 
     @Override
-    public boolean InCategory(Task task) {
+    public boolean InCategory(TaskItem task) {
         return true;
     }
 

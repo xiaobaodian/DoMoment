@@ -1,7 +1,7 @@
 package threecats.zhang.domoment.DataStructures;
 
 /**
- * Created by zhang on 2017/8/3.
+ * 由 zhang 于 2017/8/3 创建
  */
 
 public class ItemBase {

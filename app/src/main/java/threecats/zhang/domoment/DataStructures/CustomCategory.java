@@ -4,7 +4,7 @@ import threecats.zhang.domoment.ENUM.CategoryType;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/8/21.
+ * 由 zhang 于 2017/8/21 创建
  */
 
 public class CustomCategory extends CategoryBase {

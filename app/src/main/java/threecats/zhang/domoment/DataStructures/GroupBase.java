@@ -17,7 +17,7 @@ import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.App;
 
 /**
- * Created by zhang on 2017/8/3.
+ * 由 zhang 于 2017/8/3 创建
  */
 
 public abstract class GroupBase extends RecyclerViewItem {
