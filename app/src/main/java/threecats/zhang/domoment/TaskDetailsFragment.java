@@ -252,7 +252,7 @@ public class TaskDetailsFragment extends TitleFragment {
                     }
                     break;
             }
-            App.getDataManger().getTaskBox().put(taskExt.getTaskItem());
+            //App.getDataManger().getTaskBox().put(taskExt.getTaskItem());
             DisplayDateTimeFields();
         });
         dialog.setNegativeButton("取消", (dialogInterface, i) -> App.Toast("取消编辑"));
