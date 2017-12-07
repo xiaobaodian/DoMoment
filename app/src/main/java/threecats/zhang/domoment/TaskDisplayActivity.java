@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DataStructures.TaskExt;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.Helper.MaskDialog;
@@ -39,7 +41,7 @@ import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
-    private Task task = App.getDataManger().getEditorTask();
+    private TaskItem task = App.getDataManger().getEditorTask();
     private int oldCategoryID;
     private TaskPriority oldPriority;
     private EditText etTaskTitle;
@@ -55,9 +57,12 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private TaskCheckListFragment taskCheckListFragment;
     private EditorMode editorMode = EditorMode.Edit;
 
+    private TaskExt taskExt = new TaskExt();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        taskExt.setTaskItem(task);
         setContentView(R.layout.activity_task_dispay);
         Toolbar editToolbar = (Toolbar) findViewById(R.id.TaskEditorToolbar);
         setSupportActionBar(editToolbar);
@@ -108,28 +113,28 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private void DisplayTaskItems(){
-        if (task.IsComplete()) {
+        if (taskExt.IsComplete()) {
             doneflag.setVisibility(View.VISIBLE);
         } else {
             doneflag.setVisibility(View.GONE);
         }
-        String createDateTimeStr = "创建于：" + task.getCreatedDateTimeStr();
+        String createDateTimeStr = "创建于：" + taskExt.getCreatedDateTimeStr();
         tvCreatedDateTime.setText(createDateTimeStr);
         btnCategory.setText(App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
-        if (task.getPriority() == TaskPriority.Urgent) {
+        if (taskExt.getPriority() == TaskPriority.Urgent) {
             priorityTitle = "紧急";
-        } else if (task.getPriority() == TaskPriority.VeryImprotant){
+        } else if (taskExt.getPriority() == TaskPriority.VeryImprotant){
             priorityTitle = "非常重要";
-        } else if (task.getPriority() == TaskPriority.Improtant) {
+        } else if (taskExt.getPriority() == TaskPriority.Improtant) {
             priorityTitle = "重要";
-        } else if(task.getPriority() == TaskPriority.Focus){
+        } else if(taskExt.getPriority() == TaskPriority.Focus){
             priorityTitle = "关注";
-        } else if (task.getPriority() == TaskPriority.None){
+        } else if (taskExt.getPriority() == TaskPriority.None){
             priorityTitle = "普通";
         } else {
             priorityTitle = "普通";
-            task.setPriority(TaskPriority.None);
+            taskExt.setPriority(TaskPriority.None);
         }
         btnPriority.setText(priorityTitle);
     }
@@ -143,7 +148,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (task.IsComplete()) {
+        if (taskExt.IsComplete()) {
             menu.findItem(R.id.taskeditormenu_makeout).setVisible(false);
         } else {
             menu.findItem(R.id.taskeditormenu_makeout).setVisible(true);
@@ -166,7 +171,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
                 break;
             case R.id.taskeditormenu_makeout:
                 UIHelper.Toast("任务标记完成");
-                task.setComplete(true);
+                taskExt.setComplete(true);
                 finish();
                 break;
         }
@@ -186,19 +191,19 @@ public class TaskDisplayActivity extends AppCompatActivity {
         //App.Toast("Click Category Button");
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_categoryselection, (ViewGroup)findViewById(R.id.CategoryDialog));
-        int oldCategory = task.getCategoryID();
+        int oldCategory = taskExt.getCategoryID();
         AlertDialog.Builder categoryDialog = new AlertDialog.Builder(this);
         categoryDialog.setTitle("设置类目");
         categoryDialog.setView(layout);
         categoryDialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            task.setCategoryID(1);
+            taskExt.setCategoryID(1);
             DisplayTaskItems();
         });
         categoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
             DisplayTaskItems();
         });
         categoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            task.setCategoryID(oldCategory);
+            taskExt.setCategoryID(oldCategory);
         });
         categoryDialog.setOnCancelListener(view ->{task.setCategoryID(oldCategory);});
         RecyclerView recyclerView = layout.findViewById(R.id.CategoryRecyclerView);
@@ -217,65 +222,65 @@ public class TaskDisplayActivity extends AppCompatActivity {
         //App.Toast("Click Priority Button");
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialog));
-        TaskPriority oldPriority = task.getPriority();
+        TaskPriority oldPriority = taskExt.getPriority();
         final CheckedTextView[] currentPriority = {null};
         AlertDialog.Builder priorityDialog = new AlertDialog.Builder(this);
         priorityDialog.setTitle("任务等级");
         priorityDialog.setView(layout);
         priorityDialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            task.setPriority(TaskPriority.None);
+            taskExt.setPriority(TaskPriority.None);
             DisplayTaskItems();
         });
         priorityDialog.setPositiveButton("确定", (dialogInterface, i) -> {
             DisplayTaskItems();
         });
         priorityDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            task.setPriority(oldPriority);
+            taskExt.setPriority(oldPriority);
         });
-        priorityDialog.setOnCancelListener(view ->{task.setPriority(oldPriority);});
+        priorityDialog.setOnCancelListener(view ->{taskExt.setPriority(oldPriority);});
 
         LinearLayout urgent = layout.findViewById(R.id.Urgent);
         CheckedTextView checkedUrgent = layout.findViewById(R.id.tvUrgent);
         urgent.setTag(TaskPriority.Urgent);
-        if (task.getPriority() == TaskPriority.Urgent) currentPriority[0] = checkedUrgent;
+        if (taskExt.getPriority() == TaskPriority.Urgent) currentPriority[0] = checkedUrgent;
 
         LinearLayout veryImprotant = layout.findViewById(R.id.VeryImprotant);
         CheckedTextView checkedVeryImprotant = layout.findViewById(R.id.tvVeryImprotant);
         veryImprotant.setTag(TaskPriority.VeryImprotant);
-        if (task.getPriority() == TaskPriority.VeryImprotant) currentPriority[0] = checkedVeryImprotant;
+        if (taskExt.getPriority() == TaskPriority.VeryImprotant) currentPriority[0] = checkedVeryImprotant;
 
         LinearLayout improtant = layout.findViewById(R.id.Improtant);
         CheckedTextView checkedImprotant = layout.findViewById(R.id.tvImprotant);
         improtant.setTag(TaskPriority.Improtant);
-        if (task.getPriority() == TaskPriority.Improtant) currentPriority[0] = checkedImprotant;
+        if (taskExt.getPriority() == TaskPriority.Improtant) currentPriority[0] = checkedImprotant;
 
         LinearLayout focus = layout.findViewById(R.id.Focus);
         CheckedTextView checkedFocus = layout.findViewById(R.id.tvFocus);
         focus.setTag(TaskPriority.Focus);
-        if (task.getPriority() == TaskPriority.Focus) currentPriority[0] = checkedFocus;
+        if (taskExt.getPriority() == TaskPriority.Focus) currentPriority[0] = checkedFocus;
 
         if (currentPriority[0] != null) currentPriority[0].setChecked(true);
 
         urgent.setOnClickListener(view -> {
-            task.setPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedUrgent;
             currentPriority[0].setChecked(true);
         });
         veryImprotant.setOnClickListener(view -> {
-            task.setPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedVeryImprotant;
             currentPriority[0].setChecked(true);
         });
         improtant.setOnClickListener(view -> {
-            task.setPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedImprotant;
             currentPriority[0].setChecked(true);
         });
         focus.setOnClickListener(view -> {
-            task.setPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedFocus;
             currentPriority[0].setChecked(true);
