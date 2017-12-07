@@ -3,12 +3,6 @@ package threecats.zhang.domoment.DataStructures;
 import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -53,7 +47,7 @@ public class TaskExt {
     public void setTaskItem(TaskItem taskItem){
 
         if (this.taskItem != null) {
-            finish();
+            saveToTaskItem();
         }
         this.taskItem = taskItem;
 
@@ -82,6 +76,7 @@ public class TaskExt {
 
     public void setCreateDateTime(Calendar createDateTime){
         this.createDateTime = createDateTime;
+        taskItem.setCreateDateTime(createDateTime.getTime());
     }
     public Calendar getCreateDateTime(){
         return this.createDateTime;
@@ -90,11 +85,13 @@ public class TaskExt {
         this.startDateTime = startDateTime;
         taskItem.setIsNoDate(false);
         setStartDateAndTime(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
     public void setLongStartDateTime(long longStartDateTime){
         startDateTime.setTimeInMillis(longStartDateTime);
         taskItem.setIsNoDate(false);
         setStartDateAndTime(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
     public Calendar getStartDateTime(){
         return this.startDateTime;
@@ -107,11 +104,13 @@ public class TaskExt {
         this.dueDateTime = dueDateTime;
         taskItem.setIsNoDate(false);
         setDueDateAndTime(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
     public void setLongDueDateTime(long longDueDateTime){
         this.dueDateTime.setTimeInMillis(longDueDateTime);
         taskItem.setIsNoDate(false);
         setDueDateAndTime(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
     public Calendar getDueDateTime(){
         return dueDateTime;
@@ -122,6 +121,7 @@ public class TaskExt {
 
     public void setCompleteDateTime(Calendar completeDateTime){
         this.completeDateTime = completeDateTime;
+        taskItem.setCompleteDateTime(completeDateTime.getTime());
     }
     public Calendar getCompleteDateTime(){
         return completeDateTime;
@@ -196,10 +196,12 @@ public class TaskExt {
         }
         startDay.setDate(year, month, day);
         startDateTime = startDay.getCalendar(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
     public void setDueDate(int year, int month, int day){
         dueDay.setDate(year, month, day);
         dueDateTime = dueDay.getCalendar(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
 
     public void setBeginTime(int hour, int minute){
@@ -209,24 +211,26 @@ public class TaskExt {
         }
         beginTime.setTime(hour, minute);
         startDateTime = beginTime.getCalendar(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
     public void setEndTime(int hour, int minute){
         taskItem.setIsAllDay(false);
         endTime.setTime(hour, minute);
         dueDateTime = endTime.getCalendar(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
     public void setOneDay(OneDayBase base){
         if (base == OneDayBase.Start) {
-            dueDay.setDate(startDay.Year, startDay.Month, startDay.Day);
+            setDueDate(startDay.Year, startDay.Month, startDay.Day);
         } else {
-            startDay.setDate(dueDay.Year, dueDay.Month, dueDay.Day);
+            setStartDate(dueDay.Year, dueDay.Month, dueDay.Day);
         }
     }
     public void setOneTime(OneDayBase base){
         if (base == OneDayBase.Start) {
-            endTime.setTime(beginTime.Hour, beginTime.Minute);
+            setEndTime(beginTime.Hour, beginTime.Minute);
         } else {
-            beginTime.setTime(endTime.Hour, endTime.Minute);
+            setBeginTime(endTime.Hour, endTime.Minute);
         }
     }
 
@@ -288,7 +292,7 @@ public class TaskExt {
         return simpleTimeFormat.format(startDateTime.getTime()) + endTime;
     }
 
-    public void finish(){
+    public void saveToTaskItem(){
         taskItem.setCreateDateTime(createDateTime.getTime());
         taskItem.setStartDateTime(startDateTime.getTime());
         taskItem.setDueDateTime(dueDateTime.getTime());

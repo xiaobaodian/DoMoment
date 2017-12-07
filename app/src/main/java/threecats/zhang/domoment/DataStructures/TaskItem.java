@@ -6,6 +6,7 @@ import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     ToMany<CheckItem> checkList;
 
     @Transient
-    private List<GroupBase> parentGroups;
+    private List<GroupBase> parentGroups = new ArrayList<>();
 
 
 

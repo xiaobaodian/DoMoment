@@ -3,6 +3,7 @@ package threecats.zhang.domoment.DataStructures;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +49,7 @@ public class DataManger {
 
     public DataManger(){
 
-        sqlDB = new SQLManger(App.getContext(), "IdoMoment.db", null, 1);
+        //sqlDB = new SQLManger(App.getContext(), "IdoMoment.db", null, 1);
 
         //----------------------------
 
@@ -80,7 +81,6 @@ public class DataManger {
 
     public void LoadDatas(){
         if (isDataloaded) return;
-        //new LoadDatas().execute();
         LoadCategorys();
         LoadTasks();
         if (categoryList.IsNull()) InitCategory();
@@ -292,6 +292,7 @@ public class DataManger {
     private void LoadTasks(){
 
         List<TaskItem> taskItems = taskQuery.find();
+
         for (TaskItem taskItem : taskItems) {
             AddTask(taskItem);
         }
@@ -464,7 +465,7 @@ public class DataManger {
     // 辅助操作
 
     public void BuildDatas(){
-        final int TotalTasks = 360;
+        final int TotalTasks = 10;
         List<TaskItem> taskItems = new ArrayList<>();
 
         List<String> titles = new ArrayList<>();
@@ -544,6 +545,8 @@ public class DataManger {
                 taskExt.setCategoryID(1);
             }
             taskItems.add(taskExt.getTaskItem());
+            TaskItem item = taskExt.getTaskItem();
+            Log.d(App.TAG, "Start DateTime : " + item.getStartDateTime());
         }
         taskBox.put(taskItems);
     }

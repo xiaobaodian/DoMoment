@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LayoutAnimationController;
 
+import io.objectbox.BoxStore;
+
 public class MainActivity extends AppCompatActivity {
 
     //public List<Task> taskList = new ArrayList<>();
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.Init();
         App.setMainActivity(this);
+        App.Init();
+
         setContentView(R.layout.activity_main);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
