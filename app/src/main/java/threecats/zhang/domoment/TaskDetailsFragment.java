@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.DataStructures.TaskExt;
@@ -175,13 +176,16 @@ public class TaskDetailsFragment extends TitleFragment {
     }
 
     private void EditDate(){
+
         LayoutInflater layoutInflater = LayoutInflater.from(parentContext);
         View layout = layoutInflater.inflate(R.layout.taskeditor_dateselection, taskDetailsView.findViewById(R.id.DateDialong));
         DatePicker datePicker = layout.findViewById(R.id.datePicker);
         datePicker.setFirstDayOfWeek(Calendar.MONDAY);
+
         taskExt.setTaskItem(task);
         Calendar date;
         String title;
+
         switch (EditType) {
             case editStartDate:
                 title = taskExt.IsOneDay() ? "设置日期" : "设置开始日期";
@@ -196,9 +200,11 @@ public class TaskDetailsFragment extends TitleFragment {
                 title = "类型错误";
                 date = Calendar.getInstance();
         }
+
         datePicker.init(date.get(Calendar.YEAR),date.get(Calendar.MONTH),date.get(Calendar.DAY_OF_MONTH),null);
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
+
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
             TaskExt taskExt = new TaskExt(task);
@@ -216,6 +222,7 @@ public class TaskDetailsFragment extends TitleFragment {
             }
             DisplayDateTimeFields();
         });
+
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
             TaskExt taskExt = new TaskExt(App.getDataManger().getEditorTask());
@@ -226,7 +233,7 @@ public class TaskDetailsFragment extends TitleFragment {
                     DateTime.BlendCalendar(SelectedDate, datePicker);
                     if (SelectedDate.after(taskExt.getDueDateTime())) {
                         long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
-                        taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                        taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
                         taskExt.setLongDueDateTime(taskExt.getLongStartDateTime() + timeSpan);
                     } else {
                         taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth()+1, datePicker.getDayOfMonth());
@@ -240,37 +247,46 @@ public class TaskDetailsFragment extends TitleFragment {
                     Calendar tmpStartDate = (Calendar)taskExt.getStartDateTime().clone();
                     if (SelectedDate.before(taskExt.getStartDateTime())) {
                         if (taskExt.IsOneDay()) {
-                            taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
+                            taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                             taskExt.setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH),tmpStartDate.get(Calendar.DAY_OF_MONTH));
                         } else {
                             long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
-                            taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
+                            taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                             taskExt.setLongStartDateTime(taskExt.getLongDueDateTime()-timeSpan);
                         }
                     } else {
-                        taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
+                        taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                     }
                     break;
             }
             //App.getDataManger().getTaskBox().put(taskExt.getTaskItem());
+            boolean  b = taskExt.getTaskItem() == App.getDataManger().getEditorTask();
+            Calendar ssd = taskExt.getStartDateTime();
+            Date sd = taskExt.getTaskItem().getStartDateTime();
+            Date dd = App.getDataManger().getEditorTask().getStartDateTime();
             DisplayDateTimeFields();
         });
+
         dialog.setNegativeButton("取消", (dialogInterface, i) -> App.Toast("取消编辑"));
         dialog.setOnDismissListener((v) -> {
             //onResume();
         });
+
         dialog.show();
     }
 
     //@TargetApi(Build.VERSION_CODES.M)
     private void EditTime(){
+
         LayoutInflater layoutInflater = LayoutInflater.from(parentContext);
         View layout = layoutInflater.inflate(R.layout.taskeditor_timeselection, taskDetailsView.findViewById(R.id.TimeDialong));
         TimePicker timePicker = layout.findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
+
         taskExt.setTaskItem(task);
         Calendar date;
         String title;
+
         switch (EditType) {
             case editStartTime:
                 title = taskExt.IsOneTime() ? "设置时间" : "设置开始时间";
@@ -293,8 +309,10 @@ public class TaskDetailsFragment extends TitleFragment {
             timePicker.setCurrentHour(date.get(Calendar.HOUR_OF_DAY));
             timePicker.setCurrentMinute(date.get(Calendar.MINUTE));
         }
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(parentContext);
         dialog.setTitle(title).setView(layout);
+
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
             TaskExt taskExt = new TaskExt(task);
@@ -312,6 +330,7 @@ public class TaskDetailsFragment extends TitleFragment {
             }
             DisplayDateTimeFields();
         });
+
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
             TaskExt taskExt = new TaskExt(task);
@@ -333,11 +352,12 @@ public class TaskDetailsFragment extends TitleFragment {
             }
             DisplayDateTimeFields();
         });
-        dialog.setNegativeButton("取消", (dialogInterface, i) -> {
 
+        dialog.setNegativeButton("取消", (dialogInterface, i) -> {
         });
+
         dialog.show();
-        //dialog.
+
     }
 
     @Override

@@ -139,8 +139,8 @@ public class TaskExt {
     }
 
     public void setNoDate(){
-        taskItem.setIsNoDate(true);
         setAllDay(true);
+        taskItem.setIsNoDate(true);
         dueDateTime = (Calendar) startDateTime.clone();
         taskItem.setDueDateTime(dueDateTime.getTime());
     }
@@ -199,6 +199,10 @@ public class TaskExt {
         startDay.setDate(year, month, day);
         startDateTime = startDay.getCalendar(startDateTime);
         taskItem.setStartDateTime(startDateTime.getTime());
+
+        Date e = startDateTime.getTime();
+        Date s = taskItem.getStartDateTime();
+        Date d = taskItem.getDueDateTime();
     }
     public void setDueDate(int year, int month, int day){
         dueDay.setDate(year, month, day);
@@ -253,20 +257,20 @@ public class TaskExt {
 
     public String getCompleteDateTimeStr(){
         String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
-        SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m", Locale.CHINA);
+        SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m");
         return createDateTimeFStr.format(completeDateTime.getTime());
     }
 
     public String getBeginDateStr(){
         String year = DateTime.IsCurrentYear(startDateTime) ? "" : "yyyy ";
-        SimpleDateFormat beginDateTimeFStr = new SimpleDateFormat(year + "MMM  dd", Locale.CHINA);
+        SimpleDateFormat beginDateTimeFStr = new SimpleDateFormat(year + "MMM  dd");
         return beginDateTimeFStr.format(startDateTime.getTime());
     }
     public String getEndDateStr(){
         if (IsOneDay()) return "";
         String year = DateTime.IsCurrentYear(dueDateTime) ? "" : "yyyy ";
         String month = DateTime.SameYearMonth(startDateTime, dueDateTime) ? "" : "MMM  ";
-        SimpleDateFormat dueDateTimeFStr = new SimpleDateFormat(year + month + "dd", Locale.CHINA);
+        SimpleDateFormat dueDateTimeFStr = new SimpleDateFormat(year + month + "dd");
         return dueDateTimeFStr.format(dueDateTime.getTime());
     }
     public String getDateRangeStr(){
@@ -280,8 +284,8 @@ public class TaskExt {
             beginDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
             endDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? " - MMM d" : " - yyyy MMM d";
         }
-        SimpleDateFormat beginDate = new SimpleDateFormat(beginDateFormatStr, Locale.CHINA);
-        SimpleDateFormat endDate = new SimpleDateFormat(endDateFormatStr, Locale.CHINA);
+        SimpleDateFormat beginDate = new SimpleDateFormat(beginDateFormatStr);
+        SimpleDateFormat endDate = new SimpleDateFormat(endDateFormatStr);
         String endDateStr = IsOneDay() ? "" : endDate.format(dueDateTime.getTime());
         return beginDate.format(startDateTime.getTime()) + endDateStr;
     }
@@ -289,7 +293,7 @@ public class TaskExt {
     public String getTimeRangeStr(){
         if (IsAllDay()) return "";
         String timeFormatStr = "H:mm";
-        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(timeFormatStr, Locale.CHINA);
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(timeFormatStr);
         String endTime = IsOneTime() ? "" : " - " + simpleTimeFormat.format(dueDateTime.getTime());
         return simpleTimeFormat.format(startDateTime.getTime()) + endTime;
     }

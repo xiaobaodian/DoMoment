@@ -23,7 +23,7 @@ import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
- * Created by zhang on 2017/8/3.
+ * 由 zhang 于 2017/8/3 创建
  */
 
 @Entity
@@ -52,9 +52,6 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
 
     @Transient
     private List<GroupBase> parentGroups = new ArrayList<>();
-
-
-
 
 
     public TaskItem(){
@@ -131,6 +128,7 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     public Date getCreateDateTime(){
         return createDateTime;
     }
+
     public void setStartDateTime(Date startDateTime){
         this.startDateTime = startDateTime;
     }
