@@ -7,7 +7,7 @@ import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/8/14.
+ * 由 zhang 于 2017/8/14 创建
  */
 
 public class TimeLineGroupList extends GroupListBase {
@@ -23,9 +23,10 @@ public class TimeLineGroupList extends GroupListBase {
     }
 
     @Override
-    public boolean InGroupList(Task task){
-        if (task.IsNoDate() || task.IsComplete()) return false;
-        return task.getDueDateTime().after(timePoint);
+    public boolean InGroupList(TaskItem task){
+        TaskExt taskExt = new TaskExt(task);
+        if (taskExt.IsNoDate() || taskExt.IsComplete()) return false;
+        return taskExt.getDueDateTime().after(timePoint);
     }
 
     @Override

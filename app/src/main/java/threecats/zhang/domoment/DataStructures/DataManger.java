@@ -19,7 +19,7 @@ import threecats.zhang.domoment.SQLite.SQLManger;
 import threecats.zhang.domoment.TodoFragment;
 
 /**
- * Created by zhang on 2017/8/14.
+ * 由 zhang 于 2017/8/14 创建
  */
 
 public class DataManger {

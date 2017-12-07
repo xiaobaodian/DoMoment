@@ -8,7 +8,7 @@ import threecats.zhang.domoment.ENUM.GroupType;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/8/4.
+ * 由 zhang 于 2017/8/4 创建
  */
 
 public class TimeLineWithinSixMonthsGroup extends GroupBase {

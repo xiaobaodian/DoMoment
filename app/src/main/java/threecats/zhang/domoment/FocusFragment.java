@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by zhang on 2017/7/25.
+ * 由 zhang 于 2017/7/25 创建
  */
 
 public class FocusFragment extends Fragment {

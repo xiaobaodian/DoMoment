@@ -25,8 +25,8 @@ public class TaskPriorityCategory extends CategoryBase {
     }
 
     @Override
-    public boolean InCategory(Task task) {
-        return task.getPriority() != TaskPriority.None;
+    public boolean InCategory(TaskItem task) {
+        return task.getPriority() != TaskPriority.None.ordinal();
     }
 
     @Override
