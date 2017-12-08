@@ -42,6 +42,7 @@ public class DataManger {
     private GroupBase currentGroup;
     private TaskItem currentTask = null;
     private TaskItem editorTask = null;
+    private TaskExt currentTaskExt = new TaskExt();
     private TodoFragment todoFragment;
     private boolean isDataloaded;
 
@@ -140,6 +141,7 @@ public class DataManger {
 
     public void setEditorTask(TaskItem task){
         editorTask = task;
+        currentTaskExt.setTaskItem(task);
     }
     public TaskItem getEditorTask(){
         return  editorTask == null ? currentTask : editorTask;
@@ -197,9 +199,13 @@ public class DataManger {
 
     public void setCurrentTask(TaskItem task){
         this.currentTask = task;
+        this.currentTaskExt.setTaskItem(task);
     }
     public TaskItem getCurrentTask(){
         return currentTask;
+    }
+    public TaskExt getCurrentTaskExt(){
+        return currentTaskExt;
     }
 
     public void NewTask(Calendar day){
@@ -467,7 +473,6 @@ public class DataManger {
         customCategory = new CustomCategory("投资理财", 15);
         AddCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
-        Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         categoryBox.put(categoryItems);
     }

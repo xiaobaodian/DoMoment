@@ -1,6 +1,7 @@
 package threecats.zhang.domoment.DataStructures;
 
 import android.text.format.DateFormat;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -202,9 +203,13 @@ public class TaskExt {
         if (IsOneDay()) {
             setDueDate(year, month, day);
         }
+        Log.d(App.TAG, "YMD : " + year +"/" + month + "/"+day);
         extStartDay.setDate(year, month, day);
         extStartDateTime = extStartDay.getCalendar(extStartDateTime);
         taskItem.setStartDateTime(extStartDateTime.getTime());
+
+        Log.d(App.TAG, "extStartDateTime : " + extStartDateTime.toString());
+        Log.d(App.TAG, "taskItem : " + taskItem.getStartDateTime().toString());
 
         Date e = extStartDateTime.getTime();
         Date s = taskItem.getStartDateTime();

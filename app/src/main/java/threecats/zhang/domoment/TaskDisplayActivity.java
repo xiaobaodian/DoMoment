@@ -41,6 +41,7 @@ import threecats.zhang.domoment.layout.TitleFragment;
 public class TaskDisplayActivity extends AppCompatActivity {
 
     private TaskItem task = App.getDataManger().getEditorTask();
+    private TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
     private int oldCategoryID;
     private TaskPriority oldPriority;
     private EditText etTaskTitle;
@@ -56,12 +57,9 @@ public class TaskDisplayActivity extends AppCompatActivity {
     private TaskCheckListFragment taskCheckListFragment;
     private EditorMode editorMode = EditorMode.Edit;
 
-    private TaskExt taskExt = new TaskExt();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        taskExt.setTaskItem(task);
         setContentView(R.layout.activity_task_dispay);
         Toolbar editToolbar = (Toolbar) findViewById(R.id.TaskEditorToolbar);
         setSupportActionBar(editToolbar);

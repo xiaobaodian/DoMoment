@@ -27,7 +27,7 @@ import threecats.zhang.domoment.layout.TitleFragment;
 public class TaskDetailsFragment extends TitleFragment {
 
     private TaskItem task = App.getDataManger().getEditorTask();
-    private TaskExt taskExt = new TaskExt();
+    private TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
     private final DateTimeHelper DateTime = App.getDateTime();
     private Context parentContext;
     private View taskDetailsView;
@@ -64,7 +64,6 @@ public class TaskDetailsFragment extends TitleFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        taskExt.setTaskItem(task);
     }
 
     @Override
@@ -181,7 +180,6 @@ public class TaskDetailsFragment extends TitleFragment {
         DatePicker datePicker = layout.findViewById(R.id.datePicker);
         datePicker.setFirstDayOfWeek(Calendar.MONDAY);
 
-        taskExt.setTaskItem(task);
         Calendar date;
         String title;
 
@@ -206,7 +204,7 @@ public class TaskDetailsFragment extends TitleFragment {
 
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = new TaskExt(task);
+            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartDate:
                     if (taskExt.IsOneDay()) {
@@ -224,7 +222,7 @@ public class TaskDetailsFragment extends TitleFragment {
 
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = new TaskExt(App.getDataManger().getEditorTask());
+            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
@@ -259,10 +257,7 @@ public class TaskDetailsFragment extends TitleFragment {
                     break;
             }
             //App.getDataManger().getTaskBox().put(taskExt.getTaskItem());
-            boolean  b = taskExt.getTaskItem() == App.getDataManger().getEditorTask();
-            Calendar ssd = taskExt.getExtStartDateTime();
-            Date sd = taskExt.getTaskItem().getStartDateTime();
-            Date dd = App.getDataManger().getEditorTask().getStartDateTime();
+
             DisplayDateTimeFields();
         });
 
@@ -282,7 +277,6 @@ public class TaskDetailsFragment extends TitleFragment {
         TimePicker timePicker = layout.findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
 
-        taskExt.setTaskItem(task);
         Calendar date;
         String title;
 
@@ -314,7 +308,7 @@ public class TaskDetailsFragment extends TitleFragment {
 
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = new TaskExt(task);
+            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartTime:
                     if (taskExt.IsOneTime()) {
@@ -332,7 +326,7 @@ public class TaskDetailsFragment extends TitleFragment {
 
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
             final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = new TaskExt(task);
+            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartTime:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
