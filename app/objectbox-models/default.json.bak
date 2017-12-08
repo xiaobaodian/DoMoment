@@ -75,23 +75,23 @@
         },
         {
           "id": "5:7568463301984341595",
-          "name": "priority"
+          "name": "extPriority"
         },
         {
           "id": "6:8085170944096638521",
-          "name": "createDateTime"
+          "name": "extCreateDateTime"
         },
         {
           "id": "7:5161966827458597282",
-          "name": "startDateTime"
+          "name": "extStartDateTime"
         },
         {
           "id": "8:5474368193100235252",
-          "name": "dueDateTime"
+          "name": "extDueDateTime"
         },
         {
           "id": "9:1224347284518635336",
-          "name": "completeDateTime"
+          "name": "extCompleteDateTime"
         },
         {
           "id": "10:8902755907494601879",

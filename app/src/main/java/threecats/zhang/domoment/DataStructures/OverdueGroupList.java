@@ -26,7 +26,7 @@ public class OverdueGroupList extends GroupListBase {
     public boolean InGroupList(TaskItem task){
         TaskExt taskExt = new TaskExt(task);
         if (taskExt.IsNoDate() || taskExt.IsComplete()) return false;
-        return taskExt.getDueDateTime().before(timePoint);
+        return taskExt.getExtDueDateTime().before(timePoint);
     }
 
     @Override

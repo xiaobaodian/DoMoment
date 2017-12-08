@@ -18,7 +18,6 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 import java.util.Date;
 
-import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.OneDayBase;
@@ -189,11 +188,11 @@ public class TaskDetailsFragment extends TitleFragment {
         switch (EditType) {
             case editStartDate:
                 title = taskExt.IsOneDay() ? "设置日期" : "设置开始日期";
-                date = taskExt.IsNoDate() ? Calendar.getInstance() : (Calendar)taskExt.getStartDateTime().clone();
+                date = taskExt.IsNoDate() ? Calendar.getInstance() : (Calendar)taskExt.getExtStartDateTime().clone();
                 break;
             case editDueDate:
                 title = "设置结束日期";
-                date = (Calendar)taskExt.getDueDateTime().clone();
+                date = (Calendar)taskExt.getExtDueDateTime().clone();
                 if (taskExt.IsOneDay()) date.add(Calendar.DATE, 1);
                 break;
             default:
@@ -229,9 +228,9 @@ public class TaskDetailsFragment extends TitleFragment {
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
-                    SelectedDate = (Calendar)taskExt.getDueDateTime().clone();
+                    SelectedDate = (Calendar)taskExt.getExtDueDateTime().clone();
                     DateTime.BlendCalendar(SelectedDate, datePicker);
-                    if (SelectedDate.after(taskExt.getDueDateTime())) {
+                    if (SelectedDate.after(taskExt.getExtDueDateTime())) {
                         long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
                         taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
                         taskExt.setLongDueDateTime(taskExt.getLongStartDateTime() + timeSpan);
@@ -242,10 +241,10 @@ public class TaskDetailsFragment extends TitleFragment {
                     //taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                     break;
                 case editDueDate:
-                    SelectedDate = (Calendar)taskExt.getStartDateTime().clone();
+                    SelectedDate = (Calendar)taskExt.getExtStartDateTime().clone();
                     DateTime.BlendCalendar(SelectedDate, datePicker);
-                    Calendar tmpStartDate = (Calendar)taskExt.getStartDateTime().clone();
-                    if (SelectedDate.before(taskExt.getStartDateTime())) {
+                    Calendar tmpStartDate = (Calendar)taskExt.getExtStartDateTime().clone();
+                    if (SelectedDate.before(taskExt.getExtStartDateTime())) {
                         if (taskExt.IsOneDay()) {
                             taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
                             taskExt.setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH),tmpStartDate.get(Calendar.DAY_OF_MONTH));
@@ -261,7 +260,7 @@ public class TaskDetailsFragment extends TitleFragment {
             }
             //App.getDataManger().getTaskBox().put(taskExt.getTaskItem());
             boolean  b = taskExt.getTaskItem() == App.getDataManger().getEditorTask();
-            Calendar ssd = taskExt.getStartDateTime();
+            Calendar ssd = taskExt.getExtStartDateTime();
             Date sd = taskExt.getTaskItem().getStartDateTime();
             Date dd = App.getDataManger().getEditorTask().getStartDateTime();
             DisplayDateTimeFields();
@@ -290,11 +289,11 @@ public class TaskDetailsFragment extends TitleFragment {
         switch (EditType) {
             case editStartTime:
                 title = taskExt.IsOneTime() ? "设置时间" : "设置开始时间";
-                date = taskExt.IsAllDay() ? Calendar.getInstance() : (Calendar)taskExt.getStartDateTime().clone();
+                date = taskExt.IsAllDay() ? Calendar.getInstance() : (Calendar)taskExt.getExtStartDateTime().clone();
                 break;
             case editDueTime:
                 title = "设置结束时间";
-                date = (Calendar)taskExt.getDueDateTime().clone();
+                date = (Calendar)taskExt.getExtDueDateTime().clone();
                 if (taskExt.IsOneTime()) date.add(Calendar.MINUTE, 5);
                 break;
             default:

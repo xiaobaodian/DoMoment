@@ -104,21 +104,21 @@ public abstract class GroupBase extends RecyclerViewItem {
         TaskExt taskExt = new TaskExt(task);
         Calendar timePoint, secTimePoint;
         timePoint = null;
-        //secTimePoint = task.IsOneDay() ? null : task.getDueDateTime();
-        secTimePoint = taskExt.getDueDateTime();
+        //secTimePoint = task.IsOneDay() ? null : task.getExtDueDateTime();
+        secTimePoint = taskExt.getExtDueDateTime();
         switch (parentGroupList.taskBasePoint){
             case BeginDate:
-                timePoint = taskExt.getStartDateTime();
+                timePoint = taskExt.getExtStartDateTime();
                 break;
             case EndDate:
-                timePoint = taskExt.getDueDateTime();
+                timePoint = taskExt.getExtDueDateTime();
                 break;
             case CreateDate:
-                timePoint = taskExt.getCreateDateTime();
+                timePoint = taskExt.getExtCreateDateTime();
                 break;
             case CompleteDate:
-                timePoint = taskExt.getCompleteDateTime();
-                //timePoint = task.getDueDateTime();
+                timePoint = taskExt.getExtCompleteDateTime();
+                //timePoint = task.getExtDueDateTime();
                 break;
         }
         return !isEmpty && isGroupMember(timePoint, secTimePoint);

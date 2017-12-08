@@ -205,12 +205,12 @@ public class TaskBase extends ListItemBase implements Comparable{
             //Calendar tmpDateTime = (Calendar)dueDateTime.clone();
             //tmpDateTime.set(startDateTime.get(Calendar.YEAR), startDateTime.get(Calendar.MONTH), startDateTime.get(Calendar.DAY_OF_MONTH));
             dueDateTime.set(startDateTime.get(Calendar.YEAR), startDateTime.get(Calendar.MONTH), startDateTime.get(Calendar.DAY_OF_MONTH));
-            //setDueDateTime(tmpDateTime);
+            //setExtDueDateTime(tmpDateTime);
         } else {
             //Calendar tmpDateTime = (Calendar)startDateTime.clone();
             //tmpDateTime.set(dueDateTime.get(Calendar.YEAR), dueDateTime.get(Calendar.MONTH), dueDateTime.get(Calendar.DAY_OF_MONTH));
             startDateTime.set(dueDateTime.get(Calendar.YEAR), dueDateTime.get(Calendar.MONTH), dueDateTime.get(Calendar.DAY_OF_MONTH));
-            //setStartDateTime(tmpDateTime);
+            //setExtStartDateTime(tmpDateTime);
         }
     }
     public void setOneTime(OneDayBase base){

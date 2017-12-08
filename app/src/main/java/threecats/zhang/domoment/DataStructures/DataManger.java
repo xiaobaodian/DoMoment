@@ -548,7 +548,7 @@ public class DataManger {
             if (dueDate == -1) {
                 taskExt.setStartDate(day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH));
             } else {
-                taskExt.setCreateDateTime(day);
+                taskExt.setExtCreateDateTime(day);
             }
 
             int categoryRange = random.nextInt(10);
@@ -557,7 +557,7 @@ public class DataManger {
             }
             taskItems.add(taskExt.getTaskItem());
             TaskItem item = taskExt.getTaskItem();
-            //Log.d(App.TAG, "Start DateTime : " + item.getStartDateTime());
+            //Log.d(App.TAG, "Start DateTime : " + item.getExtStartDateTime());
         }
         taskBox.put(taskItems);
     }
