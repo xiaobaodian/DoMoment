@@ -61,8 +61,10 @@ public class TaskDisplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_dispay);
+
         Toolbar editToolbar = (Toolbar) findViewById(R.id.TaskEditorToolbar);
         setSupportActionBar(editToolbar);
+
         etTaskTitle = (EditText) findViewById(R.id.editTextTitle);
         tvCreatedDateTime = (TextView)findViewById(R.id.layCreatedDateTime);
         btnCategory = (Button)findViewById(R.id.btnCategory);
@@ -70,7 +72,9 @@ public class TaskDisplayActivity extends AppCompatActivity {
         doneflag = (ImageView)findViewById(R.id.doneflag);
         taskTab = (TabLayout)findViewById(R.id.lTaskTab);
         viewPager = (ViewPager)findViewById(R.id.lTaskPager);
+
         editToolbar.setNavigationOnClickListener(view -> {finish();});
+
         btnCategory.setOnClickListener(view -> {
             setTaskCategory();
         });
@@ -84,6 +88,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         viewFragmentList.add(taskDetailsFragment);
         viewFragmentList.add(taskCheckListFragment);
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         if (fragmentManager == null) {
             App.Toast("FragmentManager is null");
         } else {
@@ -185,13 +190,16 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private void setTaskCategory(){
-        //App.Toast("Click Category Button");
+
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_categoryselection, (ViewGroup)findViewById(R.id.CategoryDialog));
-        int oldCategory = taskExt.getCategoryID();
+
+        int oldCategoryID = taskExt.getCategoryID();
+
         AlertDialog.Builder categoryDialog = new AlertDialog.Builder(this);
         categoryDialog.setTitle("设置类目");
         categoryDialog.setView(layout);
+
         categoryDialog.setNeutralButton("删除", (dialogInterface, i) -> {
             taskExt.setCategoryID(1);
             DisplayTaskItems();
@@ -200,14 +208,17 @@ public class TaskDisplayActivity extends AppCompatActivity {
             DisplayTaskItems();
         });
         categoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            taskExt.setCategoryID(oldCategory);
+            taskExt.setCategoryID(oldCategoryID);
         });
-        categoryDialog.setOnCancelListener(view ->{task.setCategoryID(oldCategory);});
+
+        categoryDialog.setOnCancelListener(view ->{task.setCategoryID(oldCategoryID);});
+
         RecyclerView recyclerView = layout.findViewById(R.id.CategoryRecyclerView);
         SetTaskCategorysAdapter categoryAdapter = new SetTaskCategorysAdapter(App.getDataManger().getCategoryList().getCustomCategories());
         LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -215,15 +226,19 @@ public class TaskDisplayActivity extends AppCompatActivity {
             }
         },200);
     }
+
     private void setTaskPriority(){
-        //App.Toast("Click Priority Button");
+
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialog));
+
         TaskPriority oldPriority = taskExt.getExtPriority();
         final CheckedTextView[] currentPriority = {null};
+
         AlertDialog.Builder priorityDialog = new AlertDialog.Builder(this);
         priorityDialog.setTitle("任务等级");
         priorityDialog.setView(layout);
+
         priorityDialog.setNeutralButton("删除", (dialogInterface, i) -> {
             taskExt.setExtPriority(TaskPriority.None);
             DisplayTaskItems();
@@ -234,6 +249,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         priorityDialog.setNegativeButton("取消", (dialogInterface, i) -> {
             taskExt.setExtPriority(oldPriority);
         });
+
         priorityDialog.setOnCancelListener(view ->{taskExt.setExtPriority(oldPriority);});
 
         LinearLayout urgent = layout.findViewById(R.id.Urgent);

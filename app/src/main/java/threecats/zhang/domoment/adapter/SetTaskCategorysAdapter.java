@@ -12,6 +12,7 @@ import java.util.List;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.Task;
+import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
@@ -24,6 +25,7 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private DateTimeHelper DateTime = App.getDateTime();
     private TaskItem task = App.getDataManger().getCurrentTask();
+    private TaskExt taskExt =App.getDataManger().getCurrentTaskExt();
     private List<CategoryBase>  itemBases;
     private int currentChecked = -1;
 
@@ -54,7 +56,7 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
             int position = itemViewHolder.getAdapterPosition();
             CategoryBase category = itemBases.get(position);
             itemViewHolder.tvTitle.setChecked(true);
-            task.setCategoryID(category.getCategoryID());
+            taskExt.setCategoryID(category.getCategoryID());
             if (currentChecked >= 0) {
                 notifyItemChanged(currentChecked);
             }
@@ -69,7 +71,7 @@ public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.V
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
         String title = item.getTitle();
         itemViewHolder.tvTitle.setText(title);
-        if (task.getCategoryID() == item.getCategoryID()) {
+        if (taskExt.getCategoryID() == item.getCategoryID()) {
             itemViewHolder.tvTitle.setChecked(true);
             currentChecked = position;
         } else {

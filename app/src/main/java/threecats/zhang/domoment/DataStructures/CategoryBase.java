@@ -24,6 +24,7 @@ public abstract class CategoryBase extends ItemBase {
     }
 
     public abstract boolean InCategory(TaskItem task);
+
     protected abstract void BuildGroupLists();
     public int getTaskCount(){
         int count = 0;

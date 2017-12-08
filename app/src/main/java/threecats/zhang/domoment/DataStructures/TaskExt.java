@@ -146,9 +146,10 @@ public class TaskExt {
     }
 
     public void setNoDate(){
-        setAllDay(true);
         taskItem.setIsNoDate(true);
+        taskItem.setIsAllDay(true);
         extDueDateTime = (Calendar) extStartDateTime.clone();
+        taskItem.setStartDateTime(extStartDateTime.getTime());
         taskItem.setDueDateTime(extDueDateTime.getTime());
     }
     public boolean IsNoDate(){
