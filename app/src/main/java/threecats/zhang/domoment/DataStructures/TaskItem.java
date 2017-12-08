@@ -137,7 +137,6 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     }
 
     public void setDueDateTime(Date dueDateTime){
-        isNoDate = false;
         this.dueDateTime = dueDateTime;
     }
     public Date getDueDateTime(){

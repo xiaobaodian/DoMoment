@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +129,7 @@ public class TaskDetailsFragment extends TitleFragment {
     @SuppressLint("SetTextI18n")
     private void DisplayDateTimeFields(){
         //taskExt.setTaskItem(task);  //刷新taskExt内部字段
+        Log.d(App.TAG,"Display Task , "+taskExt.getTitle()+" is NoDate : "+taskExt.IsNoDate());
         if (taskExt.IsNoDate()) {
             startDateBox.setText("");
             dueDateBox.setVisibility(View.GONE);

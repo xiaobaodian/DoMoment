@@ -151,6 +151,8 @@ public class TaskExt {
         extDueDateTime = (Calendar) extStartDateTime.clone();
         taskItem.setStartDateTime(extStartDateTime.getTime());
         taskItem.setDueDateTime(extDueDateTime.getTime());
+        Log.d(App.TAG,"taskExt is NoDate : "+IsNoDate());
+        Log.d(App.TAG,"taskItem is NoDate : "+taskItem.getIsNoDate());
     }
     public boolean IsNoDate(){
         return taskItem.getIsNoDate();
