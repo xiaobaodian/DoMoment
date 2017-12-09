@@ -38,11 +38,11 @@ public class TaskExt {
     public TaskExt(TaskItem taskItem){
         setTaskItem(taskItem);
     }
-    public TaskExt(int categoryID, Calendar beginDate){
+    public TaskExt(int categoryID, Calendar createDateTime){
         super();
         taskItem = new TaskItem();
         setCategoryID(categoryID);
-        setStartDate(beginDate.get(Calendar.YEAR), beginDate.get(Calendar.MONTH)+1, beginDate.get(Calendar.DAY_OF_MONTH));
+        setExtCreateDateTime(createDateTime);
     }
 
     public void setTaskItem(TaskItem taskItem){
