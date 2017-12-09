@@ -205,7 +205,7 @@ public class DataManger {
         if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
             categoryID = App.getCurrentCategory().getCategoryID();
         }
-        //TaskItem task = new TaskItem(categoryID, day);
+        //TaskItem task = new TaskItem(categoryID, day); ??
         TaskItem task = new TaskExt(categoryID, day).getTaskItem();
         setEditorTask(task);
         App.showTaskDisplayActivity();
