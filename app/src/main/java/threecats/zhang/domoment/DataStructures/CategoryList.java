@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import threecats.zhang.domoment.App;
+import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.R;
 
 /**
@@ -129,9 +130,19 @@ public class CategoryList {
         List<CategoryBase> updateCategorys = new ArrayList<>();
         List<GroupBase> changeGroups = new ArrayList<>();
         List<GroupBase> updateGroups = new ArrayList<>();
+
+        //遍历task的父组列表，找出task所在的groupList与Category
         for (GroupBase group : task.getParentGroups()) {
             GroupListBase groupList = group.getParent();
             CategoryBase category = groupList.getParent();
+
+            //判读task是不是还在原来的分类树中，即Category,groupList,group的判断同时为真
+            //如果还在原来的分类树中，就判断是不是还在原来group的序列位置，判断依据是原来的前后task没有改变
+            //如果序列位置没有发生改变，就加入updateGroups与updateCategorys列表中
+            //如果序列位置该表，就加入changeGroups列表中
+            //
+            //如果不在原来的分类树中，即Category,groupList,group的判断任一条件为假，就加入到changeGroups列表中
+
             if (category.InCategory(task) && groupList.InGroupList(task) && group.InGroup(task)){
                 if (group.needChangedPosition(task)) {
                     changeGroups.add(group);
@@ -143,6 +154,8 @@ public class CategoryList {
                 changeGroups.add(group);
             }
         }
+
+        //处理changeGroups列表中的记录
         if (changeGroups.size() > 0) {
             //从需要改变的groups里面移除task
             for (GroupBase group : changeGroups) {
@@ -155,6 +168,8 @@ public class CategoryList {
                 category.AddTask(task);
             }
         }
+
+        //处理updateGroups列表中的记录
         if (updateGroups.size() > 0) {
             for (GroupBase group : updateGroups) {
                 GroupListBase groupList = group.getParent();
@@ -162,12 +177,16 @@ public class CategoryList {
                 groupList.UpdateTaskDisplay(group, task);
             }
         }
-    }
 
-    public void UpdateTaskaa(Task task){
-        for (GroupBase group : task.getParentGroup()) {
-            GroupListBase groupList = group.getParent();
-            groupList.SortGroup(group);
+        //有一个特殊情况需要处理：Task的Priority未设置时，是不从属于Priority分类的group中的，当仅仅新设置一个Priority
+        //属性后，无法通过task的parentGroups列表进行判断。但是如果同时设置了task的其他能够影响分类树位置的属性后，就能够
+        //附带处理新设置的Priority属性。
+        //因此，在此处首先检查changeGroups列表里面是否未空，并检查task的Priotity属性，如果设置了priority属性而changeGroups列表
+        //为空，就将task加入到Priority分类树中
+
+        if (changeGroups.size() == 0 && task.getPriorityID() != TaskPriority.None.ordinal()) {
+            CategoryBase priorityCategory = Categorys.get(2);
+            priorityCategory.AddTask(task);
         }
     }
 

@@ -67,7 +67,7 @@ public class TaskExt {
         setStartDateAndTime(extStartDateTime);
         setDueDateAndTime(extDueDateTime);
 
-        extPriority = TaskPriority.values()[taskItem.getPriority()];
+        extPriority = TaskPriority.values()[taskItem.getPriorityID()];
     }
     public TaskItem getTaskItem(){
         return this.taskItem;
@@ -149,7 +149,6 @@ public class TaskExt {
         taskItem.setIsNoDate(true);
         taskItem.setIsAllDay(true);
         extDueDateTime = (Calendar) extStartDateTime.clone();
-        taskItem.setStartDateTime(extStartDateTime.getTime());
         taskItem.setDueDateTime(extDueDateTime.getTime());
         Log.d(App.TAG,"taskExt is NoDate : "+IsNoDate());
         Log.d(App.TAG,"taskItem is NoDate : "+taskItem.getIsNoDate());
@@ -158,7 +157,7 @@ public class TaskExt {
         return taskItem.getIsNoDate();
     }
     public void setExtPriority(TaskPriority extPriority){
-        taskItem.setPriority(extPriority.ordinal());
+        taskItem.setPriorityID(extPriority.ordinal());
         this.extPriority = extPriority;
     }
     public TaskPriority getExtPriority(){
@@ -206,17 +205,10 @@ public class TaskExt {
         if (IsOneDay()) {
             setDueDate(year, month, day);
         }
-        Log.d(App.TAG, "YMD : " + year +"/" + month + "/"+day);
+        taskItem.setIsNoDate(false);
         extStartDay.setDate(year, month, day);
         extStartDateTime = extStartDay.getCalendar(extStartDateTime);
         taskItem.setStartDateTime(extStartDateTime.getTime());
-
-        Log.d(App.TAG, "extStartDateTime : " + extStartDateTime.toString());
-        Log.d(App.TAG, "taskItem : " + taskItem.getStartDateTime().toString());
-
-        Date e = extStartDateTime.getTime();
-        Date s = taskItem.getStartDateTime();
-        Date d = taskItem.getDueDateTime();
 
     }
     public void setDueDate(int year, int month, int day){

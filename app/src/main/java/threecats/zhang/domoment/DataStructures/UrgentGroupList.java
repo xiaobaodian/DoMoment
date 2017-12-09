@@ -25,7 +25,7 @@ public class UrgentGroupList extends GroupListBase {
 
     @Override
     public boolean InGroupList(TaskItem task){
-        return task.getPriority() == TaskPriority.Urgent.ordinal();
+        return task.getPriorityID() == TaskPriority.Urgent.ordinal();
     }
 
     @Override

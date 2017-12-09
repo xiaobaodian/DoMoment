@@ -341,7 +341,7 @@ public class DataManger {
     // 辅助操作
 
     public void BuildDatas(){
-        final int TotalTasks = 10;
+        final int TotalTasks = 80;
         List<TaskItem> taskItems = new ArrayList<>();
 
         List<String> titles = new ArrayList<>();
@@ -388,6 +388,7 @@ public class DataManger {
         int titleSum = titles.size();
         int pacleSum = places.size();
         Random random = new Random();
+
         for (int i = 0; i < TotalTasks; i++) {
             int dueDate = -1;
 
@@ -416,12 +417,14 @@ public class DataManger {
                 taskExt.setExtCreateDateTime(day);
             }
 
-            int categoryRange = random.nextInt(10);
-            if (categoryRange >= 8) {
-                taskExt.setCategoryID(1);
-            }
+            //int categoryRange = random.nextInt(10);
+            //if (categoryRange >= 8) {
+            //    taskExt.setCategoryID(1);
+            //}
+            taskExt.setCategoryID(1);
+
             taskItems.add(taskExt.getTaskItem());
-            TaskItem item = taskExt.getTaskItem();
+            AddTask(taskExt.getTaskItem());
             //Log.d(App.TAG, "Start DateTime : " + item.getExtStartDateTime());
         }
         taskBox.put(taskItems);

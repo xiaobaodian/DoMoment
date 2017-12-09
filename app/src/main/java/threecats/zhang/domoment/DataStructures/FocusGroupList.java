@@ -25,7 +25,7 @@ public class FocusGroupList extends GroupListBase {
 
     @Override
     public boolean InGroupList(TaskItem task){
-        return task.getPriority() == TaskPriority.Focus.ordinal();
+        return task.getPriorityID() == TaskPriority.Focus.ordinal();
     }
 
     @Override

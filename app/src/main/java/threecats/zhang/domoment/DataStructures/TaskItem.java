@@ -2,12 +2,8 @@ package threecats.zhang.domoment.DataStructures;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.format.DateFormat;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +14,7 @@ import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToMany;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.ItemType;
-import threecats.zhang.domoment.ENUM.OneDayBase;
 import threecats.zhang.domoment.ENUM.TaskPriority;
-import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * 由 zhang 于 2017/8/3 创建
@@ -38,7 +32,7 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     private String taskContext;
     private String taskTags;
     private int categoryID;
-    private int priority;
+    private int priorityID;
     private Date createDateTime;
     private Date startDateTime;
     private Date dueDateTime;
@@ -63,7 +57,7 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
         createDateTime = new Date();
         completeDateTime = new Date();
 
-        priority = TaskPriority.None.ordinal();
+        priorityID = TaskPriority.None.ordinal();
 
         isNoDate = true;
         isAllDay = true;
@@ -115,11 +109,11 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
         return categoryID;
     }
 
-    public void setPriority(int priority){
-        this.priority = priority;
+    public void setPriorityID(int priorityID){
+        this.priorityID = priorityID;
     }
-    public int getPriority(){
-        return priority;
+    public int getPriorityID(){
+        return priorityID;
     }
 
     public void setCreateDateTime(Date createDateTime){
