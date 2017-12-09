@@ -417,10 +417,6 @@ public class DataManger {
                 taskExt.setExtCreateDateTime(day);
             }
 
-            //int categoryRange = random.nextInt(10);
-            //if (categoryRange >= 8) {
-            //    taskExt.setCategoryID(1);
-            //}
             taskExt.setCategoryID(1);
 
             taskItems.add(taskExt.getTaskItem());
