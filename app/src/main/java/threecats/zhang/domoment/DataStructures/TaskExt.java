@@ -38,11 +38,11 @@ public class TaskExt {
     public TaskExt(TaskItem taskItem){
         setTaskItem(taskItem);
     }
-    public TaskExt(int categoryID, Calendar createDateTime){
+    public TaskExt(int categoryID, Calendar startDateTime){
         super();
         taskItem = new TaskItem();
         setCategoryID(categoryID);
-        setExtCreateDateTime(createDateTime);
+        setExtStartDateTime(startDateTime);
     }
 
     public void setTaskItem(TaskItem taskItem){
