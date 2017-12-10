@@ -22,15 +22,15 @@ public class TaskExt {
     private DateTimeHelper DateTime = App.getDateTime();
 
     private TaskItem taskItem = null;
-    private TaskDate extStartDay = new TaskDate();
-    private TaskDate extDueDay = new TaskDate();
-    private TaskTime extBeginTime = new TaskTime();
-    private TaskTime extEndTime = new TaskTime();
-    private Calendar extCreateDateTime;
-    private Calendar extStartDateTime;
-    private Calendar extDueDateTime;
-    private Calendar extCompleteDateTime;
-    private TaskPriority extPriority;
+    private TaskDate startDay = new TaskDate();
+    private TaskDate dueDay = new TaskDate();
+    private TaskTime beginTime = new TaskTime();
+    private TaskTime endTime = new TaskTime();
+    private Calendar createDateTime;
+    private Calendar startDateTime;
+    private Calendar dueDateTime;
+    private Calendar completeDateTime;
+    private TaskPriority priority;
 
     public TaskExt(){
 
@@ -40,9 +40,11 @@ public class TaskExt {
     }
     public TaskExt(int categoryID, Calendar startDateTime){
         super();
-        taskItem = new TaskItem();
+        setTaskItem(new TaskItem());
         setCategoryID(categoryID);
-        setExtStartDateTime(startDateTime);
+        setStartDate(startDateTime);
+        setBeginTime(0,0);
+        setAllDay(true);
     }
 
     public void setTaskItem(TaskItem taskItem){
@@ -52,86 +54,86 @@ public class TaskExt {
         }
         this.taskItem = taskItem;
 
-        extCreateDateTime = Calendar.getInstance();
-        extCreateDateTime.setTime(taskItem.getCreateDateTime());
+        createDateTime = Calendar.getInstance();
+        createDateTime.setTime(taskItem.getCreateDateTime());
 
-        extStartDateTime = Calendar.getInstance();
-        extStartDateTime.setTime(taskItem.getStartDateTime());
+        startDateTime = Calendar.getInstance();
+        startDateTime.setTime(taskItem.getStartDateTime());
 
-        extDueDateTime = Calendar.getInstance();
-        extDueDateTime.setTime(taskItem.getDueDateTime());
+        dueDateTime = Calendar.getInstance();
+        dueDateTime.setTime(taskItem.getDueDateTime());
 
-        extCompleteDateTime = Calendar.getInstance();
-        extCompleteDateTime.setTime(taskItem.getCompleteDateTime());
+        completeDateTime = Calendar.getInstance();
+        completeDateTime.setTime(taskItem.getCompleteDateTime());
 
-        setStartDateAndTime(extStartDateTime);
-        setDueDateAndTime(extDueDateTime);
+        setStartDateAndTime(startDateTime);
+        setDueDateAndTime(dueDateTime);
 
-        extPriority = TaskPriority.values()[taskItem.getPriorityID()];
+        priority = TaskPriority.values()[taskItem.getPriorityID()];
     }
     public TaskItem getTaskItem(){
         return this.taskItem;
     }
 
-    public void setExtCreateDateTime(Calendar extCreateDateTime){
-        this.extCreateDateTime = extCreateDateTime;
-        taskItem.setCreateDateTime(extCreateDateTime.getTime());
+    public void setCreateDateTime(Calendar createDateTime){
+        this.createDateTime = createDateTime;
+        taskItem.setCreateDateTime(createDateTime.getTime());
     }
-    public Calendar getExtCreateDateTime(){
+    public Calendar getCreateDateTime(){
         //taskItem应用可能在别处被修改，所以在调用的时候需要从taskItem实例中重新获取数值
-        extCreateDateTime.setTime(taskItem.getCreateDateTime());
-        return this.extCreateDateTime;
+        createDateTime.setTime(taskItem.getCreateDateTime());
+        return this.createDateTime;
     }
-    public void setExtStartDateTime(Calendar extStartDateTime){
-        this.extStartDateTime = extStartDateTime;
+    public void setStartDateTime(Calendar startDateTime){
+        this.startDateTime = startDateTime;
         taskItem.setIsNoDate(false);
-        setStartDateAndTime(extStartDateTime);
-        taskItem.setStartDateTime(extStartDateTime.getTime());
+        setStartDateAndTime(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
     public void setLongStartDateTime(long longStartDateTime){
-        extStartDateTime.setTimeInMillis(longStartDateTime);
+        startDateTime.setTimeInMillis(longStartDateTime);
         taskItem.setIsNoDate(false);
-        setStartDateAndTime(extStartDateTime);
-        taskItem.setStartDateTime(extStartDateTime.getTime());
+        setStartDateAndTime(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
-    public Calendar getExtStartDateTime(){
-        extStartDateTime.setTime(taskItem.getStartDateTime());
-        return this.extStartDateTime;
+    public Calendar getStartDateTime(){
+        startDateTime.setTime(taskItem.getStartDateTime());
+        return this.startDateTime;
     }
     public long getLongStartDateTime(){
         //taskItem应用可能在别处被修改，所以在调用的时候需要从taskItem实例中重新获取数值
-        extStartDateTime.setTime(taskItem.getStartDateTime());
-        return this.extStartDateTime.getTimeInMillis();
+        startDateTime.setTime(taskItem.getStartDateTime());
+        return this.startDateTime.getTimeInMillis();
     }
 
-    public void setExtDueDateTime(Calendar extDueDateTime){
-        this.extDueDateTime = extDueDateTime;
+    public void setDueDateTime(Calendar dueDateTime){
+        this.dueDateTime = dueDateTime;
         taskItem.setIsNoDate(false);
-        setDueDateAndTime(extDueDateTime);
-        taskItem.setDueDateTime(extDueDateTime.getTime());
+        setDueDateAndTime(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
     public void setLongDueDateTime(long longDueDateTime){
-        this.extDueDateTime.setTimeInMillis(longDueDateTime);
+        this.dueDateTime.setTimeInMillis(longDueDateTime);
         taskItem.setIsNoDate(false);
-        setDueDateAndTime(extDueDateTime);
-        taskItem.setDueDateTime(extDueDateTime.getTime());
+        setDueDateAndTime(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
-    public Calendar getExtDueDateTime(){
-        extDueDateTime.setTime(taskItem.getDueDateTime());
-        return extDueDateTime;
+    public Calendar getDueDateTime(){
+        dueDateTime.setTime(taskItem.getDueDateTime());
+        return dueDateTime;
     }
     public long getLongDueDateTime(){
-        extDueDateTime.setTime(taskItem.getDueDateTime());
-        return extDueDateTime.getTimeInMillis();
+        dueDateTime.setTime(taskItem.getDueDateTime());
+        return dueDateTime.getTimeInMillis();
     }
 
-    public void setExtCompleteDateTime(Calendar extCompleteDateTime){
-        this.extCompleteDateTime = extCompleteDateTime;
-        taskItem.setCompleteDateTime(extCompleteDateTime.getTime());
+    public void setCompleteDateTime(Calendar completeDateTime){
+        this.completeDateTime = completeDateTime;
+        taskItem.setCompleteDateTime(completeDateTime.getTime());
     }
-    public Calendar getExtCompleteDateTime(){
-        extCompleteDateTime.setTime(taskItem.getCompleteDateTime());
-        return extCompleteDateTime;
+    public Calendar getCompleteDateTime(){
+        completeDateTime.setTime(taskItem.getCompleteDateTime());
+        return completeDateTime;
     }
 
     // 设置全天属性时，将开始时间设为当天的零点零分，这样就可以在排序时排在最前面。
@@ -148,25 +150,25 @@ public class TaskExt {
     public void setNoDate(){
         taskItem.setIsNoDate(true);
         taskItem.setIsAllDay(true);
-        extDueDateTime = (Calendar) extStartDateTime.clone();
-        taskItem.setDueDateTime(extDueDateTime.getTime());
+        dueDateTime = (Calendar) startDateTime.clone();
+        taskItem.setDueDateTime(dueDateTime.getTime());
         Log.d(App.TAG,"taskExt is NoDate : "+IsNoDate());
         Log.d(App.TAG,"taskItem is NoDate : "+taskItem.getIsNoDate());
     }
     public boolean IsNoDate(){
         return taskItem.getIsNoDate();
     }
-    public void setExtPriority(TaskPriority extPriority){
-        taskItem.setPriorityID(extPriority.ordinal());
-        this.extPriority = extPriority;
+    public void setPriority(TaskPriority priority){
+        taskItem.setPriorityID(priority.ordinal());
+        this.priority = priority;
     }
-    public TaskPriority getExtPriority(){
-        return extPriority;
+    public TaskPriority getPriority(){
+        return priority;
     }
     public void setComplete(boolean isComplete){
         if (isComplete) {
-            extCompleteDateTime = Calendar.getInstance();
-            taskItem.setCompleteDateTime(extCompleteDateTime.getTime());
+            completeDateTime = Calendar.getInstance();
+            taskItem.setCompleteDateTime(completeDateTime.getTime());
         }
         taskItem.setIsComplete(isComplete);
     }
@@ -181,10 +183,10 @@ public class TaskExt {
         return taskItem.getIsComplete();
     }
     public boolean IsOneDay(){
-        return extStartDay.Year == extDueDay.Year && extStartDay.Month == extDueDay.Month && extStartDay.Day == extDueDay.Day;
+        return startDay.Year == dueDay.Year && startDay.Month == dueDay.Month && startDay.Day == dueDay.Day;
     }
     public boolean IsOneTime(){
-        return extBeginTime.Hour == extEndTime.Hour && extBeginTime.Minute == extEndTime.Minute;
+        return beginTime.Hour == endTime.Hour && beginTime.Minute == endTime.Minute;
     }
 
     public void setTitle(String title){
@@ -206,15 +208,25 @@ public class TaskExt {
             setDueDate(year, month, day);
         }
         taskItem.setIsNoDate(false);
-        extStartDay.setDate(year, month, day);
-        extStartDateTime = extStartDay.getCalendar(extStartDateTime);
-        taskItem.setStartDateTime(extStartDateTime.getTime());
-
+        startDay.setDate(year, month, day);
+        startDateTime = startDay.getCalendar(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
+    public void setStartDate(Calendar startDate){
+        TaskDate day = new TaskDate();
+        day.setDate(startDate.getTime());
+        setStartDate(day.Year, day.Month, day.Day);
+    }
+
     public void setDueDate(int year, int month, int day){
-        extDueDay.setDate(year, month, day);
-        extDueDateTime = extDueDay.getCalendar(extDueDateTime);
-        taskItem.setDueDateTime(extDueDateTime.getTime());
+        dueDay.setDate(year, month, day);
+        dueDateTime = dueDay.getCalendar(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
+    }
+    public void setDueDate(Calendar dueDate){
+        TaskDate day = new TaskDate();
+        day.setDate(dueDate.getTime());
+        setDueDate(day.Year, day.Month, day.Day);
     }
 
     public void setBeginTime(int hour, int minute){
@@ -222,61 +234,61 @@ public class TaskExt {
         if (IsOneTime()) {
             setEndTime(hour, minute);
         }
-        extBeginTime.setTime(hour, minute);
-        extStartDateTime = extBeginTime.getCalendar(extStartDateTime);
-        taskItem.setStartDateTime(extStartDateTime.getTime());
+        beginTime.setTime(hour, minute);
+        startDateTime = beginTime.getCalendar(startDateTime);
+        taskItem.setStartDateTime(startDateTime.getTime());
     }
     public void setEndTime(int hour, int minute){
         taskItem.setIsAllDay(false);
-        extEndTime.setTime(hour, minute);
-        extDueDateTime = extEndTime.getCalendar(extDueDateTime);
-        taskItem.setDueDateTime(extDueDateTime.getTime());
+        endTime.setTime(hour, minute);
+        dueDateTime = endTime.getCalendar(dueDateTime);
+        taskItem.setDueDateTime(dueDateTime.getTime());
     }
     public void setOneDay(OneDayBase base){
         if (base == OneDayBase.Start) {
-            setDueDate(extStartDay.Year, extStartDay.Month, extStartDay.Day);
+            setDueDate(startDay.Year, startDay.Month, startDay.Day);
         } else {
-            setStartDate(extDueDay.Year, extDueDay.Month, extDueDay.Day);
+            setStartDate(dueDay.Year, dueDay.Month, dueDay.Day);
         }
     }
     public void setOneTime(OneDayBase base){
         if (base == OneDayBase.Start) {
-            setEndTime(extBeginTime.Hour, extBeginTime.Minute);
+            setEndTime(beginTime.Hour, beginTime.Minute);
         } else {
-            setBeginTime(extEndTime.Hour, extEndTime.Minute);
+            setBeginTime(endTime.Hour, endTime.Minute);
         }
     }
 
     public String getBeginTimeStr(){
         final String timeFormatString = "H:mm";
-        return (String) DateFormat.format(timeFormatString, extStartDateTime);
+        return (String) DateFormat.format(timeFormatString, startDateTime);
     }
     public String getEndTimeStr(){
         final String timeFormatString = "H:mm";
-        return (String) DateFormat.format(timeFormatString, extDueDateTime);
+        return (String) DateFormat.format(timeFormatString, dueDateTime);
     }
 
     public String getCreatedDateTimeStr(){
-        String year = DateTime.IsCurrentYear(extCreateDateTime) ? "" : "yyyy ";
+        String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
         SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m", Locale.CHINA);
         return createDateTimeFStr.format(taskItem.getCreateDateTime());
     }
 
     public String getCompleteDateTimeStr(){
-        String year = DateTime.IsCurrentYear(extCreateDateTime) ? "" : "yyyy ";
+        String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
         SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m");
         return createDateTimeFStr.format(taskItem.getCompleteDateTime());
     }
 
     public String getBeginDateStr(){
-        String year = DateTime.IsCurrentYear(extStartDateTime) ? "" : "yyyy ";
+        String year = DateTime.IsCurrentYear(startDateTime) ? "" : "yyyy ";
         SimpleDateFormat beginDateTimeFStr = new SimpleDateFormat(year + "MMM  dd");
         return beginDateTimeFStr.format(taskItem.getStartDateTime());
     }
     public String getEndDateStr(){
         if (IsOneDay()) return "";
-        String year = DateTime.IsCurrentYear(extDueDateTime) ? "" : "yyyy ";
-        String month = DateTime.SameYearMonth(extStartDateTime, extDueDateTime) ? "" : "MMM  ";
+        String year = DateTime.IsCurrentYear(dueDateTime) ? "" : "yyyy ";
+        String month = DateTime.SameYearMonth(startDateTime, dueDateTime) ? "" : "MMM  ";
         SimpleDateFormat dueDateTimeFStr = new SimpleDateFormat(year + month + "dd");
         return dueDateTimeFStr.format(taskItem.getDueDateTime());
     }
@@ -284,42 +296,42 @@ public class TaskExt {
         if (IsNoDate()) return "DoDate";
         String beginDateFormatStr = "";
         String endDateFormatStr = "";
-        if (DateTime.SameYearMonth(extStartDateTime, extDueDateTime)) {
-            beginDateFormatStr = DateTime.IsCurrentYear(extStartDateTime) ? "MMM d" : "yyyy MMM d";
+        if (DateTime.SameYearMonth(startDateTime, dueDateTime)) {
+            beginDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
             endDateFormatStr = " - d";
         } else {
-            beginDateFormatStr = DateTime.IsCurrentYear(extStartDateTime) ? "MMM d" : "yyyy MMM d";
-            endDateFormatStr = DateTime.IsCurrentYear(extStartDateTime) ? " - MMM d" : " - yyyy MMM d";
+            beginDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
+            endDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? " - MMM d" : " - yyyy MMM d";
         }
         SimpleDateFormat beginDate = new SimpleDateFormat(beginDateFormatStr);
         SimpleDateFormat endDate = new SimpleDateFormat(endDateFormatStr);
-        String endDateStr = IsOneDay() ? "" : endDate.format(extDueDateTime.getTime());
-        return beginDate.format(extStartDateTime.getTime()) + endDateStr;
+        String endDateStr = IsOneDay() ? "" : endDate.format(dueDateTime.getTime());
+        return beginDate.format(startDateTime.getTime()) + endDateStr;
     }
 
     public String getTimeRangeStr(){
         if (IsAllDay()) return "";
         String timeFormatStr = "H:mm";
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(timeFormatStr);
-        String endTime = IsOneTime() ? "" : " - " + simpleTimeFormat.format(extDueDateTime.getTime());
-        return simpleTimeFormat.format(extStartDateTime.getTime()) + endTime;
+        String endTime = IsOneTime() ? "" : " - " + simpleTimeFormat.format(dueDateTime.getTime());
+        return simpleTimeFormat.format(startDateTime.getTime()) + endTime;
     }
 
     public void saveToTaskItem(){
-        taskItem.setCreateDateTime(extCreateDateTime.getTime());
-        taskItem.setStartDateTime(extStartDateTime.getTime());
-        taskItem.setDueDateTime(extDueDateTime.getTime());
-        taskItem.setCompleteDateTime(extCompleteDateTime.getTime());
+        taskItem.setCreateDateTime(createDateTime.getTime());
+        taskItem.setStartDateTime(startDateTime.getTime());
+        taskItem.setDueDateTime(dueDateTime.getTime());
+        taskItem.setCompleteDateTime(completeDateTime.getTime());
     }
 
     private void setStartDateAndTime(Calendar date){
-        extStartDay.setDate(date.getTime());
-        extBeginTime.setTime(date.getTime());
+        startDay.setDate(date.getTime());
+        beginTime.setTime(date.getTime());
     }
 
     private void setDueDateAndTime(Calendar date){
-        extDueDay.setDate(date.getTime());
-        extEndTime.setTime(date.getTime());
+        dueDay.setDate(date.getTime());
+        endTime.setTime(date.getTime());
     }
 
     class TaskDate {

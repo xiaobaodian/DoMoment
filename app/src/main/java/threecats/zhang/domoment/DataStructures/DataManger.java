@@ -1,9 +1,6 @@
 package threecats.zhang.domoment.DataStructures;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +13,6 @@ import io.objectbox.query.Query;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
-import threecats.zhang.domoment.SQLite.SQLManger;
 import threecats.zhang.domoment.TodoFragment;
 
 /**
@@ -414,14 +410,14 @@ public class DataManger {
             if (dueDate == -1) {
                 taskExt.setStartDate(day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH));
             } else {
-                taskExt.setExtCreateDateTime(day);
+                taskExt.setCreateDateTime(day);
             }
 
             taskExt.setCategoryID(1);
 
             taskItems.add(taskExt.getTaskItem());
             AddTask(taskExt.getTaskItem());
-            //Log.d(App.TAG, "Start DateTime : " + item.getExtStartDateTime());
+            //Log.d(App.TAG, "Start DateTime : " + item.getStartDateTime());
         }
         taskBox.put(taskItems);
     }

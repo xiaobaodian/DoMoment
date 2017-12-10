@@ -109,7 +109,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         super.onResume();
         App.setCurrentActivity(this);
         //oldCategoryID = task.getCategoryID();
-        //oldPriority = task.getExtPriority();
+        //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
         DisplayTaskItems();
     }
@@ -124,19 +124,19 @@ public class TaskDisplayActivity extends AppCompatActivity {
         tvCreatedDateTime.setText(createDateTimeStr);
         btnCategory.setText(App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
-        if (taskExt.getExtPriority() == TaskPriority.Urgent) {
+        if (taskExt.getPriority() == TaskPriority.Urgent) {
             priorityTitle = "紧急";
-        } else if (taskExt.getExtPriority() == TaskPriority.VeryImprotant){
+        } else if (taskExt.getPriority() == TaskPriority.VeryImprotant){
             priorityTitle = "非常重要";
-        } else if (taskExt.getExtPriority() == TaskPriority.Improtant) {
+        } else if (taskExt.getPriority() == TaskPriority.Improtant) {
             priorityTitle = "重要";
-        } else if(taskExt.getExtPriority() == TaskPriority.Focus){
+        } else if(taskExt.getPriority() == TaskPriority.Focus){
             priorityTitle = "关注";
-        } else if (taskExt.getExtPriority() == TaskPriority.None){
+        } else if (taskExt.getPriority() == TaskPriority.None){
             priorityTitle = "普通";
         } else {
             priorityTitle = "普通";
-            taskExt.setExtPriority(TaskPriority.None);
+            taskExt.setPriority(TaskPriority.None);
         }
         btnPriority.setText(priorityTitle);
     }
@@ -232,7 +232,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.taskeditor_priorityselection, (ViewGroup)findViewById(R.id.PriorityDialog));
 
-        TaskPriority oldPriority = taskExt.getExtPriority();
+        TaskPriority oldPriority = taskExt.getPriority();
         final CheckedTextView[] currentPriority = {null};
 
         AlertDialog.Builder priorityDialog = new AlertDialog.Builder(this);
@@ -240,60 +240,60 @@ public class TaskDisplayActivity extends AppCompatActivity {
         priorityDialog.setView(layout);
 
         priorityDialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            taskExt.setExtPriority(TaskPriority.None);
+            taskExt.setPriority(TaskPriority.None);
             DisplayTaskItems();
         });
         priorityDialog.setPositiveButton("确定", (dialogInterface, i) -> {
             DisplayTaskItems();
         });
         priorityDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            taskExt.setExtPriority(oldPriority);
+            taskExt.setPriority(oldPriority);
         });
 
-        priorityDialog.setOnCancelListener(view ->{taskExt.setExtPriority(oldPriority);});
+        priorityDialog.setOnCancelListener(view ->{taskExt.setPriority(oldPriority);});
 
         LinearLayout urgent = layout.findViewById(R.id.Urgent);
         CheckedTextView checkedUrgent = layout.findViewById(R.id.tvUrgent);
         urgent.setTag(TaskPriority.Urgent);
-        if (taskExt.getExtPriority() == TaskPriority.Urgent) currentPriority[0] = checkedUrgent;
+        if (taskExt.getPriority() == TaskPriority.Urgent) currentPriority[0] = checkedUrgent;
 
         LinearLayout veryImprotant = layout.findViewById(R.id.VeryImprotant);
         CheckedTextView checkedVeryImprotant = layout.findViewById(R.id.tvVeryImprotant);
         veryImprotant.setTag(TaskPriority.VeryImprotant);
-        if (taskExt.getExtPriority() == TaskPriority.VeryImprotant) currentPriority[0] = checkedVeryImprotant;
+        if (taskExt.getPriority() == TaskPriority.VeryImprotant) currentPriority[0] = checkedVeryImprotant;
 
         LinearLayout improtant = layout.findViewById(R.id.Improtant);
         CheckedTextView checkedImprotant = layout.findViewById(R.id.tvImprotant);
         improtant.setTag(TaskPriority.Improtant);
-        if (taskExt.getExtPriority() == TaskPriority.Improtant) currentPriority[0] = checkedImprotant;
+        if (taskExt.getPriority() == TaskPriority.Improtant) currentPriority[0] = checkedImprotant;
 
         LinearLayout focus = layout.findViewById(R.id.Focus);
         CheckedTextView checkedFocus = layout.findViewById(R.id.tvFocus);
         focus.setTag(TaskPriority.Focus);
-        if (taskExt.getExtPriority() == TaskPriority.Focus) currentPriority[0] = checkedFocus;
+        if (taskExt.getPriority() == TaskPriority.Focus) currentPriority[0] = checkedFocus;
 
         if (currentPriority[0] != null) currentPriority[0].setChecked(true);
 
         urgent.setOnClickListener(view -> {
-            taskExt.setExtPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedUrgent;
             currentPriority[0].setChecked(true);
         });
         veryImprotant.setOnClickListener(view -> {
-            taskExt.setExtPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedVeryImprotant;
             currentPriority[0].setChecked(true);
         });
         improtant.setOnClickListener(view -> {
-            taskExt.setExtPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedImprotant;
             currentPriority[0].setChecked(true);
         });
         focus.setOnClickListener(view -> {
-            taskExt.setExtPriority((TaskPriority) view.getTag());
+            taskExt.setPriority((TaskPriority) view.getTag());
             if (currentPriority[0] != null) currentPriority[0].setChecked(false);
             currentPriority[0] = checkedFocus;
             currentPriority[0].setChecked(true);
