@@ -42,13 +42,13 @@ public class DateTimeHelper {
 
     public boolean IsCurrentMonth(Date date){
         tempCalendarDay.setTime(date);
-        boolean yes;
+        boolean currentMonth;
         if (IsCurrentYear(date)) {
-            yes = tempCalendarDay.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH);
+            currentMonth = tempCalendarDay.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH);
         } else {
-            yes = false;
+            currentMonth = false;
         }
-        return yes;
+        return currentMonth;
     }
 
     public void  BlendCalendar(Calendar date, DatePicker datePicker){
