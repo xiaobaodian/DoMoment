@@ -227,37 +227,20 @@ public class TaskDetailsFragment extends TitleFragment {
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
-                    SelectedDate = (Calendar)taskExt.getDueDateTime().clone();
-                    DateTime.BlendCalendar(SelectedDate, datePicker);
-                    if (SelectedDate.after(taskExt.getDueDateTime())) {
-                        long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
-                        taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                        taskExt.setLongDueDateTime(taskExt.getLongStartDateTime() + timeSpan);
-                    } else {
-                        taskExt.setStartDate(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                    }
-                    //TaskItem tt = App.getDataManger().getEditorTask();
-                    //taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
+
+                    taskExt.setShiftStartDate(datePicker.getYear()
+                            , datePicker.getMonth()
+                            , datePicker.getDayOfMonth());
+
                     break;
                 case editDueDate:
-                    SelectedDate = (Calendar)taskExt.getStartDateTime().clone();
-                    DateTime.BlendCalendar(SelectedDate, datePicker);
-                    Calendar tmpStartDate = (Calendar)taskExt.getStartDateTime().clone();
-                    if (SelectedDate.before(taskExt.getStartDateTime())) {
-                        if (taskExt.IsOneDay()) {
-                            taskExt.setStartDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
-                            taskExt.setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH),tmpStartDate.get(Calendar.DAY_OF_MONTH));
-                        } else {
-                            long timeSpan = taskExt.getLongDueDateTime() - taskExt.getLongStartDateTime();
-                            taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
-                            taskExt.setLongStartDateTime(taskExt.getLongDueDateTime()-timeSpan);
-                        }
-                    } else {
-                        taskExt.setDueDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
-                    }
+
+                    taskExt.setShiftDueDate(datePicker.getYear()
+                            , datePicker.getMonth()
+                            , datePicker.getDayOfMonth());
+
                     break;
             }
-            //App.getDataManger().getTaskBox().put(taskExt.getTaskItem());
 
             DisplayDateTimeFields();
         });

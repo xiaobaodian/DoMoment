@@ -217,6 +217,19 @@ public class TaskExt {
         day.setDate(startDate.getTime());
         setStartDate(day.Year, day.Month, day.Day);
     }
+    public void setShiftStartDate(int year, int month, int day){
+        //dueDateTime().clone()是为了在if (date.after(dueDateTime())判断
+        //里对齐小时分钟，即只计算年月日的部分
+        Calendar date = (Calendar)dueDateTime.clone();
+        date.set(year, month, day);
+        if (date.after(dueDateTime)) {
+            long timeSpan = getLongDueDateTime() - getLongStartDateTime();
+            setStartDate(year, month, day);
+            setLongDueDateTime(getLongStartDateTime() + timeSpan);
+        } else {
+            setStartDate(year, month, day);
+        }
+    }
 
     public void setDueDate(int year, int month, int day){
         dueDay.setDate(year, month, day);
@@ -227,6 +240,25 @@ public class TaskExt {
         TaskDate day = new TaskDate();
         day.setDate(dueDate.getTime());
         setDueDate(day.Year, day.Month, day.Day);
+    }
+    public void setShiftDueDate(int year, int month, int day){
+        Calendar date = (Calendar)startDateTime.clone();
+        date.set(year, month, day);
+        Calendar tmpStartDate = (Calendar)startDateTime.clone();
+        if (date.before(startDateTime)) {
+            if (IsOneDay()) {
+                setStartDate(year, month, day);
+                setDueDate(startDay.Year, startDay.Month, startDay.Day);
+                //setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH),tmpStartDate.get(Calendar.DAY_OF_MONTH));
+                //setDueDate(year, month, day);
+            } else {
+                long timeSpan = getLongDueDateTime() - getLongStartDateTime();
+                setDueDate(year, month, day);
+                setLongStartDateTime(getLongDueDateTime()-timeSpan);
+            }
+        } else {
+            setDueDate(year, month, day);
+        }
     }
 
     public void setBeginTime(int hour, int minute){
