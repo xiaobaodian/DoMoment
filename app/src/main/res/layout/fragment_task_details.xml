@@ -10,6 +10,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="top"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -113,12 +114,13 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.526"
-                        app:srcCompat="@mipmap/ic_event_black_24dp" />
+                        app:srcCompat="@android:drawable/ic_menu_today" />
 
                     <TextView
                         android:id="@+id/tvStartDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:background="@drawable/touch_bg"
                         android:drawablePadding="12dp"
                         android:drawableTint="@color/colorPrimary"
@@ -128,10 +130,9 @@
                         android:paddingTop="16dp"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/imageCal"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginLeft="8dp"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:layout_constraintLeft_toRightOf="@+id/imageCal" />
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <TextView
                         android:id="@+id/tvDueDate"
@@ -155,11 +156,9 @@
                         style="@style/Widget.AppCompat.Button.Small"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:adjustViewBounds="false"
-                        android:background="@mipmap/add"
+                        android:background="@drawable/ic_action_name"
                         android:backgroundTint="@color/colorPrimary"
                         android:scaleType="fitXY"
                         android:scaleX="0.5"
@@ -196,12 +195,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/ic_schedule_black_24dp" />
+                        app:srcCompat="@drawable/ic_check_circle" />
 
                     <TextView
                         android:id="@+id/tvStartTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:background="@null"
                         android:drawablePadding="12dp"
                         android:drawableTint="@color/colorPrimary"
@@ -211,10 +211,9 @@
                         android:paddingTop="16dp"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/imageClock"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
-                        android:layout_marginLeft="8dp"
-                        app:layout_constraintLeft_toRightOf="@+id/imageClock" />
+                        app:layout_constraintVertical_bias="1.0" />
 
                     <TextView
                         android:id="@+id/tvDueTime"
@@ -236,11 +235,10 @@
                         style="@style/Widget.AppCompat.Button.Small"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_weight="1"
                         android:adjustViewBounds="false"
-                        android:background="@mipmap/add"
+                        android:background="@drawable/ic_action_name"
                         android:backgroundTint="@color/colorPrimary"
                         android:scaleType="fitXY"
                         android:scaleX="0.5"
@@ -311,4 +309,5 @@
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
+
 </FrameLayout>

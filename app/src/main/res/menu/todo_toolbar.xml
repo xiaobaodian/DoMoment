@@ -7,7 +7,6 @@
         android:title="删除分类" />
     <item
         android:id="@+id/TodoMenu_ChangedCategoryBackgroup"
-        android:icon="@mipmap/remind"
         android:title="更换主题" />
     <item android:title="显示详情" />
     <item
