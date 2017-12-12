@@ -50,4 +50,5 @@
     <string name="category_prioritycategory_title">重要任务</string>
     <string name="grouplist_veryimprotant_title">非常重要</string>
     <string name="inputtext_category_hint">项目标题</string>
+    <string name="inputtext_simpleaddtask_hint">任务标题</string>
 </resources>

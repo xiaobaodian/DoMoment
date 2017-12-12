@@ -26,21 +26,21 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
     @Id
     long id;
 
-    private String title;
-    private String note;
-    private String place;
-    private String taskContext;
-    private String taskTags;
-    private int categoryID;
-    private int priorityID;
+    private String title = "";
+    private String note = "";
+    private String place = "";
+    private String taskContext = "";
+    private String taskTags = "";
+    private int categoryID = 1;
+    private int priorityID = TaskPriority.None.ordinal();
     private Date createDateTime;
     private Date startDateTime;
     private Date dueDateTime;
     private Date completeDateTime;
-    private boolean isAllDay;
-    private boolean isNoDate;
-    private boolean isComplete;
-    private boolean isMoment;
+    private boolean isAllDay = true;
+    private boolean isNoDate = true;
+    private boolean isComplete = false;
+    private boolean isMoment = true;
     @Backlink
     ToMany<CheckItem> checkList;
 
@@ -57,11 +57,6 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
         createDateTime = new Date();
         completeDateTime = new Date();
 
-        priorityID = TaskPriority.None.ordinal();
-
-        isNoDate = true;
-        isAllDay = true;
-        isComplete = false;
     }
 
     public void setID(int ID){

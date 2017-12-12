@@ -114,7 +114,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.526"
-                        app:srcCompat="@android:drawable/ic_menu_today" />
+                        app:srcCompat="@drawable/ic_action_date_small" />
 
                     <TextView
                         android:id="@+id/tvStartDate"
@@ -195,7 +195,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_check_circle" />
+                        app:srcCompat="@drawable/ic_action_time_small" />
 
                     <TextView
                         android:id="@+id/tvStartTime"

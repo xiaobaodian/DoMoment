@@ -51,4 +51,5 @@
     <string name="category_prioritycategory_title">Priority</string>
     <string name="grouplist_veryimprotant_title">Very Improtant</string>
     <string name="inputtext_category_hint">Category Title</string>
+    <string name="inputtext_simpleaddtask_hint">Task Title</string>
 </resources>

@@ -1,6 +1,7 @@
 package threecats.zhang.domoment;
 
 import android.content.Context;
+import android.drm.DrmStore;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -12,17 +13,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +39,7 @@ import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
+import threecats.zhang.domoment.EventClass.TaskEditorEvent;
 import threecats.zhang.domoment.Helper.MaskDialog;
 import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.SetTaskCategorysAdapter;
@@ -95,7 +104,18 @@ public class TaskDisplayActivity extends AppCompatActivity {
             viewPager.setAdapter(new TaskFragmentAdapter(fragmentManager, viewFragmentList));
             taskTab.setupWithViewPager(viewPager);
         }
+
+        etTaskTitle.setOnFocusChangeListener(mOnFocusChangeListener);
+
     }
+
+    private View.OnFocusChangeListener mOnFocusChangeListener = (view, b) -> {
+        if (b) {
+            App.Toast("has focus");
+        } else {
+            App.Toast("no focus");
+        }
+    };
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
@@ -112,6 +132,23 @@ public class TaskDisplayActivity extends AppCompatActivity {
         //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
         DisplayTaskItems();
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void doEditorStat(TaskEditorEvent editorEvent){
+        if (editorEvent.getEditorMode() == EditorMode.Add) {
+
+            etTaskTitle.setFocusable(true);
+            etTaskTitle.setFocusableInTouchMode(true);
+            etTaskTitle.requestFocus();
+            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            //InputMethodManager imm = (InputMethodManager) thisContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            //imm.showSoftInput(etTaskTitle, InputMethodManager.SHOW_FORCED);// 显示输入法
+            //etTaskTitle.imeOptions="actionDone";
+            //((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(this.getWindowToken(), 0);
+        }
+        EventBus.getDefault().removeStickyEvent(editorEvent);
     }
 
     private void DisplayTaskItems(){
@@ -179,6 +216,12 @@ public class TaskDisplayActivity extends AppCompatActivity {
         }
         //return super.onOptionsItemSelected(item);
         return false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +49,8 @@ import java.util.List;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.CustomCategory;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
+import threecats.zhang.domoment.DataStructures.TaskExt;
+import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.EventClass.TaskEditorEvent;
@@ -195,7 +198,9 @@ public class TodoFragment extends Fragment {
         });
 
         addActionButton.setOnClickListener(v -> {
-            App.getDataManger().NewTask(Calendar.getInstance());
+            //EventBus.getDefault().postSticky(new TaskEditorEvent(EditorMode.Add));
+            //App.getDataManger().NewTask(Calendar.getInstance());
+            popupSimpleAddTask();
         });
 
         viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(), fragmentList));
@@ -239,8 +244,10 @@ public class TodoFragment extends Fragment {
 
         buildsDrawerCategoryList(view);
         setCurrentCategory();
-        EventBus.getDefault().register(this);
+
+        //EventBus.getDefault().register(this);
         App.Toast("注册了EventBus");
+
         return view;
     }
 
@@ -309,17 +316,17 @@ public class TodoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe  //(sticky = true, threadMode = ThreadMode.MAIN)
-    public void doTaskEditor(TaskEditorEvent taskEditorEvent){
-        if (taskEditorEvent.getEditorMode() == EditorMode.Edit) {
-            App.Toast("调用了编辑模式");
-        } else {
-            App.Toast("调用了其他的模式");
-        }
-    }
+//    @Subscribe  //(sticky = true, threadMode = ThreadMode.MAIN)
+//    public void doTaskEditor(TaskEditorEvent taskEditorEvent){
+//        if (taskEditorEvent.getEditorMode() == EditorMode.Edit) {
+//            App.Toast("调用了编辑模式");
+//        } else {
+//            App.Toast("调用了其他的模式");
+//        }
+//    }
 
     public void setBackgroundImage(CategoryBase currentCategory){
         if (currentCategory == null) return;
@@ -370,6 +377,111 @@ public class TodoFragment extends Fragment {
 
     public void setProgressBarVisibility(int Visibility){
         if (progressBar != null) progressBar.setVisibility(Visibility);
+    }
+
+    private void popupSimpleAddTask(){
+
+        View contentView = LayoutInflater.from(parentContext).inflate(R.layout.popupwindow_simple_addtask, null, false);
+        PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
+        popupWindow.setOutsideTouchable(true);
+        //设置可以点击
+        popupWindow.setTouchable(true);
+        popupWindow.setFocusable(true);
+        //进入退出的动画
+        //popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
+
+        ConstraintLayout root = contentView.findViewById(R.id.Root);
+        root.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        TextInputLayout textInputLayout = contentView.findViewById(R.id.TextInputLayout);
+        TextInputEditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
+
+        taskTitle.setOnFocusChangeListener((v, hasFocus) -> {
+
+        });
+
+        taskTitle.setOnKeyListener((view, i, keyEvent) -> {
+
+            if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                if (i == KeyEvent.KEYCODE_ENTER) {
+                    if (taskTitle.getText().toString().isEmpty()) {
+                        App.Toast("no task");
+                    } else {
+                        App.getDataManger().SimpleAddTask(taskTitle.getText().toString());
+                        taskTitle.setText("");
+                    }
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        taskTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    //textInputLayout.setErrorEnabled(true);
+                    //textInputLayout.setError("不能为空");
+                } else {
+                    //textInputLayout.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        popupWindow.setOnDismissListener(() -> {
+            if (taskTitle.getText().toString().isEmpty()) {
+                App.Toast("no task");
+            } else {
+                App.getDataManger().SimpleAddTask(taskTitle.getText().toString());
+            }
+        });
+
+        TabLayout.Tab tab = viewTabLayout.getTabAt(2);
+        tab.select();
+        App.setPopupWindow(popupWindow);
+        popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
+    }
+
+    private void safeRemoveCategory(String notice){
+        AlertDialog.Builder removeCategoryDialog = UIHelper.getYNDialog(parentContext, notice);
+        removeCategoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
+            App.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+            CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
+            App.getDataManger().setCurrentCategory(firstCategory);
+            updateDrawerCategoryList();
+        });
+        removeCategoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
+            App.Toast("取消");
+        });
+        removeCategoryDialog.show();
+    }
+    private void RemoveCategory(){
+        String title = "删除类目《"+currentCategory.getTitle()+"》";
+        String notice = "如果确认删除，该类目下所有的任务将成为未分类的任务";
+        MaskDialog maskDialog = new MaskDialog(parentContext, title, notice);
+        maskDialog.setBtnOKOnClickListener(view -> {
+            App.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+            CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
+            App.getDataManger().setCurrentCategory(firstCategory);
+            updateDrawerCategoryList();
+        });
+        maskDialog.setBtnCancelOnClickListener(view -> {
+            UIHelper.Toast("取消");
+        });
+        maskDialog.showAtLocation(fragmentView);
     }
 
     private void popupCategoryEditor(){
@@ -444,35 +556,6 @@ public class TodoFragment extends Fragment {
         //popupWindowCategoryEditor = popupWindow;
         App.setPopupWindow(popupWindow);
         popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
-    }
-
-    private void safeRemoveCategory(String notice){
-        AlertDialog.Builder removeCategoryDialog = UIHelper.getYNDialog(parentContext, notice);
-        removeCategoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            App.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
-            CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
-            App.getDataManger().setCurrentCategory(firstCategory);
-            updateDrawerCategoryList();
-        });
-        removeCategoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            App.Toast("取消");
-        });
-        removeCategoryDialog.show();
-    }
-    private void RemoveCategory(){
-        String title = "删除类目《"+currentCategory.getTitle()+"》";
-        String notice = "如果确认删除，该类目下所有的任务将成为未分类的任务";
-        MaskDialog maskDialog = new MaskDialog(parentContext, title, notice);
-        maskDialog.setBtnOKOnClickListener(view -> {
-            App.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
-            CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
-            App.getDataManger().setCurrentCategory(firstCategory);
-            updateDrawerCategoryList();
-        });
-        maskDialog.setBtnCancelOnClickListener(view -> {
-            UIHelper.Toast("取消");
-        });
-        maskDialog.showAtLocation(fragmentView);
     }
 
 }
