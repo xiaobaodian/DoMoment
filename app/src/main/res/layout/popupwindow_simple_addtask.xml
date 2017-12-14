@@ -18,44 +18,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_action_listadd" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/TextInputLayout"
+        <EditText
+            android:id="@+id/SimpleTaskTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
-            android:paddingEnd="12dp"
-            android:paddingStart="12dp"
-            android:paddingTop="12dp"
-            app:counterMaxLength="10"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/inputtext_simpleaddtask_hint"
+            android:inputType="text"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_conversion_absoluteHeight="81dp"
-            tools:layout_conversion_absoluteWidth="384dp">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/SimpleTaskTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/inputtext_simpleaddtask_hint"
-                android:inputType="text"
-                android:singleLine="true"
-                tools:layout_conversion_absoluteHeight="46dp"
-                tools:layout_conversion_absoluteWidth="360dp"
-                tools:layout_editor_absoluteX="12dp"
-                tools:layout_editor_absoluteY="490dp" />
+        <Button
+            android:id="@+id/buttonDate"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="日期"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SimpleTaskTitle" />
 
-        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/buttonCategory"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未分类"
+            app:layout_constraintStart_toEndOf="@+id/buttonDate"
+            app:layout_constraintTop_toTopOf="@+id/buttonDate" />
+
+        <Button
+            android:id="@+id/buttonAdd"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="加入"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

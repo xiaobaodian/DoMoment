@@ -31,7 +31,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -382,6 +385,7 @@ public class TodoFragment extends Fragment {
     private void popupSimpleAddTask(){
 
         View contentView = LayoutInflater.from(parentContext).inflate(R.layout.popupwindow_simple_addtask, null, false);
+
         PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
@@ -390,15 +394,42 @@ public class TodoFragment extends Fragment {
         popupWindow.setTouchable(true);
         popupWindow.setFocusable(true);
         //进入退出的动画
-        //popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
+
+        contentView.setOnKeyListener((view, i, keyEvent) -> {
+            if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                if (i == KeyEvent.KEYCODE_BACK){
+                    App.Toast("Back Key");
+                    popupWindow.dismiss();
+                }
+            }
+            return true;
+        });
 
         ConstraintLayout root = contentView.findViewById(R.id.Root);
         root.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
 
-        TextInputLayout textInputLayout = contentView.findViewById(R.id.TextInputLayout);
-        TextInputEditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
+        EditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
+
+        taskTitle.setFocusable(true);
+        taskTitle.setFocusableInTouchMode(true);
+        taskTitle.requestFocus();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) taskTitle.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                //imm.showSoftInput(taskTitle, 0);// 显示输入法,InputMethodManager.SHOW_FORCED
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        },0);
+
+        Button btnAddTask = contentView.findViewById(R.id.buttonAdd);
+        btnAddTask.setOnClickListener(view -> {
+            App.getDataManger().SimpleAddTask(taskTitle.getText().toString());
+            taskTitle.setText("");
+        });
+
 
         taskTitle.setOnFocusChangeListener((v, hasFocus) -> {
 
