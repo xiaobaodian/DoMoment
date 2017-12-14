@@ -2,6 +2,7 @@ package threecats.zhang.domoment;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -387,7 +388,7 @@ public class TodoFragment extends Fragment {
         View contentView = LayoutInflater.from(parentContext).inflate(R.layout.popupwindow_simple_addtask, null, false);
 
         PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000)); //new BitmapDrawable(),提示是过期方法
         //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
         popupWindow.setOutsideTouchable(true);
         //设置可以点击
@@ -396,6 +397,7 @@ public class TodoFragment extends Fragment {
         //进入退出的动画
 
         contentView.setOnKeyListener((view, i, keyEvent) -> {
+            App.Toast("Simple Back Key");
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 if (i == KeyEvent.KEYCODE_BACK){
                     App.Toast("Back Key");
