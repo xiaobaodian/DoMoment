@@ -412,6 +412,13 @@ public class TodoFragment extends Fragment {
             popupWindow.dismiss();
         });
 
+        ConstraintLayout simpleDate = contentView.findViewById(R.id.SimpleDate);
+
+        Button buttonDate = contentView.findViewById(R.id.buttonDate);
+        buttonDate.setOnClickListener(view -> {
+            simpleDate.setVisibility(View.VISIBLE);
+        });
+
         EditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
 
         taskTitle.setFocusable(true);
