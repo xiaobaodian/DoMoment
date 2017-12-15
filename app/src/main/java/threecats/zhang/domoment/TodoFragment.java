@@ -419,6 +419,11 @@ public class TodoFragment extends Fragment {
             simpleDate.setVisibility(View.VISIBLE);
         });
 
+        Button buttonCategory = contentView.findViewById(R.id.buttonCategory);
+        buttonCategory.setOnClickListener(view -> {
+            simpleDate.setVisibility(View.GONE);
+        });
+
         EditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
 
         taskTitle.setFocusable(true);
