@@ -46,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
             //以后根据设置的参数来判断是首先进入哪一个活动（任务、回顾、关注）
             //mountFragment(momentFragment);
         }
+        if (todoFragment == null) todoFragment = new TodoFragment();
+        if (momentFragment == null) momentFragment = new MomentFragment();
+        if (focusFragment == null) focusFragment = new FocusFragment();
         mountFragment(todoFragment);
     }
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        if (todoFragment == null) todoFragment = new TodoFragment();
-        if (momentFragment == null) momentFragment = new MomentFragment();
-        if (focusFragment == null) focusFragment = new FocusFragment();
+//        if (todoFragment == null) todoFragment = new TodoFragment();
+//        if (momentFragment == null) momentFragment = new MomentFragment();
+//        if (focusFragment == null) focusFragment = new FocusFragment();
 
         return super.onCreateView(parent, name, context, attrs);
     }

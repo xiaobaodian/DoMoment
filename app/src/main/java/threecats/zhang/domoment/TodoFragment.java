@@ -79,7 +79,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 public class TodoFragment extends Fragment {
 
     private DateTimeHelper DateTime = App.getDateTime();
-    private Bundle savedInstanceState;
+    //private Bundle savedInstanceState;
     private Context parentContext;
     private Toolbar toolbar = null;
     private CollapsingToolbarLayout collapsingToolbar = null;
@@ -111,7 +111,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedInstanceState = savedInstanceState;
+        //this.savedInstanceState = savedInstanceState;
         App.getDataManger().setTodoFragment(this);
         //currentCategory = App.getCurrentCategory();
         //setRetainInstance(true);
@@ -429,13 +429,10 @@ public class TodoFragment extends Fragment {
         taskTitle.setFocusable(true);
         taskTitle.setFocusableInTouchMode(true);
         taskTitle.requestFocus();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) taskTitle.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                //imm.showSoftInput(taskTitle, 0);// 显示输入法,InputMethodManager.SHOW_FORCED
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            }
+        new Handler().postDelayed(() -> {
+            InputMethodManager imm = (InputMethodManager) taskTitle.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            //imm.showSoftInput(taskTitle, 0);// 显示输入法,InputMethodManager.SHOW_FORCED
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         },0);
 
         Button btnAddTask = contentView.findViewById(R.id.buttonAdd);

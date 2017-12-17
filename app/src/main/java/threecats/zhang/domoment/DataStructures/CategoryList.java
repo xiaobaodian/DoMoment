@@ -186,7 +186,9 @@ public class CategoryList {
 
         if (changeGroups.size() == 0 && task.getPriorityID() != TaskPriority.None.ordinal()) {
             CategoryBase priorityCategory = Categorys.get(2);
-            priorityCategory.AddTask(task);
+            if (!updateCategorys.contains(priorityCategory)) {
+                priorityCategory.AddTask(task);
+            }
         }
     }
 
