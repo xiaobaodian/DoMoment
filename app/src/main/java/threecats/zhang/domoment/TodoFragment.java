@@ -32,8 +32,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,9 +40,6 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,7 +52,6 @@ import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.GroupListType;
-import threecats.zhang.domoment.EventClass.TaskEditorEvent;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.Helper.MaskDialog;
 import threecats.zhang.domoment.Helper.UIHelper;
@@ -400,7 +394,7 @@ public class TodoFragment extends Fragment {
             App.Toast("Simple Back Key");
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 if (i == KeyEvent.KEYCODE_BACK){
-                    App.Toast("Back Key");
+                    UIHelper.Toast("Back Key");
                     popupWindow.dismiss();
                 }
             }
@@ -414,8 +408,14 @@ public class TodoFragment extends Fragment {
 
         ConstraintLayout simpleDate = contentView.findViewById(R.id.SimpleDate);
 
+        TaskExt taskExt = new TaskExt(new TaskItem());
+
+        EditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
+        UIHelper.showSoftKeyboard(taskTitle);
+
         Button buttonDate = contentView.findViewById(R.id.buttonDate);
         buttonDate.setOnClickListener(view -> {
+            UIHelper.closeSoftKeyboard(taskTitle);
             simpleDate.setVisibility(View.VISIBLE);
         });
 
@@ -424,21 +424,16 @@ public class TodoFragment extends Fragment {
             simpleDate.setVisibility(View.GONE);
         });
 
-        EditText taskTitle = contentView.findViewById(R.id.SimpleTaskTitle);
-
-        taskTitle.setFocusable(true);
-        taskTitle.setFocusableInTouchMode(true);
-        taskTitle.requestFocus();
-        new Handler().postDelayed(() -> {
-            InputMethodManager imm = (InputMethodManager) taskTitle.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            //imm.showSoftInput(taskTitle, 0);// 显示输入法,InputMethodManager.SHOW_FORCED
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        },0);
-
         Button btnAddTask = contentView.findViewById(R.id.buttonAdd);
         btnAddTask.setOnClickListener(view -> {
-            App.getDataManger().SimpleAddTask(taskTitle.getText().toString());
-            taskTitle.setText("");
+            if ( ! taskTitle.getText().toString().isEmpty()) {
+                taskExt.setTitle(taskTitle.getText().toString());
+                App.getDataManger().SimpleNewTask(taskExt.getTaskItem());
+                taskTitle.setText("");
+                buttonDate.setText("日期");
+                buttonCategory.setText("未分类");
+                taskExt.setTaskItem(new TaskItem());
+            }
         });
 
 
@@ -453,8 +448,12 @@ public class TodoFragment extends Fragment {
                     if (taskTitle.getText().toString().isEmpty()) {
                         App.Toast("no task");
                     } else {
-                        App.getDataManger().SimpleAddTask(taskTitle.getText().toString());
+                        taskExt.setTitle(taskTitle.getText().toString());
+                        App.getDataManger().SimpleNewTask(taskExt.getTaskItem());
                         taskTitle.setText("");
+                        buttonDate.setText("日期");
+                        buttonCategory.setText("未分类");
+                        taskExt.setTaskItem(new TaskItem());
                     }
                     return false;
                 }
@@ -483,11 +482,43 @@ public class TodoFragment extends Fragment {
 
             }
         });
+
+        Button buttonToday = contentView.findViewById(R.id.buttonToDay);
+        buttonToday.setOnClickListener(view -> {
+            buttonDate.setText("今天");
+            simpleDate.setVisibility(View.GONE);
+            UIHelper.closeSoftKeyboard(taskTitle);
+            taskExt.setStartDate(Calendar.getInstance());
+        });
+        Button buttonTomorrow = contentView.findViewById(R.id.buttonTomorrow);
+        buttonTomorrow.setOnClickListener(view -> {
+            buttonDate.setText("明天");
+            simpleDate.setVisibility(View.GONE);
+            UIHelper.closeSoftKeyboard(taskTitle);
+            taskExt.setStartDate(DateTime.getTomorrow());
+        });
+        Button buttonAfterTomorrow = contentView.findViewById(R.id.buttonAfterTomorrow);
+        buttonAfterTomorrow.setOnClickListener(view -> {
+            buttonDate.setText("后天");
+            simpleDate.setVisibility(View.GONE);
+            UIHelper.closeSoftKeyboard(taskTitle);
+            taskExt.setStartDate(DateTime.getAfterTomorrow());
+        });
+        Button buttonNextWeek = contentView.findViewById(R.id.buttonNextWeek);
+        buttonNextWeek.setOnClickListener(view -> {
+            buttonDate.setText("下周");
+            simpleDate.setVisibility(View.GONE);
+            UIHelper.closeSoftKeyboard(taskTitle);
+            taskExt.setStartDate(DateTime.getAfterTomorrow());
+        });
+
+
+
         popupWindow.setOnDismissListener(() -> {
             if (taskTitle.getText().toString().isEmpty()) {
                 App.Toast("no task");
             } else {
-                App.getDataManger().SimpleAddTask(taskTitle.getText().toString());
+                App.getDataManger().SimpleNewTask(taskTitle.getText().toString());
             }
         });
 

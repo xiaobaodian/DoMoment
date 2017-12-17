@@ -32,6 +32,18 @@ public class DateTimeHelper {
         date.set(Calendar.DAY_OF_MONTH, day);
     }
 
+    public Calendar getTomorrow(){
+        Calendar day = Calendar.getInstance();
+        day.add(Calendar.DATE, 1);
+        return day;
+    }
+
+    public Calendar getAfterTomorrow(){
+        Calendar day = Calendar.getInstance();
+        day.add(Calendar.DATE, 2);
+        return day;
+    }
+
     public boolean IsCurrentYear(Date date){
         tempCalendarDay.setTime(date);
         return tempCalendarDay.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR);

@@ -1,9 +1,12 @@
 package threecats.zhang.domoment.Helper;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +36,24 @@ public class UIHelper {
     public static void Toast(String message){
         Context context = App.getContext();
         android.widget.Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showSoftKeyboard(EditText editText){
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        new Handler().postDelayed(() -> {
+            InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            //imm.showSoftInput(taskTitle, 0);// 显示输入法,InputMethodManager.SHOW_FORCED
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+        },0);
+    }
+
+    public static void closeSoftKeyboard(EditText editText){
+        new Handler().postDelayed(() -> {
+            InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        },0);
     }
 
 }

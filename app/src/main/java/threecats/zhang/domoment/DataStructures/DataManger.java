@@ -209,9 +209,13 @@ public class DataManger {
     public void AddTask(TaskItem task){
         categoryList.AddTask(task);
     }
-    public void SimpleAddTask(String title){
+    public void SimpleNewTask(String title){
         TaskItem taskItem = new TaskItem();
         taskItem.setTitle(title);
+        taskBox.put(taskItem);
+        AddTask(taskItem);
+    }
+    public void SimpleNewTask(TaskItem taskItem){
         taskBox.put(taskItem);
         AddTask(taskItem);
     }
