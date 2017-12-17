@@ -4,12 +4,12 @@
     <string name="title_moment">时刻</string>
     <string name="title_todo">任务</string>
     <string name="title_focus">关注</string>
-    <string name="timeline_today_title">今日事 • 今日毕</string>
-    <string name="timeline_tomorrow_title">明日复明日，明日何其多</string>
-    <string name="timeline_nextweek_title">转眼即到是下周</string>
-    <string name="timeline_aftertomorrow_title">至后日，尝未晓</string>
+    <string name="timeline_today_title">今天</string>
+    <string name="timeline_tomorrow_title">明日</string>
+    <string name="timeline_nextweek_title">下周</string>
+    <string name="timeline_aftertomorrow_title">后天</string>
     <string name="hello_blank_fragment">你好空的碎片</string>
-    <string name="timeline_thisweek_title">这周事，早绸缪</string>
+    <string name="timeline_thisweek_title">这周</string>
     <string name="timeline_thismonth_title">本月</string>
     <string name="timeline_nextmonth_title">下个月</string>
     <string name="timeline_30daysoverdue_title">逾期30天</string>
