@@ -407,11 +407,27 @@ public class TodoFragment extends Fragment {
         });
 
         ConstraintLayout root = contentView.findViewById(R.id.Root);
+        ConstraintLayout simpleDate = contentView.findViewById(R.id.SimpleDate);
+        simpleDate.setTag(false);
+
         root.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
 
-        ConstraintLayout simpleDate = contentView.findViewById(R.id.SimpleDate);
+        root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                Integer tagInt = (Integer) view.getTag();
+                if (tagInt != null) {
+                    if ((tagInt - i7) > 100 && (boolean)simpleDate.getTag()) {
+                        popupWindow.dismiss();
+                    }
+                }
+                if (i3 == i7) {
+                    view.setTag(i3);
+                }
+            }
+        });
 
         TaskExt taskExt = new TaskExt(new TaskItem());
 
@@ -420,6 +436,7 @@ public class TodoFragment extends Fragment {
 
         Button buttonDate = contentView.findViewById(R.id.buttonDate);
         buttonDate.setOnClickListener(view -> {
+            simpleDate.setTag(false);
             UIHelper.closeSoftKeyboard(taskTitle);
             simpleDate.setVisibility(View.VISIBLE);
         });
@@ -492,6 +509,7 @@ public class TodoFragment extends Fragment {
         buttonToday.setOnClickListener(view -> {
             buttonDate.setText("今天");
             simpleDate.setVisibility(View.GONE);
+            simpleDate.setTag(true);
             UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(Calendar.getInstance());
         });
@@ -499,6 +517,7 @@ public class TodoFragment extends Fragment {
         buttonTomorrow.setOnClickListener(view -> {
             buttonDate.setText("明天");
             simpleDate.setVisibility(View.GONE);
+            simpleDate.setTag(true);
             UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(DateTime.getTomorrow());
         });
@@ -506,6 +525,7 @@ public class TodoFragment extends Fragment {
         buttonAfterTomorrow.setOnClickListener(view -> {
             buttonDate.setText("后天");
             simpleDate.setVisibility(View.GONE);
+            simpleDate.setTag(true);
             UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(DateTime.getAfterTomorrow());
         });
@@ -513,6 +533,7 @@ public class TodoFragment extends Fragment {
         buttonNextWeek.setOnClickListener(view -> {
             buttonDate.setText("下周");
             simpleDate.setVisibility(View.GONE);
+            simpleDate.setTag(true);
             UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(DateTime.getAfterTomorrow());
         });
