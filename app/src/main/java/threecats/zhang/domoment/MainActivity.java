@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        closeNavigation();
 
         //恢复或旋转屏幕后进入原来的状态
         if (savedInstanceState != null) {
@@ -83,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void showNavigation(){
+        navigation.setVisibility(View.VISIBLE);
+    }
+
+    public void closeNavigation(){
+        navigation.setVisibility(View.GONE);
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -91,12 +100,15 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_todo:
                     mountFragment(todoFragment);
+                    closeNavigation();
                     return true;
                 case R.id.navigation_moment:
                     mountFragment(momentFragment);
+                    closeNavigation();
                     return true;
                 case R.id.navigation_focus:
                     mountFragment(focusFragment);
+                    closeNavigation();
                     return true;
             }
             return false;

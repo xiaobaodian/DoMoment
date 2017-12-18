@@ -19,4 +19,5 @@
     <color name="colorAccent1">#ff4081</color>
     <color name="primary_text1">#212121</color>
     <color name="primary_lighttext">#eceae0</color>
+    <color name="title_backgroup">#6feceae0</color>
 </resources>

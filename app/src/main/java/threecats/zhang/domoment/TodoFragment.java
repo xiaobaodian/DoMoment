@@ -135,7 +135,29 @@ public class TodoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
         fragmentView = view;
+
         drawerLayout = view.findViewById(R.id.drawer_layout);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                //if (slideOffset > 0.02) App.getMainActivity().setNavigationState(View.GONE);
+                //if (slideOffset < 0.02) App.getMainActivity().setNavigationState(View.VISIBLE);
+            }
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                App.setDrawerMenu(drawerLayout);
+            }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                App.setDrawerMenu(null);
+            }
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
+
         progressBar = view.findViewById(R.id.LoadDatasprogressBar);
         //AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
         viewPager = view.findViewById(R.id.todo_viewpager);
@@ -155,26 +177,6 @@ public class TodoFragment extends Fragment {
                 App.getDataManger().categoryEditor.newCategory(id);
                 popupCategoryEditor();
             },200);
-        });
-
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                if (slideOffset > 0.02) App.getMainActivity().setNavigationState(View.GONE);
-                if (slideOffset < 0.02) App.getMainActivity().setNavigationState(View.VISIBLE);
-            }
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                App.setDrawerMenu(drawerLayout);
-            }
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                App.setDrawerMenu(null);
-            }
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
         });
 
         toolbar.setOnClickListener(v -> {
@@ -272,6 +274,9 @@ public class TodoFragment extends Fragment {
 //                ImageView themebackground = (ImageView)fragmentView.findViewById(R.id.todo_appbar_image);
 //                themebackground.setImageResource(currentCategory.getThemeBackgroundID());
 //                App.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
+                break;
+            case R.id.TodoMenu_ShowMainMenu:
+                App.getMainActivity().showNavigation();
                 break;
             case R.id.TodoMenu_EditCategoryTitle:
                 UIHelper.Toast("生成测试数据");

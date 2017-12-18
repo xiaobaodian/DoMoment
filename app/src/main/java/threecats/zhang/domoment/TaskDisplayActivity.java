@@ -1,7 +1,6 @@
 package threecats.zhang.domoment;
 
 import android.content.Context;
-import android.drm.DrmStore;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -13,14 +12,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
@@ -131,7 +128,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         //oldCategoryID = task.getCategoryID();
         //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
-        DisplayTaskItems();
+        displayTaskItems();
         EventBus.getDefault().register(this);
     }
 
@@ -151,7 +148,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         EventBus.getDefault().removeStickyEvent(editorEvent);
     }
 
-    private void DisplayTaskItems(){
+    private void displayTaskItems(){
         if (taskExt.IsComplete()) {
             doneflag.setVisibility(View.VISIBLE);
         } else {
@@ -245,10 +242,10 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
         categoryDialog.setNeutralButton("删除", (dialogInterface, i) -> {
             taskExt.setCategoryID(1);
-            DisplayTaskItems();
+            displayTaskItems();
         });
         categoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            DisplayTaskItems();
+            displayTaskItems();
         });
         categoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
             taskExt.setCategoryID(oldCategoryID);
@@ -284,10 +281,10 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
         priorityDialog.setNeutralButton("删除", (dialogInterface, i) -> {
             taskExt.setPriority(TaskPriority.None);
-            DisplayTaskItems();
+            displayTaskItems();
         });
         priorityDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            DisplayTaskItems();
+            displayTaskItems();
         });
         priorityDialog.setNegativeButton("取消", (dialogInterface, i) -> {
             taskExt.setPriority(oldPriority);

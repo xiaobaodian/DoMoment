@@ -7,9 +7,13 @@
         android:title="删除分类" />
     <item
         android:id="@+id/TodoMenu_ChangedCategoryBackgroup"
-        android:title="更换主题" />
-    <item android:title="显示详情" />
+        android:title="编辑主题" />
+    <item
+        android:id="@+id/TodoMenu_ShowMainMenu"
+        android:icon="@drawable/ic_action_rootmenu_drak"
+        android:title="显示主菜单"
+        app:showAsAction="always" />
     <item
         android:id="@+id/TodoMenu_EditCategoryTitle"
-        android:title="编辑标题" />
+        android:title="加载测试数据" />
 </menu>

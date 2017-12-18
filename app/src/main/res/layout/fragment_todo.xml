@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
 
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
         <android.support.design.widget.AppBarLayout
@@ -55,7 +53,7 @@
                     android:fitsSystemWindows="true"
                     android:minHeight="185dp"
                     app:layout_collapseMode="pin"
-                    app:navigationIcon="@mipmap/files"
+                    app:navigationIcon="@drawable/ic_action_menu_drak"
                     app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
                     app:titleTextColor="@color/colorAccent" />
 
