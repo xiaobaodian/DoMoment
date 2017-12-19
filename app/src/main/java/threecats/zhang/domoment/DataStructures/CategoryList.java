@@ -106,10 +106,10 @@ public class CategoryList {
         //App.getDataManger().setCurrentCategory(getFirstCategory());
         for (TaskItem task : removeTasks) {
             AddTask(task);
-            App.getDataManger().UpdateTask(task);
+            App.getDataManger().updateTask(task);
         }
 //        for (Task task : removeTasks) {
-//            App.getDataManger().UpdateTask(task);
+//            App.getDataManger().updateTask(task);
 //        }
     }
 

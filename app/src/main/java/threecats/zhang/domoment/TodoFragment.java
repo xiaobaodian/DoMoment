@@ -308,7 +308,7 @@ public class TodoFragment extends Fragment {
         setBackgroundImage(currentCategory);
         //检查是不是当前日期是新的一天
         if (App.getDateTime().IsCurrentDateChanged()) {
-            App.getDataManger().CurrentDateChange();
+            App.getDataManger().currentDateChange();
             App.getDateTime().MarkToday();
             //Toast.makeText(getContext(),"日期<已经>变更", Toast.LENGTH_SHORT).show();
         } else {
@@ -455,7 +455,7 @@ public class TodoFragment extends Fragment {
         btnAddTask.setOnClickListener(view -> {
             if ( ! taskTitle.getText().toString().isEmpty()) {
                 taskExt.setTitle(taskTitle.getText().toString());
-                App.getDataManger().SimpleNewTask(taskExt.getTaskItem());
+                App.getDataManger().simpleNewTask(taskExt.getTaskItem());
                 taskTitle.setText("");
                 buttonDate.setText("日期");
                 buttonCategory.setText("未分类");
@@ -476,7 +476,7 @@ public class TodoFragment extends Fragment {
                         App.Toast("no task");
                     } else {
                         taskExt.setTitle(taskTitle.getText().toString());
-                        App.getDataManger().SimpleNewTask(taskExt.getTaskItem());
+                        App.getDataManger().simpleNewTask(taskExt.getTaskItem());
                         taskTitle.setText("");
                         buttonDate.setText("日期");
                         buttonCategory.setText("未分类");

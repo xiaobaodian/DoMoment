@@ -209,7 +209,7 @@ public abstract class GroupBase extends RecyclerViewItem {
     }
 
     //以下是分组里面的条目管理
-//    public int AddTask(Task task){
+//    public int addTask(Task task){
 //        task.addParentGroup(this);
 //        tasks.add(task);
 //        if (State == DisplayState.Hide) State = DisplayState.Show;

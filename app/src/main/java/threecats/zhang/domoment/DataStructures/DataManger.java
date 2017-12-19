@@ -158,16 +158,16 @@ public class DataManger {
             if (mode == EditorMode.Edit) {
                 if (hasEditorTask()){
                     if (taskItem.getTitle().length() > 0) {
-                        AddTask(taskItem);
+                        addTask(taskItem);
                         taskBox.put(taskItem);
                         //AddTaskToDataBase(editorTask);
                     }
                 } else {
-                    ChangeTask(currentTask);
+                    changeTask(currentTask);
                 }
             } else {
-                if (!hasEditorTask()){
-                    RemoveTask(currentTask);
+                if ( ! hasEditorTask()){
+                    removeTask(currentTask);
                 }
             }
             taskItem = null;
@@ -188,16 +188,16 @@ public class DataManger {
         if (mode == EditorMode.Edit) {
             if (hasEditorTask()){
                 if (editorTask.getTitle().length() > 0) {
-                    AddTask(editorTask);
+                    addTask(editorTask);
                     taskBox.put(editorTask);
                     //AddTaskToDataBase(editorTask);
                 }
             } else {
-                ChangeTask(currentTask);
+                changeTask(currentTask);
             }
         } else {
             if (!hasEditorTask()){
-                RemoveTask(currentTask);
+                removeTask(currentTask);
             }
         }
         editorTask = null;
@@ -255,33 +255,33 @@ public class DataManger {
         App.showTaskDisplayActivity();
     }
 
-    public void AddTask(TaskItem task){
+    public void addTask(TaskItem task){
         categoryList.AddTask(task);
     }
     public void SimpleNewTask(String title){
         TaskItem taskItem = new TaskItem();
         taskItem.setTitle(title);
         taskBox.put(taskItem);
-        AddTask(taskItem);
+        addTask(taskItem);
     }
-    public void SimpleNewTask(TaskItem taskItem){
+    public void simpleNewTask(TaskItem taskItem){
         taskBox.put(taskItem);
-        AddTask(taskItem);
+        addTask(taskItem);
     }
 
-    public void RemoveTask(TaskItem task){
+    public void removeTask(TaskItem task){
         categoryList.RemoveTask(task);
         taskBox.remove(task);
     }
-    private void ChangeTask(TaskItem task){
+    private void changeTask(TaskItem task){
         categoryList.ChangeTask(task);
         taskBox.put(task);
     }
-    public void UpdateTask(TaskItem task){
+    public void updateTask(TaskItem task){
         taskBox.put(task);
     }
 
-    public void CurrentDateChange(){
+    public void currentDateChange(){
         categoryList.CurrentDateChange();
     }
 
@@ -290,7 +290,7 @@ public class DataManger {
         List<TaskItem> taskItems = taskQuery.find();
 
         for (TaskItem taskItem : taskItems) {
-            AddTask(taskItem);
+            addTask(taskItem);
         }
     }
 
@@ -475,7 +475,7 @@ public class DataManger {
             taskExt.setCategoryID(1);
 
             taskItems.add(taskExt.getTaskItem());
-            AddTask(taskExt.getTaskItem());
+            addTask(taskExt.getTaskItem());
             //Log.d(App.TAG, "Start DateTime : " + item.getStartDateTime());
         }
         taskBox.put(taskItems);
