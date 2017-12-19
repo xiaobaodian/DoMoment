@@ -25,7 +25,7 @@ public class DueThisMonthGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         int daySite = DateTime.GetDayOfWeek(Calendar.getInstance());
         //上周一的零时
         this.timePoint = DateTime.BuildTimePoint(1-daySite-7);

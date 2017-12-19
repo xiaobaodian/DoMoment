@@ -57,10 +57,10 @@ public class DataManger {
         categoryQuery = categoryBox.query().order(CategoryItem_.orderID).build();
 
         isDataloaded = false;
-        BuildCategorys();
+        buildCategorys();
     }
 
-    private void BuildCategorys(){
+    private void buildCategorys(){
         categoryList = new CategoryList();
         currentCategory = categoryList.getFirstCategory();
         currentGroupList = categoryList.getFirstGroupList();
@@ -75,7 +75,7 @@ public class DataManger {
         if (isDataloaded) return;
         LoadCategorys();
         LoadTasks();
-        if (categoryList.IsNull()) InitCategory();
+        if (categoryList.isNull()) initCategory();
         isDataloaded = true;
     }
 
@@ -107,19 +107,19 @@ public class DataManger {
             return category;
         }
 
-        public void Commit(EditorMode mode){
+        public void commit(EditorMode mode){
             if (mode == EditorMode.Edit) {
                 if (editorCategory != null){
                     if (editorCategory.title.length() > 0) {
-                        AddCustomCategory((CustomCategory) editorCategory);
-                        AddCategoryToDataBase((CustomCategory) editorCategory);
+                        addCustomCategory((CustomCategory) editorCategory);
+                        addCategoryToDataBase((CustomCategory) editorCategory);
                     }
                 } else {
-                    UpdateCategoryToDataBase((CustomCategory) currentCategory);
+                    updateCategoryToDataBase((CustomCategory) currentCategory);
                 }
             } else {
                 if (editorCategory == null){
-                    RemoveCategoryFromDataBase((CustomCategory) currentCategory);
+                    removeCategoryFromDataBase((CustomCategory) currentCategory);
                 } else {
                     currentCategory = oldCategory;
                     todoFragment.setCurrentCategory();
@@ -243,7 +243,7 @@ public class DataManger {
         return currentTaskExt;
     }
 
-    public void NewTask(Calendar day){
+    public void newTask(Calendar day){
         int categoryID = categoryList.getUsabilityCategoryID();
         TaskItem task = new TaskExt(categoryID, day).getTaskItem();
         setEditorTask(task);
@@ -256,7 +256,7 @@ public class DataManger {
     }
 
     public void addTask(TaskItem task){
-        categoryList.AddTask(task);
+        categoryList.addTask(task);
     }
     public void SimpleNewTask(String title){
         TaskItem taskItem = new TaskItem();
@@ -270,11 +270,11 @@ public class DataManger {
     }
 
     public void removeTask(TaskItem task){
-        categoryList.RemoveTask(task);
+        categoryList.removeTask(task);
         taskBox.remove(task);
     }
     private void changeTask(TaskItem task){
-        categoryList.ChangeTask(task);
+        categoryList.changeTask(task);
         taskBox.put(task);
     }
     public void updateTask(TaskItem task){
@@ -282,7 +282,7 @@ public class DataManger {
     }
 
     public void currentDateChange(){
-        categoryList.CurrentDateChange();
+        categoryList.currentDateChange();
     }
 
     private void LoadTasks(){
@@ -295,31 +295,31 @@ public class DataManger {
     }
 
     // Category操作
-    public void AddCustomCategory(CustomCategory customCategory){
-        categoryList.AddCustomCategory(customCategory);
+    public void addCustomCategory(CustomCategory customCategory){
+        categoryList.addCustomCategory(customCategory);
     }
     public void UpdateCustomCategory(CustomCategory customCategory){
-        UpdateCategoryToDataBase(customCategory);
+        updateCategoryToDataBase(customCategory);
     }
-    public void RemoveCustomCategory(CustomCategory customCategory){
-        categoryList.RemoveCustomCategory(customCategory);
-        RemoveCategoryFromDataBase(customCategory);
+    public void removeCustomCategory(CustomCategory customCategory){
+        categoryList.removeCustomCategory(customCategory);
+        removeCategoryFromDataBase(customCategory);
     }
 
     // Category数据库操作
 
-    private void AddCategoryToDataBase(CustomCategory customCategory){
+    private void addCategoryToDataBase(CustomCategory customCategory){
         CategoryItem categoryItem = new CategoryItem();
         categoryCustomToItem(customCategory, categoryItem);
         categoryItem.setId(0);
         categoryBox.put(categoryItem);
     }
-    private void UpdateCategoryToDataBase(CustomCategory customCategory){
+    private void updateCategoryToDataBase(CustomCategory customCategory){
         CategoryItem categoryItem = new CategoryItem();
         categoryCustomToItem(customCategory, categoryItem);
         categoryBox.put(categoryItem);
     }
-    private void RemoveCategoryFromDataBase(CustomCategory customCategory){
+    private void removeCategoryFromDataBase(CustomCategory customCategory){
         CategoryItem categoryItem = new CategoryItem();
         categoryCustomToItem(customCategory, categoryItem);
         categoryBox.remove(categoryItem);
@@ -333,7 +333,7 @@ public class DataManger {
 
             CustomCategory customCategory = new CustomCategory();
             categoryItemToCustom(categoryItem, customCategory);
-            AddCustomCategory(customCategory);
+            addCustomCategory(customCategory);
 
         }
     }
@@ -359,34 +359,34 @@ public class DataManger {
 
     // 初始化操作
 
-    private void InitCategory(){
+    private void initCategory(){
 
         List<CategoryItem> categoryItems = new ArrayList<>();
 
         CustomCategory customCategory;
         customCategory = new CustomCategory("学习与进修", 10);
-        AddCustomCategory(customCategory);
+        addCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
 
         customCategory = new CustomCategory("工作", 17);
-        AddCustomCategory(customCategory);
+        addCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
 
         customCategory = new CustomCategory("家庭", 16);
-        AddCustomCategory(customCategory);
+        addCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
 
         customCategory = new CustomCategory("宠物花鸟", 13);
-        AddCustomCategory(customCategory);
+        addCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
 
         customCategory = new CustomCategory("休闲娱乐", 18);
-        AddCustomCategory(customCategory);
+        addCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
         //Log.d(App.TAG, "title : " + customCategory.getTitle());
 
         customCategory = new CustomCategory("投资理财", 15);
-        AddCustomCategory(customCategory);
+        addCustomCategory(customCategory);
         categoryItems.add(new CategoryItem(customCategory.getTitle(), customCategory.getCategoryID()));
 
         categoryBox.put(categoryItems);
@@ -395,7 +395,7 @@ public class DataManger {
 
     // 辅助操作
 
-    public void BuildDatas(){
+    public void buildDatas(){
         final int TotalTasks = 80;
         List<TaskItem> taskItems = new ArrayList<>();
 

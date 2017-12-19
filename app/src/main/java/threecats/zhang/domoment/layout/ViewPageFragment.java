@@ -70,7 +70,7 @@ public abstract class ViewPageFragment extends TitleFragment {
         TipsText = fragmentView.findViewById(tipsTextID);
         RecyclerView recyclerView = fragmentView.findViewById(recyclerViewID);
         try {
-            groupList.BindRecyclerView(recyclerView, groupListAdapter, fragmentView);
+            groupList.bindRecyclerView(recyclerView, groupListAdapter, fragmentView);
             //TouchMode（即手机触摸屏模式）下默认没有Focus，只有设置如下才能获取OnFocusChange事件
             recyclerView.setFocusableInTouchMode(true);
             recyclerView.setOnFocusChangeListener(new View.OnFocusChangeListener() {

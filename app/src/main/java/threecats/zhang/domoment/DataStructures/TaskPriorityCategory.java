@@ -25,16 +25,16 @@ public class TaskPriorityCategory extends CategoryBase {
     }
 
     @Override
-    public boolean InCategory(TaskItem task) {
+    public boolean inCategory(TaskItem task) {
         return task.getPriorityID() != TaskPriority.None.ordinal();
     }
 
     @Override
     protected void BuildGroupLists() {
-        AddGroupList(new UrgentGroupList(this));
-        AddGroupList(new VeryImportanceGroupList(this));
-        AddGroupList(new ImportanceGroupList(this));
-        AddGroupList(new FocusGroupList(this));
+        addGroupList(new UrgentGroupList(this));
+        addGroupList(new VeryImportanceGroupList(this));
+        addGroupList(new ImportanceGroupList(this));
+        addGroupList(new FocusGroupList(this));
     }
 
 }

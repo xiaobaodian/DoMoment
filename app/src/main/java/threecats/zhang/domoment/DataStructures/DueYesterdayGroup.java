@@ -25,7 +25,7 @@ public class DueYesterdayGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         this.timePoint = DateTime.BuildTimePoint(0);
     }
 

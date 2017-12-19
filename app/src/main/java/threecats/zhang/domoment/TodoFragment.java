@@ -199,7 +199,7 @@ public class TodoFragment extends Fragment {
 
         addActionButton.setOnClickListener(v -> {
             //EventBus.getDefault().postSticky(new TaskEditorEvent(EditorMode.Add));
-            //App.getDataManger().NewTask(Calendar.getInstance());
+            //App.getDataManger().newTask(Calendar.getInstance());
             popupSimpleAddTask();
         });
 
@@ -264,7 +264,7 @@ public class TodoFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.TodoMenu_RemoveCategory:
                 //safeRemoveCategory(notice);
-                RemoveCategory();
+                removeCategory();
                 break;
             case R.id.TodoMenu_ChangedCategoryBackgroup:
                 //setCategoryBackground();
@@ -280,7 +280,7 @@ public class TodoFragment extends Fragment {
                 break;
             case R.id.TodoMenu_EditCategoryTitle:
                 UIHelper.Toast("生成测试数据");
-                App.getDataManger().BuildDatas();
+                App.getDataManger().buildDatas();
                 UIHelper.Toast("测试数据已生成");
                 break;
         }
@@ -337,14 +337,14 @@ public class TodoFragment extends Fragment {
         Glide.with(parentContext).load(currentCategory.getThemeBackgroundID()).transition(withCrossFade()).into(backgroundImage);
     }
 
-    public void SetGroupListTitle(String title){
+    public void setGroupListTitle(String title){
         collapsingToolbar.setTitle(title);
     }
 
     public void setCurrentCategory(){
         drawerLayout.closeDrawer(GravityCompat.START);
         currentCategory = App.getCurrentCategory();
-        SetGroupListTitle(currentCategory.getTitle());
+        setGroupListTitle(currentCategory.getTitle());
         setBackgroundImage(currentCategory);
         //ImageView themebackground = (ImageView)fragmentView.findViewById(R.id.todo_appbar_image);
         //themebackground.setImageResource(currentCategory.getThemeBackgroundID());
@@ -558,7 +558,7 @@ public class TodoFragment extends Fragment {
     private void safeRemoveCategory(String notice){
         AlertDialog.Builder removeCategoryDialog = UIHelper.getYNDialog(parentContext, notice);
         removeCategoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            App.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+            App.getDataManger().removeCustomCategory((CustomCategory) currentCategory);
             CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
             App.getDataManger().setCurrentCategory(firstCategory);
             updateDrawerCategoryList();
@@ -568,12 +568,12 @@ public class TodoFragment extends Fragment {
         });
         removeCategoryDialog.show();
     }
-    private void RemoveCategory(){
+    private void removeCategory(){
         String title = "删除类目《"+currentCategory.getTitle()+"》";
         String notice = "如果确认删除，该类目下所有的任务将成为未分类的任务";
         MaskDialog maskDialog = new MaskDialog(parentContext, title, notice);
         maskDialog.setBtnOKOnClickListener(view -> {
-            App.getDataManger().RemoveCustomCategory((CustomCategory) currentCategory);
+            App.getDataManger().removeCustomCategory((CustomCategory) currentCategory);
             CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
             App.getDataManger().setCurrentCategory(firstCategory);
             updateDrawerCategoryList();
@@ -625,7 +625,7 @@ public class TodoFragment extends Fragment {
                     textInputLayout.setError("不能为空");
                 } else {
                     textInputLayout.setErrorEnabled(false);
-                    SetGroupListTitle(s.toString());
+                    setGroupListTitle(s.toString());
                 }
             }
 
@@ -637,10 +637,10 @@ public class TodoFragment extends Fragment {
         popupWindow.setOnDismissListener(() -> {
             if (categoryTitle.getText().toString().isEmpty()) {
                 App.Toast("标题设置错误，恢复到以前");
-                SetGroupListTitle(editorCategory.getTitle());
+                setGroupListTitle(editorCategory.getTitle());
             } else {
                 editorCategory.setTitle(categoryTitle.getText().toString());
-                App.getDataManger().categoryEditor.Commit(EditorMode.Edit);
+                App.getDataManger().categoryEditor.commit(EditorMode.Edit);
                 //App.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 updateDrawerCategoryList();
             }

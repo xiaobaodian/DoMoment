@@ -19,38 +19,38 @@ public class TimeLineGroupList extends GroupListBase {
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
         setTitle(App.getContext().getString(R.string.grouplist_timeline_title));
-        BuildGroups();
+        buildGroups();
     }
 
     @Override
-    public boolean InGroupList(TaskItem task){
+    public boolean inGroupList(TaskItem task){
         TaskExt taskExt = new TaskExt(task);
-        if (taskExt.IsNoDate() || taskExt.IsComplete()) return false;
+        if (taskExt.isNoDate() || taskExt.isComplete()) return false;
         return taskExt.getDueDateTime().after(timePoint);
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         this.timePoint = DateTime.BuildTimePoint(0);
     }
 
     @Override
-    protected void BuildGroups(){
+    protected void buildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
-        AddGroup(new TimeLineTodayGroup(this));
-        AddGroup(new TimeLineTomorrowGroup(this));
-        AddGroup(new TimeLineAfterTomorrowGroup(this));
-        AddGroup(new TimeLineThisWeekGroup(this));
-        AddGroup(new TimeLineNextWeekGroup(this));
-        AddGroup(new TimeLineThisMonthGroup(this));
-        AddGroup(new TimeLineNextMonthGroup(this));
-        AddGroup(new TimeLineWithinThreeMonthsGroup(this));
-        AddGroup(new TimeLineWithinSixMonthsGroup(this));
-        AddGroup(new TimeLineForwardGroup(this));
+        addGroup(new TimeLineTodayGroup(this));
+        addGroup(new TimeLineTomorrowGroup(this));
+        addGroup(new TimeLineAfterTomorrowGroup(this));
+        addGroup(new TimeLineThisWeekGroup(this));
+        addGroup(new TimeLineNextWeekGroup(this));
+        addGroup(new TimeLineThisMonthGroup(this));
+        addGroup(new TimeLineNextMonthGroup(this));
+        addGroup(new TimeLineWithinThreeMonthsGroup(this));
+        addGroup(new TimeLineWithinSixMonthsGroup(this));
+        addGroup(new TimeLineForwardGroup(this));
 
         //TimeSeries t = this.getTimeSeries();
-        CheckArea();
+        checkArea();
     }
 
 }

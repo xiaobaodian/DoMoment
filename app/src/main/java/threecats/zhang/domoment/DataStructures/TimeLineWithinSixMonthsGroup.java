@@ -25,7 +25,7 @@ public class TimeLineWithinSixMonthsGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         Calendar timePoint = Calendar.getInstance();
         timePoint.add(Calendar.MONTH,4);
         timePoint.set(Calendar.DAY_OF_MONTH,1);

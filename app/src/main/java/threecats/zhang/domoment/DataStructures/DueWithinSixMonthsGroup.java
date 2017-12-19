@@ -25,7 +25,7 @@ public class DueWithinSixMonthsGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         Calendar timePoint = Calendar.getInstance();
         timePoint.add(Calendar.MONTH,-3);
         timePoint.set(Calendar.DAY_OF_MONTH,1);

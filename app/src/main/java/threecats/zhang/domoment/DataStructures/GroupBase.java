@@ -50,12 +50,12 @@ public abstract class GroupBase extends RecyclerViewItem {
         this.tasks = new ArrayList<>();
         this.context = App.getContext();
         this.parentGroupList = parent;
-        BuildTimePoint();
+        buildTimePoint();
     }
 
     //抽象方法，必须在子类中实现
     protected abstract boolean isGroupMember(Calendar timePoint, @Nullable Calendar secTimePoint);
-    public abstract void BuildTimePoint();
+    public abstract void buildTimePoint();
 
     public void setID(long ID){
         this.ID = ID;
@@ -100,11 +100,11 @@ public abstract class GroupBase extends RecyclerViewItem {
         return nextGroup.timePoint;
     }
 
-    public boolean InGroup(TaskItem task){
+    public boolean inGroup(TaskItem task){
         TaskExt taskExt = new TaskExt(task);
         Calendar timePoint, secTimePoint;
         timePoint = null;
-        //secTimePoint = task.IsOneDay() ? null : task.getDueDateTime();
+        //secTimePoint = task.isOneDay() ? null : task.getDueDateTime();
         secTimePoint = taskExt.getDueDateTime();
         switch (parentGroupList.taskBasePoint){
             case BeginDate:
@@ -141,7 +141,7 @@ public abstract class GroupBase extends RecyclerViewItem {
         return groupType;
     }
 
-    public void CheckArea(){
+    public void checkArea(){
         if (previousGroup == null || nextGroup == null) return;
         if (getParent().timeSeries == TimeSeries.Forward) {
             // 区间判断：如果前一组的TimePoint不在当前组的TimePoint日期以前，说明前一组
@@ -215,7 +215,7 @@ public abstract class GroupBase extends RecyclerViewItem {
 //        if (State == DisplayState.Hide) State = DisplayState.Show;
 //        return tasks.size();      //返回加入的任务的位置序号，便于组列表处理（0位是组标题）
 //    }
-    public int AddTask(TaskItem task){
+    public int addTask(TaskItem task){
         task.addParentGroup(this);
         int site = 0;
         if (tasks.size() == 0) {
@@ -237,7 +237,7 @@ public abstract class GroupBase extends RecyclerViewItem {
         return site;
     }
     
-    public int RemoveTask(TaskItem task){
+    public int removeTask(TaskItem task){
         int site = tasks.indexOf(task);
         if(site >= 0) tasks.remove(site);
         return site;
@@ -267,7 +267,7 @@ public abstract class GroupBase extends RecyclerViewItem {
     public List<TaskItem> getTasks(){
         return tasks;
     }
-    public void Sort(){
+    public void sort(){
         Collections.sort(tasks);
     }
 

@@ -23,7 +23,7 @@ public abstract class CategoryBase extends ItemBase {
         GroupLists = new ArrayList<>();
     }
 
-    public abstract boolean InCategory(TaskItem task);
+    public abstract boolean inCategory(TaskItem task);
 
     protected abstract void BuildGroupLists();
     public int getTaskCount(){
@@ -45,7 +45,7 @@ public abstract class CategoryBase extends ItemBase {
         return allTasks;
     }
 
-    public void AddGroupList(GroupListBase groupList){
+    public void addGroupList(GroupListBase groupList){
         GroupLists.add(groupList);
     }
 
@@ -91,11 +91,11 @@ public abstract class CategoryBase extends ItemBase {
         return themeBackgroundID;
     }
 
-    public void AddTask(TaskItem task){
-        if ( ! InCategory(task)) return;
+    public void addTask(TaskItem task){
+        if ( ! inCategory(task)) return;
         for (GroupListBase groupList : GroupLists) {
-            if (groupList.InGroupList(task)) {
-                groupList.AddTask(task);
+            if (groupList.inGroupList(task)) {
+                groupList.addTask(task);
                 break;
             }
         }
@@ -107,9 +107,9 @@ public abstract class CategoryBase extends ItemBase {
     }
 
 
-    public void UnBind(){
+    public void unBind(){
         for (GroupListBase groupList : GroupLists){
-            groupList.UnBind();
+            groupList.unBind();
         }
     }
 

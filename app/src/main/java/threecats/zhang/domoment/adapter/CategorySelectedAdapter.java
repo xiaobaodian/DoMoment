@@ -57,7 +57,7 @@ public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.V
                 new Handler().postDelayed(() -> {
                     CategoryBase oldCategory = App.getCurrentCategory();
                     App.getDataManger().setCurrentCategory(category);
-                    oldCategory.UnBind();
+                    oldCategory.unBind();
                 },350);
 
             }

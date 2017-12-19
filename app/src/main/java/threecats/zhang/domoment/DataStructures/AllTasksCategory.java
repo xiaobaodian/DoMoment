@@ -24,16 +24,16 @@ public class AllTasksCategory extends CategoryBase {
     }
 
     @Override
-    public boolean InCategory(TaskItem task) {
+    public boolean inCategory(TaskItem task) {
         return true;
     }
 
     @Override
     protected void BuildGroupLists() {
-        AddGroupList(new TimeLineGroupList(this));
-        AddGroupList(new OverdueGroupList(this));
-        AddGroupList(new NoDateGroupList(this));
-        AddGroupList(new MakeOutGroupList(this));
+        addGroupList(new TimeLineGroupList(this));
+        addGroupList(new OverdueGroupList(this));
+        addGroupList(new NoDateGroupList(this));
+        addGroupList(new MakeOutGroupList(this));
     }
 
 }

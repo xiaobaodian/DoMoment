@@ -25,10 +25,10 @@ public class TimeLineThisMonthGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         //int daySite = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         //int monthDays = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-        //return DateTime.BuildTimePoint(monthDays - daySite);
+        //return DateTime.buildTimePoint(monthDays - daySite);
         int daySite = DateTime.GetDayOfWeek(Calendar.getInstance());
         this.timePoint = DateTime.BuildTimePoint(7-daySite+8);
     }

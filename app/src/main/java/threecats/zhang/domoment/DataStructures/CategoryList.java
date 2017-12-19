@@ -39,7 +39,7 @@ public class CategoryList {
     public GroupListBase getFirstGroupList(){
         return Categorys.get(0).getGroupLists().get(0);
     }
-    public boolean IsNull(){
+    public boolean isNull(){
         return Categorys.size() == 3 && getTaskCount() == 0;
     }
     public int getTaskCount(){
@@ -90,22 +90,22 @@ public class CategoryList {
         return title;
     }
 
-    public void AddCustomCategory(CustomCategory customCategory){
+    public void addCustomCategory(CustomCategory customCategory){
         Categorys.add(customCategory);
         //customCategories.add(customCategory);
     }
 
-    public void RemoveCustomCategory(CustomCategory customCategory){
+    public void removeCustomCategory(CustomCategory customCategory){
         List<TaskItem> removeTasks = customCategory.getAllTasks();
         for (TaskItem task : removeTasks) {
-            RemoveTask(task);
+            removeTask(task);
             //恢复原始的分类ID，这很重要，不然AddTask的时候就丢失了
             task.setCategoryID(1);
         }
         Categorys.remove(customCategory);
         //App.getDataManger().setCurrentCategory(getFirstCategory());
         for (TaskItem task : removeTasks) {
-            AddTask(task);
+            addTask(task);
             App.getDataManger().updateTask(task);
         }
 //        for (Task task : removeTasks) {
@@ -121,23 +121,24 @@ public class CategoryList {
         return Categorys.subList(3, Categorys.size());
     }
 
-    public void AddTask(TaskItem task){
+    public void addTask(TaskItem task){
         for (CategoryBase category : Categorys) {
-            if (category.InCategory(task)) category.AddTask(task);
+            if (category.inCategory(task)) category.addTask(task);
         }
     }
 
-    public void RemoveTask(TaskItem task){
+    public void removeTask(TaskItem task){
         // 删除task需要从GroupList里面进行，因为需要维护GroupList的显示列表itemlist
         List<GroupBase> groups = new ArrayList<>();
         groups.addAll(task.getParentGroups());
         for (GroupBase group : groups) {
             GroupListBase groupList = group.getParent();
-            groupList.RemoveTask(group, task);
+            groupList.removeTask(group, task);
         }
     }
 
-    public void ChangeTask(TaskItem task){
+    public void changeTask(TaskItem task){
+
         List<CategoryBase> updateCategorys = new ArrayList<>();
         List<GroupBase> changeGroups = new ArrayList<>();
         List<GroupBase> updateGroups = new ArrayList<>();
@@ -154,7 +155,7 @@ public class CategoryList {
             //
             //如果不在原来的分类树中，即Category,groupList,group的判断任一条件为假，就加入到changeGroups列表中
 
-            if (category.InCategory(task) && groupList.InGroupList(task) && group.InGroup(task)){
+            if (category.inCategory(task) && groupList.inGroupList(task) && group.inGroup(task)){
                 if (group.needChangedPosition(task)) {
                     changeGroups.add(group);
                 } else {
@@ -171,12 +172,12 @@ public class CategoryList {
             //从需要改变的groups里面移除task
             for (GroupBase group : changeGroups) {
                 GroupListBase groupList = group.getParent();
-                groupList.RemoveTask(group, task);
+                groupList.removeTask(group, task);
             }
             //将task重新加入到Categroy里面，但排除只是需要更新的Category(在更新Category里面不需要移动task的顺序)
             for (CategoryBase category : Categorys) {
                 if (updateCategorys.contains(category)) continue;
-                category.AddTask(task);
+                category.addTask(task);
             }
         }
 
@@ -184,8 +185,8 @@ public class CategoryList {
         if (updateGroups.size() > 0) {
             for (GroupBase group : updateGroups) {
                 GroupListBase groupList = group.getParent();
-                //groupList.SortGroup(group);
-                groupList.UpdateTaskDisplay(group, task);
+                //groupList.sortGroup(group);
+                groupList.updateTaskDisplay(group, task);
             }
         }
 
@@ -198,7 +199,7 @@ public class CategoryList {
         if (changeGroups.size() == 0 && task.getPriorityID() != TaskPriority.None.ordinal()) {
             CategoryBase priorityCategory = Categorys.get(2);
             if (!updateCategorys.contains(priorityCategory)) {
-                priorityCategory.AddTask(task);
+                priorityCategory.addTask(task);
             }
         }
     }
@@ -207,30 +208,30 @@ public class CategoryList {
         return categoryThemebackground;
     }
 
-    public void CurrentDateChange(){
+    public void currentDateChange(){
         List<TaskItem> dateChangeTasks = new ArrayList<>();
         for (CategoryBase category : Categorys){
             for (GroupListBase gorupList : category.getGroupLists()) {
-                gorupList.BuildTimePoint();
+                gorupList.buildTimePoint();
                 for (GroupBase group : gorupList.getGroups()){
-                    group.BuildTimePoint();
+                    group.buildTimePoint();
                 }
-                gorupList.CheckArea();
-                gorupList.UpdateTitleMessage();
+                gorupList.checkArea();
+                gorupList.updateTitleMessage();
             }
         }
         for (CategoryBase category : Categorys){
             for (GroupListBase gorupList : category.getGroupLists()) {
                 for (GroupBase group : gorupList.getGroups()){
                     for (TaskItem task : group.getTasks()) {
-                        if ( ! group.InGroup(task)) dateChangeTasks.add(task);
+                        if ( ! group.inGroup(task)) dateChangeTasks.add(task);
                     }
                 }
             }
         }
         if (dateChangeTasks.size() > 0) {
             for (TaskItem task : dateChangeTasks) {
-                ChangeTask(task);
+                changeTask(task);
             }
         }
         dateChangeTasks.clear();

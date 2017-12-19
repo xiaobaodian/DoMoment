@@ -138,7 +138,7 @@ public class TaskExt {
 
     // 设置全天属性时，将开始时间设为当天的零点零分，这样就可以在排序时排在最前面。
     // 全天属性设定后，可以利用任务的完成日期和时间设定独立闹钟
-    public boolean IsAllDay() {
+    public boolean isAllDay() {
         return taskItem.getIsAllDay();
     }
 
@@ -152,10 +152,10 @@ public class TaskExt {
         taskItem.setIsAllDay(true);
         dueDateTime = (Calendar) startDateTime.clone();
         taskItem.setDueDateTime(dueDateTime.getTime());
-        Log.d(App.TAG,"taskExt is NoDate : "+IsNoDate());
+        Log.d(App.TAG,"taskExt is NoDate : "+ isNoDate());
         Log.d(App.TAG,"taskItem is NoDate : "+taskItem.getIsNoDate());
     }
-    public boolean IsNoDate(){
+    public boolean isNoDate(){
         return taskItem.getIsNoDate();
     }
     public void setPriority(TaskPriority priority){
@@ -179,13 +179,13 @@ public class TaskExt {
         return taskItem.getCategoryID();
     }
 
-    public boolean IsComplete(){
+    public boolean isComplete(){
         return taskItem.getIsComplete();
     }
-    public boolean IsOneDay(){
+    public boolean isOneDay(){
         return startDay.Year == dueDay.Year && startDay.Month == dueDay.Month && startDay.Day == dueDay.Day;
     }
-    public boolean IsOneTime(){
+    public boolean isOneTime(){
         return beginTime.Hour == endTime.Hour && beginTime.Minute == endTime.Minute;
     }
 
@@ -204,7 +204,7 @@ public class TaskExt {
 
     //辅助日期属性
     public void setStartDate(int year, int month, int day){
-        if (IsOneDay()) {
+        if (isOneDay()) {
             setDueDate(year, month, day);
         }
         taskItem.setIsNoDate(false);
@@ -246,7 +246,7 @@ public class TaskExt {
         date.set(year, month, day);
         Calendar tmpStartDate = (Calendar)startDateTime.clone();
         if (date.before(startDateTime)) {
-            if (IsOneDay()) {
+            if (isOneDay()) {
                 setStartDate(year, month, day);
                 setDueDate(startDay.Year, startDay.Month, startDay.Day);
                 //setDueDate(tmpStartDate.get(Calendar.YEAR),tmpStartDate.get(Calendar.MONTH),tmpStartDate.get(Calendar.DAY_OF_MONTH));
@@ -263,7 +263,7 @@ public class TaskExt {
 
     public void setBeginTime(int hour, int minute){
         taskItem.setIsAllDay(false);
-        if (IsOneTime()) {
+        if (isOneTime()) {
             setEndTime(hour, minute);
         }
         beginTime.setTime(hour, minute);
@@ -318,14 +318,14 @@ public class TaskExt {
         return beginDateTimeFStr.format(taskItem.getStartDateTime());
     }
     public String getEndDateStr(){
-        if (IsOneDay()) return "";
+        if (isOneDay()) return "";
         String year = DateTime.IsCurrentYear(dueDateTime) ? "" : "yyyy ";
         String month = DateTime.SameYearMonth(startDateTime, dueDateTime) ? "" : "MMM  ";
         SimpleDateFormat dueDateTimeFStr = new SimpleDateFormat(year + month + "dd");
         return dueDateTimeFStr.format(taskItem.getDueDateTime());
     }
     public String getDateRangeStr(){
-        if (IsNoDate()) return "DoDate";
+        if (isNoDate()) return "DoDate";
         String beginDateFormatStr = "";
         String endDateFormatStr = "";
         if (DateTime.SameYearMonth(startDateTime, dueDateTime)) {
@@ -337,15 +337,15 @@ public class TaskExt {
         }
         SimpleDateFormat beginDate = new SimpleDateFormat(beginDateFormatStr);
         SimpleDateFormat endDate = new SimpleDateFormat(endDateFormatStr);
-        String endDateStr = IsOneDay() ? "" : endDate.format(dueDateTime.getTime());
+        String endDateStr = isOneDay() ? "" : endDate.format(dueDateTime.getTime());
         return beginDate.format(startDateTime.getTime()) + endDateStr;
     }
 
     public String getTimeRangeStr(){
-        if (IsAllDay()) return "";
+        if (isAllDay()) return "";
         String timeFormatStr = "H:mm";
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(timeFormatStr);
-        String endTime = IsOneTime() ? "" : " - " + simpleTimeFormat.format(dueDateTime.getTime());
+        String endTime = isOneTime() ? "" : " - " + simpleTimeFormat.format(dueDateTime.getTime());
         return simpleTimeFormat.format(startDateTime.getTime()) + endTime;
     }
 

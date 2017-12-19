@@ -128,13 +128,13 @@ public class TaskDetailsFragment extends TitleFragment {
     @SuppressLint("SetTextI18n")
     private void DisplayDateTimeFields(){
         //taskExt.setTaskItem(task);  //刷新taskExt内部字段
-        Log.d(App.TAG,"Display Task , "+taskExt.getTitle()+" is NoDate : "+taskExt.IsNoDate());
-        if (taskExt.IsNoDate()) {
+        Log.d(App.TAG,"Display Task , "+taskExt.getTitle()+" is NoDate : "+taskExt.isNoDate());
+        if (taskExt.isNoDate()) {
             startDateBox.setText("");
             dueDateBox.setVisibility(View.GONE);
             addDateButton.setVisibility(View.GONE);
             HideTimeRecylerItems();
-        } else if (taskExt.IsOneDay()){
+        } else if (taskExt.isOneDay()){
             startDateBox.setText(taskExt.getBeginDateStr() + "日");
             dueDateBox.setVisibility(View.GONE);
             addDateButton.setVisibility(View.VISIBLE);
@@ -145,11 +145,11 @@ public class TaskDetailsFragment extends TitleFragment {
             dueDateBox.setVisibility(View.VISIBLE);
             addDateButton.setVisibility(View.GONE);
         }
-        if (taskExt.IsAllDay()) {
+        if (taskExt.isAllDay()) {
             startTimeBox.setText("");
             dueTimeBox.setVisibility(View.GONE);
             addTimeButton.setVisibility(View.GONE);
-        } else if (taskExt.IsOneTime()) {
+        } else if (taskExt.isOneTime()) {
             startTimeBox.setText(taskExt.getBeginTimeStr());
             dueTimeBox.setVisibility(View.GONE);
             addTimeButton.setVisibility(View.VISIBLE);
@@ -186,13 +186,13 @@ public class TaskDetailsFragment extends TitleFragment {
 
         switch (EditType) {
             case editStartDate:
-                title = taskExt.IsOneDay() ? "设置日期" : "设置开始日期";
-                date = taskExt.IsNoDate() ? Calendar.getInstance() : (Calendar)taskExt.getStartDateTime().clone();
+                title = taskExt.isOneDay() ? "设置日期" : "设置开始日期";
+                date = taskExt.isNoDate() ? Calendar.getInstance() : (Calendar)taskExt.getStartDateTime().clone();
                 break;
             case editDueDate:
                 title = "设置结束日期";
                 date = (Calendar)taskExt.getDueDateTime().clone();
-                if (taskExt.IsOneDay()) date.add(Calendar.DATE, 1);
+                if (taskExt.isOneDay()) date.add(Calendar.DATE, 1);
                 break;
             default:
                 title = "类型错误";
@@ -208,7 +208,7 @@ public class TaskDetailsFragment extends TitleFragment {
             TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartDate:
-                    if (taskExt.IsOneDay()) {
+                    if (taskExt.isOneDay()) {
                         taskExt.setNoDate();
                     } else {
                         taskExt.setOneDay(OneDayBase.Due);
@@ -266,13 +266,13 @@ public class TaskDetailsFragment extends TitleFragment {
 
         switch (EditType) {
             case editStartTime:
-                title = taskExt.IsOneTime() ? "设置时间" : "设置开始时间";
-                date = taskExt.IsAllDay() ? Calendar.getInstance() : (Calendar)taskExt.getStartDateTime().clone();
+                title = taskExt.isOneTime() ? "设置时间" : "设置开始时间";
+                date = taskExt.isAllDay() ? Calendar.getInstance() : (Calendar)taskExt.getStartDateTime().clone();
                 break;
             case editDueTime:
                 title = "设置结束时间";
                 date = (Calendar)taskExt.getDueDateTime().clone();
-                if (taskExt.IsOneTime()) date.add(Calendar.MINUTE, 5);
+                if (taskExt.isOneTime()) date.add(Calendar.MINUTE, 5);
                 break;
             default:
                 title = "类型错误";
@@ -295,7 +295,7 @@ public class TaskDetailsFragment extends TitleFragment {
             TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartTime:
-                    if (taskExt.IsOneTime()) {
+                    if (taskExt.isOneTime()) {
                         taskExt.setAllDay(true);
                     } else {
                         taskExt.setOneTime(OneDayBase.Due);

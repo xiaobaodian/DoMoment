@@ -4,9 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import threecats.zhang.domoment.DataStructures.GroupBase;
-import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.RecyclerViewItem;
-import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
@@ -82,15 +80,15 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
     @Override
     protected void OnGroupClick(GroupBase group) {
         if (group instanceof TimeLineTodayGroup) {
-            App.getDataManger().NewTask(Calendar.getInstance());
+            App.getDataManger().newTask(Calendar.getInstance());
         } else if (group instanceof TimeLineTomorrowGroup) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE,1);
-            App.getDataManger().NewTask(calendar);
+            App.getDataManger().newTask(calendar);
         } else if (group instanceof TimeLineAfterTomorrowGroup) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE,2);
-            App.getDataManger().NewTask(calendar);
+            App.getDataManger().newTask(calendar);
         }
     }
 

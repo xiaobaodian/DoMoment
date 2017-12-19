@@ -149,7 +149,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     }
 
     private void displayTaskItems(){
-        if (taskExt.IsComplete()) {
+        if (taskExt.isComplete()) {
             doneflag.setVisibility(View.VISIBLE);
         } else {
             doneflag.setVisibility(View.GONE);
@@ -184,7 +184,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (taskExt.IsComplete()) {
+        if (taskExt.isComplete()) {
             menu.findItem(R.id.taskeditormenu_makeout).setVisible(false);
         } else {
             menu.findItem(R.id.taskeditormenu_makeout).setVisible(true);

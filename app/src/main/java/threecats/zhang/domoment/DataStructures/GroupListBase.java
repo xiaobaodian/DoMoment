@@ -49,11 +49,11 @@ public abstract class GroupListBase {
         displayType = GroupListDisplayType.Simple;
         recyclerViewItems = new ArrayList<>();
         groups = new ArrayList<>();
-        BuildTimePoint();
+        buildTimePoint();
     }
-    public abstract boolean InGroupList(TaskItem task);
-    public abstract void BuildTimePoint();
-    protected abstract void BuildGroups();
+    public abstract boolean inGroupList(TaskItem task);
+    public abstract void buildTimePoint();
+    protected abstract void buildGroups();
 
     public GroupListType getType(){
         return selfType;
@@ -78,19 +78,19 @@ public abstract class GroupListBase {
     }
 
     //下面是分类列表的管理
-    public void AddGroup(GroupBase group){
+    public void addGroup(GroupBase group){
         if (groups.size() > 0) {
             GroupBase lastGroup = groups.get(groups.size() - 1);
             lastGroup.setNextGroup(group);
             group.setPreviousGroup(lastGroup);
         }
         groups.add(group);
-        AddGroupInListItems(group);
+        addGroupInListItems(group);
         CalculatorTitleSite();
     }
-    public void CheckArea(){
+    public void checkArea(){
         for (GroupBase group : groups) {
-            group.CheckArea();
+            group.checkArea();
         }
     }
     private void CalculatorTitleSite(){
@@ -112,8 +112,8 @@ public abstract class GroupListBase {
         }
         return count;
     }
-    public void SortGroup(GroupBase group){
-        group.Sort();
+    public void sortGroup(GroupBase group){
+        group.sort();
         int I = group.SiteID +1;
         for (TaskItem task : group.getTasks()) {
             recyclerViewItems.set(I++,task);
@@ -121,12 +121,12 @@ public abstract class GroupListBase {
         if (isBindRecyclerView()) GroupListAdapter.notifyItemRangeChanged(group.SiteID + 1,group.getTaskCount());
         //GroupListAdapter.notifyDataSetChanged();
     }
-    public void SortAllGroup(){
+    public void sortAllGroup(){
         for (GroupBase group : groups) {
-            SortGroup(group);
+            sortGroup(group);
         }
     }
-    private void HideGroup(GroupBase group){
+    private void hideGroup(GroupBase group){
         if (group.getTaskCount() > 0) return;
         if (group.SiteID > recyclerViewItems.size() - 1) {
             App.Toast("Hide Group : group.siteID > size()");
@@ -142,7 +142,7 @@ public abstract class GroupListBase {
             GroupBase g = (GroupBase) recyclerViewItems.get(group.SiteID);
             App.Toast("HideGroup出现错误");
         }
-        UpdateTitleMessage();
+        updateTitleMessage();
     }
 
     private void ActiveGroup(GroupBase group){
@@ -178,44 +178,44 @@ public abstract class GroupListBase {
     }
 
     //分组列表的任务项管理，在这里管理分组项里的任务可以执行自动进入分组、重新调整分组、从分组中删除的操作
-    public void AddTask(TaskItem task){
+    public void addTask(TaskItem task){
         for(GroupBase group : groups){
-            if (group.InGroup(task)){
+            if (group.inGroup(task)){
                 if (group.State == DisplayState.Hide) {
                     ActiveGroup(group);
                 }
-                int site = group.AddTask(task);
-                AddTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目
+                int site = group.addTask(task);
+                addTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目
             }
         }
         CalculatorTitleSite();
     }
 
-    public void RemoveTask(TaskItem task){
+    public void removeTask(TaskItem task){
         for (GroupBase group : groups) {
-            if (group.InGroup(task)) {
-                RemoveTaskFromGroup(group, task);
+            if (group.inGroup(task)) {
+                removeTaskFromGroup(group, task);
                 break;
             }
         }
     }
 
-    public void RemoveTask(GroupBase group, TaskItem task){
-        RemoveTaskFromGroup(group, task);
+    public void removeTask(GroupBase group, TaskItem task){
+        removeTaskFromGroup(group, task);
     }
 
-    private void RemoveTaskFromGroup(GroupBase group, TaskItem task){
+    private void removeTaskFromGroup(GroupBase group, TaskItem task){
         //task.getParentGroup().remove(group);
         //如果采用for(GroupBase group : Groups) 遍历调用
         //这里不能删除父类group的引用，不然无法调用遍历寻找下一个父类引用
         //目前采用的方法是另外new一个group的ArrayList,通过for(GroupBase group : Groups)将group加入进去
         //然后遍历新建的ArrayList操作
         task.getParentGroups().remove(group);
-        int site = group.RemoveTask(task);
+        int site = group.removeTask(task);
         if (site >= 0){
-            RemoveTaskFromListItems(group, site, task);
+            removeTaskFromListItems(group, site, task);
             if (group.getTaskCount() == 0) {
-                HideGroup(group);
+                hideGroup(group);
             }
             CalculatorTitleSite();
         }
@@ -225,12 +225,12 @@ public abstract class GroupListBase {
     public List<RecyclerViewItem> getRecyclerViewItems(){
         return recyclerViewItems;
     }
-    private void AddGroupInListItems(GroupBase group){
+    private void addGroupInListItems(GroupBase group){
         if (group.State == DisplayState.Hide) return;
         recyclerViewItems.add(group);
         recyclerViewItems.addAll(group.getTasks());
     }
-    private void AddTaskToListItems(GroupBase group, int position, TaskItem task){
+    private void addTaskToListItems(GroupBase group, int position, TaskItem task){
         //根据任务在分组中的位置计算出任务在RecyclerView列表中的位置
         int site = group.SiteID + position + 1;
         //根据上面计算的位置执行插入操作
@@ -238,9 +238,9 @@ public abstract class GroupListBase {
         //执行插入动画
         if (isBindRecyclerView()) GroupListAdapter.notifyItemInserted(site);
         //测试用，更新显示组头的位置序号
-        //UpdateTitleMessage();
+        //updateTitleMessage();
     }
-    private void RemoveTaskFromListItems(GroupBase group, int position, TaskItem task){
+    private void removeTaskFromListItems(GroupBase group, int position, TaskItem task){
 
         int site = group.SiteID + position + 1;  //从分组中返回的位置是不包括组头的，就是说分组中列表是从0算起的所以+1
         TaskItem ntask = (TaskItem) recyclerViewItems.get(site);
@@ -252,11 +252,11 @@ public abstract class GroupListBase {
             App.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
         }
         //测试用，更新显示组头的位置序号
-        //UpdateTitleMessage();
+        //updateTitleMessage();
     }
 
     //测试用，更新显示组头的位置序号
-    public void UpdateTitleMessage(){
+    public void updateTitleMessage(){
         for (GroupBase g : groups) {
             if (g.State == DisplayState.Show) {
                 if (isBindRecyclerView()) GroupListAdapter.notifyItemChanged(g.SiteID);
@@ -264,12 +264,12 @@ public abstract class GroupListBase {
         }
     }
 
-    public void UpdateTaskDisplay(GroupBase group, TaskItem task){
+    public void updateTaskDisplay(GroupBase group, TaskItem task){
         int site = group.getTasks().indexOf(task) + group.SiteID + 1;
         if (isBindRecyclerView()) GroupListAdapter.notifyItemChanged(site);
     }
 
-    public void BindRecyclerView(RecyclerView recyclerView, RecyclerViewAdapterBase adapter, View view){
+    public void bindRecyclerView(RecyclerView recyclerView, RecyclerViewAdapterBase adapter, View view){
         //String className = adapter.getClass().getSimpleName();
         //if (className.contains("NoDateAdapter")) viewAdapterBase = (RecyclerViewAdapterBase)adapter;
 
@@ -283,12 +283,12 @@ public abstract class GroupListBase {
         recyclerView.setAdapter(GroupListAdapter);
     }
 
-    public void UnBind(){
+    public void unBind(){
         GroupListAdapter = null;
         GroupListRecyclerView = null;
     }
 
-    public void BindDatas(){
+    public void bindDatas(){
         if (GroupListRecyclerView != null) {
             GroupListRecyclerView.setAdapter(GroupListAdapter);
         }

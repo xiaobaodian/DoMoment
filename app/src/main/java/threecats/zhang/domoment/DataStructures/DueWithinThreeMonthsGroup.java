@@ -25,7 +25,7 @@ public class DueWithinThreeMonthsGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         //上月1日零时
         Calendar timePoint = Calendar.getInstance();
         timePoint.add(Calendar.MONTH,-1);

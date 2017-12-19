@@ -26,7 +26,7 @@ public class TimeLineAfterTomorrowGroup extends GroupBase {
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         timePoint = DateTime.BuildTimePoint(2);
     }
 

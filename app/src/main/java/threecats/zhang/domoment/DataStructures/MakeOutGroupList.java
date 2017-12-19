@@ -19,35 +19,35 @@ public class MakeOutGroupList extends GroupListBase {
         this.timeSeries = TimeSeries.Afterward;
         this.taskBasePoint = TaskBasePoint.CompleteDate;
         setTitle(App.getContext().getString(R.string.grouplist_completed_title));
-        BuildGroups();
+        buildGroups();
     }
 
     @Override
-    public boolean InGroupList(TaskItem task){
+    public boolean inGroupList(TaskItem task){
         TaskExt taskExt = new TaskExt(task);
-        return taskExt.IsComplete();
+        return taskExt.isComplete();
     }
 
     @Override
-    public void BuildTimePoint(){
+    public void buildTimePoint(){
         this.timePoint = DateTime.BuildTimePoint(0);
     }
 
     @Override
-    protected void BuildGroups(){
+    protected void buildGroups(){
 
         //必须按顺序加入建立正确的链表，后面组的区间判断是依靠获取前一组的标记日完成的
-        AddGroup(new DueTodayGroup(this, "今天"));
-        AddGroup(new DueYesterdayGroup(this, App.getContext().getString(R.string.overdue_yesterday_title)));                //今天零时
-        AddGroup(new DueBeforeYesterdayGroup(this, App.getContext().getString(R.string.overdue_beforeyesterday_title)));   //昨天零时
-        AddGroup(new DueThisWeekGroup(this, App.getContext().getString(R.string.overdue_thisweek_title)));                 //前天零时
-        AddGroup(new DueLastWeekGroup(this, App.getContext().getString(R.string.overdue_lastweek_title)));                 //上周一零时
-        AddGroup(new DueThisMonthGroup(this, App.getContext().getString(R.string.overdue_thismonth_title)));               //
-        AddGroup(new DueLastMonthGroup(this, App.getContext().getString(R.string.overdue_lastmonth_title)));
-        AddGroup(new DueWithinThreeMonthsGroup(this, App.getContext().getString(R.string.overdue_withinthreemonths_title)));
-        AddGroup(new DueWithinSixMonthsGroup(this, App.getContext().getString(R.string.overdue_withinsixmonths_title)));
-        AddGroup(new DueLongTimeAgoGroup(this, App.getContext().getString(R.string.overdue_longtimeage_title)));
-        CheckArea();
+        addGroup(new DueTodayGroup(this, "今天"));
+        addGroup(new DueYesterdayGroup(this, App.getContext().getString(R.string.overdue_yesterday_title)));                //今天零时
+        addGroup(new DueBeforeYesterdayGroup(this, App.getContext().getString(R.string.overdue_beforeyesterday_title)));   //昨天零时
+        addGroup(new DueThisWeekGroup(this, App.getContext().getString(R.string.overdue_thisweek_title)));                 //前天零时
+        addGroup(new DueLastWeekGroup(this, App.getContext().getString(R.string.overdue_lastweek_title)));                 //上周一零时
+        addGroup(new DueThisMonthGroup(this, App.getContext().getString(R.string.overdue_thismonth_title)));               //
+        addGroup(new DueLastMonthGroup(this, App.getContext().getString(R.string.overdue_lastmonth_title)));
+        addGroup(new DueWithinThreeMonthsGroup(this, App.getContext().getString(R.string.overdue_withinthreemonths_title)));
+        addGroup(new DueWithinSixMonthsGroup(this, App.getContext().getString(R.string.overdue_withinsixmonths_title)));
+        addGroup(new DueLongTimeAgoGroup(this, App.getContext().getString(R.string.overdue_longtimeage_title)));
+        checkArea();
     }
 
 }
