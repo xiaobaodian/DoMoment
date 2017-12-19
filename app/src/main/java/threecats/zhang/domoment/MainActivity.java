@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     //public List<Task> taskList = new ArrayList<>();
     private Application app;
     private BottomNavigationView navigation;
+    private View naviMask;
     private TodoFragment todoFragment;
     private MomentFragment momentFragment;
     private FocusFragment focusFragment;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        naviMask = (View) findViewById(R.id.ViewMask);
+        naviMask.setOnClickListener(view -> closeNavigation());
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         closeNavigation();
@@ -86,10 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void showNavigation(){
         navigation.setVisibility(View.VISIBLE);
+        naviMask.setVisibility(View.VISIBLE);
     }
 
     public void closeNavigation(){
         navigation.setVisibility(View.GONE);
+        naviMask.setVisibility(View.GONE);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -140,13 +145,17 @@ public class MainActivity extends AppCompatActivity {
                 App.closeDrawerMenu();
                 return true;
             }
+            if (navigation.getVisibility() == View.VISIBLE) {
+                this.closeNavigation();
+                return true;
+            }
             if ((System.currentTimeMillis()-mExitTime)>1000) {
                 App.Toast("再按一次退出程序");
                 mExitTime = System.currentTimeMillis();
             }else{
                 finish();
             }
-            return true;
+            //return true;
         }
         return super.onKeyDown(keyCode, event);
     }

@@ -80,17 +80,20 @@ public class DataManger {
     }
 
     public class CategoryEditor {
-        CategoryBase editorCategory;
-        CategoryBase oldCategory;
-        public CategoryEditor(){
+
+        CategoryBase editorCategory, oldCategory;
+
+        CategoryEditor(){
             editorCategory = null;
             oldCategory = null;
             //editorMode = EditorMode.Edit;
         }
+
         public CategoryBase newCategory(int ID){
             editorCategory = new CustomCategory("新的项目", ID);
             return editorCategory;
         }
+
         public CategoryBase getEditorCategory(){
             CategoryBase category = null;
             if (editorCategory == null) {
@@ -103,6 +106,7 @@ public class DataManger {
             }
             return category;
         }
+
         public void Commit(EditorMode mode){
             if (mode == EditorMode.Edit) {
                 if (editorCategory != null){
@@ -123,6 +127,50 @@ public class DataManger {
                 }
             }
             editorCategory = null;
+        }
+    }
+
+    public class TaskEditor{
+
+        TaskItem taskItem, oldTaskItem;
+
+        TaskEditor(){
+            taskItem = null;
+            oldTaskItem = null;
+        }
+
+        public void setEditorTask(TaskItem taskItem){
+            this.taskItem = taskItem;
+            if (currentTask != null) {
+                oldTaskItem = currentTask;
+            }
+        }
+
+        public TaskItem getEditorTask(){
+            return taskItem == null ? currentTask : taskItem;
+        }
+
+        public boolean hasEditorTask(){
+            return taskItem != null;
+        }
+
+        public void commit(EditorMode mode){
+            if (mode == EditorMode.Edit) {
+                if (hasEditorTask()){
+                    if (taskItem.getTitle().length() > 0) {
+                        AddTask(taskItem);
+                        taskBox.put(taskItem);
+                        //AddTaskToDataBase(editorTask);
+                    }
+                } else {
+                    ChangeTask(currentTask);
+                }
+            } else {
+                if (!hasEditorTask()){
+                    RemoveTask(currentTask);
+                }
+            }
+            taskItem = null;
         }
     }
 
@@ -196,16 +244,17 @@ public class DataManger {
     }
 
     public void NewTask(Calendar day){
-        int categoryID = 1;
-        CategoryBase category = getCurrentCategory();
-        if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
-            categoryID = App.getCurrentCategory().getCategoryID();
-        }
-        //TaskItem task = new TaskItem(categoryID, day); ??
+        int categoryID = categoryList.getUsabilityCategoryID();
         TaskItem task = new TaskExt(categoryID, day).getTaskItem();
         setEditorTask(task);
         App.showTaskDisplayActivity();
     }
+
+    public void newTask(TaskItem taskItem){
+        setEditorTask(taskItem);
+        App.showTaskDisplayActivity();
+    }
+
     public void AddTask(TaskItem task){
         categoryList.AddTask(task);
     }

@@ -13,18 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@android:drawable/editbox_dropdown_dark_frame"
+        android:background="@color/cardview_dark_background"
         android:visibility="visible"
         app:itemIconTint="@color/primary_light"
         app:itemTextColor="@color/primary_light"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation">
+
+    </android.support.design.widget.BottomNavigationView>
 
     <FrameLayout
-        android:id="@+id/main_frament"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/main_frament"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </FrameLayout>
+
+        <View
+            android:id="@+id/ViewMask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.1" />
     </FrameLayout>
 
 </LinearLayout>

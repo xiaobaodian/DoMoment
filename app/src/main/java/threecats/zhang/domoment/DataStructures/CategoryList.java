@@ -7,6 +7,8 @@ import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.R;
 
+import static threecats.zhang.domoment.App.getCurrentCategory;
+
 /**
  * 由 zhang 于 2017/10/27 创建
  */
@@ -66,6 +68,15 @@ public class CategoryList {
             }
         }
         return ID;
+    }
+
+    public int getUsabilityCategoryID(){
+        int categoryID = 1;
+        CategoryBase category = App.getCurrentCategory();
+        if (!(category instanceof AllTasksCategory || category instanceof NoCategory)) {
+            categoryID = getCurrentCategory().getCategoryID();
+        }
+        return categoryID;
     }
 
     public String getCategoryTitle(int site){
