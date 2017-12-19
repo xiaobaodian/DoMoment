@@ -464,7 +464,7 @@ public class TodoFragment extends Fragment {
 
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
-                    //btnAddTask.performClick();
+                    btnAddTask.performClick();
                     return true;
                 }
             }
