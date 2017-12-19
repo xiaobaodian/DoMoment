@@ -395,17 +395,6 @@ public class TodoFragment extends Fragment {
         popupWindow.setFocusable(true);
         //进入退出的动画
 
-        contentView.setOnKeyListener((view, i, keyEvent) -> {
-            App.Toast("Simple Back Key");
-            if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                if (i == KeyEvent.KEYCODE_BACK){
-                    UIHelper.Toast("Back Key");
-                    popupWindow.dismiss();
-                }
-            }
-            return true;
-        });
-
         ConstraintLayout root = contentView.findViewById(R.id.Root);
         ConstraintLayout simpleDate = contentView.findViewById(R.id.SimpleDate);
 
@@ -415,13 +404,16 @@ public class TodoFragment extends Fragment {
 
         root.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> {
             Integer tagInt = (Integer) view.getTag();
-            if (tagInt != null) {
-                if ((tagInt - i7) > 100 && simpleDate.getVisibility() == View.GONE) {
-                    popupWindow.dismiss();
-                }
-            }
+            //UIHelper.Toast("tagInt : "+tagInt+"  i3 : "+i3+" - i7 : "+i7);
             if (i3 == i7) {
                 view.setTag(i3);
+            } else {
+                if (tagInt != null) {
+                    if (tagInt == i3 && simpleDate.getVisibility() == View.GONE) {     //&& i7 > 0
+                        popupWindow.dismiss();
+                        //UIHelper.Toast("close input");
+                    }
+                }
             }
         });
 
@@ -472,20 +464,11 @@ public class TodoFragment extends Fragment {
 
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
-                    if (taskTitle.getText().toString().isEmpty()) {
-                        App.Toast("no task");
-                    } else {
-                        taskExt.setTitle(taskTitle.getText().toString());
-                        App.getDataManger().simpleNewTask(taskExt.getTaskItem());
-                        taskTitle.setText("");
-                        buttonDate.setText("日期");
-                        buttonCategory.setText("未分类");
-                        taskExt.setTaskItem(new TaskItem());
-                    }
-                    return false;
+                    //btnAddTask.performClick();
+                    return true;
                 }
             }
-            return true;
+            return false;
         });
 
         taskTitle.addTextChangedListener(new TextWatcher() {
