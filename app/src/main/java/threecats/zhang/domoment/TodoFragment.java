@@ -32,12 +32,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -399,14 +401,26 @@ public class TodoFragment extends Fragment {
         ConstraintLayout simpleDate = contentView.findViewById(R.id.SimpleDate);
 
         root.setOnClickListener(v -> {
-            popupWindow.dismiss();
+            if (simpleDate.getVisibility() == View.VISIBLE) {
+                simpleDate.setVisibility(View.GONE);
+            } else {
+                popupWindow.dismiss();
+            }
         });
 
+        /*
+        当前  i->左边  i1->上边  i2->右边  i3->下边
+        原来  i4->左边  i5->上边  i6->右边  i7->下边
+         */
         root.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> {
             Integer tagInt = (Integer) view.getTag();
             //UIHelper.Toast("tagInt : "+tagInt+"  i3 : "+i3+" - i7 : "+i7);
             if (i3 == i7) {
-                view.setTag(i3);
+                // 第一次（就是tagInt == null 时） i3 == i7 应该就是最低的底边，以后还有可能
+                // i3 == i7 这时候就不是最低的底边了
+                if (tagInt == null) {
+                    view.setTag(i3);
+                }
             } else {
                 if (tagInt != null) {
                     if (tagInt == i3 && simpleDate.getVisibility() == View.GONE) {     //&& i7 > 0
@@ -426,6 +440,11 @@ public class TodoFragment extends Fragment {
         buttonDate.setOnClickListener(view -> {
             UIHelper.closeSoftKeyboard(taskTitle);
             simpleDate.setVisibility(View.VISIBLE);
+            taskTitle.setFocusable(false);
+            simpleDate.setFocusable(true);
+            simpleDate.setFocusableInTouchMode(true);
+            taskTitle.setFocusable(true);
+            taskTitle.setFocusableInTouchMode(true);
         });
 
         Button buttonCategory = contentView.findViewById(R.id.buttonCategory);
@@ -457,16 +476,16 @@ public class TodoFragment extends Fragment {
 
 
         taskTitle.setOnFocusChangeListener((v, hasFocus) -> {
-
+            if (hasFocus) {
+                simpleDate.setVisibility(View.GONE);
+            }
         });
 
-        taskTitle.setOnKeyListener((view, i, keyEvent) -> {
-
-            if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                if (i == KeyEvent.KEYCODE_ENTER) {
-                    btnAddTask.performClick();
-                    return true;
-                }
+        taskTitle.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEND) {
+                //UIHelper.Toast("editor action");
+                btnAddTask.performClick();
+                return true;
             }
             return false;
         });
@@ -526,9 +545,9 @@ public class TodoFragment extends Fragment {
 
         popupWindow.setOnDismissListener(() -> {
             if (taskTitle.getText().toString().isEmpty()) {
-                App.Toast("no task");
+                //App.Toast("no task");
             } else {
-                App.getDataManger().SimpleNewTask(taskTitle.getText().toString());
+                //App.getDataManger().SimpleNewTask(taskTitle.getText().toString());
             }
         });
 

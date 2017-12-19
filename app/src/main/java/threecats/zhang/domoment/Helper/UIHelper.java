@@ -52,7 +52,8 @@ public class UIHelper {
     public static void closeSoftKeyboard(EditText editText){
         new Handler().postDelayed(() -> {
             InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         },0);
     }
 
