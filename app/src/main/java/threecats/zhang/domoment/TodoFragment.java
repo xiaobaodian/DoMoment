@@ -409,8 +409,8 @@ public class TodoFragment extends Fragment {
         });
 
         /*
-        当前  i->左边  i1->上边  i2->右边  i3->下边
-        原来  i4->左边  i5->上边  i6->右边  i7->下边
+         * 当前  i->左边  i1->上边  i2->右边  i3->下边
+         * 原来  i4->左边  i5->上边  i6->右边  i7->下边
          */
         root.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> {
             Integer tagInt = (Integer) view.getTag();
@@ -423,7 +423,7 @@ public class TodoFragment extends Fragment {
                 }
             } else {
                 if (tagInt != null) {
-                    if (tagInt == i3 && simpleDate.getVisibility() == View.GONE) {     //&& i7 > 0
+                    if (tagInt == i3 && simpleDate.getVisibility() == View.GONE) {
                         popupWindow.dismiss();
                         //UIHelper.Toast("close input");
                     }
@@ -439,8 +439,8 @@ public class TodoFragment extends Fragment {
         Button buttonDate = contentView.findViewById(R.id.buttonDate);
         buttonDate.setOnClickListener(view -> {
             UIHelper.closeSoftKeyboard(taskTitle);
-            simpleDate.setVisibility(View.VISIBLE);
             taskTitle.setFocusable(false);
+            simpleDate.setVisibility(View.VISIBLE);
             simpleDate.setFocusable(true);
             simpleDate.setFocusableInTouchMode(true);
             taskTitle.setFocusable(true);
@@ -592,16 +592,11 @@ public class TodoFragment extends Fragment {
             return;
         }
         View contentView = LayoutInflater.from(parentContext).inflate(R.layout.popupwindow_categroy_editor, null, false);
-        //实例化PopupWindow并设置宽高
         PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //点击外部消失，这里因为PopupWindow填充了整个窗口，所以这句代码就没用了
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
         popupWindow.setOutsideTouchable(true);
-        //设置可以点击
         popupWindow.setTouchable(true);
         popupWindow.setFocusable(true);
-        //进入退出的动画
-        //popupWindow.setAnimationStyle(R.style.MyPopWindowAnim);
 
         ConstraintLayout root = contentView.findViewById(R.id.Root);
         root.setOnClickListener(v -> {
