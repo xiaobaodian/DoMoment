@@ -541,16 +541,6 @@ public class TodoFragment extends Fragment {
             taskExt.setStartDate(DateTime.getAfterTomorrow());
         });
 
-
-
-        popupWindow.setOnDismissListener(() -> {
-            if (taskTitle.getText().toString().isEmpty()) {
-                //App.Toast("no task");
-            } else {
-                //App.getDataManger().SimpleNewTask(taskTitle.getText().toString());
-            }
-        });
-
         //TabLayout.Tab tab = viewTabLayout.getTabAt(2);
         //tab.select();
         App.setPopupWindow(popupWindow);
@@ -605,6 +595,7 @@ public class TodoFragment extends Fragment {
 
         TextInputLayout textInputLayout = contentView.findViewById(R.id.TextInputLayout);
         TextInputEditText categoryTitle = contentView.findViewById(R.id.CategoryTitle);
+
         categoryTitle.setText(editorCategory.getTitle());
         categoryTitle.setOnFocusChangeListener((v, hasFocus) -> {
 
