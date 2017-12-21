@@ -26,7 +26,7 @@ public class MomentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_moment, container, false);
 
         Button button = view.findViewById(R.id.buttonMoment);
-        button.setOnClickListener(view1 -> App.getMainActivity().showNavigation());
+        button.setOnClickListener(view1 -> App.self().getMainActivity().showNavigation());
 
         return view;
     }

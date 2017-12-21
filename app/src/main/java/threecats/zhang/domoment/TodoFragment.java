@@ -74,7 +74,6 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 public class TodoFragment extends Fragment {
 
-    private DateTimeHelper DateTime = App.getDateTime();
     //private Bundle savedInstanceState;
     private Context parentContext;
     private Toolbar toolbar = null;
@@ -108,7 +107,7 @@ public class TodoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //this.savedInstanceState = savedInstanceState;
-        App.getDataManger().setTodoFragment(this);
+        App.self().getDataManger().setTodoFragment(this);
         //currentCategory = App.getCurrentCategory();
         //setRetainInstance(true);
 
@@ -147,11 +146,11 @@ public class TodoFragment extends Fragment {
             }
             @Override
             public void onDrawerOpened(View drawerView) {
-                App.setDrawerMenu(drawerLayout);
+                App.self().setDrawerMenu(drawerLayout);
             }
             @Override
             public void onDrawerClosed(View drawerView) {
-                App.setDrawerMenu(null);
+                App.self().setDrawerMenu(null);
             }
             @Override
             public void onDrawerStateChanged(int newState) {
@@ -175,8 +174,8 @@ public class TodoFragment extends Fragment {
             drawerLayout.closeDrawer(GravityCompat.START);
             new Handler().postDelayed(() -> {
                 //popupCategoryEditor();
-                int id = App.getDataManger().getCategoryList().getUsabilityID();
-                App.getDataManger().categoryEditor.newCategory(id);
+                int id = App.self().getDataManger().getCategoryList().getUsabilityID();
+                App.self().getDataManger().categoryEditor.newCategory(id);
                 popupCategoryEditor();
             },150);
         });
@@ -214,18 +213,18 @@ public class TodoFragment extends Fragment {
                 switch (tab.getPosition()){
                     case 0:
                         currentGroupList = currentCategory.getGroupList(GroupListType.TimeLine);
-                        App.getDataManger().setCurrentGroupList(currentGroupList);
+                        App.self().getDataManger().setCurrentGroupList(currentGroupList);
                         break;
                     case 1:
                         currentGroupList = currentCategory.getGroupList(GroupListType.Overdue);
-                        App.getDataManger().setCurrentGroupList(currentGroupList);
+                        App.self().getDataManger().setCurrentGroupList(currentGroupList);
                         break;
                     case 2:
                         currentGroupList = currentCategory.getGroupList(GroupListType.Nodate);
-                        App.getDataManger().setCurrentGroupList(currentGroupList);
+                        App.self().getDataManger().setCurrentGroupList(currentGroupList);
                     case 3:
                         currentGroupList = currentCategory.getGroupList(GroupListType.Complete);
-                        App.getDataManger().setCurrentGroupList(currentGroupList);
+                        App.self().getDataManger().setCurrentGroupList(currentGroupList);
                 }
             }
 
@@ -245,7 +244,7 @@ public class TodoFragment extends Fragment {
 //        tab.select();
 
         buildsDrawerCategoryList(view);
-        App.getDataManger().loadToDoDatas();
+        App.self().getDataManger().loadToDoDatas();
         setCurrentCategory();
 
         //EventBus.getDefault().register(this);
@@ -279,11 +278,11 @@ public class TodoFragment extends Fragment {
 //                App.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 break;
             case R.id.TodoMenu_ShowMainMenu:
-                App.getMainActivity().showNavigation();
+                App.self().getMainActivity().showNavigation();
                 break;
             case R.id.TodoMenu_EditCategoryTitle:
                 UIHelper.Toast("生成测试数据");
-                App.getDataManger().buildDatas();
+                App.self().getDataManger().buildDatas();
                 UIHelper.Toast("测试数据已生成");
                 break;
         }
@@ -293,7 +292,7 @@ public class TodoFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        if (App.getCurrentCategory().getCategoryID() < 10) {
+        if (App.self().getCurrentCategory().getCategoryID() < 10) {
             menu.findItem(R.id.TodoMenu_ChangedCategoryBackgroup).setVisible(false);
             menu.findItem(R.id.TodoMenu_RemoveCategory).setVisible(false);
             //menu.findItem(R.id.TodoMenu_EditCategoryTitle).setVisible(false);
@@ -310,9 +309,8 @@ public class TodoFragment extends Fragment {
         super.onResume();
         setBackgroundImage(currentCategory);
         //检查是不是当前日期是新的一天
-        if (App.getDateTime().IsCurrentDateChanged()) {
-            App.getDataManger().currentDateChange();
-            App.getDateTime().MarkToday();
+        if (DateTimeHelper.IsCurrentDateChanged()) {
+            App.self().getDataManger().currentDateChange();
             //Toast.makeText(getContext(),"日期<已经>变更", Toast.LENGTH_SHORT).show();
         } else {
             //Toast.makeText(getContext(),"日期<没有>变更", Toast.LENGTH_SHORT).show();
@@ -346,7 +344,7 @@ public class TodoFragment extends Fragment {
 
     public void setCurrentCategory(){
         drawerLayout.closeDrawer(GravityCompat.START);
-        currentCategory = App.getCurrentCategory();
+        currentCategory = App.self().getCurrentCategory();
         setGroupListTitle(currentCategory.getTitle());
         setBackgroundImage(currentCategory);
         //ImageView themebackground = (ImageView)fragmentView.findViewById(R.id.todo_appbar_image);
@@ -372,7 +370,7 @@ public class TodoFragment extends Fragment {
     // 构建侧滑的类目列表
     private void buildsDrawerCategoryList(View v){
         RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.CategoryRecyclerView);
-        categoryAdapter = new CategorySelectedAdapter(App.getDataManger().getCategoryList().getCategorys());
+        categoryAdapter = new CategorySelectedAdapter(App.self().getDataManger().getCategoryList().getCategorys());
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);
@@ -452,22 +450,22 @@ public class TodoFragment extends Fragment {
         buttonCategory.setOnClickListener(view -> {
             simpleDate.setVisibility(View.GONE);
         });
-        int categoryID = App.getDataManger().getCategoryList().getUsabilityCategoryID();
-        buttonCategory.setText(App.getDataManger().getCategoryList().getCategoryTitle(categoryID));
+        int categoryID = App.self().getDataManger().getCategoryList().getUsabilityCategoryID();
+        buttonCategory.setText(App.self().getDataManger().getCategoryList().getCategoryTitle(categoryID));
         taskExt.setCategoryID(categoryID);
 
         Button buttonDetail = contentView.findViewById(R.id.buttonDetail);
         buttonDetail.setOnClickListener(view -> {
             popupWindow.dismiss();
             taskExt.setTitle(taskTitle.getText().toString());
-            App.getDataManger().newTask(taskExt.getTaskItem());
+            App.self().getDataManger().newTask(taskExt.getTaskItem());
         });
 
         Button btnAddTask = contentView.findViewById(R.id.buttonAdd);
         btnAddTask.setOnClickListener(view -> {
             if ( ! taskTitle.getText().toString().isEmpty()) {
                 taskExt.setTitle(taskTitle.getText().toString());
-                App.getDataManger().simpleNewTask(taskExt.getTaskItem());
+                App.self().getDataManger().simpleNewTask(taskExt.getTaskItem());
                 taskTitle.setText("");
                 buttonDate.setText("日期");
                 buttonCategory.setText("未分类");
@@ -525,35 +523,35 @@ public class TodoFragment extends Fragment {
             buttonDate.setText("明天");
             simpleDate.setVisibility(View.GONE);
             UIHelper.closeSoftKeyboard(taskTitle);
-            taskExt.setStartDate(DateTime.getTomorrow());
+            taskExt.setStartDate(DateTimeHelper.getTomorrow());
         });
         Button buttonAfterTomorrow = contentView.findViewById(R.id.buttonAfterTomorrow);
         buttonAfterTomorrow.setOnClickListener(view -> {
             buttonDate.setText("后天");
             simpleDate.setVisibility(View.GONE);
             UIHelper.closeSoftKeyboard(taskTitle);
-            taskExt.setStartDate(DateTime.getAfterTomorrow());
+            taskExt.setStartDate(DateTimeHelper.getAfterTomorrow());
         });
         Button buttonNextWeek = contentView.findViewById(R.id.buttonNextWeek);
         buttonNextWeek.setOnClickListener(view -> {
             buttonDate.setText("下周");
             simpleDate.setVisibility(View.GONE);
             UIHelper.closeSoftKeyboard(taskTitle);
-            taskExt.setStartDate(DateTime.getAfterTomorrow());
+            taskExt.setStartDate(DateTimeHelper.getAfterTomorrow());
         });
 
         //TabLayout.Tab tab = viewTabLayout.getTabAt(2);
         //tab.select();
-        App.setPopupWindow(popupWindow);
+        App.self().setPopupWindow(popupWindow);
         popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
     }
 
     private void safeRemoveCategory(String notice){
         AlertDialog.Builder removeCategoryDialog = UIHelper.getYNDialog(parentContext, notice);
         removeCategoryDialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            App.getDataManger().removeCustomCategory((CustomCategory) currentCategory);
-            CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
-            App.getDataManger().setCurrentCategory(firstCategory);
+            App.self().getDataManger().removeCustomCategory((CustomCategory) currentCategory);
+            CategoryBase firstCategory = App.self().getDataManger().getCategoryList().getFirstCategory();
+            App.self().getDataManger().setCurrentCategory(firstCategory);
             updateDrawerCategoryList();
         });
         removeCategoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
@@ -566,9 +564,9 @@ public class TodoFragment extends Fragment {
         String notice = "如果确认删除，该类目下所有的任务将成为未分类的任务";
         MaskDialog maskDialog = new MaskDialog(parentContext, title, notice);
         maskDialog.setBtnOKOnClickListener(view -> {
-            App.getDataManger().removeCustomCategory((CustomCategory) currentCategory);
-            CategoryBase firstCategory = App.getDataManger().getCategoryList().getFirstCategory();
-            App.getDataManger().setCurrentCategory(firstCategory);
+            App.self().getDataManger().removeCustomCategory((CustomCategory) currentCategory);
+            CategoryBase firstCategory = App.self().getDataManger().getCategoryList().getFirstCategory();
+            App.self().getDataManger().setCurrentCategory(firstCategory);
             updateDrawerCategoryList();
         });
         maskDialog.setBtnCancelOnClickListener(view -> {
@@ -578,7 +576,7 @@ public class TodoFragment extends Fragment {
     }
 
     private void popupCategoryEditor(){
-        CategoryBase editorCategory = App.getDataManger().categoryEditor.getEditorCategory();
+        CategoryBase editorCategory = App.self().getDataManger().categoryEditor.getEditorCategory();
         if (editorCategory.getCategoryID() < 10) {
             return;
         }
@@ -629,21 +627,21 @@ public class TodoFragment extends Fragment {
                 setGroupListTitle(editorCategory.getTitle());
             } else {
                 editorCategory.setTitle(categoryTitle.getText().toString());
-                App.getDataManger().categoryEditor.commit(EditorMode.Edit);
+                App.self().getDataManger().categoryEditor.commit(EditorMode.Edit);
                 //App.getDataManger().UpdateCustomCategory((CustomCategory)currentCategory);
                 updateDrawerCategoryList();
             }
         });
 
         RecyclerView recyclerView = contentView.findViewById(R.id.RecyclerView);
-        CategoryBackgroundAdapter backgroupAdapter = new CategoryBackgroundAdapter(App.getCategoryThemebackgrounds(), this);
+        CategoryBackgroundAdapter backgroupAdapter = new CategoryBackgroundAdapter(App.self().getCategoryThemebackgrounds(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(backgroupAdapter);
         new LinearSnapHelper().attachToRecyclerView(recyclerView);
         //popupWindowCategoryEditor = popupWindow;
-        App.setPopupWindow(popupWindow);
+        App.self().setPopupWindow(popupWindow);
         popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
     }
 

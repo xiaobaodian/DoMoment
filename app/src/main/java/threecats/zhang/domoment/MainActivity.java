@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.setMainActivity(this);
-        App.Init();
+        App.self().setMainActivity(this);
+        App.self().Init();
 
         setContentView(R.layout.activity_main);
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        App.setCurrentActivity(this);
+        App.self().setCurrentActivity(this);
     }
 
     public void setNavigationState(int visibility){
@@ -138,12 +138,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (App.hasPopupWindow()) {
-                App.closePopupWindow();
+            if (App.self().hasPopupWindow()) {
+                App.self().closePopupWindow();
                 return true;
             }
-            if (App.hasDrawerMenu()) {
-                App.closeDrawerMenu();
+            if (App.self().hasDrawerMenu()) {
+                App.self().closeDrawerMenu();
                 return true;
             }
             if (navigation.getVisibility() == View.VISIBLE) {

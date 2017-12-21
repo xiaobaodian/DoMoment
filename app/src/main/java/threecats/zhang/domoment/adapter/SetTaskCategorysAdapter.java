@@ -23,9 +23,8 @@ import threecats.zhang.domoment.R;
 
 public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private DateTimeHelper DateTime = App.getDateTime();
-    private TaskItem task = App.getDataManger().getCurrentTask();
-    private TaskExt taskExt =App.getDataManger().getCurrentTaskExt();
+    private TaskItem task = App.self().getDataManger().getCurrentTask();
+    private TaskExt taskExt =App.self().getDataManger().getCurrentTaskExt();
     private List<CategoryBase>  itemBases;
     private int currentChecked = -1;
 

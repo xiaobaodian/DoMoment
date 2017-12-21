@@ -5,6 +5,7 @@ import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.ENUM.TimeSeries;
 import threecats.zhang.domoment.App;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.R;
 
@@ -31,7 +32,7 @@ public class FocusGroupList extends GroupListBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTime.BuildTimePoint(0);
+        this.timePoint = DateTimeHelper.BuildTimePoint(0);
     }
 
     @Override

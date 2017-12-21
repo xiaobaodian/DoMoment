@@ -21,7 +21,6 @@ import threecats.zhang.domoment.R;
 
 public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private DateTimeHelper DateTime = App.getDateTime();
     private List<CategoryBase>  itemBases;
 
     //static
@@ -55,8 +54,8 @@ public class CategorySelectedAdapter extends RecyclerView.Adapter<RecyclerView.V
                 int position = itemViewHolder.getAdapterPosition();
                 CategoryBase category = itemBases.get(position);
                 new Handler().postDelayed(() -> {
-                    CategoryBase oldCategory = App.getCurrentCategory();
-                    App.getDataManger().setCurrentCategory(category);
+                    CategoryBase oldCategory = App.self().getCurrentCategory();
+                    App.self().getDataManger().setCurrentCategory(category);
                     oldCategory.unBind();
                 },350);
 

@@ -30,14 +30,11 @@ public class App extends Application {
     private static App self;
     private BoxStore boxStore;
     private Context context;
-    private static DateTimeHelper dateTime;
-    private static DataManger dataManger;
-    private static MainActivity mainActivity;
-    private static Activity currentActivity;
-    private static PopupWindow popupWindow;
-    private static DrawerLayout drawerLayout;
-    //private static BoxStore boxStore;
-    private static boolean initFlag;
+    private DataManger dataManger;
+    private MainActivity mainActivity;
+    private Activity currentActivity;
+    private PopupWindow popupWindow;
+    private DrawerLayout drawerLayout;
 
     @Override
     public void onCreate() {
@@ -45,17 +42,14 @@ public class App extends Application {
         self = this;
         context = getApplicationContext();
         boxStore = MyObjectBox.builder().androidContext(App.this).build();
-        initFlag = false;
         //dateTime = new DateTimeHelper();
         //dataManger = new DataManger();
         //dataManger.loadToDoDatas();
     }
 
-    public static void Init(){
-        dateTime = new DateTimeHelper();
+    public void Init(){
         dataManger = new DataManger();
         //dataManger.loadToDoDatas();
-        initFlag = true;
     }
 
     public static App self(){
@@ -66,79 +60,70 @@ public class App extends Application {
         return boxStore;
     }
 
-    public static boolean isInit(){
-        return initFlag;
-    }
-    public static DateTimeHelper getDateTime(){
-        return dateTime;
-    }
     public Context getContext() {
         return context;
     }
-    public static DataManger getDataManger(){
+    public DataManger getDataManger(){
         return dataManger;
     }
-    public static CategoryBase getCurrentCategory(){
+    public CategoryBase getCurrentCategory(){
         return dataManger.getCurrentCategory();
     }
-    public static GroupListBase getCurrentGroupList(){
+    public GroupListBase getCurrentGroupList(){
         return dataManger.getCurrentGroupList();
     }
 
-    public static void setMainActivity(MainActivity activity){
+    public void setMainActivity(MainActivity activity){
         mainActivity = activity;
     }
-    public static MainActivity getMainActivity(){
+    public MainActivity getMainActivity(){
         return mainActivity;
     }
-    public static void setCurrentActivity(Activity activity){
+
+    public void setCurrentActivity(Activity activity){
         currentActivity = activity;
     }
-    public static Activity getCurrentActivity(){
+    public Activity getCurrentActivity(){
         return currentActivity;
     }
-    public String getRString(int StringID){
-        return context.getString(StringID);
+
+    public void showTaskDisplayActivity(){
+        Intent taskIntent = new Intent(mainActivity,TaskDisplayActivity.class);
+        mainActivity.startActivity(taskIntent);
     }
-    public static void showTaskDisplayActivity(){
-        Intent taskIntent = new Intent(App.getMainActivity(),TaskDisplayActivity.class);
-        App.getMainActivity().startActivity(taskIntent);
-    }
-    public static void setPopupWindow(PopupWindow pWin){
+
+    public void setPopupWindow(PopupWindow pWin){
         popupWindow = pWin;
     }
-    public static boolean hasPopupWindow(){
+    public boolean hasPopupWindow(){
         return popupWindow != null;
     }
-    public static void closePopupWindow(){
+    public void closePopupWindow(){
         if (popupWindow != null) {
             popupWindow.dismiss();
             popupWindow = null;
         }
     }
-    public static void setDrawerMenu(DrawerLayout drawer){
+
+    public void setDrawerMenu(DrawerLayout drawer){
         drawerLayout = drawer;
     }
-    public static void closeDrawerMenu(){
+    public void closeDrawerMenu(){
         if (drawerLayout != null){
             drawerLayout.closeDrawer(GravityCompat.START);
             drawerLayout = null;
         }
     }
-    public static boolean hasDrawerMenu(){
+    public boolean hasDrawerMenu(){
         return drawerLayout != null;
     }
-    public static List<BackgroundBase> getCategoryThemebackgrounds(){
+
+    public List<BackgroundBase> getCategoryThemebackgrounds(){
         return dataManger.getCategoryList().getCategoryThemebackgrounds();
     }
 
 
     public static void Exit() {
-        dateTime = null;
-        dataManger = null;
-        mainActivity = null;
-        currentActivity = null;
-        popupWindow = null;
-        drawerLayout = null;
+        self = null;
     }
 }

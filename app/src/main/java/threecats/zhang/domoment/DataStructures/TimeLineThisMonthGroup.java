@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.ENUM.GroupType;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
 
 /**
@@ -29,7 +30,7 @@ public class TimeLineThisMonthGroup extends GroupBase {
         //int daySite = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         //int monthDays = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
         //return DateTime.buildTimePoint(monthDays - daySite);
-        int daySite = DateTime.GetDayOfWeek(Calendar.getInstance());
-        this.timePoint = DateTime.BuildTimePoint(7-daySite+8);
+        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
+        this.timePoint = DateTimeHelper.BuildTimePoint(7-daySite+8);
     }
 }

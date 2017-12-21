@@ -27,9 +27,9 @@ import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
 
-    private TaskItem task = App.getDataManger().getEditorTask();
-    private TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
-    private final DateTimeHelper DateTime = App.getDateTime();
+    private TaskItem task = App.self().getDataManger().getEditorTask();
+    private TaskExt taskExt = App.self().getDataManger().getCurrentTaskExt();
+
     private Context parentContext;
     private View taskDetailsView;
     private final int editStartDate = 1;
@@ -205,8 +205,8 @@ public class TaskDetailsFragment extends TitleFragment {
         dialog.setTitle(title).setView(layout);
 
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
+            final TaskItem task = App.self().getDataManger().getEditorTask();
+            TaskExt taskExt = App.self().getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartDate:
                     if (taskExt.isOneDay()) {
@@ -223,8 +223,8 @@ public class TaskDetailsFragment extends TitleFragment {
         });
 
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
+            final TaskItem task = App.self().getDataManger().getEditorTask();
+            TaskExt taskExt = App.self().getDataManger().getCurrentTaskExt();
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
@@ -292,8 +292,8 @@ public class TaskDetailsFragment extends TitleFragment {
         dialog.setTitle(title).setView(layout);
 
         dialog.setNeutralButton("删除", (dialogInterface, i) -> {
-            final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
+            final TaskItem task = App.self().getDataManger().getEditorTask();
+            TaskExt taskExt = App.self().getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartTime:
                     if (taskExt.isOneTime()) {
@@ -310,8 +310,8 @@ public class TaskDetailsFragment extends TitleFragment {
         });
 
         dialog.setPositiveButton("确定", (dialogInterface, i) -> {
-            final TaskItem task = App.getDataManger().getEditorTask();
-            TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
+            final TaskItem task = App.self().getDataManger().getEditorTask();
+            TaskExt taskExt = App.self().getDataManger().getCurrentTaskExt();
             switch (EditType) {
                 case editStartTime:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

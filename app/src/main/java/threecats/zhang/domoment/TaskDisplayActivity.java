@@ -46,8 +46,8 @@ import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDisplayActivity extends AppCompatActivity {
 
-    private TaskItem task = App.getDataManger().getEditorTask();
-    private TaskExt taskExt = App.getDataManger().getCurrentTaskExt();
+    private TaskItem task = App.self().getDataManger().getEditorTask();
+    private TaskExt taskExt = App.self().getDataManger().getCurrentTaskExt();
     private int oldCategoryID;
     private TaskPriority oldPriority;
     private EditText etTaskTitle;
@@ -124,7 +124,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        App.setCurrentActivity(this);
+        App.self().setCurrentActivity(this);
         //oldCategoryID = task.getCategoryID();
         //oldPriority = task.getPriority();
         etTaskTitle.setText(task.getTitle());
@@ -156,7 +156,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         }
         String createDateTimeStr = "创建于：" + taskExt.getCreatedDateTimeStr();
         tvCreatedDateTime.setText(createDateTimeStr);
-        btnCategory.setText(App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        btnCategory.setText(App.self().getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         String priorityTitle = "";
         if (taskExt.getPriority() == TaskPriority.Urgent) {
             priorityTitle = "紧急";
@@ -225,7 +225,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         task.setTitle(etTaskTitle.getText().toString());
-        App.getDataManger().commitEditorTask(editorMode);
+        App.self().getDataManger().commitEditorTask(editorMode);
         //EventBus.getDefault().post(new TaskEditorEvent(editorMode));
     }
 
@@ -254,7 +254,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         categoryDialog.setOnCancelListener(view ->{task.setCategoryID(oldCategoryID);});
 
         RecyclerView recyclerView = layout.findViewById(R.id.CategoryRecyclerView);
-        SetTaskCategorysAdapter categoryAdapter = new SetTaskCategorysAdapter(App.getDataManger().getCategoryList().getCustomCategories());
+        SetTaskCategorysAdapter categoryAdapter = new SetTaskCategorysAdapter(App.self().getDataManger().getCategoryList().getCustomCategories());
         LinearLayoutManager layoutManager = new LinearLayoutManager(layout.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryAdapter);

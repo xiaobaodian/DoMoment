@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.ENUM.GroupType;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
 
 /**
@@ -26,7 +27,7 @@ public class TimeLineNextWeekGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        int daySite = DateTime.GetDayOfWeek(Calendar.getInstance());
-        this.timePoint = DateTime.BuildTimePoint(7-daySite+1);
+        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
+        this.timePoint = DateTimeHelper.BuildTimePoint(7-daySite+1);
     }
 }

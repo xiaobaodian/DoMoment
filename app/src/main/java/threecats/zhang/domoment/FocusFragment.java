@@ -25,7 +25,7 @@ public class FocusFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_focus, container, false);
 
         Button button = view.findViewById(R.id.buttonFocus);
-        button.setOnClickListener(view1 -> App.getMainActivity().showNavigation());
+        button.setOnClickListener(view1 -> App.self().getMainActivity().showNavigation());
 
         return view;
     }

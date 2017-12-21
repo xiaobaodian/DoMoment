@@ -26,80 +26,74 @@ public class DateTimeHelper {
         return tempCalendarDay.getTime();
     }
 
-    public void SetDate(Calendar date, int year, int month, int day){
+    public static void SetCalendarDate(Calendar date, int year, int month, int day){
         date.set(Calendar.YEAR, year);
         date.set(Calendar.MONTH, month);
         date.set(Calendar.DAY_OF_MONTH, day);
     }
 
-    public Calendar getTomorrow(){
+    public static Calendar getTomorrow(){
         Calendar day = Calendar.getInstance();
         day.add(Calendar.DATE, 1);
         return day;
     }
 
-    public Calendar getAfterTomorrow(){
+    public static Calendar getAfterTomorrow(){
         Calendar day = Calendar.getInstance();
         day.add(Calendar.DATE, 2);
         return day;
     }
 
-    public boolean IsCurrentYear(Date date){
-        tempCalendarDay.setTime(date);
-        return tempCalendarDay.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR);
+    public static boolean IsCurrentYear(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR);
     }
-    public boolean IsCurrentYear(Calendar calendar){
+    public static boolean IsCurrentYear(Calendar calendar){
         return calendar.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    public boolean IsCurrentMonth(Date date){
-        tempCalendarDay.setTime(date);
+    public static boolean IsCurrentMonth(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         boolean currentMonth;
         if (IsCurrentYear(date)) {
-            currentMonth = tempCalendarDay.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH);
+            currentMonth = calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH);
         } else {
             currentMonth = false;
         }
         return currentMonth;
     }
 
-    public void  BlendCalendar(Calendar date, DatePicker datePicker){
+    public static void  BlendCalendar(Calendar date, DatePicker datePicker){
         date.set(Calendar.YEAR, datePicker.getYear());
         date.set(Calendar.MONTH, datePicker.getMonth());
         date.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
     }
 
-    public boolean SameYearMonth(Calendar c1, Calendar c2){
+    public static boolean SameYearMonth(Calendar c1, Calendar c2){
         return c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR) && c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH);
     }
 
-    public boolean SameYMD(Calendar c1, Calendar c2){
+    public static boolean SameYMD(Calendar c1, Calendar c2){
         return c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR) &&
                c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) &&
                c1.get(Calendar.DAY_OF_MONTH) == c2.get(Calendar.DAY_OF_MONTH);
     }
 
-    public Date Clone(Date date){
-        if (date == null) {
-            date = Now();
-        }
-        tempCalendarDay.setTime(date);
-        return tempCalendarDay.getTime();
-    }
-
-    public String getyearFormatStr(Date date){
+    public static String getyearFormatStr(Date date){
         return IsCurrentYear(date) ? "" : "yyyy ";
     }
-    public String getyearFormatStr(Calendar date){
+    public static String getyearFormatStr(Calendar date){
         return IsCurrentYear(date) ? "" : "yyyy ";
     }
 
-    public String getDateWeekStr(Calendar date){
+    public static String getDateWeekStr(Calendar date){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMdd  E");
         return dateFormat.format(date.getTime());
     }
 
-    public Calendar BuildTimePoint(int days){
+    public static Calendar BuildTimePoint(int days){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,days);
 
@@ -115,22 +109,22 @@ public class DateTimeHelper {
         return timePoint;
     }
 
-    public int GetDayOfWeek(Calendar day){
+    public static int GetDayOfWeek(Calendar day){
         int Site = day.get(Calendar.DAY_OF_WEEK);
         if (Site == 1) Site = 8;
         return --Site;
     }
 
-    public int getDayOfWeek(LocalDate day){
+    public static int getDayOfWeek(LocalDate day){
         //DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
         return day.getDayOfWeek().ordinal();
     }
 
-    public boolean IsCurrentDateChanged(){
-        return ! Calendar.getInstance().before(currentDate);
+    public static boolean IsCurrentDateChanged(){
+        return ! Calendar.getInstance().before(BuildTimePoint(1));
     }
 
-    public void MarkToday(){
-        currentDate = BuildTimePoint(1);
+    public static void MarkToday(){
+        //currentDate = BuildTimePoint(1);
     }
 }

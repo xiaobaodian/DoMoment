@@ -40,8 +40,8 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
         }
         if (datetimeRange.length() > 0) datetimeRange += "   ";
         holder.setText(R.id.taskDateTime, datetimeRange);
-        if (App.getCurrentCategory().getCategoryID() == 0) {
-            holder.setText(R.id.taskCategory, App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        if (App.self().getCurrentCategory().getCategoryID() == 0) {
+            holder.setText(R.id.taskCategory, App.self().getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }
 
@@ -80,15 +80,15 @@ public class TimeLineAdapter extends RecyclerViewAdapterBase {
     @Override
     protected void OnGroupClick(GroupBase group) {
         if (group instanceof TimeLineTodayGroup) {
-            App.getDataManger().newTask(Calendar.getInstance());
+            App.self().getDataManger().newTask(Calendar.getInstance());
         } else if (group instanceof TimeLineTomorrowGroup) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE,1);
-            App.getDataManger().newTask(calendar);
+            App.self().getDataManger().newTask(calendar);
         } else if (group instanceof TimeLineAfterTomorrowGroup) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE,2);
-            App.getDataManger().newTask(calendar);
+            App.self().getDataManger().newTask(calendar);
         }
     }
 

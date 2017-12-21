@@ -36,7 +36,6 @@ import threecats.zhang.domoment.TaskDisplayActivity;
 
 public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    protected DateTimeHelper dateTime = App.getDateTime();
     private GroupListBase groupList;
     private GroupBase group;
     private List<RecyclerViewItem>  items;
@@ -140,20 +139,20 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                 final ItemViewHolder itemViewHolder = new ItemViewHolder(view);
                 itemViewHolder.currentItemView.setOnClickListener(v -> {
                     TaskItem task = itemViewHolder.getTask();
-                    App.getDataManger().setCurrentTask(task);
+                    App.self().getDataManger().setCurrentTask(task);
                     if (isChecked) {
                         itemViewHolder.checkBox.setChecked(! task.getChecked());
                         task.setChecked(itemViewHolder.checkBox.isChecked());
                     } else {
                         //Intent taskIntent = new Intent(App.getMainActivity(),TaskDetailsActivity.class);
-                        Intent taskIntent = new Intent(App.getMainActivity(),TaskDisplayActivity.class);
-                        App.getMainActivity().startActivity(taskIntent);
+                        Intent taskIntent = new Intent(App.self().getMainActivity(),TaskDisplayActivity.class);
+                        App.self().getMainActivity().startActivity(taskIntent);
                     }
                 });
                 itemViewHolder.currentItemView.setOnLongClickListener(v -> {
                     if (isChecked) return false;
                     TaskItem task = itemViewHolder.getTask();
-                    App.getDataManger().setCurrentTask(task);
+                    App.self().getDataManger().setCurrentTask(task);
                     //暂时关闭长安多选功能
                     //App.getDataManger().getCurrentGroupList().setItemChecked(true);
                     return true;

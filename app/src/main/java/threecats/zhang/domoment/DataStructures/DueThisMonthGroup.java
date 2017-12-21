@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.ENUM.GroupType;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * 由 zhang 于 2017/8/4 创建
@@ -26,9 +27,9 @@ public class DueThisMonthGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        int daySite = DateTime.GetDayOfWeek(Calendar.getInstance());
+        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
         //上周一的零时
-        this.timePoint = DateTime.BuildTimePoint(1-daySite-7);
+        this.timePoint = DateTimeHelper.BuildTimePoint(1-daySite-7);
     }
 
     public String getDateTitle(){

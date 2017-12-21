@@ -19,8 +19,6 @@ import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 public class TaskExt {
 
-    private DateTimeHelper DateTime = App.getDateTime();
-
     private TaskItem taskItem = null;
     private TaskDate startDay = new TaskDate();
     private TaskDate dueDay = new TaskDate();
@@ -301,26 +299,26 @@ public class TaskExt {
     }
 
     public String getCreatedDateTimeStr(){
-        String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
+        String year = DateTimeHelper.IsCurrentYear(createDateTime) ? "" : "yyyy ";
         SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m", Locale.CHINA);
         return createDateTimeFStr.format(taskItem.getCreateDateTime());
     }
 
     public String getCompleteDateTimeStr(){
-        String year = DateTime.IsCurrentYear(createDateTime) ? "" : "yyyy ";
+        String year = DateTimeHelper.IsCurrentYear(createDateTime) ? "" : "yyyy ";
         SimpleDateFormat createDateTimeFStr = new SimpleDateFormat(year + "MMMd  H:m");
         return createDateTimeFStr.format(taskItem.getCompleteDateTime());
     }
 
     public String getBeginDateStr(){
-        String year = DateTime.IsCurrentYear(startDateTime) ? "" : "yyyy ";
+        String year = DateTimeHelper.IsCurrentYear(startDateTime) ? "" : "yyyy ";
         SimpleDateFormat beginDateTimeFStr = new SimpleDateFormat(year + "MMM  dd");
         return beginDateTimeFStr.format(taskItem.getStartDateTime());
     }
     public String getEndDateStr(){
         if (isOneDay()) return "";
-        String year = DateTime.IsCurrentYear(dueDateTime) ? "" : "yyyy ";
-        String month = DateTime.SameYearMonth(startDateTime, dueDateTime) ? "" : "MMM  ";
+        String year = DateTimeHelper.IsCurrentYear(dueDateTime) ? "" : "yyyy ";
+        String month = DateTimeHelper.SameYearMonth(startDateTime, dueDateTime) ? "" : "MMM  ";
         SimpleDateFormat dueDateTimeFStr = new SimpleDateFormat(year + month + "dd");
         return dueDateTimeFStr.format(taskItem.getDueDateTime());
     }
@@ -328,12 +326,12 @@ public class TaskExt {
         if (isNoDate()) return "DoDate";
         String beginDateFormatStr = "";
         String endDateFormatStr = "";
-        if (DateTime.SameYearMonth(startDateTime, dueDateTime)) {
-            beginDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
+        if (DateTimeHelper.SameYearMonth(startDateTime, dueDateTime)) {
+            beginDateFormatStr = DateTimeHelper.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
             endDateFormatStr = " - d";
         } else {
-            beginDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
-            endDateFormatStr = DateTime.IsCurrentYear(startDateTime) ? " - MMM d" : " - yyyy MMM d";
+            beginDateFormatStr = DateTimeHelper.IsCurrentYear(startDateTime) ? "MMM d" : "yyyy MMM d";
+            endDateFormatStr = DateTimeHelper.IsCurrentYear(startDateTime) ? " - MMM d" : " - yyyy MMM d";
         }
         SimpleDateFormat beginDate = new SimpleDateFormat(beginDateFormatStr);
         SimpleDateFormat endDate = new SimpleDateFormat(endDateFormatStr);

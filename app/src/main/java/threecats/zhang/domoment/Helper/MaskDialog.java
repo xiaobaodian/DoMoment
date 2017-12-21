@@ -96,8 +96,8 @@ public class MaskDialog {
     }
 
     private void setBackgroundAlpha(float alpha) {
-        WindowManager.LayoutParams layoutParams = App.getCurrentActivity().getWindow().getAttributes();
+        WindowManager.LayoutParams layoutParams = App.self().getCurrentActivity().getWindow().getAttributes();
         layoutParams.alpha = alpha;
-        App.getCurrentActivity().getWindow().setAttributes(layoutParams);
+        App.self().getCurrentActivity().getWindow().setAttributes(layoutParams);
     }
 }

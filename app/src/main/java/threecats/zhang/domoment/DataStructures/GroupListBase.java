@@ -24,7 +24,6 @@ import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 public abstract class GroupListBase {
 
-    protected DateTimeHelper DateTime = App.getDateTime();
     private String title = "";
     protected RecyclerView GroupListRecyclerView;
     protected RecyclerViewAdapterBase GroupListAdapter;

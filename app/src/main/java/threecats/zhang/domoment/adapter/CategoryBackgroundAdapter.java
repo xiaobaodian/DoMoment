@@ -23,7 +23,6 @@ import threecats.zhang.domoment.TodoFragment;
 
 public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private DateTimeHelper DateTime = App.getDateTime();
     private TodoFragment fragment;
     private List<BackgroundBase>  itemBases;
     private int currentCheckedSite = -1;
@@ -55,7 +54,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         itemViewHolder.view.setOnClickListener(v -> {
             int position = itemViewHolder.getAdapterPosition();
             BackgroundBase background = itemBases.get(position);
-            CategoryBase currentCategory = App.getCurrentCategory();
+            CategoryBase currentCategory = App.self().getCurrentCategory();
             currentCategory.setThemeBackgroundID(background.getID());
             itemViewHolder.CheckImage.setVisibility(View.VISIBLE);
             if (currentCheckedSite >= 0) {
@@ -72,7 +71,7 @@ public class CategoryBackgroundAdapter extends RecyclerView.Adapter<RecyclerView
         BackgroundBase background = itemBases.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder)holder;
         Glide.with(fragment).load(background.getID()).into(itemViewHolder.backgroundImage);
-        CategoryBase currentCategory = App.getCurrentCategory();
+        CategoryBase currentCategory = App.self().getCurrentCategory();
         if (currentCategory.getThemeBackgroundID() == background.getID()) {
             itemViewHolder.CheckImage.setVisibility(View.VISIBLE);
             currentCheckedSite = position;

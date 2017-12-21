@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.ENUM.GroupType;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
 
 /**
@@ -27,7 +28,7 @@ public class TimeLineAfterTomorrowGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        timePoint = DateTime.BuildTimePoint(2);
+        timePoint = DateTimeHelper.BuildTimePoint(2);
     }
 
     public String getDateTitle(){

@@ -32,8 +32,8 @@ public class MakeOutAdapter extends RecyclerViewAdapterBase {
         holder.setText(R.id.taskTitle, task.getTitle())
                 .setText(R.id.taskPlace, "")
                 .setText(R.id.taskDateTime, "完成于：" + taskExt.getCompleteDateTimeStr());
-        if (App.getCurrentCategory().getCategoryID() == 0) {
-            holder.setText(R.id.taskCategory, App.getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
+        if (App.self().getCurrentCategory().getCategoryID() == 0) {
+            holder.setText(R.id.taskCategory, App.self().getDataManger().getCategoryList().getCategoryTitle(task.getCategoryID()));
         }
     }
 

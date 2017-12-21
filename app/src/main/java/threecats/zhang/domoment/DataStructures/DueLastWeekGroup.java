@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.ENUM.GroupType;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * 由 zhang 于 2017/8/4 创建
@@ -26,8 +27,8 @@ public class DueLastWeekGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        int daySite = DateTime.GetDayOfWeek(Calendar.getInstance());
-        this.timePoint = DateTime.BuildTimePoint(1-daySite);
+        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
+        this.timePoint = DateTimeHelper.BuildTimePoint(1-daySite);
     }
 
     public String getDateTitle(){

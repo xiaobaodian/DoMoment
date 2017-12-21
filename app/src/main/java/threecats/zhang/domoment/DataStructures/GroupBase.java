@@ -22,8 +22,6 @@ import threecats.zhang.domoment.App;
 
 public abstract class GroupBase extends RecyclerViewItem {
 
-    protected DateTimeHelper DateTime = App.getDateTime();
-
     protected long ID;
     protected String title;
     protected String note;
@@ -183,8 +181,8 @@ public abstract class GroupBase extends RecyclerViewItem {
             } else {
                 Calendar endDate = (Calendar)nextGroup.timePoint.clone();
                 endDate.add(Calendar.DATE, -1);
-                if (!DateTime.SameYMD(timePoint, endDate)) {
-                    String s = DateTime.getyearFormatStr(endDate.getTime());
+                if ( ! DateTimeHelper.SameYMD(timePoint, endDate)) {
+                    String s = DateTimeHelper.getyearFormatStr(endDate.getTime());
                     SimpleDateFormat date2Format = new SimpleDateFormat("  / "+ s +" MMMd  E");
                     d = date2Format.format(endDate.getTime());
                 }
@@ -197,8 +195,8 @@ public abstract class GroupBase extends RecyclerViewItem {
                 d = "很久以前 —— ";
             } else {
                 Calendar beginDate = (Calendar)nextGroup.timePoint.clone();
-                if (!DateTime.SameYMD(beginDate, endDate)) {
-                    String s = DateTime.getyearFormatStr(beginDate.getTime());
+                if ( ! DateTimeHelper.SameYMD(beginDate, endDate)) {
+                    String s = DateTimeHelper.getyearFormatStr(beginDate.getTime());
                     SimpleDateFormat date2Format = new SimpleDateFormat(s + "MMMd  E" + "  / ");
                     d = date2Format.format(beginDate.getTime());
                 }

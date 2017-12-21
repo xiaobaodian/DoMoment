@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import threecats.zhang.domoment.ENUM.GroupType;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * 由 zhang 于 2017/8/4 创建
@@ -26,7 +27,7 @@ public class DueBeforeYesterdayGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTime.BuildTimePoint(-1);
+        this.timePoint = DateTimeHelper.BuildTimePoint(-1);
     }
 
     public String getDateTitle(){

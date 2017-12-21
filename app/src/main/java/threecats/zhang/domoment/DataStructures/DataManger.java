@@ -247,12 +247,12 @@ public class DataManger {
         int categoryID = categoryList.getUsabilityCategoryID();
         TaskItem task = new TaskExt(categoryID, day).getTaskItem();
         setEditorTask(task);
-        App.showTaskDisplayActivity();
+        App.self().showTaskDisplayActivity();
     }
 
     public void newTask(TaskItem taskItem){
         setEditorTask(taskItem);
-        App.showTaskDisplayActivity();
+        App.self().showTaskDisplayActivity();
     }
 
     public void addTask(TaskItem task){
