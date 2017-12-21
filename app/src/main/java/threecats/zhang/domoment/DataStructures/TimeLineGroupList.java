@@ -51,7 +51,6 @@ public class TimeLineGroupList extends GroupListBase {
         addGroup(new TimeLineWithinSixMonthsGroup(this));
         addGroup(new TimeLineForwardGroup(this));
 
-        //TimeSeries t = this.getTimeSeries();
         checkArea();
     }
 
