@@ -17,7 +17,7 @@ public class CandidateMaster {
     private Box<CandidateItem> candidateListBox;
 
     public CandidateMaster(){
-        BoxStore boxStore = App.getBoxStore();
+        BoxStore boxStore = App.self().getBoxStore();
         candidateListBox = boxStore.boxFor(CandidateItem.class);
     }
 

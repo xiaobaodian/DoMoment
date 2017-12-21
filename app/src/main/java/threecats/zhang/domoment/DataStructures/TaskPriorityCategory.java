@@ -16,7 +16,7 @@ public class TaskPriorityCategory extends CategoryBase {
     TaskPriorityCategory() {
         super();
         setCategoryID(2);
-        Context context = App.getContext();
+        Context context = App.self().getContext();
         setTitle(context.getString(R.string.category_prioritycategory_title));
         categoryType = CategoryType.System;
         iconId = R.mipmap.openbook;

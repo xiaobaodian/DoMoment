@@ -33,8 +33,12 @@ public class UIHelper {
         return dialog;
     }
 
+    public static String getRString(int StringID){
+        return App.self().getContext().getString(StringID);
+    }
+
     public static void Toast(String message){
-        Context context = App.getContext();
+        Context context = App.self().getContext();
         android.widget.Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 

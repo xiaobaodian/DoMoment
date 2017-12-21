@@ -15,7 +15,7 @@ public class NoCategory extends CategoryBase {
     NoCategory() {
         super();
         setCategoryID(1);
-        Context context = App.getContext();
+        Context context = App.self().getContext();
         setTitle(context.getString(R.string.category_nocategory_title));
         categoryType = CategoryType.System;
         iconId = R.mipmap.brightness;

@@ -15,6 +15,7 @@ import io.objectbox.relation.ToMany;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.ItemType;
 import threecats.zhang.domoment.ENUM.TaskPriority;
+import threecats.zhang.domoment.Helper.UIHelper;
 
 /**
  * 由 zhang 于 2017/8/3 创建
@@ -178,7 +179,7 @@ public class TaskItem extends RecyclerViewItem implements Comparable{
         if (!parentGroups.contains(group)) {
             parentGroups.add(group);
         } else {
-            App.Toast("有重复的ParentGroup加入");
+            UIHelper.Toast("有重复的ParentGroup加入");
         }
     }
     public List<GroupBase> getParentGroups(){

@@ -249,7 +249,7 @@ public class TodoFragment extends Fragment {
         setCurrentCategory();
 
         //EventBus.getDefault().register(this);
-        App.Toast("注册了EventBus");
+        UIHelper.Toast("注册了EventBus");
 
         return view;
     }
@@ -557,7 +557,7 @@ public class TodoFragment extends Fragment {
             updateDrawerCategoryList();
         });
         removeCategoryDialog.setNegativeButton("取消", (dialogInterface, i) -> {
-            App.Toast("取消");
+            UIHelper.Toast("取消");
         });
         removeCategoryDialog.show();
     }
@@ -625,7 +625,7 @@ public class TodoFragment extends Fragment {
         });
         popupWindow.setOnDismissListener(() -> {
             if (categoryTitle.getText().toString().isEmpty()) {
-                App.Toast("标题设置错误，恢复到以前");
+                UIHelper.Toast("标题设置错误，恢复到以前");
                 setGroupListTitle(editorCategory.getTitle());
             } else {
                 editorCategory.setTitle(categoryTitle.getText().toString());

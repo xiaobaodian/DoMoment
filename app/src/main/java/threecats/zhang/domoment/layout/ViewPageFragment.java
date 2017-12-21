@@ -12,6 +12,7 @@ import android.widget.TextView;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.RecyclerViewAdapterBase;
 
 /**
@@ -84,7 +85,7 @@ public abstract class ViewPageFragment extends TitleFragment {
                 }
             });
         } catch (Exception e){
-            App.Toast("TimeLine Groups is Null");
+            UIHelper.Toast("TimeLine Groups is Null");
         }
     }
 

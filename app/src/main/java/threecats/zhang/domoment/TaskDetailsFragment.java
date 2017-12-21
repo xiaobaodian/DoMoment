@@ -22,6 +22,7 @@ import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.OneDayBase;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.layout.TitleFragment;
 
 public class TaskDetailsFragment extends TitleFragment {
@@ -245,7 +246,7 @@ public class TaskDetailsFragment extends TitleFragment {
             DisplayDateTimeFields();
         });
 
-        dialog.setNegativeButton("取消", (dialogInterface, i) -> App.Toast("取消编辑"));
+        dialog.setNegativeButton("取消", (dialogInterface, i) -> UIHelper.Toast("取消编辑"));
         dialog.setOnDismissListener((v) -> {
             //onResume();
         });

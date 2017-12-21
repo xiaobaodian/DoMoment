@@ -14,6 +14,7 @@ import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TimeSeries;
 import threecats.zhang.domoment.ENUM.GroupListDisplayType;
 import threecats.zhang.domoment.ENUM.GroupListType;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.RecyclerViewAdapterBase;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 
@@ -129,7 +130,7 @@ public abstract class GroupListBase {
     private void hideGroup(GroupBase group){
         if (group.getTaskCount() > 0) return;
         if (group.SiteID > recyclerViewItems.size() - 1) {
-            App.Toast("Hide Group : group.siteID > size()");
+            UIHelper.Toast("Hide Group : group.siteID > size()");
             return;
         }
         if (group == recyclerViewItems.get(group.SiteID)) {
@@ -140,7 +141,7 @@ public abstract class GroupListBase {
         } else {
             int a= group.SiteID;
             GroupBase g = (GroupBase) recyclerViewItems.get(group.SiteID);
-            App.Toast("HideGroup出现错误");
+            UIHelper.Toast("HideGroup出现错误");
         }
         updateTitleMessage();
     }
@@ -249,7 +250,7 @@ public abstract class GroupListBase {
             if (isBindRecyclerView()) GroupListAdapter.notifyItemRemoved(site);
             //CalculatorTitleSite();
         } else {
-            App.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
+            UIHelper.Toast(group.getParent().getParent().getTitle()+"Task与ListItems不符");
         }
         //测试用，更新显示组头的位置序号
         //updateTitleMessage();

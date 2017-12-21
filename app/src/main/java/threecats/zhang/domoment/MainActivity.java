@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.LayoutAnimationController;
 
 import io.objectbox.BoxStore;
+import threecats.zhang.domoment.Helper.UIHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if ((System.currentTimeMillis()-mExitTime)>1000) {
-                App.Toast("再按一次退出程序");
+                UIHelper.Toast("再按一次退出程序");
                 mExitTime = System.currentTimeMillis();
             }else{
                 finish();

@@ -27,21 +27,24 @@ public class App extends Application {
 
     public static final String TAG = "IDoMoment";
 
-    private static Context context;
+    private static App self;
+    private BoxStore boxStore;
+    private Context context;
     private static DateTimeHelper dateTime;
     private static DataManger dataManger;
     private static MainActivity mainActivity;
     private static Activity currentActivity;
     private static PopupWindow popupWindow;
     private static DrawerLayout drawerLayout;
-    private static BoxStore boxStore;
+    //private static BoxStore boxStore;
     private static boolean initFlag;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        self = this;
         context = getApplicationContext();
-        //boxStore = MyObjectBox.builder().androidContext(App.this).build();
+        boxStore = MyObjectBox.builder().androidContext(App.this).build();
         initFlag = false;
         //dateTime = new DateTimeHelper();
         //dataManger = new DataManger();
@@ -55,13 +58,21 @@ public class App extends Application {
         initFlag = true;
     }
 
+    public static App self(){
+        return self;
+    }
+
+    public BoxStore getBoxStore(){
+        return boxStore;
+    }
+
     public static boolean isInit(){
         return initFlag;
     }
     public static DateTimeHelper getDateTime(){
         return dateTime;
     }
-    public static Context getContext() {
+    public Context getContext() {
         return context;
     }
     public static DataManger getDataManger(){
@@ -86,11 +97,8 @@ public class App extends Application {
     public static Activity getCurrentActivity(){
         return currentActivity;
     }
-    public static String getRString(int StringID){
-        return App.getContext().getString(StringID);
-    }
-    public static void Toast(String message){
-        android.widget.Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    public String getRString(int StringID){
+        return context.getString(StringID);
     }
     public static void showTaskDisplayActivity(){
         Intent taskIntent = new Intent(App.getMainActivity(),TaskDisplayActivity.class);
@@ -124,24 +132,13 @@ public class App extends Application {
         return dataManger.getCategoryList().getCategoryThemebackgrounds();
     }
 
-    public static boolean boxStoreIsNull(){
-        return boxStore == null;
-    }
-    public static BoxStore getBoxStore() {
-        if (boxStore == null) {
-            boxStore = MyObjectBox.builder().androidContext(context).build();
-        }
-        return boxStore;
-    }
 
     public static void Exit() {
-        context = null;
         dateTime = null;
         dataManger = null;
         mainActivity = null;
         currentActivity = null;
         popupWindow = null;
         drawerLayout = null;
-        boxStore = null;
     }
 }

@@ -5,6 +5,7 @@ import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TaskPriority;
 import threecats.zhang.domoment.ENUM.TimeSeries;
 import threecats.zhang.domoment.App;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.R;
 
 /**
@@ -19,7 +20,7 @@ public class ImportanceGroupList extends GroupListBase {
         this.selfType = GroupListType.Nodate;
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
-        setTitle(App.getContext().getString(R.string.grouplist_improtant_title));
+        setTitle(UIHelper.getRString(R.string.grouplist_improtant_title));
         buildGroups();
     }
 

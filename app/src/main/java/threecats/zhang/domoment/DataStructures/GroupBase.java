@@ -48,7 +48,7 @@ public abstract class GroupBase extends RecyclerViewItem {
         this.SiteID = -1;
         this.State = DisplayState.Hide;
         this.tasks = new ArrayList<>();
-        this.context = App.getContext();
+        this.context = App.self().getContext();
         this.parentGroupList = parent;
         buildTimePoint();
     }

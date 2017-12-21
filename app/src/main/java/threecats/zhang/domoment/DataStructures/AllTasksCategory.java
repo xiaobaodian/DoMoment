@@ -15,7 +15,7 @@ public class AllTasksCategory extends CategoryBase {
     AllTasksCategory() {
         super();
         setCategoryID(0);
-        Context context = App.getContext();
+        Context context = App.self().getContext();
         setTitle(context.getString(R.string.category_alltask_title));
         categoryType = CategoryType.System;
         iconId = R.mipmap.folder;

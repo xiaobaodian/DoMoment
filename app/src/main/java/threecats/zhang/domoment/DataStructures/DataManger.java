@@ -45,7 +45,7 @@ public class DataManger {
 
     public DataManger(){
 
-        BoxStore boxStore = App.getBoxStore();
+        BoxStore boxStore = App.self().getBoxStore();
 
         taskBox = boxStore.boxFor(TaskItem.class);
         checkListBox = boxStore.boxFor(CheckItem.class);

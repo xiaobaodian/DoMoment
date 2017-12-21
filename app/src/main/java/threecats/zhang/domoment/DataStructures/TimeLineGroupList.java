@@ -4,6 +4,7 @@ import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TimeSeries;
 import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.App;
+import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.R;
 
 /**
@@ -18,7 +19,7 @@ public class TimeLineGroupList extends GroupListBase {
         this.selfType = GroupListType.TimeLine;
         this.timeSeries = TimeSeries.Forward;
         this.taskBasePoint = TaskBasePoint.BeginDate;   //后面加上 开始与结束的日期区间
-        setTitle(App.getContext().getString(R.string.grouplist_timeline_title));
+        setTitle(UIHelper.getRString(R.string.grouplist_timeline_title));
         buildGroups();
     }
 

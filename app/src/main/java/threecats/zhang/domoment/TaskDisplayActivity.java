@@ -96,7 +96,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (fragmentManager == null) {
-            App.Toast("FragmentManager is null");
+            UIHelper.Toast("FragmentManager is null");
         } else {
             viewPager.setAdapter(new TaskFragmentAdapter(fragmentManager, viewFragmentList));
             taskTab.setupWithViewPager(viewPager);
@@ -108,9 +108,9 @@ public class TaskDisplayActivity extends AppCompatActivity {
 
     private View.OnFocusChangeListener mOnFocusChangeListener = (view, b) -> {
         if (b) {
-            App.Toast("has focus");
+            UIHelper.Toast("has focus");
         } else {
-            App.Toast("no focus");
+            UIHelper.Toast("no focus");
         }
     };
 

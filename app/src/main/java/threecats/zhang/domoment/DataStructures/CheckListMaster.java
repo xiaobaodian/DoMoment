@@ -16,7 +16,7 @@ public class CheckListMaster {
     private Box<CheckItem> checkListBox;
 
     public CheckListMaster(){
-        BoxStore boxStore = App.getBoxStore();
+        BoxStore boxStore = App.self().getBoxStore();
         checkListBox = boxStore.boxFor(CheckItem.class);
     }
 
