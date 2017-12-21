@@ -29,7 +29,7 @@ public class TimeLineTodayGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTimeHelper.BuildTimePoint(0);
+        this.timePoint = DateTimeHelper.buildTimePoint(0);
     }
 
     public String getDateTitle(){

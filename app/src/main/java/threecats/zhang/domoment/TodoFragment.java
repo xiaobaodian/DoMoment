@@ -1,7 +1,6 @@
 package threecats.zhang.domoment;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +37,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -309,7 +306,7 @@ public class TodoFragment extends Fragment {
         super.onResume();
         setBackgroundImage(currentCategory);
         //检查是不是当前日期是新的一天
-        if (DateTimeHelper.IsCurrentDateChanged()) {
+        if (DateTimeHelper.isCurrentDateChanged()) {
             App.self().getDataManger().currentDateChange();
             //Toast.makeText(getContext(),"日期<已经>变更", Toast.LENGTH_SHORT).show();
         } else {
@@ -515,29 +512,29 @@ public class TodoFragment extends Fragment {
         buttonToday.setOnClickListener(view -> {
             buttonDate.setText("今天");
             simpleDate.setVisibility(View.GONE);
-            UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(Calendar.getInstance());
+            UIHelper.showSoftKeyboard(taskTitle);
         });
         Button buttonTomorrow = contentView.findViewById(R.id.buttonTomorrow);
         buttonTomorrow.setOnClickListener(view -> {
             buttonDate.setText("明天");
             simpleDate.setVisibility(View.GONE);
-            UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(DateTimeHelper.getTomorrow());
+            UIHelper.showSoftKeyboard(taskTitle);
         });
         Button buttonAfterTomorrow = contentView.findViewById(R.id.buttonAfterTomorrow);
         buttonAfterTomorrow.setOnClickListener(view -> {
             buttonDate.setText("后天");
             simpleDate.setVisibility(View.GONE);
-            UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(DateTimeHelper.getAfterTomorrow());
+            UIHelper.showSoftKeyboard(taskTitle);
         });
         Button buttonNextWeek = contentView.findViewById(R.id.buttonNextWeek);
         buttonNextWeek.setOnClickListener(view -> {
             buttonDate.setText("下周");
             simpleDate.setVisibility(View.GONE);
-            UIHelper.closeSoftKeyboard(taskTitle);
             taskExt.setStartDate(DateTimeHelper.getAfterTomorrow());
+            UIHelper.showSoftKeyboard(taskTitle);
         });
 
         //TabLayout.Tab tab = viewTabLayout.getTabAt(2);

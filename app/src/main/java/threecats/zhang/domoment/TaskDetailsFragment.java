@@ -126,6 +126,7 @@ public class TaskDetailsFragment extends TitleFragment {
         noteBox.setText(task.getNote());
         placeBox.setText(task.getPlace());
     }
+
     @SuppressLint("SetTextI18n")
     private void DisplayDateTimeFields(){
         //taskExt.setTaskItem(task);  //刷新taskExt内部字段
@@ -228,21 +229,16 @@ public class TaskDetailsFragment extends TitleFragment {
             Calendar SelectedDate;
             switch (EditType) {
                 case editStartDate:
-
                     taskExt.setShiftStartDate(datePicker.getYear()
                             , datePicker.getMonth()
                             , datePicker.getDayOfMonth());
-
                     break;
                 case editDueDate:
-
                     taskExt.setShiftDueDate(datePicker.getYear()
                             , datePicker.getMonth()
                             , datePicker.getDayOfMonth());
-
                     break;
             }
-
             DisplayDateTimeFields();
         });
 

@@ -28,7 +28,7 @@ public class TimeLineAfterTomorrowGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        timePoint = DateTimeHelper.BuildTimePoint(2);
+        timePoint = DateTimeHelper.buildTimePoint(2);
     }
 
     public String getDateTitle(){

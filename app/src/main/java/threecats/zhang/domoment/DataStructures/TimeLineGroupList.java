@@ -3,7 +3,6 @@ package threecats.zhang.domoment.DataStructures;
 import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TimeSeries;
 import threecats.zhang.domoment.ENUM.GroupListType;
-import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.R;
@@ -33,7 +32,7 @@ public class TimeLineGroupList extends GroupListBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTimeHelper.BuildTimePoint(0);
+        this.timePoint = DateTimeHelper.buildTimePoint(0);
     }
 
     @Override

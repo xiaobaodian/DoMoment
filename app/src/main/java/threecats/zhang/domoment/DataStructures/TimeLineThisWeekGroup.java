@@ -27,6 +27,6 @@ public class TimeLineThisWeekGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTimeHelper.BuildTimePoint(3);
+        this.timePoint = DateTimeHelper.buildTimePoint(3);
     }
 }

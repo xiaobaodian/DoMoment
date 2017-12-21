@@ -27,8 +27,8 @@ public class DueLastWeekGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
-        this.timePoint = DateTimeHelper.BuildTimePoint(1-daySite);
+        int daySite = DateTimeHelper.getDayOfWeek(Calendar.getInstance());
+        this.timePoint = DateTimeHelper.buildTimePoint(1-daySite);
     }
 
     public String getDateTitle(){

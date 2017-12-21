@@ -181,8 +181,8 @@ public abstract class GroupBase extends RecyclerViewItem {
             } else {
                 Calendar endDate = (Calendar)nextGroup.timePoint.clone();
                 endDate.add(Calendar.DATE, -1);
-                if ( ! DateTimeHelper.SameYMD(timePoint, endDate)) {
-                    String s = DateTimeHelper.getyearFormatStr(endDate.getTime());
+                if ( ! DateTimeHelper.sameYMD(timePoint, endDate)) {
+                    String s = DateTimeHelper.getYearFormatStr(endDate.getTime());
                     SimpleDateFormat date2Format = new SimpleDateFormat("  / "+ s +" MMMd  E");
                     d = date2Format.format(endDate.getTime());
                 }
@@ -195,8 +195,8 @@ public abstract class GroupBase extends RecyclerViewItem {
                 d = "很久以前 —— ";
             } else {
                 Calendar beginDate = (Calendar)nextGroup.timePoint.clone();
-                if ( ! DateTimeHelper.SameYMD(beginDate, endDate)) {
-                    String s = DateTimeHelper.getyearFormatStr(beginDate.getTime());
+                if ( ! DateTimeHelper.sameYMD(beginDate, endDate)) {
+                    String s = DateTimeHelper.getYearFormatStr(beginDate.getTime());
                     SimpleDateFormat date2Format = new SimpleDateFormat(s + "MMMd  E" + "  / ");
                     d = date2Format.format(beginDate.getTime());
                 }

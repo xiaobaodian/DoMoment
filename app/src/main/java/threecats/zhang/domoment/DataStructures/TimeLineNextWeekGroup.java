@@ -27,7 +27,7 @@ public class TimeLineNextWeekGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
-        this.timePoint = DateTimeHelper.BuildTimePoint(7-daySite+1);
+        int daySite = DateTimeHelper.getDayOfWeek(Calendar.getInstance());
+        this.timePoint = DateTimeHelper.buildTimePoint(7-daySite+1);
     }
 }

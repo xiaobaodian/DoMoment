@@ -27,7 +27,7 @@ public class DueThisWeekGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTimeHelper.BuildTimePoint(-2);
+        this.timePoint = DateTimeHelper.buildTimePoint(-2);
     }
 
     public String getDateTitle(){

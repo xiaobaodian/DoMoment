@@ -30,7 +30,7 @@ public class TimeLineThisMonthGroup extends GroupBase {
         //int daySite = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         //int monthDays = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
         //return DateTime.buildTimePoint(monthDays - daySite);
-        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
-        this.timePoint = DateTimeHelper.BuildTimePoint(7-daySite+8);
+        int daySite = DateTimeHelper.getDayOfWeek(Calendar.getInstance());
+        this.timePoint = DateTimeHelper.buildTimePoint(7-daySite+8);
     }
 }

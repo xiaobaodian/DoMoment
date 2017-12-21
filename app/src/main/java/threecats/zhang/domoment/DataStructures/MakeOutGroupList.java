@@ -1,6 +1,5 @@
 package threecats.zhang.domoment.DataStructures;
 
-import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TimeSeries;
@@ -32,7 +31,7 @@ public class MakeOutGroupList extends GroupListBase {
 
     @Override
     public void buildTimePoint(){
-        this.timePoint = DateTimeHelper.BuildTimePoint(0);
+        this.timePoint = DateTimeHelper.buildTimePoint(0);
     }
 
     @Override

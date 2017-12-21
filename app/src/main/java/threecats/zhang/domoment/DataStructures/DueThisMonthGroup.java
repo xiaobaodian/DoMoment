@@ -27,9 +27,9 @@ public class DueThisMonthGroup extends GroupBase {
 
     @Override
     public void buildTimePoint(){
-        int daySite = DateTimeHelper.GetDayOfWeek(Calendar.getInstance());
+        int daySite = DateTimeHelper.getDayOfWeek(Calendar.getInstance());
         //上周一的零时
-        this.timePoint = DateTimeHelper.BuildTimePoint(1-daySite-7);
+        this.timePoint = DateTimeHelper.buildTimePoint(1-daySite-7);
     }
 
     public String getDateTitle(){
