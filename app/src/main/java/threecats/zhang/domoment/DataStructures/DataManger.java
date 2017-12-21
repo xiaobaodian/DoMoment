@@ -71,7 +71,7 @@ public class DataManger {
         return categoryList;
     }
 
-    public void LoadDatas(){
+    public void loadToDoDatas(){
         if (isDataloaded) return;
         LoadCategorys();
         LoadTasks();

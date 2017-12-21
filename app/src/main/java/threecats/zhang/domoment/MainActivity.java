@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 finish();
             }
-            //return true;
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

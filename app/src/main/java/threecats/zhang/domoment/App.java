@@ -35,21 +35,28 @@ public class App extends Application {
     private static PopupWindow popupWindow;
     private static DrawerLayout drawerLayout;
     private static BoxStore boxStore;
+    private static boolean initFlag;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        boxStore = MyObjectBox.builder().androidContext(App.this).build();
         context = getApplicationContext();
+        //boxStore = MyObjectBox.builder().androidContext(App.this).build();
+        initFlag = false;
         //dateTime = new DateTimeHelper();
         //dataManger = new DataManger();
-        //dataManger.LoadDatas();
+        //dataManger.loadToDoDatas();
     }
 
     public static void Init(){
         dateTime = new DateTimeHelper();
         dataManger = new DataManger();
-        dataManger.LoadDatas();
+        //dataManger.loadToDoDatas();
+        initFlag = true;
+    }
+
+    public static boolean isInit(){
+        return initFlag;
     }
     public static DateTimeHelper getDateTime(){
         return dateTime;
@@ -117,7 +124,13 @@ public class App extends Application {
         return dataManger.getCategoryList().getCategoryThemebackgrounds();
     }
 
+    public static boolean boxStoreIsNull(){
+        return boxStore == null;
+    }
     public static BoxStore getBoxStore() {
+        if (boxStore == null) {
+            boxStore = MyObjectBox.builder().androidContext(context).build();
+        }
         return boxStore;
     }
 

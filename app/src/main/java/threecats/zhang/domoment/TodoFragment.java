@@ -123,8 +123,8 @@ public class TodoFragment extends Fragment {
         fragmentList.add(noDateFragment);
         fragmentList.add(makeOutFragment);
 
-        //App.getDataManger().LoadDatas();
-        //new LoadDatas().execute();
+        //App.getDataManger().loadToDoDatas();
+        //new loadToDoDatas().execute();
         if (savedInstanceState != null) {
             //Toast.makeText(getActivity(),"TabID:"+savedInstanceState.getInt("tablayout"),Toast.LENGTH_SHORT).show();
         } else {
@@ -245,6 +245,7 @@ public class TodoFragment extends Fragment {
 //        tab.select();
 
         buildsDrawerCategoryList(view);
+        App.getDataManger().loadToDoDatas();
         setCurrentCategory();
 
         //EventBus.getDefault().register(this);
