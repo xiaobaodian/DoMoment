@@ -14,9 +14,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.LayoutAnimationController;
 
-import io.objectbox.BoxStore;
 import threecats.zhang.domoment.Helper.UIHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             App.setSelf((App)getApplication());
         }
         App.self().setMainActivity(this);
-        App.self().Init();
+        App.self().init();
 
         setContentView(R.layout.activity_main);
 
@@ -162,12 +160,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        App.Exit();
     }
 
     @Override

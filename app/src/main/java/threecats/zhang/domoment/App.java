@@ -43,11 +43,16 @@ public class App extends Application {
         context = getApplicationContext();
     }
 
-    public void Init(){
-        boxStore = MyObjectBox.builder().androidContext(App.this).build();
-        dataManger = new DataManger();
+    public void init(){
+        if (boxStore == null) {
+            boxStore = MyObjectBox.builder().androidContext(App.this).build();
+        }
+        if (dataManger == null) {
+            dataManger = new DataManger();
+        }
         //dataManger.loadToDoDatas();
     }
+
 
     public static App self(){
         return self;
@@ -120,10 +125,5 @@ public class App extends Application {
 
     public List<BackgroundBase> getCategoryThemebackgrounds(){
         return dataManger.getCategoryList().getCategoryThemebackgrounds();
-    }
-
-
-    public static void Exit() {
-        self = null;
     }
 }
