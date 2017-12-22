@@ -10,12 +10,12 @@ import threecats.zhang.domoment.layout.TitleFragment;
 import threecats.zhang.domoment.layout.ViewPageFragment;
 
 /**
- * Created by zhang on 2017/7/31.
+ * 由 zhang 于 2017/7/31 创建
  */
 
 public class todoFragmentAdapter extends FragmentPagerAdapter {
 
-    List<ViewPageFragment> fragmentList;
+    private List<ViewPageFragment> fragmentList;
 
     public todoFragmentAdapter(FragmentManager fm, Context context){
         super(fm);

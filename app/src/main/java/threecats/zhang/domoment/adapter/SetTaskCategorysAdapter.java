@@ -18,7 +18,7 @@ import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/8/1.
+ * 由 zhang 于 2017/8/1 创建
  */
 
 public class SetTaskCategorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -40,6 +40,10 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,6 +55,7 @@ import threecats.zhang.domoment.DataStructures.TaskExt;
 import threecats.zhang.domoment.DataStructures.TaskItem;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.GroupListType;
+import threecats.zhang.domoment.EventClass.InitEvent;
 import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.Helper.MaskDialog;
 import threecats.zhang.domoment.Helper.UIHelper;
@@ -66,7 +71,7 @@ import threecats.zhang.domoment.layout.ViewPageFragment;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
- * Created by zhang on 2017/7/25.
+ * 由 zhang 于 2017/7/25 创建
  */
 
 public class TodoFragment extends Fragment {
@@ -93,6 +98,7 @@ public class TodoFragment extends Fragment {
     private List<ViewPageFragment> fragmentList;
     private ProgressBar progressBar;
     private View fragmentView;
+    private boolean initFLAG;
 
     @Override
     public void onAttach(Context context) {
@@ -104,20 +110,21 @@ public class TodoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //this.savedInstanceState = savedInstanceState;
-        App.self().getDataManger().setTodoFragment(this);
+        //App.self().getDataManger().setTodoFragment(this);
         //currentCategory = App.getCurrentCategory();
         //setRetainInstance(true);
+        initFLAG = false;
 
-        fragmentList = new ArrayList<>();
-        timeLineFragment = new TodoTimeLineFragment();
-        overDueFragment = new TodoOverDueFragment();
-        noDateFragment = new TodoNoDateFragment();
-        makeOutFragment = new TodoMakeOutFragment();
-
-        fragmentList.add(timeLineFragment);
-        fragmentList.add(overDueFragment);
-        fragmentList.add(noDateFragment);
-        fragmentList.add(makeOutFragment);
+//        fragmentList = new ArrayList<>();
+//        timeLineFragment = new TodoTimeLineFragment();
+//        overDueFragment = new TodoOverDueFragment();
+//        noDateFragment = new TodoNoDateFragment();
+//        makeOutFragment = new TodoMakeOutFragment();
+//
+//        fragmentList.add(timeLineFragment);
+//        fragmentList.add(overDueFragment);
+//        fragmentList.add(noDateFragment);
+//        fragmentList.add(makeOutFragment);
 
         //App.getDataManger().loadToDoDatas();
         //new loadToDoDatas().execute();
@@ -159,7 +166,9 @@ public class TodoFragment extends Fragment {
         progressBar = view.findViewById(R.id.LoadDatasprogressBar);
         //AppBarLayout appBarLayout = view.findViewById(R.id.todo_appbar);
         viewPager = view.findViewById(R.id.todo_viewpager);
+
         viewTabLayout = view.findViewById(R.id.ViewTabLayout);
+
         toolbar = view.findViewById(R.id.todo_toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -201,8 +210,8 @@ public class TodoFragment extends Fragment {
             popupSimpleAddTask();
         });
 
-        viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(), fragmentList));
-        viewTabLayout.setupWithViewPager(viewPager);
+//        viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(), fragmentList));
+//        viewTabLayout.setupWithViewPager(viewPager);
         viewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -240,16 +249,65 @@ public class TodoFragment extends Fragment {
 //        tab = viewTabLayout.getTabAt(0);
 //        tab.select();
 
-        buildsDrawerCategoryList(view);
-        App.self().getDataManger().loadToDoDatas();
-        setCurrentCategory();
+        EventBus.getDefault().register(this);
+        if (fragmentList == null) {
+            EventBus.getDefault().post(new InitEvent(11));
+        } else {
+            EventBus.getDefault().post(new InitEvent(12));
+        }
 
-        //EventBus.getDefault().register(this);
-        //UIHelper.Toast("注册了EventBus");
+        if (initFLAG) {
+            EventBus.getDefault().post(new InitEvent(15));
+        } else {
+            EventBus.getDefault().post(new InitEvent(13));
+        }
 
         return view;
     }
 
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void mountFragments(InitEvent initEvent){
+        if (initEvent.getType() == 11) {
+            fragmentList = new ArrayList<>();
+            timeLineFragment = new TodoTimeLineFragment();
+            overDueFragment = new TodoOverDueFragment();
+            noDateFragment = new TodoNoDateFragment();
+            makeOutFragment = new TodoMakeOutFragment();
+            fragmentList.add(timeLineFragment);
+            fragmentList.add(overDueFragment);
+            fragmentList.add(noDateFragment);
+            fragmentList.add(makeOutFragment);
+            EventBus.getDefault().post(new InitEvent(12));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bindTabLayout(InitEvent initEvent){
+        if (initEvent.getType() == 12) {
+            viewPager.setAdapter(new todoFragmentAdapter(getChildFragmentManager(), fragmentList));
+            viewTabLayout.setupWithViewPager(viewPager);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)  //, sticky = true
+    public void loadDatas(InitEvent initEvent){
+        if (initEvent.getType() == 13) {
+            setProgressBarVisibility(View.VISIBLE);
+            App.self().getDataManger().setTodoFragment(this);
+            buildsDrawerCategoryList(fragmentView);
+            App.self().getDataManger().loadToDoDatas();
+            //EventBus.getDefault().removeStickyEvent(initEvent);
+            EventBus.getDefault().post(new InitEvent(15));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void displayCategory(InitEvent initEvent){
+        if (initEvent.getType() == 15) {
+            setProgressBarVisibility(View.GONE);
+            setCurrentCategory();
+        }
+    }
 
 
     @Override

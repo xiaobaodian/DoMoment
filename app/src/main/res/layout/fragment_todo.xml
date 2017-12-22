@@ -33,7 +33,7 @@
                 app:expandedTitleMarginBottom="50dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:statusBarScrim="@color/colorPrimaryDark"
-                app:title="Title"
+                app:title=" "
                 app:toolbarId="@+id/todo_toolbar">
 
                 <ImageView

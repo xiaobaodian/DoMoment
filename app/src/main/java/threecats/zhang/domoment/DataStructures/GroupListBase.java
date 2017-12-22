@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.DisplayState;
 import threecats.zhang.domoment.ENUM.TaskBasePoint;
 import threecats.zhang.domoment.ENUM.TimeSeries;
@@ -16,7 +15,6 @@ import threecats.zhang.domoment.ENUM.GroupListDisplayType;
 import threecats.zhang.domoment.ENUM.GroupListType;
 import threecats.zhang.domoment.Helper.UIHelper;
 import threecats.zhang.domoment.adapter.RecyclerViewAdapterBase;
-import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * 由 zhang 于 2017/8/3 创建
@@ -145,7 +143,7 @@ public abstract class GroupListBase {
         updateTitleMessage();
     }
 
-    private void ActiveGroup(GroupBase group){
+    private void activeGroup(GroupBase group){
         if (group.State == DisplayState.Show || group.State == DisplayState.Fold) return;
         int nextGroupSite = getNextGroupSite(group);
         if (nextGroupSite >= 0) {
@@ -182,7 +180,7 @@ public abstract class GroupListBase {
         for(GroupBase group : groups){
             if (group.inGroup(task)){
                 if (group.State == DisplayState.Hide) {
-                    ActiveGroup(group);
+                    activeGroup(group);
                 }
                 int site = group.addTask(task);
                 addTaskToListItems(group, site, task);  //在RecyclerView列表中加入条目

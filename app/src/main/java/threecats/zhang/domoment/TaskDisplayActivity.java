@@ -132,7 +132,7 @@ public class TaskDisplayActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void doEditorStat(TaskEditorEvent editorEvent){
         if (editorEvent.getEditorMode() == EditorMode.Add) {
 

@@ -15,6 +15,11 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import threecats.zhang.domoment.EventClass.InitEvent;
 import threecats.zhang.domoment.Helper.UIHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        EventBus.getDefault().post(new InitEvent(1));
+
         if (App.self() == null) {
             App.setSelf((App)getApplication());
         }
         App.self().setMainActivity(this);
-        App.self().init();
+        //App.self().init();
 
         setContentView(R.layout.activity_main);
 
@@ -71,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         App.self().setCurrentActivity(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void doInitApp(InitEvent initEvent){
+        if (initEvent.getType() == 1) {
+            App.self().init();
+        }
     }
 
     public void setNavigationState(int visibility){
@@ -168,4 +183,9 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("BottomNavigationView", navigation.getSelectedItemId());
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

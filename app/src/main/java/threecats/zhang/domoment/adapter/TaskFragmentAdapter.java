@@ -10,12 +10,12 @@ import java.util.List;
 import threecats.zhang.domoment.layout.TitleFragment;
 
 /**
- * Created by zhang on 2017/7/31.
+ * 由 zhang 于 2017/7/31 创建
  */
 
 public class TaskFragmentAdapter extends FragmentPagerAdapter {
 
-    List<TitleFragment> fragmentList;
+    private List<TitleFragment> fragmentList;
 
     public TaskFragmentAdapter(FragmentManager fragmentManager, Context context){
         super(fragmentManager);

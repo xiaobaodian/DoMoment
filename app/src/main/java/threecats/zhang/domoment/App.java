@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ import threecats.zhang.domoment.DataStructures.CategoryBase;
 import threecats.zhang.domoment.DataStructures.DataManger;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
 import threecats.zhang.domoment.DataStructures.MyObjectBox;
-import threecats.zhang.domoment.Helper.DateTimeHelper;
 
 /**
  * Created by zhang on 2017/8/14.
@@ -35,12 +33,24 @@ public class App extends Application {
     private Activity currentActivity;
     private PopupWindow popupWindow;
     private DrawerLayout drawerLayout;
+    private boolean initFLAG;
 
     @Override
     public void onCreate() {
         super.onCreate();
         self = this;
+        initFLAG = false;
         context = getApplicationContext();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        self = null;
+    }
+
+    public static App self(){
+        return self;
     }
 
     public void init(){
@@ -50,13 +60,14 @@ public class App extends Application {
         if (dataManger == null) {
             dataManger = new DataManger();
         }
+        initFLAG = true;
         //dataManger.loadToDoDatas();
     }
 
-
-    public static App self(){
-        return self;
+    public boolean isInit(){
+        return initFLAG;
     }
+
     public static void setSelf(App app){
         self = app;
     }
