@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(new InitEvent(1));
 
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             App.setSelf((App)getApplication());
         }
         App.self().setMainActivity(this);
-        //App.self().init();
 
         setContentView(R.layout.activity_main);
 
@@ -53,24 +53,23 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         closeNavigation();
 
-        //恢复或旋转屏幕后进入原来的状态
-        if (savedInstanceState != null) {
-            navigation.setSelectedItemId(savedInstanceState.getInt("BottomNavigationView"));
-        } else {
-            //以后根据设置的参数来判断是首先进入哪一个活动（任务、回顾、关注）
-            //mountFragment(momentFragment);
-        }
         if (todoFragment == null) todoFragment = new TodoFragment();
         if (momentFragment == null) momentFragment = new MomentFragment();
         if (focusFragment == null) focusFragment = new FocusFragment();
-        mountFragment(todoFragment);
+
+        //恢复或旋转屏幕后进入原来的状态
+        if (savedInstanceState != null) {
+            navigation.setSelectedItemId(savedInstanceState.getInt("NavigationViewItemID"));
+        } else {
+            //以后根据设置的参数来判断是首先进入哪一个活动（任务、回顾、关注）
+            mountFragment(todoFragment);
+        }
+
+
     }
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-//        if (todoFragment == null) todoFragment = new TodoFragment();
-//        if (momentFragment == null) momentFragment = new MomentFragment();
-//        if (focusFragment == null) focusFragment = new FocusFragment();
 
         return super.onCreateView(parent, name, context, attrs);
     }
@@ -86,22 +85,6 @@ public class MainActivity extends AppCompatActivity {
         if (initEvent.getType() == 1) {
             App.self().init();
         }
-    }
-
-    public void setNavigationState(int visibility){
-        //Animation alphaAnimation = new AlphaAnimation(1, (float) 0);
-        //alphaAnimation.setDuration(300);       //设置动画持续时间为3秒
-        //alphaAnimation.setFillEnabled(true);
-        //alphaAnimation.setFillAfter(true);      //
-
-        //Animation naviAnimatin = new TranslateAnimation(0,0,0,300);
-        //naviAnimatin.setDuration(300);
-        //naviAnimatin.setFillAfter(true);
-
-        //navigation.startAnimation(naviAnimatin);
-
-        navigation.setVisibility(visibility);
-
     }
 
     public void showNavigation(){
@@ -180,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("BottomNavigationView", navigation.getSelectedItemId());
+        outState.putInt("NavigationViewItemID", navigation.getSelectedItemId());
     }
 
     @Override

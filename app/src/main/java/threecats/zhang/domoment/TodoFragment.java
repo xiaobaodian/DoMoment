@@ -109,31 +109,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.savedInstanceState = savedInstanceState;
-        //App.self().getDataManger().setTodoFragment(this);
-        //currentCategory = App.getCurrentCategory();
-        //setRetainInstance(true);
         initFLAG = false;
-
-//        fragmentList = new ArrayList<>();
-//        timeLineFragment = new TodoTimeLineFragment();
-//        overDueFragment = new TodoOverDueFragment();
-//        noDateFragment = new TodoNoDateFragment();
-//        makeOutFragment = new TodoMakeOutFragment();
-//
-//        fragmentList.add(timeLineFragment);
-//        fragmentList.add(overDueFragment);
-//        fragmentList.add(noDateFragment);
-//        fragmentList.add(makeOutFragment);
-
-        //App.getDataManger().loadToDoDatas();
-        //new loadToDoDatas().execute();
-        if (savedInstanceState != null) {
-            //Toast.makeText(getActivity(),"TabID:"+savedInstanceState.getInt("tablayout"),Toast.LENGTH_SHORT).show();
-        } else {
-            //Toast.makeText(getActivity(), "on Create", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @Override
@@ -598,6 +574,7 @@ public class TodoFragment extends Fragment {
         //TabLayout.Tab tab = viewTabLayout.getTabAt(2);
         //tab.select();
         App.self().setPopupWindow(popupWindow);
+        simpleDate.setVisibility(View.GONE);
         popupWindow.showAtLocation(fragmentView, Gravity.BOTTOM, 0, 0);
     }
 
