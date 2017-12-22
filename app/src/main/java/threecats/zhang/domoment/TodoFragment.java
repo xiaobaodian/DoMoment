@@ -245,7 +245,7 @@ public class TodoFragment extends Fragment {
         setCurrentCategory();
 
         //EventBus.getDefault().register(this);
-        UIHelper.Toast("注册了EventBus");
+        //UIHelper.Toast("注册了EventBus");
 
         return view;
     }
@@ -434,7 +434,7 @@ public class TodoFragment extends Fragment {
 
         Button buttonDate = contentView.findViewById(R.id.buttonDate);
         buttonDate.setOnClickListener(view -> {
-            UIHelper.closeSoftKeyboard(taskTitle);
+            //UIHelper.closeSoftKeyboard(taskTitle);
             taskTitle.setFocusable(false);
             simpleDate.setVisibility(View.VISIBLE);
             simpleDate.setFocusable(true);
@@ -513,21 +513,21 @@ public class TodoFragment extends Fragment {
             buttonDate.setText("今天");
             simpleDate.setVisibility(View.GONE);
             taskExt.setStartDate(Calendar.getInstance());
-            UIHelper.showSoftKeyboard(taskTitle);
+            //UIHelper.showSoftKeyboard(taskTitle);
         });
         Button buttonTomorrow = contentView.findViewById(R.id.buttonTomorrow);
         buttonTomorrow.setOnClickListener(view -> {
             buttonDate.setText("明天");
             simpleDate.setVisibility(View.GONE);
             taskExt.setStartDate(DateTimeHelper.getTomorrow());
-            UIHelper.showSoftKeyboard(taskTitle);
+            //UIHelper.showSoftKeyboard(taskTitle);
         });
         Button buttonAfterTomorrow = contentView.findViewById(R.id.buttonAfterTomorrow);
         buttonAfterTomorrow.setOnClickListener(view -> {
             buttonDate.setText("后天");
             simpleDate.setVisibility(View.GONE);
             taskExt.setStartDate(DateTimeHelper.getAfterTomorrow());
-            UIHelper.showSoftKeyboard(taskTitle);
+            //UIHelper.showSoftKeyboard(taskTitle);
         });
         Button buttonNextWeek = contentView.findViewById(R.id.buttonNextWeek);
         buttonNextWeek.setOnClickListener(view -> {

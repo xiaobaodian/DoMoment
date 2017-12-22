@@ -41,19 +41,19 @@ public class App extends Application {
         super.onCreate();
         self = this;
         context = getApplicationContext();
-        boxStore = MyObjectBox.builder().androidContext(App.this).build();
-        //dateTime = new DateTimeHelper();
-        //dataManger = new DataManger();
-        //dataManger.loadToDoDatas();
     }
 
     public void Init(){
+        boxStore = MyObjectBox.builder().androidContext(App.this).build();
         dataManger = new DataManger();
         //dataManger.loadToDoDatas();
     }
 
     public static App self(){
         return self;
+    }
+    public static void setSelf(App app){
+        self = app;
     }
 
     public BoxStore getBoxStore(){

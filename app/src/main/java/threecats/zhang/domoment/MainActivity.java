@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.self() == null) {
+            App.setSelf((App)getApplication());
+        }
         App.self().setMainActivity(this);
         App.self().Init();
 
