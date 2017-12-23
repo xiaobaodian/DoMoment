@@ -12,20 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
 import java.util.List;
 
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.DataStructures.GroupBase;
 import threecats.zhang.domoment.DataStructures.GroupListBase;
-import threecats.zhang.domoment.DataStructures.ListItemBase;
 import threecats.zhang.domoment.DataStructures.RecyclerViewItem;
 import threecats.zhang.domoment.DataStructures.TaskItem;
-import threecats.zhang.domoment.DataStructures.TimeLineAfterTomorrowGroup;
-import threecats.zhang.domoment.DataStructures.TimeLineTodayGroup;
-import threecats.zhang.domoment.DataStructures.TimeLineTomorrowGroup;
 import threecats.zhang.domoment.ENUM.GroupType;
-import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.R;
 import threecats.zhang.domoment.DataStructures.Task;
 import threecats.zhang.domoment.TaskDisplayActivity;
@@ -36,7 +30,7 @@ import threecats.zhang.domoment.TaskDisplayActivity;
 
 public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private GroupListBase groupList;
+    private GroupListBase groups;
     private GroupBase group;
     private List<RecyclerViewItem>  items;
     private int itemLayoutID;
@@ -44,8 +38,8 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
     public boolean isChecked = false;
     private AdapterView.OnItemClickListener onItemClickListener;
 
-    public void setGroupList(GroupListBase groupList){
-        this.groupList = groupList;
+    public void setGroups(GroupListBase groups){
+        this.groups = groups;
     }
     public void setGroup(GroupBase group){
         this.group = group;
@@ -183,7 +177,7 @@ public abstract class RecyclerViewAdapterBase extends RecyclerView.Adapter<Recyc
                     itemViewHolder.checkBox.setVisibility(View.GONE);
                 }
                 itemViewHolder.checkBox.setTag(task);
-                GroupType groupType = task.getCurrentGroup(groupList).getGroupType();
+                GroupType groupType = task.getCurrentGroup(groups).getGroupType();
                 OnBindItem(itemViewHolder, task, groupType);
                 break;
             case Group:

@@ -271,7 +271,7 @@ public abstract class GroupListBase {
         //String className = adapter.getClass().getSimpleName();
         //if (className.contains("NoDateAdapter")) viewAdapterBase = (RecyclerViewAdapterBase)adapter;
 
-        adapter.setGroupList(this);
+        adapter.setGroups(this);
         GroupListAdapter = adapter;
         GroupListRecyclerView = recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
