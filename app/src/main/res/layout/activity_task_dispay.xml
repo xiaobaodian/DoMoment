@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/TaskEditorToolbar"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:elevation="2dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -28,51 +28,28 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:layout_height="36dp"
+        android:background="@color/primary_light"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:paddingTop="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TaskEditorToolbar">
-
-        <EditText
-            android:id="@+id/editTextTitle"
-            style="@style/Widget.AppCompat.EditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:contentDescription="hello world"
-            android:ems="10"
-            android:enabled="true"
-            android:hint="任务标题"
-            android:inputType="text|textMultiLine"
-            android:paddingBottom="4dp"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:paddingTop="4dp"
-            android:soundEffectsEnabled="true"
-            android:textColor="@color/primary_lighttext"
-            android:textSize="22sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/layCreatedDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:alpha="0.45"
-            android:paddingBottom="8dp"
             android:paddingStart="20dp"
-            android:paddingTop="8dp"
             android:text="TextView"
-            android:textColor="@color/primary_lighttext"
+            android:textColor="@color/primary_text"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/editTextTitle"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnCategory"
@@ -80,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="任务类别"
-            android:textColor="@color/primary_lighttext"
+            android:textColor="@color/colorAccent"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/btnPriority"
@@ -93,23 +70,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="普通"
-            android:textColor="@color/primary_lighttext"
+            android:textColor="@color/colorAccent"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
 
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
         <ImageView
             android:id="@+id/doneflag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:tint="@android:color/holo_red_light"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editTextTitle"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_action_done_all" />
 
+        <EditText
+            android:id="@+id/editTextTitle"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="hello world"
+            android:ems="10"
+            android:enabled="true"
+            android:hint="任务标题"
+            android:inputType="text|textMultiLine"
+            android:paddingBottom="12dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="12dp"
+            android:soundEffectsEnabled="true"
+            android:textColor="@color/primary_text"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@android:color/transparent" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/lTaskTab"
