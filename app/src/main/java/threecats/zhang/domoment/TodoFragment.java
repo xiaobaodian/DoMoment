@@ -225,17 +225,21 @@ public class TodoFragment extends Fragment {
 //        tab = viewTabLayout.getTabAt(0);
 //        tab.select();
 
-        EventBus.getDefault().register(this);
-        if (fragmentList == null) {
-            EventBus.getDefault().post(new InitEvent(11));
+        EventBus eventBus = EventBus.getDefault();
+
+        eventBus.register(this);
+
+        //必须先执行这一部分建立数据，才能执行下面的if (fragmentList == null)
+        if (initFLAG) {
+            eventBus.post(new InitEvent(15));
         } else {
-            EventBus.getDefault().post(new InitEvent(12));
+            eventBus.post(new InitEvent(13));
         }
 
-        if (initFLAG) {
-            EventBus.getDefault().post(new InitEvent(15));
+        if (fragmentList == null) {
+            eventBus.post(new InitEvent(11));
         } else {
-            EventBus.getDefault().post(new InitEvent(13));
+            eventBus.post(new InitEvent(12));
         }
 
         return view;
@@ -351,7 +355,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
 //    @Subscribe  //(sticky = true, threadMode = ThreadMode.MAIN)

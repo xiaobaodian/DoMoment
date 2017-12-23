@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.PopupWindow;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import io.objectbox.BoxStore;
@@ -41,6 +43,7 @@ public class App extends Application {
         self = this;
         initFLAG = false;
         context = getApplicationContext();
+        EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
     }
 
     @Override
