@@ -83,9 +83,9 @@ public class DateTimeHelper {
         return dateFormat.format(date.getTime());
     }
 
-    public static Calendar buildTimePoint(int days){
+    public static Calendar buildTimePoint(int shiftDays){
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE,days);
+        calendar.add(Calendar.DATE,shiftDays);
 
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);

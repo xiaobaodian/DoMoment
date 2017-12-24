@@ -1,6 +1,7 @@
 package threecats.zhang.domoment.DataStructures;
 
 import android.content.ContentValues;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,9 +11,11 @@ import java.util.Random;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.query.Query;
+import io.objectbox.query.QueryFilter;
 import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.ENUM.EditorMode;
 import threecats.zhang.domoment.ENUM.TaskPriority;
+import threecats.zhang.domoment.Helper.DateTimeHelper;
 import threecats.zhang.domoment.TodoFragment;
 
 /**
@@ -22,13 +25,15 @@ import threecats.zhang.domoment.TodoFragment;
 public class DataManger {
 
     private Box<TaskItem> taskBox;
-    private Query<TaskItem> taskQuery;
+    private Query<TaskItem> taskQueryAll;
+    private Query<TaskItem> taskQueryAllTodo;
+    private Query<TaskItem> taskQueryAllDue;
 
     private Box<CheckItem> checkListBox;
-    private Query<CheckItem> checkListQuery;
+    private Query<CheckItem> checkListQueryAll;
 
     private Box<CategoryItem> categoryBox;
-    private Query<CategoryItem> categoryQuery;
+    private Query<CategoryItem> categoryQueryAll;
 
     private ContentValues values = new ContentValues();
     private CategoryList categoryList;
@@ -49,12 +54,28 @@ public class DataManger {
 
         taskBox = boxStore.boxFor(TaskItem.class);
         checkListBox = boxStore.boxFor(CheckItem.class);
-
-        taskQuery = taskBox.query().order(TaskItem_.startDateTime).build();
-        checkListQuery = checkListBox.query().build();
-
         categoryBox = boxStore.boxFor(CategoryItem.class);
-        categoryQuery = categoryBox.query().order(CategoryItem_.orderID).build();
+
+        taskQueryAll = taskBox.query().order(TaskItem_.startDateTime).build();
+        taskQueryAllTodo = taskBox.query()
+                .greater(TaskItem_.dueDateTime , DateTimeHelper.buildTimePoint(0).getTime())
+                .filter(entity -> {
+                    boolean isOK = ( ! entity.getIsNoDate()) && ( ! entity.getIsComplete());
+                    return isOK;
+                })
+                .order(TaskItem_.startDateTime)
+                .build();
+        taskQueryAllDue = taskBox.query()
+                .less(TaskItem_.dueDateTime , DateTimeHelper.buildTimePoint(0).getTime())
+                .filter(entity -> {
+                    boolean isOK = ( ! entity.getIsNoDate()) && ( ! entity.getIsComplete());
+                    return isOK;
+                })
+                .order(TaskItem_.startDateTime)
+                .build();
+
+        checkListQueryAll = checkListBox.query().build();
+        categoryQueryAll = categoryBox.query().order(CategoryItem_.orderID).build();
 
         isDataloaded = false;
         buildCategorys();
@@ -74,7 +95,7 @@ public class DataManger {
     public void loadToDoDatas(){
         if (isDataloaded) return;
         LoadCategorys();
-        LoadTasks();
+        loadTasks();
         if (categoryList.isNull()) initCategory();
         isDataloaded = true;
     }
@@ -285,13 +306,18 @@ public class DataManger {
         categoryList.currentDateChange();
     }
 
-    private void LoadTasks(){
+    private void loadTasks(){
 
-        List<TaskItem> taskItems = taskQuery.find();
+        //List<TaskItem> taskItems = taskQueryAllDue.find();
+        //List<TaskItem> taskItems = taskQueryAllTodo.find();
+        List<TaskItem> taskItems = taskQueryAll.find();
+
+        Log.d(App.TAG, "Tasks Count : "+taskItems.size());
 
         for (TaskItem taskItem : taskItems) {
             addTask(taskItem);
         }
+
     }
 
     // Category操作
@@ -327,7 +353,7 @@ public class DataManger {
 
     private void LoadCategorys(){
 
-        List<CategoryItem> categoryItems = categoryQuery.find();
+        List<CategoryItem> categoryItems = categoryQueryAll.find();
 
         for (CategoryItem categoryItem : categoryItems) {
 

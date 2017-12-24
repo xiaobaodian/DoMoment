@@ -194,8 +194,10 @@ public class TodoFragment extends Fragment {
                 GroupListBase currentGroupList = null;
                 switch (tab.getPosition()){
                     case 0:
-                        currentGroupList = currentCategory.getGroupList(GroupListType.TimeLine);
-                        App.self().getDataManger().setCurrentGroupList(currentGroupList);
+                        if (currentCategory != null) {
+                            currentGroupList = currentCategory.getGroupList(GroupListType.TimeLine);
+                            App.self().getDataManger().setCurrentGroupList(currentGroupList);
+                        }
                         break;
                     case 1:
                         currentGroupList = currentCategory.getGroupList(GroupListType.Overdue);
