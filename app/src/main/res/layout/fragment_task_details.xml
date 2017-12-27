@@ -44,6 +44,25 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
+                    android:id="@+id/etTaskPlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="地址"
+                    android:inputType="textMultiLine|textPostalAddress"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etTaskNote" />
+
+                <EditText
                     android:id="@+id/etTaskNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,24 +82,6 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etTaskTitle" />
 
-                <EditText
-                    android:id="@+id/etTaskPlace"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:drawablePadding="8dp"
-                    android:ems="10"
-                    android:hint="地址"
-                    android:inputType="textMultiLine|textPostalAddress"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etTaskNote" />
             </LinearLayout>
 
             <LinearLayout
@@ -107,7 +108,7 @@
                         android:id="@+id/imageCal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="6dp"
                         android:alpha="0.8"
                         android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -175,7 +176,7 @@
                     android:id="@+id/ALine"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="6dp"
                     android:background="@color/line_grey" />
 
                 <android.support.constraint.ConstraintLayout
@@ -189,7 +190,7 @@
                         android:id="@+id/imageClock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="6dp"
                         android:alpha="0.8"
                         android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -256,7 +257,7 @@
                     android:id="@+id/BLine"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:background="@color/line_grey" />
 

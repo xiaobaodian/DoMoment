@@ -15,7 +15,7 @@ import threecats.zhang.domoment.App;
 import threecats.zhang.domoment.R;
 
 /**
- * Created by zhang on 2017/11/29.
+ * 由 zhang 创建于 2017/11/29.
  */
 
 public class UIHelper {
